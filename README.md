@@ -6,6 +6,8 @@
 
 **E-MAIL**: dkononov@t1-consulting.ru
 
+**COMPANY**: T1-Consulting
+
 ## SOFTWARE
 
 **OS**: Windows 10 1809
