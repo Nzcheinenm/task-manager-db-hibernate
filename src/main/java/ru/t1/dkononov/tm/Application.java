@@ -2,6 +2,7 @@ package ru.t1.dkononov.tm;
 
 import ru.t1.dkononov.tm.constant.ArgumentConst;
 import ru.t1.dkononov.tm.constant.CommandConst;
+import ru.t1.dkononov.tm.util.FormatUtil;
 
 import java.util.Scanner;
 
@@ -40,6 +41,9 @@ public class Application {
             case ArgumentConst.VERSION:
                 showVersion();
                 break;
+            case ArgumentConst.INFO:
+                showSystemInfo();
+                break;
             default:
                 showErrorArgument();
                 break;
@@ -59,6 +63,9 @@ public class Application {
             case CommandConst.VERSION:
                 showVersion();
                 break;
+            case CommandConst.INFO:
+                showSystemInfo();
+                break;
             case CommandConst.EXIT:
                 showExit();
                 break;
@@ -66,6 +73,23 @@ public class Application {
                 showErrorCommand();
                 break;
         }
+    }
+
+    private static void showSystemInfo() {
+        final Runtime runtime = Runtime.getRuntime();
+        final long availableProcessors = runtime.availableProcessors();
+        final long freeMemory = runtime.freeMemory();
+        final String freeMemoryFormat = FormatUtil.format(freeMemory);
+        final long maxMemory = runtime.maxMemory();
+        final boolean maxMemoryCheck = maxMemory == Long.MAX_VALUE;
+        final String maxMemoryFormat = maxMemoryCheck ? "no limit" : FormatUtil.format(maxMemory);
+        final long totalMemory = runtime.totalMemory();
+        final String totalMemoryFormat = FormatUtil.format(totalMemory);
+
+        System.out.println("Available processors (cores): " + availableProcessors);
+        System.out.println("Free memory (bytes): " + freeMemoryFormat);
+        System.out.println("Maximum memory (bytes): " + maxMemoryFormat);
+        System.out.println("Total memory (bytes): " + totalMemoryFormat);
     }
 
     private static void showHelp() {
@@ -78,7 +102,7 @@ public class Application {
 
     private static void showVersion() {
         System.out.println("[VERSION]");
-        System.out.println("1.6.0");
+        System.out.println("1.7.0");
     }
 
     private static void showExit() {
