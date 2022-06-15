@@ -1,12 +1,16 @@
 package ru.t1.dkononov.tm;
 
+import ru.t1.dkononov.tm.api.ICommandRepository;
 import ru.t1.dkononov.tm.constant.ArgumentConst;
 import ru.t1.dkononov.tm.constant.CommandConst;
+import ru.t1.dkononov.tm.model.Command;
+import ru.t1.dkononov.tm.repository.CommandRepository;
 import ru.t1.dkononov.tm.util.FormatUtil;
 
 import java.util.Scanner;
 
 public class Application {
+    private static final ICommandRepository COMMAND_REPOSITORY = new CommandRepository();
 
     public static void main(String[] args) {
         processArguments(args);
@@ -94,10 +98,9 @@ public class Application {
 
     private static void showHelp() {
         System.out.println("[HELP]");
-        System.out.printf("%s, %s - Показать информацию о разработчике.\n",ArgumentConst.ABOUT,CommandConst.ABOUT);
-        System.out.printf("%s, %s - Показать версию приложения.\n",ArgumentConst.VERSION,CommandConst.VERSION);
-        System.out.printf("%s, %s - Показать справку о командах.\n",ArgumentConst.HELP,CommandConst.HELP);
-        System.out.printf("%s - Выйти из программы.\n",CommandConst.EXIT);
+        for (Command command : COMMAND_REPOSITORY.getCommands()) {
+            System.out.println(command.toString());
+        }
     }
 
     private static void showVersion() {
