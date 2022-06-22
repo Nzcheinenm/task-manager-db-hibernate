@@ -8,7 +8,7 @@ public final class CommandService implements ICommandService {
 
     private final ICommandRepository commandRepository;
 
-    public CommandService(ICommandRepository commandRepository) {
+    public CommandService(final ICommandRepository commandRepository) {
         this.commandRepository = commandRepository;
     }
 

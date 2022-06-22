@@ -14,7 +14,7 @@ public final class CommandController implements ICommandController {
     }
 
     @Override
-    public  void showSystemInfo() {
+    public void showSystemInfo() {
         final Runtime runtime = Runtime.getRuntime();
         final long availableProcessors = runtime.availableProcessors();
         final long freeMemory = runtime.freeMemory();
@@ -42,7 +42,7 @@ public final class CommandController implements ICommandController {
     @Override
     public void showVersion() {
         System.out.println("[VERSION]");
-        System.out.println("1.7.0");
+        System.out.println("1.10.0");
     }
 
     @Override

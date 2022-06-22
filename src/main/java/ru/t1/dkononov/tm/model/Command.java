@@ -44,11 +44,11 @@ public class Command {
     @Override
     public String toString() {
         String result = "";
-        if(name != null && !name.isEmpty())
+        if (name != null && !name.isEmpty())
             result += name;
-        if(argument != null && !argument.isEmpty())
-            result +=", " + argument;
-        if(description != null && !description.isEmpty())
+        if (argument != null && !argument.isEmpty())
+            result += ", " + argument;
+        if (description != null && !description.isEmpty())
             result += ": " + description;
         return result;
     }
