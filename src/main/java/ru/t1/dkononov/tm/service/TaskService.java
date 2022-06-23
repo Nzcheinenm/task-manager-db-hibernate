@@ -8,11 +8,11 @@ import ru.t1.dkononov.tm.repository.TaskRepository;
 
 import java.util.List;
 
-public class TaskService implements ITaskService {
+public final class TaskService implements ITaskService {
 
-    private ITaskRepository taskRepository;
+    private final ITaskRepository taskRepository;
 
-    public TaskService(ITaskRepository taskRepository) {
+    public TaskService(final ITaskRepository taskRepository) {
         this.taskRepository = taskRepository;
     }
 
@@ -22,9 +22,9 @@ public class TaskService implements ITaskService {
     }
 
     @Override
-    public Task create(String name, String description) {
-        if(name == null) return null;
-        if(description == null) return null;
+    public Task create(final String name, final String description) {
+        if (name == null) return null;
+        if (description == null) return null;
         Task task = new Task();
         task.setName(name);
         task.setDescription(description);
@@ -34,7 +34,7 @@ public class TaskService implements ITaskService {
 
     @Override
     public Task add(final Task project) {
-        if(project == null) return null;
+        if (project == null) return null;
         return taskRepository.add(project);
     }
 

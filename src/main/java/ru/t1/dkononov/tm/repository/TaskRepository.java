@@ -6,7 +6,7 @@ import ru.t1.dkononov.tm.model.Task;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TaskRepository implements ITaskRepository {
+public final class TaskRepository implements ITaskRepository {
 
     private List<Task> tasks = new ArrayList<>();
 

@@ -2,7 +2,7 @@ package ru.t1.dkononov.tm.model;
 
 import java.util.UUID;
 
-public class Project {
+public final class Project {
 
     private String id = UUID.randomUUID().toString();
 

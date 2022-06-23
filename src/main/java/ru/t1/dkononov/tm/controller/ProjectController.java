@@ -21,7 +21,7 @@ public class ProjectController implements IProjectController {
         System.out.println("[SHOW PROJECTS]");
         int index = 0;
         final List<Project> projects = projectService.findAll();
-        for(Project project : projects) {
+        for (Project project : projects) {
             index++;
             System.out.println(index + ". " + project.getName());
         }
@@ -36,7 +36,7 @@ public class ProjectController implements IProjectController {
         System.out.println("ENTER DESCRIPTION:");
         String description = TerminalUtil.inLine();
         final Project project = projectService.create(name, description);
-        if(project == null) {
+        if (project == null) {
             System.out.println("[FAIL]");
             return;
         }

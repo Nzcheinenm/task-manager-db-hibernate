@@ -7,11 +7,11 @@ import ru.t1.dkononov.tm.util.TerminalUtil;
 
 import java.util.List;
 
-public class TaskController implements ITaskController {
+public final class TaskController implements ITaskController {
 
-    private ITaskService taskService;
+    private final ITaskService taskService;
 
-    public TaskController(ITaskService taskService) {
+    public TaskController(final ITaskService taskService) {
         this.taskService = taskService;
     }
 
@@ -20,7 +20,7 @@ public class TaskController implements ITaskController {
         System.out.println("[SHOW TASKS]");
         int index = 0;
         final List<Task> tasks = taskService.findAll();
-        for(Task task : tasks) {
+        for (Task task : tasks) {
             index++;
             System.out.println(index + ". " + task.getName());
         }
@@ -35,7 +35,7 @@ public class TaskController implements ITaskController {
         System.out.println("ENTER DESCRIPTION:");
         String description = TerminalUtil.inLine();
         final Task task = taskService.create(name, description);
-        if(task == null) {
+        if (task == null) {
             System.out.println("[FAIL]");
             return;
         }

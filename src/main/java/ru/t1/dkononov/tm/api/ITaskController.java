@@ -6,4 +6,5 @@ public interface ITaskController {
     void addTask();
 
     void clearTasks();
+
 }

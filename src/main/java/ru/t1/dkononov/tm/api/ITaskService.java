@@ -12,4 +12,5 @@ public interface ITaskService {
     Task add(Task project);
 
     void clear();
+
 }

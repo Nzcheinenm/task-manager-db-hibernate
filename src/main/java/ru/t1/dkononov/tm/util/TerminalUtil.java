@@ -8,4 +8,5 @@ public interface TerminalUtil {
     static String inLine() {
         return scanner.nextLine();
     }
+
 }

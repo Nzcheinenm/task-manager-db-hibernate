@@ -10,4 +10,5 @@ public interface IProjectRepository {
     Project add(Project project);
 
     void clear();
+
 }

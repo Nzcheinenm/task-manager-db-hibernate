@@ -6,7 +6,7 @@ import ru.t1.dkononov.tm.model.Project;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProjectRepository implements IProjectRepository {
+public final class ProjectRepository implements IProjectRepository {
 
     private List<Project> projects = new ArrayList<>();
 

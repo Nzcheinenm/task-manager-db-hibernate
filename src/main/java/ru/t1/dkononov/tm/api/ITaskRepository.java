@@ -10,4 +10,5 @@ public interface ITaskRepository {
     Task add(Task task);
 
     void clear();
+
 }

@@ -53,8 +53,8 @@ public class CommandRepository implements ICommandRepository {
     );
 
     private static final Command[] COMMANDS = new Command[]{
-            TASK_ADD,TASK_LIST,TASK_CLEAR,
-            PROJECT_ADD,PROJECT_CLEAR,PROJECT_LIST,
+            TASK_ADD, TASK_LIST, TASK_CLEAR,
+            PROJECT_ADD, PROJECT_CLEAR, PROJECT_LIST,
             ABOUT, VERSION, HELP, EXIT, INFO
     };
 
