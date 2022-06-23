@@ -7,9 +7,9 @@ import java.util.List;
 public interface ITaskService {
     List<Task> findAll();
 
-    Task create(String name, String description);
+    Task create(final String name,final String description);
 
-    Task add(Task project);
+    Task add(final Task project);
 
     void clear();
 

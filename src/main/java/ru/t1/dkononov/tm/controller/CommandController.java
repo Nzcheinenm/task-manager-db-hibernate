@@ -34,7 +34,7 @@ public final class CommandController implements ICommandController {
     @Override
     public void showHelp() {
         System.out.println("[HELP]");
-        for (Command command : commandService.getCommands()) {
+        for (final Command command : commandService.getCommands()) {
             System.out.println(command.toString());
         }
     }

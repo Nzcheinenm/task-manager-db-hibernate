@@ -8,11 +8,11 @@ import ru.t1.dkononov.tm.util.TerminalUtil;
 
 import java.util.List;
 
-public class ProjectController implements IProjectController {
+public final class ProjectController implements IProjectController {
 
-    private IProjectService projectService;
+    private final IProjectService projectService;
 
-    public ProjectController(IProjectService projectService) {
+    public ProjectController(final IProjectService projectService) {
         this.projectService = projectService;
     }
 
@@ -21,7 +21,7 @@ public class ProjectController implements IProjectController {
         System.out.println("[SHOW PROJECTS]");
         int index = 0;
         final List<Project> projects = projectService.findAll();
-        for (Project project : projects) {
+        for (final Project project : projects) {
             index++;
             System.out.println(index + ". " + project.getName());
         }
@@ -32,9 +32,9 @@ public class ProjectController implements IProjectController {
     public void addProject() {
         System.out.println("[CREATE NEW PROJECT]");
         System.out.println("ENTER NAME:");
-        String name = TerminalUtil.inLine();
+        final String name = TerminalUtil.inLine();
         System.out.println("ENTER DESCRIPTION:");
-        String description = TerminalUtil.inLine();
+        final String description = TerminalUtil.inLine();
         final Project project = projectService.create(name, description);
         if (project == null) {
             System.out.println("[FAIL]");

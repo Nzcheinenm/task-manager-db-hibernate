@@ -20,7 +20,7 @@ public final class TaskController implements ITaskController {
         System.out.println("[SHOW TASKS]");
         int index = 0;
         final List<Task> tasks = taskService.findAll();
-        for (Task task : tasks) {
+        for (final Task task : tasks) {
             index++;
             System.out.println(index + ". " + task.getName());
         }
@@ -31,9 +31,9 @@ public final class TaskController implements ITaskController {
     public void addTask() {
         System.out.println("[CREATE NEW TASK]");
         System.out.println("ENTER NAME:");
-        String name = TerminalUtil.inLine();
+        final String name = TerminalUtil.inLine();
         System.out.println("ENTER DESCRIPTION:");
-        String description = TerminalUtil.inLine();
+        final String description = TerminalUtil.inLine();
         final Task task = taskService.create(name, description);
         if (task == null) {
             System.out.println("[FAIL]");

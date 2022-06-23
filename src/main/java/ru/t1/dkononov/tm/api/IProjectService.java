@@ -7,9 +7,9 @@ import java.util.List;
 public interface IProjectService {
     List<Project> findAll();
 
-    Project create(String name, String description);
+    Project create(final String name,final String description);
 
-    Project add(Project project);
+    Project add(final Project project);
 
     void clear();
 

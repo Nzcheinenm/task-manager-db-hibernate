@@ -7,7 +7,7 @@ import java.util.List;
 public interface IProjectRepository {
     List<Project> findAll();
 
-    Project add(Project project);
+    Project add(final Project project);
 
     void clear();
 

@@ -7,7 +7,7 @@ import java.util.List;
 public interface ITaskRepository {
     List<Task> findAll();
 
-    Task add(Task task);
+    Task add(final Task task);
 
     void clear();
 

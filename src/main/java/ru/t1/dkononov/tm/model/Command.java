@@ -11,7 +11,7 @@ public class Command {
     public Command() {
     }
 
-    public Command(String name, String argument, String description) {
+    public Command(final String name,final String argument,final String description) {
         this.name = name;
         this.argument = argument;
         this.description = description;
@@ -29,15 +29,15 @@ public class Command {
         return this.name;
     }
 
-    private void setArgument(String argument) {
+    private void setArgument(final String argument) {
         this.argument = argument;
     }
 
-    private void setName(String name) {
+    private void setName(final String name) {
         this.name = name;
     }
 
-    private void setDescription(String description) {
+    private void setDescription(final String description) {
         this.description = description;
     }
 
