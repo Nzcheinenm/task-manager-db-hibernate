@@ -8,7 +8,7 @@ import java.util.List;
 
 public final class ProjectRepository implements IProjectRepository {
 
-    private List<Project> projects = new ArrayList<>();
+    private final List<Project> projects = new ArrayList<>();
 
     @Override
     public List<Project> findAll() {

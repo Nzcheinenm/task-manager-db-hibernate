@@ -25,7 +25,7 @@ public final class TaskService implements ITaskService {
     public Task create(final String name, final String description) {
         if (name == null) return null;
         if (description == null) return null;
-        Task task = new Task();
+        final Task task = new Task();
         task.setName(name);
         task.setDescription(description);
         add(task);

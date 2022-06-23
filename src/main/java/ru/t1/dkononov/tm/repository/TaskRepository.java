@@ -8,7 +8,7 @@ import java.util.List;
 
 public final class TaskRepository implements ITaskRepository {
 
-    private List<Task> tasks = new ArrayList<>();
+    private final List<Task> tasks = new ArrayList<>();
 
     @Override
     public List<Task> findAll() {
