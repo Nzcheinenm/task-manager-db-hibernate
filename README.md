@@ -29,3 +29,9 @@
 ```bash
 java -jar ./task-manager.jar
 ```
+
+## BUILD
+
+```bash
+mvn clean install
+```
