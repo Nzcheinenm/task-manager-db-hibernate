@@ -1,7 +1,5 @@
 package ru.t1.dkononov.tm.model;
 
-import ru.t1.dkononov.tm.api.ICommandRepository;
-
 public class Command {
 
     private String name;
@@ -11,7 +9,7 @@ public class Command {
     public Command() {
     }
 
-    public Command(final String name,final String argument,final String description) {
+    public Command(final String name, final String argument, final String description) {
         this.name = name;
         this.argument = argument;
         this.description = description;

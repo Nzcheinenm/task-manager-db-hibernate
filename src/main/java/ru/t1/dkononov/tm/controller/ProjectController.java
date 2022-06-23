@@ -3,7 +3,6 @@ package ru.t1.dkononov.tm.controller;
 import ru.t1.dkononov.tm.api.IProjectController;
 import ru.t1.dkononov.tm.api.IProjectService;
 import ru.t1.dkononov.tm.model.Project;
-import ru.t1.dkononov.tm.service.ProjectService;
 import ru.t1.dkononov.tm.util.TerminalUtil;
 
 import java.util.List;

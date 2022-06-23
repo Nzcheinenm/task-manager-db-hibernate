@@ -4,7 +4,6 @@ package ru.t1.dkononov.tm.service;
 import ru.t1.dkononov.tm.api.ITaskRepository;
 import ru.t1.dkononov.tm.api.ITaskService;
 import ru.t1.dkononov.tm.model.Task;
-import ru.t1.dkononov.tm.repository.TaskRepository;
 
 import java.util.List;
 
