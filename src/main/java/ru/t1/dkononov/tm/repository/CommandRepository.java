@@ -35,6 +35,30 @@ public class CommandRepository implements ICommandRepository {
             CommandConst.PROJECT_LIST, null,
             "Вывести список проектов."
     );
+    private static final Command PROJECT_REMOVE_BY_ID = new Command(
+            CommandConst.PROJECT_REMOVE_BY_ID, null,
+            "Удалить проект по Id."
+    );
+    private static final Command PROJECT_REMOVE_BY_INDEX = new Command(
+            CommandConst.PROJECT_REMOVE_BY_INDEX, null,
+            "Удалить проект по индексу."
+    );
+    private static final Command PROJECT_SHOW_BY_ID = new Command(
+            CommandConst.PROJECT_SHOW_BY_ID, null,
+            "Показать проект по Id."
+    );
+    private static final Command PROJECT_SHOW_BY_INDEX = new Command(
+            CommandConst.PROJECT_SHOW_BY_INDEX, null,
+            "Показать проект по индексу."
+    );
+    private static final Command PROJECT_UPDATE_BY_ID = new Command(
+            CommandConst.PROJECT_UPDATE_BY_ID, null,
+            "Обновить проект по Id."
+    );
+    private static final Command PROJECT_UPDATE_BY_INDEX = new Command(
+            CommandConst.PROJECT_UPDATE_BY_INDEX, null,
+            "Обновить проект по индексу."
+    );
     private static final Command TASK_ADD = new Command(
             CommandConst.TASK_ADD, null,
             "Создать новую задачу."
@@ -47,6 +71,30 @@ public class CommandRepository implements ICommandRepository {
             CommandConst.TASK_LIST, null,
             "Вывести список задач."
     );
+    private static final Command TASK_REMOVE_BY_ID = new Command(
+            CommandConst.TASK_REMOVE_BY_ID, null,
+            "Удалить задачу по Id."
+    );
+    private static final Command TASK_REMOVE_BY_INDEX = new Command(
+            CommandConst.TASK_REMOVE_BY_INDEX, null,
+            "Удалить задачу по индексу."
+    );
+    private static final Command TASK_SHOW_BY_ID = new Command(
+            CommandConst.TASK_SHOW_BY_ID, null,
+            "Показать задачу по Id."
+    );
+    private static final Command TASK_SHOW_BY_INDEX = new Command(
+            CommandConst.TASK_SHOW_BY_INDEX, null,
+            "Показать задачу по индексу."
+    );
+    private static final Command TASK_UPDATE_BY_ID = new Command(
+            CommandConst.TASK_UPDATE_BY_ID, null,
+            "Обновить задачу по Id."
+    );
+    private static final Command TASK_UPDATE_BY_INDEX = new Command(
+            CommandConst.TASK_UPDATE_BY_INDEX, null,
+            "Обновить задачу по индексу."
+    );
     private static final Command INFO = new Command(
             CommandConst.INFO, ArgumentConst.INFO,
             "Показать информацию о системе"
@@ -54,7 +102,15 @@ public class CommandRepository implements ICommandRepository {
 
     private static final Command[] COMMANDS = new Command[]{
             TASK_ADD, TASK_LIST, TASK_CLEAR,
+            TASK_REMOVE_BY_ID, TASK_REMOVE_BY_INDEX,
+            TASK_SHOW_BY_ID, TASK_SHOW_BY_INDEX,
+            TASK_UPDATE_BY_ID, TASK_UPDATE_BY_INDEX,
+
             PROJECT_ADD, PROJECT_CLEAR, PROJECT_LIST,
+            PROJECT_REMOVE_BY_ID, PROJECT_REMOVE_BY_INDEX,
+            PROJECT_SHOW_BY_ID, PROJECT_SHOW_BY_INDEX,
+            PROJECT_UPDATE_BY_ID, PROJECT_UPDATE_BY_INDEX,
+
             ABOUT, VERSION, HELP, EXIT, INFO
     };
 

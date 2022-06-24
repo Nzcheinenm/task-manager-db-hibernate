@@ -3,6 +3,7 @@ package ru.t1.dkononov.tm.service;
 
 import ru.t1.dkononov.tm.api.ITaskRepository;
 import ru.t1.dkononov.tm.api.ITaskService;
+import ru.t1.dkononov.tm.model.Project;
 import ru.t1.dkononov.tm.model.Task;
 
 import java.util.List;
@@ -21,17 +22,6 @@ public final class TaskService implements ITaskService {
     }
 
     @Override
-    public Task create(final String name, final String description) {
-        if (name == null) return null;
-        if (description == null) return null;
-        final Task task = new Task();
-        task.setName(name);
-        task.setDescription(description);
-        add(task);
-        return task;
-    }
-
-    @Override
     public Task add(final Task project) {
         if (project == null) return null;
         return taskRepository.add(project);
@@ -40,6 +30,76 @@ public final class TaskService implements ITaskService {
     @Override
     public void clear() {
         taskRepository.clear();
+    }
+
+    @Override
+    public Task create(final String name, final String description) {
+        if (name == null || name.isEmpty()) return null;
+        if (description == null && description.isEmpty()) return null;
+        return taskRepository.create(name, description);
+    }
+
+    @Override
+    public Task create(final String name) {
+        if (name == null || name.isEmpty()) return null;
+        return taskRepository.create(name);
+    }
+
+    @Override
+    public Task findById(final String id) {
+        if (id == null || id.isEmpty()) return null;
+        return taskRepository.findById(id);
+    }
+
+    @Override
+    public Task findByIndex(final Integer index) {
+        if (index == null || index < 0) return null;
+        return taskRepository.findByIndex(index);
+    }
+
+    @Override
+    public void remove(final Task task) {
+        taskRepository.remove(task);
+    }
+
+    @Override
+    public Task removeById(final String id) {
+        if (id == null || id.isEmpty()) return null;
+        final Task task = taskRepository.findById(id);
+        remove(task);
+        return task;
+    }
+
+    @Override
+    public Task removeByIndex(final Integer index) {
+        if (index == null || index < 0) return null;
+        final Task task = taskRepository.findByIndex(index);
+        taskRepository.remove(task);
+        return task;
+    }
+
+    @Override
+    public Task updateById(final String id, final String name, final String description) {
+        if (id == null || id.isEmpty()) return null;
+        if (name == null || name.isEmpty()) return null;
+        if (description == null || description.isEmpty()) return null;
+        final Task task = taskRepository.findById(id);
+        if (task == null) return null;
+        task.setName(name);
+        task.setDescription(description);
+        return task;
+    }
+
+    @Override
+    public Task updateByIndex(final Integer index, final String name, final String description) {
+        if (index == null || index < 0) return null;
+        if (name == null || name.isEmpty()) return null;
+        if (description == null || description.isEmpty()) return null;
+        final Task task = taskRepository.findByIndex(index);
+        if (task == null) return null;
+        task.setName(name);
+        task.setDescription(description);
+        return task;
     }
 
 }
