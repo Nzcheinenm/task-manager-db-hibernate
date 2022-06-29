@@ -1,6 +1,6 @@
 package ru.t1.dkononov.tm.repository;
 
-import ru.t1.dkononov.tm.api.IProjectRepository;
+import ru.t1.dkononov.tm.api.repository.IProjectRepository;
 import ru.t1.dkononov.tm.model.Project;
 
 import java.util.ArrayList;

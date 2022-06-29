@@ -1,6 +1,6 @@
 package ru.t1.dkononov.tm.repository;
 
-import ru.t1.dkononov.tm.api.ICommandRepository;
+import ru.t1.dkononov.tm.api.repository.ICommandRepository;
 import ru.t1.dkononov.tm.constant.ArgumentConst;
 import ru.t1.dkononov.tm.constant.CommandConst;
 import ru.t1.dkononov.tm.model.Command;
@@ -59,6 +59,31 @@ public class CommandRepository implements ICommandRepository {
             CommandConst.PROJECT_UPDATE_BY_INDEX, null,
             "Обновить проект по индексу."
     );
+
+    private static final Command PROJECT_CHANGE_STATUS_BY_ID = new Command(
+            CommandConst.PROJECT_CHANGE_STATUS_BY_ID, null,
+            "Поменять статус у проекта по Id."
+    );
+    private static final Command PROJECT_CHANGE_STATUS_BY_INDEX = new Command(
+            CommandConst.PROJECT_CHANGE_STATUS_BY_INDEX, null,
+            "Поменять статус у проекта по индексу."
+    );
+    private static final Command PROJECT_COMPLETE_BY_ID = new Command(
+            CommandConst.PROJECT_COMPLETE_BY_ID, null,
+            "Завершить проект по Id."
+    );
+    private static final Command PROJECT_COMPLETE_BY_INDEX = new Command(
+            CommandConst.PROJECT_COMPLETE_BY_INDEX, null,
+            "Завершить проект по индексу."
+    );
+    private static final Command PROJECT_START_BY_ID = new Command(
+            CommandConst.PROJECT_START_BY_ID, null,
+            "Начать проект по Id."
+    );
+    private static final Command PROJECT_START_BY_INDEX = new Command(
+            CommandConst.PROJECT_START_BY_INDEX, null,
+            "Начать проект по индексу."
+    );
     private static final Command TASK_ADD = new Command(
             CommandConst.TASK_ADD, null,
             "Создать новую задачу."
@@ -95,6 +120,31 @@ public class CommandRepository implements ICommandRepository {
             CommandConst.TASK_UPDATE_BY_INDEX, null,
             "Обновить задачу по индексу."
     );
+
+    private static final Command TASK_CHANGE_STATUS_BY_ID = new Command(
+            CommandConst.TASK_CHANGE_STATUS_BY_ID, null,
+            "Поменять статус задачи по Id."
+    );
+    private static final Command TASK_CHANGE_STATUS_BY_INDEX = new Command(
+            CommandConst.TASK_CHANGE_STATUS_BY_INDEX, null,
+            "Поменять статус задачи по индексу."
+    );
+    private static final Command TASK_COMPLETE_BY_ID = new Command(
+            CommandConst.TASK_COMPLETE_BY_ID, null,
+            "Завершить задачу по Id."
+    );
+    private static final Command TASK_COMPLETE_BY_INDEX = new Command(
+            CommandConst.TASK_COMPLETE_BY_INDEX, null,
+            "Завершить задачу по индексу."
+    );
+    private static final Command TASK_START_BY_ID = new Command(
+            CommandConst.TASK_START_BY_ID, null,
+            "Начать задачу по Id."
+    );
+    private static final Command TASK_START_BY_INDEX = new Command(
+            CommandConst.TASK_START_BY_INDEX, null,
+            "Начать задачу по индексу."
+    );
     private static final Command INFO = new Command(
             CommandConst.INFO, ArgumentConst.INFO,
             "Показать информацию о системе"
@@ -105,11 +155,17 @@ public class CommandRepository implements ICommandRepository {
             TASK_REMOVE_BY_ID, TASK_REMOVE_BY_INDEX,
             TASK_SHOW_BY_ID, TASK_SHOW_BY_INDEX,
             TASK_UPDATE_BY_ID, TASK_UPDATE_BY_INDEX,
+            TASK_CHANGE_STATUS_BY_ID,TASK_CHANGE_STATUS_BY_INDEX,
+            TASK_COMPLETE_BY_ID,TASK_COMPLETE_BY_INDEX,
+            TASK_START_BY_ID,TASK_START_BY_INDEX,
 
             PROJECT_ADD, PROJECT_CLEAR, PROJECT_LIST,
             PROJECT_REMOVE_BY_ID, PROJECT_REMOVE_BY_INDEX,
             PROJECT_SHOW_BY_ID, PROJECT_SHOW_BY_INDEX,
             PROJECT_UPDATE_BY_ID, PROJECT_UPDATE_BY_INDEX,
+            PROJECT_CHANGE_STATUS_BY_ID,PROJECT_CHANGE_STATUS_BY_INDEX,
+            PROJECT_COMPLETE_BY_ID,PROJECT_COMPLETE_BY_INDEX,
+            PROJECT_START_BY_ID,PROJECT_START_BY_INDEX,
 
             ABOUT, VERSION, HELP, EXIT, INFO
     };

@@ -1,5 +1,7 @@
-package ru.t1.dkononov.tm.api;
+package ru.t1.dkononov.tm.api.services;
 
+import ru.t1.dkononov.tm.enumerated.Status;
+import ru.t1.dkononov.tm.model.Project;
 import ru.t1.dkononov.tm.model.Task;
 
 import java.util.List;
@@ -28,5 +30,9 @@ public interface ITaskService {
     Task updateById(final String id, final String name, final String description);
 
     Task updateByIndex(final Integer index, final String name, final String description);
+
+    Task changeTaskStatusById(String id, Status status);
+
+    Task changeTaskStatusByIndex(Integer index, Status status);
 
 }

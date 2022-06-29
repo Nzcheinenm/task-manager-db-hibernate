@@ -1,11 +1,11 @@
 package ru.t1.dkononov.tm.service;
 
-import ru.t1.dkononov.tm.api.IProjectRepository;
-import ru.t1.dkononov.tm.api.IProjectService;
+import ru.t1.dkononov.tm.api.repository.IProjectRepository;
+import ru.t1.dkononov.tm.api.services.IProjectService;
+import ru.t1.dkononov.tm.enumerated.Status;
 import ru.t1.dkononov.tm.model.Project;
 
 import java.util.List;
-import java.util.Objects;
 
 public final class ProjectService implements IProjectService {
 
@@ -98,6 +98,24 @@ public final class ProjectService implements IProjectService {
         if (project == null) return null;
         project.setName(name);
         project.setDescription(description);
+        return project;
+    }
+
+    @Override
+    public Project changeProjectStatusById(final String id, final Status status) {
+        if (id == null || id.isEmpty()) return null;
+        final Project project = findById(id);
+        if(project == null) return null;
+        project.setStatus(status);
+        return project;
+    }
+
+    @Override
+    public Project changeProjectStatusByIndex(final Integer index, final Status status) {
+        if (index == null || index < 0) return null;
+        final Project project = findByIndex(index);
+        if(project == null) return null;
+        project.setStatus(status);
         return project;
     }
 

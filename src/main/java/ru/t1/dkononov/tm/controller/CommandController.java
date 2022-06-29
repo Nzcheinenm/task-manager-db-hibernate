@@ -1,7 +1,7 @@
 package ru.t1.dkononov.tm.controller;
 
-import ru.t1.dkononov.tm.api.ICommandController;
-import ru.t1.dkononov.tm.api.ICommandService;
+import ru.t1.dkononov.tm.api.controllers.ICommandController;
+import ru.t1.dkononov.tm.api.services.ICommandService;
 import ru.t1.dkononov.tm.model.Command;
 import ru.t1.dkononov.tm.util.FormatUtil;
 
@@ -42,7 +42,7 @@ public final class CommandController implements ICommandController {
     @Override
     public void showVersion() {
         System.out.println("[VERSION]");
-        System.out.println("1.11.0");
+        System.out.println("1.12.0");
     }
 
     @Override

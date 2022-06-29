@@ -1,8 +1,9 @@
 package ru.t1.dkononov.tm.service;
 
 
-import ru.t1.dkononov.tm.api.ITaskRepository;
-import ru.t1.dkononov.tm.api.ITaskService;
+import ru.t1.dkononov.tm.api.repository.ITaskRepository;
+import ru.t1.dkononov.tm.api.services.ITaskService;
+import ru.t1.dkononov.tm.enumerated.Status;
 import ru.t1.dkononov.tm.model.Project;
 import ru.t1.dkononov.tm.model.Task;
 
@@ -99,6 +100,24 @@ public final class TaskService implements ITaskService {
         if (task == null) return null;
         task.setName(name);
         task.setDescription(description);
+        return task;
+    }
+
+    @Override
+    public Task changeTaskStatusById(final String id,final Status status) {
+        if (id == null || id.isEmpty()) return null;
+        final Task task = findById(id);
+        if(task == null) return null;
+        task.setStatus(status);
+        return task;
+    }
+
+    @Override
+    public Task changeTaskStatusByIndex(final Integer index,final Status status) {
+        if (index == null || index < 0) return null;
+        final Task task = findByIndex(index);
+        if(task == null) return null;
+        task.setStatus(status);
         return task;
     }
 

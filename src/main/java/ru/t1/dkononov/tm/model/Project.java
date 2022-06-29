@@ -1,5 +1,7 @@
 package ru.t1.dkononov.tm.model;
 
+import ru.t1.dkononov.tm.enumerated.Status;
+
 import java.util.UUID;
 
 public final class Project {
@@ -7,6 +9,8 @@ public final class Project {
     private String id = UUID.randomUUID().toString();
 
     private String name = "";
+
+    private Status status = Status.NOT_STARTED;
 
     private String description = "";
 
@@ -34,4 +38,11 @@ public final class Project {
         this.description = description;
     }
 
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
 }

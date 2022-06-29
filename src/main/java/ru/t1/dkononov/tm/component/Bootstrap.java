@@ -1,10 +1,17 @@
 package ru.t1.dkononov.tm.component;
 
-import ru.t1.dkononov.tm.api.*;
+import ru.t1.dkononov.tm.api.controllers.ICommandController;
+import ru.t1.dkononov.tm.api.controllers.IProjectController;
+import ru.t1.dkononov.tm.api.repository.ICommandRepository;
+import ru.t1.dkononov.tm.api.repository.IProjectRepository;
+import ru.t1.dkononov.tm.api.repository.ITaskRepository;
+import ru.t1.dkononov.tm.api.services.ICommandService;
+import ru.t1.dkononov.tm.api.services.IProjectService;
+import ru.t1.dkononov.tm.api.services.ITaskService;
 import ru.t1.dkononov.tm.constant.ArgumentConst;
 import ru.t1.dkononov.tm.constant.CommandConst;
 import ru.t1.dkononov.tm.controller.CommandController;
-import ru.t1.dkononov.tm.api.ITaskController;
+import ru.t1.dkononov.tm.api.controllers.ITaskController;
 import ru.t1.dkononov.tm.controller.ProjectController;
 import ru.t1.dkononov.tm.controller.TaskController;
 import ru.t1.dkononov.tm.repository.CommandRepository;
@@ -122,6 +129,25 @@ public class Bootstrap {
             case CommandConst.PROJECT_UPDATE_BY_INDEX:
                 projectController.updateProjectByIndex();
                 break;
+            case CommandConst.PROJECT_CHANGE_STATUS_BY_ID:
+                projectController.changeProjectStatusById();
+                break;
+            case CommandConst.PROJECT_CHANGE_STATUS_BY_INDEX:
+                projectController.changeProjectStatusByIndex();
+                break;
+            case CommandConst.PROJECT_COMPLETE_BY_ID:
+                projectController.completeProjectById();
+                break;
+            case CommandConst.PROJECT_COMPLETE_BY_INDEX:
+                projectController.completeProjectByIndex();
+                break;
+            case CommandConst.PROJECT_START_BY_ID:
+                projectController.startProjectById();
+                break;
+            case CommandConst.PROJECT_START_BY_INDEX:
+                projectController.startProjectByIndex();
+                break;
+
             case CommandConst.TASK_ADD:
                 taskController.addTask();
                 break;
@@ -149,6 +175,25 @@ public class Bootstrap {
             case CommandConst.TASK_UPDATE_BY_INDEX:
                 taskController.updateTaskByIndex();
                 break;
+            case CommandConst.TASK_CHANGE_STATUS_BY_ID:
+                taskController.changeTaskStatusById();
+                break;
+            case CommandConst.TASK_CHANGE_STATUS_BY_INDEX:
+                taskController.changeTaskStatusByIndex();
+                break;
+            case CommandConst.TASK_COMPLETE_BY_ID:
+                taskController.completeTaskById();
+                break;
+            case CommandConst.TASK_COMPLETE_BY_INDEX:
+                taskController.completeTaskByIndex();
+                break;
+            case CommandConst.TASK_START_BY_ID:
+                taskController.startTaskById();
+                break;
+            case CommandConst.TASK_START_BY_INDEX:
+                taskController.startTaskByIndex();
+                break;
+
             default:
                 commandController.showErrorCommand();
                 break;
