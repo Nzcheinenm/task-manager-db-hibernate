@@ -9,6 +9,8 @@ import java.util.List;
 public interface ITaskService {
     List<Task> findAll();
 
+    List<Task> findAllByProjectId(String projectId);
+
     Task add(final Task project);
 
     void clear();

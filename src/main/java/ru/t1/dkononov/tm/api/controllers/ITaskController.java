@@ -2,6 +2,8 @@ package ru.t1.dkononov.tm.api.controllers;
 
 import ru.t1.dkononov.tm.model.Task;
 
+import java.util.List;
+
 public interface ITaskController {
     void showTasks();
 
@@ -12,6 +14,8 @@ public interface ITaskController {
     void showTaskById();
 
     void showTaskByIndex();
+
+    void showTaskByProjectId();
 
     void removeTaskById();
 
@@ -34,5 +38,7 @@ public interface ITaskController {
     void startTaskByIndex();
 
     String show(final Task task);
+
+    void showTasks(final List<Task> task);
 
 }

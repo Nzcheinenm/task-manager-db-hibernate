@@ -23,10 +23,7 @@ public final class TaskController implements ITaskController {
         System.out.println("[SHOW TASKS]");
         int index = 0;
         final List<Task> tasks = taskService.findAll();
-        for (final Task task : tasks) {
-            index++;
-            System.out.println(index + ". " + task.getName());
-        }
+        showTasks(tasks);
         System.out.println("[OK]");
     }
 
@@ -77,6 +74,16 @@ public final class TaskController implements ITaskController {
             return;
         }
         System.out.println(show(task));
+        System.out.println("[OK]");
+    }
+
+    @Override
+    public void showTaskByProjectId() {
+        System.out.println("[TASK LIST BY PROJECT ID]");
+        System.out.println("[ENTER PROJECT ID:]");
+        final String projectId = TerminalUtil.inLine();
+        final List<Task> tasks = taskService.findAllByProjectId(projectId);
+        showTasks(tasks);
         System.out.println("[OK]");
     }
 
@@ -212,6 +219,16 @@ public final class TaskController implements ITaskController {
                 "[NAME: " + task.getName() + "]\n" +
                 "[DESC: " + task.getDescription() + "]\n" +
                 "[STATUS: " + task.getStatus() + "]";
+    }
+
+    @Override
+    public void showTasks(List<Task> tasks) {
+        int index = 1;
+        for (Task task : tasks) {
+            if (task == null) continue;
+            System.out.println(index + ". " + show(task));
+            index++;
+        }
     }
 
 }

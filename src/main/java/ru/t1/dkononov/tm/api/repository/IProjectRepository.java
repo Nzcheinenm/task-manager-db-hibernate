@@ -12,6 +12,8 @@ public interface IProjectRepository {
 
     void clear();
 
+    boolean existsById(String id);
+
     Project create(final String name);
 
     Project create(final String name, final String description);

@@ -6,6 +6,7 @@ import ru.t1.dkononov.tm.model.Task;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public final class TaskRepository implements ITaskRepository {
 
@@ -78,6 +79,13 @@ public final class TaskRepository implements ITaskRepository {
         if (task == null) return null;
         remove(task);
         return task;
+    }
+
+    @Override
+    public List<Task> findAllByProjectId(final String projectId) {
+        return tasks.stream()
+                .filter(x -> Objects.equals(x.getProjectId(), projectId))
+                .collect(Collectors.toList());
     }
 
 }

@@ -2,6 +2,7 @@ package ru.t1.dkononov.tm.controller;
 
 import ru.t1.dkononov.tm.api.controllers.IProjectController;
 import ru.t1.dkononov.tm.api.services.IProjectService;
+import ru.t1.dkononov.tm.api.services.IProjectTaskService;
 import ru.t1.dkononov.tm.enumerated.Status;
 import ru.t1.dkononov.tm.model.Project;
 import ru.t1.dkononov.tm.util.TerminalUtil;
@@ -13,8 +14,11 @@ public final class ProjectController implements IProjectController {
 
     private final IProjectService projectService;
 
-    public ProjectController(final IProjectService projectService) {
+    private final IProjectTaskService projectTaskService;
+
+    public ProjectController(final IProjectService projectService,final IProjectTaskService projectTaskService) {
         this.projectService = projectService;
+        this.projectTaskService = projectTaskService;
     }
 
     @Override
@@ -87,6 +91,7 @@ public final class ProjectController implements IProjectController {
             System.out.println("[FAIL]");
             return;
         }
+        projectTaskService.removeProjectById(project.getId());
         System.out.println("[OK]");
     }
 
@@ -99,6 +104,7 @@ public final class ProjectController implements IProjectController {
             System.out.println("[FAIL]");
             return;
         }
+        projectTaskService.removeProjectById(project.getId());
         System.out.println("[OK]");
     }
 

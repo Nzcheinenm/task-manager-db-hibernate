@@ -14,6 +14,24 @@ public final class Task {
 
     private Status status = Status.NOT_STARTED;
 
+    private String projectId;
+
+    public Task() {
+    }
+
+    public Task(String name, Status status) {
+        this.name = name;
+        this.status = status;
+    }
+
+    public String getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(String projectId) {
+        this.projectId = projectId;
+    }
+
     public String getId() {
         return id;
     }

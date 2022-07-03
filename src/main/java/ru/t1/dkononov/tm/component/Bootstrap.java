@@ -2,23 +2,30 @@ package ru.t1.dkononov.tm.component;
 
 import ru.t1.dkononov.tm.api.controllers.ICommandController;
 import ru.t1.dkononov.tm.api.controllers.IProjectController;
+import ru.t1.dkononov.tm.api.controllers.IProjectTaskController;
 import ru.t1.dkononov.tm.api.repository.ICommandRepository;
 import ru.t1.dkononov.tm.api.repository.IProjectRepository;
 import ru.t1.dkononov.tm.api.repository.ITaskRepository;
 import ru.t1.dkononov.tm.api.services.ICommandService;
 import ru.t1.dkononov.tm.api.services.IProjectService;
+import ru.t1.dkononov.tm.api.services.IProjectTaskService;
 import ru.t1.dkononov.tm.api.services.ITaskService;
 import ru.t1.dkononov.tm.constant.ArgumentConst;
 import ru.t1.dkononov.tm.constant.CommandConst;
 import ru.t1.dkononov.tm.controller.CommandController;
 import ru.t1.dkononov.tm.api.controllers.ITaskController;
 import ru.t1.dkononov.tm.controller.ProjectController;
+import ru.t1.dkononov.tm.controller.ProjectTaskController;
 import ru.t1.dkononov.tm.controller.TaskController;
+import ru.t1.dkononov.tm.enumerated.Status;
+import ru.t1.dkononov.tm.model.Project;
+import ru.t1.dkononov.tm.model.Task;
 import ru.t1.dkononov.tm.repository.CommandRepository;
 import ru.t1.dkononov.tm.repository.ProjectRepository;
 import ru.t1.dkononov.tm.repository.TaskRepository;
 import ru.t1.dkononov.tm.service.CommandService;
 import ru.t1.dkononov.tm.service.ProjectService;
+import ru.t1.dkononov.tm.service.ProjectTaskService;
 import ru.t1.dkononov.tm.service.TaskService;
 import ru.t1.dkononov.tm.util.TerminalUtil;
 
@@ -34,15 +41,21 @@ public class Bootstrap {
 
     private final IProjectService projectService = new ProjectService(projectRepository);
 
-    private final IProjectController projectController = new ProjectController(projectService);
-
     private final ITaskRepository taskRepository = new TaskRepository();
 
     private final ITaskService taskService = new TaskService(taskRepository);
 
+    private final IProjectTaskService projectTaskService = new ProjectTaskService(projectRepository,taskRepository);
+
+    private final IProjectController projectController = new ProjectController(projectService, projectTaskService);
+
+
+    private final IProjectTaskController projectTaskController = new ProjectTaskController(projectTaskService);
+
     private final ITaskController taskController = new TaskController(taskService);
 
     public void run(final String[] args) {
+        initData();
         processArguments(args);
         processCommands();
     }
@@ -51,6 +64,16 @@ public class Bootstrap {
         if (args == null || args.length == 0) return;
         final String argument = args[0];
         processArgument(argument);
+    }
+
+    private void initData() {
+        projectService.add(new Project("Jira", Status.NOT_STARTED));
+        projectService.add(new Project("Confluence", Status.IN_PROGRESS));
+        projectService.add(new Project("SoapUI", Status.IN_PROGRESS));
+
+        taskService.add(new Task("Work",Status.IN_PROGRESS));
+        taskService.add(new Task("Homework",Status.NOT_STARTED));
+
     }
 
     private void processCommands() {
@@ -192,6 +215,15 @@ public class Bootstrap {
                 break;
             case CommandConst.TASK_START_BY_INDEX:
                 taskController.startTaskByIndex();
+                break;
+            case CommandConst.TASK_UNBIND_FROM_PROJECT:
+                projectTaskController.unbindTaskFromProject();
+                break;
+            case CommandConst.TASK_SHOW_BY_PROJECT_ID:
+                taskController.showTaskByProjectId();
+                break;
+            case CommandConst.TASK_BIND_TO_PROJECT:
+                projectTaskController.bindTaskToProject();
                 break;
 
             default:

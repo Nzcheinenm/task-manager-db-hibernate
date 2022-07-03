@@ -150,6 +150,19 @@ public class CommandRepository implements ICommandRepository {
             "Показать информацию о системе"
     );
 
+    private static final Command TASK_BIND_TO_PROJECT = new Command(
+            CommandConst.TASK_BIND_TO_PROJECT, null,
+            "Привязать задачу к проекту."
+    );
+    private static final Command TASK_SHOW_BY_PROJECT_ID = new Command(
+            CommandConst.TASK_SHOW_BY_PROJECT_ID, null,
+            "Вывести задачи с нужным Project Id."
+    );
+    private static final Command TASK_UNBIND_FROM_PROJECT = new Command(
+            CommandConst.TASK_UNBIND_FROM_PROJECT, null,
+            "Отвязать задачу от Проекта"
+    );
+
     private static final Command[] COMMANDS = new Command[]{
             TASK_ADD, TASK_LIST, TASK_CLEAR,
             TASK_REMOVE_BY_ID, TASK_REMOVE_BY_INDEX,
@@ -158,6 +171,9 @@ public class CommandRepository implements ICommandRepository {
             TASK_CHANGE_STATUS_BY_ID,TASK_CHANGE_STATUS_BY_INDEX,
             TASK_COMPLETE_BY_ID,TASK_COMPLETE_BY_INDEX,
             TASK_START_BY_ID,TASK_START_BY_INDEX,
+
+            TASK_BIND_TO_PROJECT,TASK_SHOW_BY_PROJECT_ID,
+            TASK_UNBIND_FROM_PROJECT,
 
             PROJECT_ADD, PROJECT_CLEAR, PROJECT_LIST,
             PROJECT_REMOVE_BY_ID, PROJECT_REMOVE_BY_INDEX,

@@ -26,4 +26,5 @@ public interface ITaskRepository {
 
     Task removeByIndex(final Integer index);
 
+    List<Task> findAllByProjectId(String projectId);
 }

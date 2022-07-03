@@ -42,4 +42,8 @@ public final class CommandConst {
     public static final String TASK_CHANGE_STATUS_BY_ID = "task-change-status-by-id";
     public static final String TASK_CHANGE_STATUS_BY_INDEX = "task-change-status-by-index";
 
+    public static final String TASK_BIND_TO_PROJECT = "task-bind-to-project";
+    public static final String TASK_UNBIND_FROM_PROJECT = "task-unbind-from-project";
+    public static final String TASK_SHOW_BY_PROJECT_ID = "task-show-by-project-id";
+
 }

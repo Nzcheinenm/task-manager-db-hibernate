@@ -28,6 +28,11 @@ public final class ProjectRepository implements IProjectRepository {
     }
 
     @Override
+    public boolean existsById(final String id) {
+        return findById(id) != null;
+    }
+
+    @Override
     public Project create(final String name) {
         final Project project = new Project();
         project.setName(name);

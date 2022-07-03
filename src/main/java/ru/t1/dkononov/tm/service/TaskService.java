@@ -7,6 +7,7 @@ import ru.t1.dkononov.tm.enumerated.Status;
 import ru.t1.dkononov.tm.model.Project;
 import ru.t1.dkononov.tm.model.Task;
 
+import java.util.Collections;
 import java.util.List;
 
 public final class TaskService implements ITaskService {
@@ -20,6 +21,12 @@ public final class TaskService implements ITaskService {
     @Override
     public List<Task> findAll() {
         return taskRepository.findAll();
+    }
+
+    @Override
+    public List<Task> findAllByProjectId(final String projectId) {
+        if (projectId == null || projectId.isEmpty()) return Collections.emptyList();
+        return taskRepository.findAllByProjectId(projectId);
     }
 
     @Override
