@@ -45,7 +45,7 @@ public class Bootstrap {
 
     private final ITaskService taskService = new TaskService(taskRepository);
 
-    private final IProjectTaskService projectTaskService = new ProjectTaskService(projectRepository,taskRepository);
+    private final IProjectTaskService projectTaskService = new ProjectTaskService(projectRepository, taskRepository);
 
     private final IProjectController projectController = new ProjectController(projectService, projectTaskService);
 
@@ -71,8 +71,8 @@ public class Bootstrap {
         projectService.add(new Project("Confluence", Status.IN_PROGRESS));
         projectService.add(new Project("SoapUI", Status.IN_PROGRESS));
 
-        taskService.add(new Task("Work",Status.IN_PROGRESS));
-        taskService.add(new Task("Homework",Status.NOT_STARTED));
+        taskService.add(new Task("Work", Status.IN_PROGRESS));
+        taskService.add(new Task("Homework", Status.NOT_STARTED));
 
     }
 

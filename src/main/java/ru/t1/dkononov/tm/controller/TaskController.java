@@ -2,6 +2,7 @@ package ru.t1.dkononov.tm.controller;
 
 import ru.t1.dkononov.tm.api.controllers.ITaskController;
 import ru.t1.dkononov.tm.api.services.ITaskService;
+import ru.t1.dkononov.tm.enumerated.Sort;
 import ru.t1.dkononov.tm.enumerated.Status;
 import ru.t1.dkononov.tm.model.Project;
 import ru.t1.dkononov.tm.model.Task;
@@ -21,8 +22,11 @@ public final class TaskController implements ITaskController {
     @Override
     public void showTasks() {
         System.out.println("[SHOW TASKS]");
-        int index = 0;
-        final List<Task> tasks = taskService.findAll();
+        System.out.println("[ENTER SORT: ]");
+        System.out.println(Arrays.toString(Sort.values()));
+        final String sortType = TerminalUtil.inLine();
+        final Sort sort = Sort.toSort(sortType);
+        final List<Task> tasks = taskService.findAll(sort);
         showTasks(tasks);
         System.out.println("[OK]");
     }
@@ -120,7 +124,7 @@ public final class TaskController implements ITaskController {
         System.out.println("[ENTER DESCRIPTION]");
         final String description = TerminalUtil.inLine();
         final Task task = taskService.updateById(id, name, description);
-        if (task == null){
+        if (task == null) {
             System.out.println("[FAIL]");
             return;
         }

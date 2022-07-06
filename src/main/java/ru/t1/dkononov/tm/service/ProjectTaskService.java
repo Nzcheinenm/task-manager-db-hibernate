@@ -22,7 +22,7 @@ public class ProjectTaskService implements IProjectTaskService {
     }
 
     @Override
-    public void bindTaskToProject(final String projectId,final String taskId) {
+    public void bindTaskToProject(final String projectId, final String taskId) {
         if (projectId == null || projectId.isEmpty()) return;
         if (taskId == null || taskId.isEmpty()) return;
         if (!projectRepository.existsById(projectId)) return;

@@ -1,10 +1,12 @@
 package ru.t1.dkononov.tm.model;
 
+import ru.t1.dkononov.tm.api.model.IWBS;
 import ru.t1.dkononov.tm.enumerated.Status;
 
+import java.util.Date;
 import java.util.UUID;
 
-public final class Project {
+public final class Project implements IWBS {
 
     private String id = UUID.randomUUID().toString();
 
@@ -14,13 +16,23 @@ public final class Project {
 
     private String description = "";
 
+    private Date created = new Date();
+
     public Project() {
 
     }
 
-    public Project(String name,Status status) {
+    public Project(String name, Status status) {
         this.name = name;
         this.status = status;
+    }
+
+    public Date getCreated() {
+        return created;
+    }
+
+    public void setCreated(final Date created) {
+        this.created = created;
     }
 
     public String getId() {
@@ -51,7 +63,7 @@ public final class Project {
         return status;
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(final Status status) {
         this.status = status;
     }
 }

@@ -2,8 +2,10 @@ package ru.t1.dkononov.tm.repository;
 
 import ru.t1.dkononov.tm.api.repository.IProjectRepository;
 import ru.t1.dkononov.tm.model.Project;
+import ru.t1.dkononov.tm.model.Task;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 
@@ -14,6 +16,13 @@ public final class ProjectRepository implements IProjectRepository {
     @Override
     public List<Project> findAll() {
         return projects;
+    }
+
+    @Override
+    public List<Project> findAll(final Comparator<Project> comparator) {
+        final List<Project> result = new ArrayList<>(projects);
+        result.sort(comparator);
+        return result;
     }
 
     @Override

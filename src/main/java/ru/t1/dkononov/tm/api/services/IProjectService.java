@@ -1,12 +1,19 @@
 package ru.t1.dkononov.tm.api.services;
 
+import ru.t1.dkononov.tm.enumerated.Sort;
 import ru.t1.dkononov.tm.enumerated.Status;
 import ru.t1.dkononov.tm.model.Project;
+import ru.t1.dkononov.tm.model.Task;
 
+import java.util.Comparator;
 import java.util.List;
 
 public interface IProjectService {
     List<Project> findAll();
+
+    List<Project> findAll(Comparator<Project> comparator);
+
+    List<Project> findAll(Sort sort);
 
     Project add(final Project project);
 

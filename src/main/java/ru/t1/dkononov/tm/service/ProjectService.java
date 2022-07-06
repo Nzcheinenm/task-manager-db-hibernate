@@ -2,9 +2,12 @@ package ru.t1.dkononov.tm.service;
 
 import ru.t1.dkononov.tm.api.repository.IProjectRepository;
 import ru.t1.dkononov.tm.api.services.IProjectService;
+import ru.t1.dkononov.tm.enumerated.Sort;
 import ru.t1.dkononov.tm.enumerated.Status;
 import ru.t1.dkononov.tm.model.Project;
+import ru.t1.dkononov.tm.model.Task;
 
+import java.util.Comparator;
 import java.util.List;
 
 public final class ProjectService implements IProjectService {
@@ -18,6 +21,18 @@ public final class ProjectService implements IProjectService {
     @Override
     public List<Project> findAll() {
         return projectRepository.findAll();
+    }
+
+    @Override
+    public List<Project> findAll(final Comparator<Project> comparator) {
+        if (comparator == null) return findAll();
+        return projectRepository.findAll(comparator);
+    }
+
+    @Override
+    public List<Project> findAll(final Sort sort) {
+        if (sort == null) return findAll();
+        return findAll(sort.getComparator());
     }
 
     @Override
@@ -105,7 +120,7 @@ public final class ProjectService implements IProjectService {
     public Project changeProjectStatusById(final String id, final Status status) {
         if (id == null || id.isEmpty()) return null;
         final Project project = findById(id);
-        if(project == null) return null;
+        if (project == null) return null;
         project.setStatus(status);
         return project;
     }
@@ -114,7 +129,7 @@ public final class ProjectService implements IProjectService {
     public Project changeProjectStatusByIndex(final Integer index, final Status status) {
         if (index == null || index < 0) return null;
         final Project project = findByIndex(index);
-        if(project == null) return null;
+        if (project == null) return null;
         project.setStatus(status);
         return project;
     }

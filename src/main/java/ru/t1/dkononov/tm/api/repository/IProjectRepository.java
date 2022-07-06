@@ -2,11 +2,14 @@ package ru.t1.dkononov.tm.api.repository;
 
 import ru.t1.dkononov.tm.model.Project;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 
 public interface IProjectRepository {
     List<Project> findAll();
+
+    List<Project> findAll(Comparator<Project> comparator);
 
     Project add(final Project project);
 

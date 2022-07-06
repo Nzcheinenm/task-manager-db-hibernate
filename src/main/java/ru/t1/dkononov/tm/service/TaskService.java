@@ -3,11 +3,13 @@ package ru.t1.dkononov.tm.service;
 
 import ru.t1.dkononov.tm.api.repository.ITaskRepository;
 import ru.t1.dkononov.tm.api.services.ITaskService;
+import ru.t1.dkononov.tm.enumerated.Sort;
 import ru.t1.dkononov.tm.enumerated.Status;
 import ru.t1.dkononov.tm.model.Project;
 import ru.t1.dkononov.tm.model.Task;
 
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public final class TaskService implements ITaskService {
@@ -21,6 +23,18 @@ public final class TaskService implements ITaskService {
     @Override
     public List<Task> findAll() {
         return taskRepository.findAll();
+    }
+
+    @Override
+    public List<Task> findAll(final Comparator<Task> comparator) {
+        if (comparator == null) return findAll();
+        return taskRepository.findAll(comparator);
+    }
+
+    @Override
+    public List<Task> findAll(final Sort sort) {
+        if (sort == null) return findAll();
+        return findAll(sort.getComparator());
     }
 
     @Override
@@ -111,19 +125,19 @@ public final class TaskService implements ITaskService {
     }
 
     @Override
-    public Task changeTaskStatusById(final String id,final Status status) {
+    public Task changeTaskStatusById(final String id, final Status status) {
         if (id == null || id.isEmpty()) return null;
         final Task task = findById(id);
-        if(task == null) return null;
+        if (task == null) return null;
         task.setStatus(status);
         return task;
     }
 
     @Override
-    public Task changeTaskStatusByIndex(final Integer index,final Status status) {
+    public Task changeTaskStatusByIndex(final Integer index, final Status status) {
         if (index == null || index < 0) return null;
         final Task task = findByIndex(index);
-        if(task == null) return null;
+        if (task == null) return null;
         task.setStatus(status);
         return task;
     }

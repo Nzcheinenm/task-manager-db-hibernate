@@ -3,6 +3,7 @@ package ru.t1.dkononov.tm.controller;
 import ru.t1.dkononov.tm.api.controllers.IProjectController;
 import ru.t1.dkononov.tm.api.services.IProjectService;
 import ru.t1.dkononov.tm.api.services.IProjectTaskService;
+import ru.t1.dkononov.tm.enumerated.Sort;
 import ru.t1.dkononov.tm.enumerated.Status;
 import ru.t1.dkononov.tm.model.Project;
 import ru.t1.dkononov.tm.util.TerminalUtil;
@@ -16,7 +17,7 @@ public final class ProjectController implements IProjectController {
 
     private final IProjectTaskService projectTaskService;
 
-    public ProjectController(final IProjectService projectService,final IProjectTaskService projectTaskService) {
+    public ProjectController(final IProjectService projectService, final IProjectTaskService projectTaskService) {
         this.projectService = projectService;
         this.projectTaskService = projectTaskService;
     }
@@ -24,8 +25,12 @@ public final class ProjectController implements IProjectController {
     @Override
     public void showProjects() {
         System.out.println("[SHOW PROJECTS]");
+        System.out.println("[ENTER SORT: ]");
+        System.out.println(Arrays.toString(Sort.values()));
+        final String sortType = TerminalUtil.inLine();
+        final Sort sort = Sort.toSort(sortType);
         int index = 0;
-        final List<Project> projects = projectService.findAll();
+        final List<Project> projects = projectService.findAll(sort);
         for (final Project project : projects) {
             index++;
             System.out.println(index + ". " + project.getName());

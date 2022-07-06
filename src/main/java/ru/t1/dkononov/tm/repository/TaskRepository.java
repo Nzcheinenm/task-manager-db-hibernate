@@ -4,6 +4,7 @@ import ru.t1.dkononov.tm.api.repository.ITaskRepository;
 import ru.t1.dkononov.tm.model.Task;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -15,6 +16,13 @@ public final class TaskRepository implements ITaskRepository {
     @Override
     public List<Task> findAll() {
         return tasks;
+    }
+
+    @Override
+    public List<Task> findAll(final Comparator<Task> comparator) {
+        final List<Task> result = new ArrayList<>(tasks);
+        result.sort(comparator);
+        return result;
     }
 
     @Override

@@ -2,11 +2,14 @@ package ru.t1.dkononov.tm.api.repository;
 
 import ru.t1.dkononov.tm.model.Task;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 
 public interface ITaskRepository {
     List<Task> findAll();
+
+    List<Task> findAll(Comparator<Task> comparator);
 
     Task add(final Task task);
 

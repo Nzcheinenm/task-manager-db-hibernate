@@ -1,13 +1,19 @@
 package ru.t1.dkononov.tm.api.services;
 
+import ru.t1.dkononov.tm.enumerated.Sort;
 import ru.t1.dkononov.tm.enumerated.Status;
 import ru.t1.dkononov.tm.model.Project;
 import ru.t1.dkononov.tm.model.Task;
 
+import java.util.Comparator;
 import java.util.List;
 
 public interface ITaskService {
     List<Task> findAll();
+
+    List<Task> findAll(Comparator<Task> comparator);
+
+    List<Task> findAll(Sort sort);
 
     List<Task> findAllByProjectId(String projectId);
 

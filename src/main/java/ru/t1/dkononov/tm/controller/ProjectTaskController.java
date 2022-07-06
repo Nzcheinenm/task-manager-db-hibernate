@@ -19,7 +19,7 @@ public class ProjectTaskController implements IProjectTaskController {
         final String projectId = TerminalUtil.inLine();
         System.out.println("[ENTER TASK ID:]");
         final String taskId = TerminalUtil.inLine();
-        projectTaskService.bindTaskToProject(projectId,taskId);
+        projectTaskService.bindTaskToProject(projectId, taskId);
         System.out.println("[OK]");
     }
 
@@ -30,7 +30,7 @@ public class ProjectTaskController implements IProjectTaskController {
         final String projectId = TerminalUtil.inLine();
         System.out.println("[ENTER TASK ID:]");
         final String taskId = TerminalUtil.inLine();
-        projectTaskService.unbindTaskFromProject(projectId,taskId);
+        projectTaskService.unbindTaskFromProject(projectId, taskId);
         System.out.println("[OK]");
     }
 
