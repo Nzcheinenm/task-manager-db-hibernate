@@ -11,9 +11,9 @@ import java.util.List;
 public interface IProjectService {
     List<Project> findAll();
 
-    List<Project> findAll(Comparator<Project> comparator);
+    List<Project> findAll(final Comparator<Project> comparator);
 
-    List<Project> findAll(Sort sort);
+    List<Project> findAll(final Sort sort);
 
     Project add(final Project project);
 
@@ -37,8 +37,8 @@ public interface IProjectService {
 
     Project updateByIndex(final Integer index, final String name, final String description);
 
-    Project changeProjectStatusById(String id, Status status);
+    Project changeProjectStatusById(final String id,final Status status);
 
-    Project changeProjectStatusByIndex(Integer index, Status status);
+    Project changeProjectStatusByIndex(final Integer index,final Status status);
 
 }

@@ -11,11 +11,11 @@ import java.util.List;
 public interface ITaskService {
     List<Task> findAll();
 
-    List<Task> findAll(Comparator<Task> comparator);
+    List<Task> findAll(final Comparator<Task> comparator);
 
-    List<Task> findAll(Sort sort);
+    List<Task> findAll(final Sort sort);
 
-    List<Task> findAllByProjectId(String projectId);
+    List<Task> findAllByProjectId(final String projectId);
 
     Task add(final Task project);
 
@@ -39,8 +39,8 @@ public interface ITaskService {
 
     Task updateByIndex(final Integer index, final String name, final String description);
 
-    Task changeTaskStatusById(String id, Status status);
+    Task changeTaskStatusById(final String id,final Status status);
 
-    Task changeTaskStatusByIndex(Integer index, Status status);
+    Task changeTaskStatusByIndex(final Integer index,final Status status);
 
 }

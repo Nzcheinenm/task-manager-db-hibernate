@@ -1,9 +1,9 @@
 package ru.t1.dkononov.tm.api.services;
 
 public interface IProjectTaskService {
-    void bindTaskToProject(String projectId, String taskId);
+    void bindTaskToProject(final String projectId,final String taskId);
 
-    void removeProjectById(String projectId);
+    void removeProjectById(final String projectId);
 
-    void unbindTaskFromProject(String projectId, String taskId);
+    void unbindTaskFromProject(final String projectId,final String taskId);
 }

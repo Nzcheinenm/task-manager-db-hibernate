@@ -9,7 +9,7 @@ import java.util.Objects;
 public interface ITaskRepository {
     List<Task> findAll();
 
-    List<Task> findAll(Comparator<Task> comparator);
+    List<Task> findAll(final Comparator<Task> comparator);
 
     Task add(final Task task);
 
@@ -29,5 +29,5 @@ public interface ITaskRepository {
 
     Task removeByIndex(final Integer index);
 
-    List<Task> findAllByProjectId(String projectId);
+    List<Task> findAllByProjectId(final String projectId);
 }

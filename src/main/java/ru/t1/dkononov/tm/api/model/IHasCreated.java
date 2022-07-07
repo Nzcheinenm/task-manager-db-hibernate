@@ -6,6 +6,6 @@ public interface IHasCreated {
 
     Date getCreated();
 
-    void setCreated(Date date);
+    void setCreated(final Date date);
 
 }

@@ -49,7 +49,6 @@ public class Bootstrap {
 
     private final IProjectController projectController = new ProjectController(projectService, projectTaskService);
 
-
     private final IProjectTaskController projectTaskController = new ProjectTaskController(projectTaskService);
 
     private final ITaskController taskController = new TaskController(taskService);
@@ -73,7 +72,6 @@ public class Bootstrap {
 
         taskService.add(new Task("Work", Status.IN_PROGRESS));
         taskService.add(new Task("Homework", Status.NOT_STARTED));
-
     }
 
     private void processCommands() {

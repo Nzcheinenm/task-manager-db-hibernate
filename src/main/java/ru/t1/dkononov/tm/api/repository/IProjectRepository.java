@@ -9,13 +9,13 @@ import java.util.Objects;
 public interface IProjectRepository {
     List<Project> findAll();
 
-    List<Project> findAll(Comparator<Project> comparator);
+    List<Project> findAll(final Comparator<Project> comparator);
 
     Project add(final Project project);
 
     void clear();
 
-    boolean existsById(String id);
+    boolean existsById(final String id);
 
     Project create(final String name);
 

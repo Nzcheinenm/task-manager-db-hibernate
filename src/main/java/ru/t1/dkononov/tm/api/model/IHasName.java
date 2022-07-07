@@ -4,6 +4,6 @@ public interface IHasName {
 
     String getName();
 
-    void setName(String name);
+    void setName(final String name);
 
 }

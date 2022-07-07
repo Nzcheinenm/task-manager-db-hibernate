@@ -6,6 +6,6 @@ public interface IHasStatus {
 
     Status getStatus();
 
-    void setStatus(Status status);
+    void setStatus(final Status status);
 
 }
