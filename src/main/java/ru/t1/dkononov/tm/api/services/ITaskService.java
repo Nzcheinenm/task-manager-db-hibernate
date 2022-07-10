@@ -2,7 +2,9 @@ package ru.t1.dkononov.tm.api.services;
 
 import ru.t1.dkononov.tm.enumerated.Sort;
 import ru.t1.dkononov.tm.enumerated.Status;
-import ru.t1.dkononov.tm.model.Project;
+import ru.t1.dkononov.tm.exception.AbstractException;
+import ru.t1.dkononov.tm.exception.entity.AbstractEntityNotFoundException;
+import ru.t1.dkononov.tm.exception.field.AbstractFieldException;
 import ru.t1.dkononov.tm.model.Task;
 
 import java.util.Comparator;
@@ -17,30 +19,30 @@ public interface ITaskService {
 
     List<Task> findAllByProjectId(final String projectId);
 
-    Task add(final Task project);
+    Task add(final Task project) throws AbstractEntityNotFoundException;
 
     void clear();
 
-    Task create(final String name, final String description);
+    Task create(final String name, final String description) throws AbstractFieldException;
 
-    Task create(final String name);
+    Task create(final String name) throws AbstractFieldException;
 
-    Task findById(final String id);
+    Task findById(final String id) throws AbstractFieldException;
 
-    Task findByIndex(final Integer index);
+    Task findByIndex(final Integer index) throws AbstractFieldException;
 
     void remove(final Task task);
 
-    Task removeById(final String id);
+    Task removeById(final String id) throws AbstractFieldException;
 
-    Task removeByIndex(final Integer index);
+    Task removeByIndex(final Integer index) throws AbstractFieldException;
 
-    Task updateById(final String id, final String name, final String description);
+    void updateById(final String id, final String name, final String description) throws AbstractException;
 
-    Task updateByIndex(final Integer index, final String name, final String description);
+    void updateByIndex(final Integer index, final String name, final String description) throws AbstractException;
 
-    Task changeTaskStatusById(final String id,final Status status);
+    void changeTaskStatusById(final String id, final Status status) throws AbstractException;
 
-    Task changeTaskStatusByIndex(final Integer index,final Status status);
+    void changeTaskStatusByIndex(final Integer index, final Status status) throws AbstractException;
 
 }

@@ -1,7 +1,9 @@
 package ru.t1.dkononov.tm.api.controllers;
 
-public interface IProjectTaskController {
-    void bindTaskToProject();
+import ru.t1.dkononov.tm.exception.AbstractException;
 
-    void unbindTaskFromProject();
+public interface IProjectTaskController {
+    void bindTaskToProject() throws AbstractException;
+
+    void unbindTaskFromProject() throws AbstractException;
 }

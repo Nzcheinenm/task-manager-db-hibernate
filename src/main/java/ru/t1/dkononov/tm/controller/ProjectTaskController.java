@@ -2,6 +2,7 @@ package ru.t1.dkononov.tm.controller;
 
 import ru.t1.dkononov.tm.api.controllers.IProjectTaskController;
 import ru.t1.dkononov.tm.api.services.IProjectTaskService;
+import ru.t1.dkononov.tm.exception.AbstractException;
 import ru.t1.dkononov.tm.util.TerminalUtil;
 
 public class ProjectTaskController implements IProjectTaskController {
@@ -13,25 +14,23 @@ public class ProjectTaskController implements IProjectTaskController {
     }
 
     @Override
-    public void bindTaskToProject() {
+    public void bindTaskToProject() throws AbstractException {
         System.out.println("[BIND TASK TO PROJECT]");
         System.out.println("[ENTER PROJECT ID:]");
         final String projectId = TerminalUtil.inLine();
         System.out.println("[ENTER TASK ID:]");
         final String taskId = TerminalUtil.inLine();
         projectTaskService.bindTaskToProject(projectId, taskId);
-        System.out.println("[OK]");
     }
 
     @Override
-    public void unbindTaskFromProject() {
+    public void unbindTaskFromProject() throws AbstractException {
         System.out.println("[UNBIND TASK TO PROJECT]");
         System.out.println("[ENTER PROJECT ID:]");
         final String projectId = TerminalUtil.inLine();
         System.out.println("[ENTER TASK ID:]");
         final String taskId = TerminalUtil.inLine();
         projectTaskService.unbindTaskFromProject(projectId, taskId);
-        System.out.println("[OK]");
     }
 
 }

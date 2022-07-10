@@ -1,5 +1,7 @@
 package ru.t1.dkononov.tm.api.controllers;
 
+import ru.t1.dkononov.tm.exception.AbstractException;
+import ru.t1.dkononov.tm.exception.field.AbstractFieldException;
 import ru.t1.dkononov.tm.model.Task;
 
 import java.util.List;
@@ -7,35 +9,35 @@ import java.util.List;
 public interface ITaskController {
     void showTasks();
 
-    void addTask();
+    void addTask() throws AbstractFieldException;
 
     void clearTasks();
 
-    void showTaskById();
+    void showTaskById() throws AbstractFieldException;
 
-    void showTaskByIndex();
+    void showTaskByIndex() throws AbstractFieldException;
 
     void showTaskByProjectId();
 
-    void removeTaskById();
+    void removeTaskById() throws AbstractFieldException;
 
-    void removeTaskByIndex();
+    void removeTaskByIndex() throws AbstractFieldException;
 
-    void updateTaskById();
+    void updateTaskById() throws AbstractException;
 
-    void updateTaskByIndex();
+    void updateTaskByIndex() throws AbstractException;
 
-    void changeTaskStatusById();
+    void changeTaskStatusById() throws AbstractException;
 
-    void changeTaskStatusByIndex();
+    void changeTaskStatusByIndex() throws AbstractException;
 
-    void completeTaskById();
+    void completeTaskById() throws AbstractException;
 
-    void completeTaskByIndex();
+    void completeTaskByIndex() throws AbstractException;
 
-    void startTaskById();
+    void startTaskById() throws AbstractException;
 
-    void startTaskByIndex();
+    void startTaskByIndex() throws AbstractException;
 
     String show(final Task task);
 

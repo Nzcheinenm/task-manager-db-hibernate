@@ -18,6 +18,9 @@ import ru.t1.dkononov.tm.controller.ProjectController;
 import ru.t1.dkononov.tm.controller.ProjectTaskController;
 import ru.t1.dkononov.tm.controller.TaskController;
 import ru.t1.dkononov.tm.enumerated.Status;
+import ru.t1.dkononov.tm.exception.AbstractException;
+import ru.t1.dkononov.tm.exception.system.ArgumentNotSupportedException;
+import ru.t1.dkononov.tm.exception.system.CommandNotSupportedException;
 import ru.t1.dkononov.tm.model.Project;
 import ru.t1.dkononov.tm.model.Task;
 import ru.t1.dkononov.tm.repository.CommandRepository;
@@ -53,8 +56,7 @@ public class Bootstrap {
 
     private final ITaskController taskController = new TaskController(taskService);
 
-    public void run(final String[] args) {
-        initData();
+    public void run(final String[] args)  {
         processArguments(args);
         processCommands();
     }
@@ -62,10 +64,14 @@ public class Bootstrap {
     private void processArguments(final String[] args) {
         if (args == null || args.length == 0) return;
         final String argument = args[0];
-        processArgument(argument);
+        try {
+            processArgument(argument);
+        } catch (final Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
-    private void initData() {
+    private void initData() throws AbstractException {
         projectService.add(new Project("Jira", Status.NOT_STARTED));
         projectService.add(new Project("Confluence", Status.IN_PROGRESS));
         projectService.add(new Project("SoapUI", Status.IN_PROGRESS));
@@ -76,14 +82,26 @@ public class Bootstrap {
 
     private void processCommands() {
         System.out.println("** WELCOME TO TASK MANAGER **");
+        try {
+            initData();
+        } catch (AbstractException e) {
+            System.out.println(e.getMessage());
+            System.out.println("[FAIL TO INIT TEST DATA]");
+        }
         while (!Thread.currentThread().isInterrupted()) {
-            System.out.println("ENTER COMMAND: ");
-            final String command = TerminalUtil.inLine();
-            processCommand(command);
+            try {
+                System.out.println("ENTER COMMAND: ");
+                final String command = TerminalUtil.inLine();
+                processCommand(command);
+                System.out.println("[OK]");
+            } catch (final Exception e) {
+                System.out.println(e.getMessage());
+                System.out.println("[FAIL]");
+            }
         }
     }
 
-    private void processArgument(final String argument) {
+    private void processArgument(final String argument) throws CommandNotSupportedException {
         if (argument == null || argument.isEmpty()) return;
         switch (argument) {
             case ArgumentConst.HELP:
@@ -99,13 +117,12 @@ public class Bootstrap {
                 commandController.showSystemInfo();
                 break;
             default:
-                commandController.showErrorArgument();
-                break;
+                throw new CommandNotSupportedException(argument);
         }
         System.exit(0);
     }
 
-    private void processCommand(final String argument) {
+    private void processCommand(final String argument) throws AbstractException {
         if (argument == null || argument.isEmpty()) return;
         switch (argument) {
             case CommandConst.HELP:
@@ -225,8 +242,7 @@ public class Bootstrap {
                 break;
 
             default:
-                commandController.showErrorCommand();
-                break;
+                throw new ArgumentNotSupportedException(argument);
         }
     }
 

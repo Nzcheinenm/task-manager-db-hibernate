@@ -1,5 +1,7 @@
 package ru.t1.dkononov.tm.util;
 
+import ru.t1.dkononov.tm.exception.field.NumberIncorrectException;
+
 import java.util.Scanner;
 
 public interface TerminalUtil {
@@ -10,9 +12,13 @@ public interface TerminalUtil {
         return SCANNER.nextLine();
     }
 
-    static Integer nextNumber() {
-        final String value = SCANNER.nextLine();
-        return Integer.parseInt(value);
+    static Integer nextNumber() throws NumberIncorrectException {
+        final String value = inLine();
+        try {
+            return Integer.parseInt(value);
+        } catch (final Exception e) {
+            throw new NumberIncorrectException(value,e);
+        }
     }
 
 }

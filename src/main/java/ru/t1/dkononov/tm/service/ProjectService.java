@@ -4,8 +4,11 @@ import ru.t1.dkononov.tm.api.repository.IProjectRepository;
 import ru.t1.dkononov.tm.api.services.IProjectService;
 import ru.t1.dkononov.tm.enumerated.Sort;
 import ru.t1.dkononov.tm.enumerated.Status;
+import ru.t1.dkononov.tm.exception.AbstractException;
+import ru.t1.dkononov.tm.exception.entity.AbstractEntityNotFoundException;
+import ru.t1.dkononov.tm.exception.entity.ProjectNotFoundException;
+import ru.t1.dkononov.tm.exception.field.*;
 import ru.t1.dkononov.tm.model.Project;
-import ru.t1.dkononov.tm.model.Task;
 
 import java.util.Comparator;
 import java.util.List;
@@ -36,8 +39,8 @@ public final class ProjectService implements IProjectService {
     }
 
     @Override
-    public Project add(final Project project) {
-        if (project == null) return null;
+    public Project add(final Project project) throws AbstractEntityNotFoundException {
+        if (project == null) throw new ProjectNotFoundException();
         return projectRepository.add(project);
     }
 
@@ -47,27 +50,27 @@ public final class ProjectService implements IProjectService {
     }
 
     @Override
-    public Project create(final String name, final String description) {
-        if (name == null || name.isEmpty()) return null;
-        if (description == null && description.isEmpty()) return null;
+    public Project create(final String name, final String description) throws AbstractFieldException {
+        if (name == null || name.isEmpty()) throw new NameEmptyException();
+        if (description == null && description.isEmpty()) throw new DescriptionEmptyException();
         return projectRepository.create(name, description);
     }
 
     @Override
-    public Project create(final String name) {
-        if (name == null || name.isEmpty()) return null;
+    public Project create(final String name) throws AbstractFieldException {
+        if (name == null || name.isEmpty()) throw new NameEmptyException();
         return projectRepository.create(name);
     }
 
     @Override
-    public Project findById(final String id) {
-        if (id == null || id.isEmpty()) return null;
+    public Project findById(final String id) throws AbstractFieldException {
+        if (id == null || id.isEmpty()) throw new IdEmptyException();
         return projectRepository.findById(id);
     }
 
     @Override
-    public Project findByIndex(final Integer index) {
-        if (index == null || index < 0) return null;
+    public Project findByIndex(final Integer index) throws AbstractFieldException {
+        if (index == null || index < 0) throw new IndexIncorrectException();
         return projectRepository.findByIndex(index);
     }
 
@@ -77,61 +80,61 @@ public final class ProjectService implements IProjectService {
     }
 
     @Override
-    public Project removeById(final String id) {
-        if (id == null || id.isEmpty()) return null;
+    public Project removeById(final String id) throws AbstractFieldException {
+        if (id == null || id.isEmpty()) throw new IdEmptyException();
         final Project project = projectRepository.findById(id);
         remove(project);
         return project;
     }
 
     @Override
-    public Project removeByIndex(final Integer index) {
-        if (index == null || index < 0) return null;
+    public Project removeByIndex(final Integer index) throws AbstractFieldException {
+        if (index == null || index < 0) throw new IndexIncorrectException();
         final Project project = projectRepository.findByIndex(index);
         projectRepository.remove(project);
         return project;
     }
 
     @Override
-    public Project updateById(final String id, final String name, final String description) {
-        if (id == null || id.isEmpty()) return null;
-        if (name == null || name.isEmpty()) return null;
-        if (description == null || description.isEmpty()) return null;
+    public void updateById(final String id, final String name, final String description)
+            throws AbstractException {
+        if (id == null || id.isEmpty()) throw new IdEmptyException();
+        if (name == null || name.isEmpty()) throw new NameEmptyException();
+        if (description == null || description.isEmpty()) throw new DescriptionEmptyException();
         final Project project = projectRepository.findById(id);
-        if (project == null) return null;
+        if (project == null) throw new ProjectNotFoundException();
         project.setName(name);
         project.setDescription(description);
-        return project;
     }
 
     @Override
-    public Project updateByIndex(final Integer index, final String name, final String description) {
-        if (index == null || index < 0) return null;
-        if (name == null || name.isEmpty()) return null;
-        if (description == null || description.isEmpty()) return null;
+    public void updateByIndex(final Integer index, final String name, final String description)
+            throws AbstractException {
+        if (index == null || index < 0) throw new IndexIncorrectException();
+        if (name == null || name.isEmpty()) throw new NameEmptyException();
+        if (description == null || description.isEmpty()) throw new DescriptionEmptyException();
         final Project project = projectRepository.findByIndex(index);
-        if (project == null) return null;
+        if (project == null) throw new ProjectNotFoundException();
         project.setName(name);
         project.setDescription(description);
-        return project;
     }
 
     @Override
-    public Project changeProjectStatusById(final String id, final Status status) {
-        if (id == null || id.isEmpty()) return null;
+    public void changeProjectStatusById(final String id, final Status status)
+            throws AbstractException {
+        if (id == null || id.isEmpty()) throw new IdEmptyException();
         final Project project = findById(id);
-        if (project == null) return null;
+        if (project == null) throw new ProjectNotFoundException();
         project.setStatus(status);
-        return project;
     }
 
     @Override
-    public Project changeProjectStatusByIndex(final Integer index, final Status status) {
-        if (index == null || index < 0) return null;
+    public void changeProjectStatusByIndex(final Integer index, final Status status)
+            throws AbstractException {
+        if (index == null || index < 0) throw new IndexIncorrectException();
         final Project project = findByIndex(index);
-        if (project == null) return null;
+        if (project == null) throw new ProjectNotFoundException();
         project.setStatus(status);
-        return project;
     }
 
 }

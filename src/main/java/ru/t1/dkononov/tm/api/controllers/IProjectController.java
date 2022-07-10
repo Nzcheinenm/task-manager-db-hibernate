@@ -1,38 +1,40 @@
 package ru.t1.dkononov.tm.api.controllers;
 
+import ru.t1.dkononov.tm.exception.AbstractException;
+import ru.t1.dkononov.tm.exception.field.AbstractFieldException;
 import ru.t1.dkononov.tm.model.Project;
 import ru.t1.dkononov.tm.util.TerminalUtil;
 
 public interface IProjectController {
     void showProjects();
 
-    void addProject();
+    void addProject() throws AbstractFieldException;
 
     void clearProjects();
 
-    void showProjectById();
+    void showProjectById() throws AbstractFieldException;
 
-    void showProjectByIndex();
+    void showProjectByIndex() throws AbstractFieldException;
 
-    void removeProjectById();
+    void removeProjectById() throws AbstractException;
 
-    void removeProjectByIndex();
+    void removeProjectByIndex() throws AbstractException;
 
-    void updateProjectById();
+    void updateProjectById() throws AbstractException;
 
-    void updateProjectByIndex();
+    void updateProjectByIndex() throws AbstractException;
 
-    void changeProjectStatusById();
+    void changeProjectStatusById() throws AbstractException;
 
-    void changeProjectStatusByIndex();
+    void changeProjectStatusByIndex() throws AbstractException;
 
-    void completeProjectById();
+    void completeProjectById() throws AbstractException;
 
-    void completeProjectByIndex();
+    void completeProjectByIndex() throws AbstractException;
 
-    void startProjectById();
+    void startProjectById() throws AbstractException;
 
-    void startProjectByIndex();
+    void startProjectByIndex() throws AbstractException;
 
     String show(final Project project);
 
