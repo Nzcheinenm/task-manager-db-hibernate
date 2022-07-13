@@ -6,10 +6,7 @@ import ru.t1.dkononov.tm.api.controllers.IProjectTaskController;
 import ru.t1.dkononov.tm.api.repository.ICommandRepository;
 import ru.t1.dkononov.tm.api.repository.IProjectRepository;
 import ru.t1.dkononov.tm.api.repository.ITaskRepository;
-import ru.t1.dkononov.tm.api.services.ICommandService;
-import ru.t1.dkononov.tm.api.services.IProjectService;
-import ru.t1.dkononov.tm.api.services.IProjectTaskService;
-import ru.t1.dkononov.tm.api.services.ITaskService;
+import ru.t1.dkononov.tm.api.services.*;
 import ru.t1.dkononov.tm.constant.ArgumentConst;
 import ru.t1.dkononov.tm.constant.CommandConst;
 import ru.t1.dkononov.tm.controller.CommandController;
@@ -26,11 +23,9 @@ import ru.t1.dkononov.tm.model.Task;
 import ru.t1.dkononov.tm.repository.CommandRepository;
 import ru.t1.dkononov.tm.repository.ProjectRepository;
 import ru.t1.dkononov.tm.repository.TaskRepository;
-import ru.t1.dkononov.tm.service.CommandService;
-import ru.t1.dkononov.tm.service.ProjectService;
-import ru.t1.dkononov.tm.service.ProjectTaskService;
-import ru.t1.dkononov.tm.service.TaskService;
+import ru.t1.dkononov.tm.service.*;
 import ru.t1.dkononov.tm.util.TerminalUtil;
+import sun.rmi.runtime.Log;
 
 public class Bootstrap {
 
@@ -56,9 +51,15 @@ public class Bootstrap {
 
     private final ITaskController taskController = new TaskController(taskService);
 
-    public void run(final String[] args)  {
+    private final ILoggerService loggerService = new LoggerService();
+
+    public void run(final String[] args) {
         processArguments(args);
         processCommands();
+    }
+
+    public void close() {
+        System.exit(0);
     }
 
     private void processArguments(final String[] args) {
@@ -81,24 +82,33 @@ public class Bootstrap {
     }
 
     private void processCommands() {
-        System.out.println("** WELCOME TO TASK MANAGER **");
         try {
             initData();
-        } catch (AbstractException e) {
-            System.out.println(e.getMessage());
+        } catch (final AbstractException e) {
+            loggerService.error(e);
             System.out.println("[FAIL TO INIT TEST DATA]");
         }
+
+        initLogger();
+
         while (!Thread.currentThread().isInterrupted()) {
             try {
                 System.out.println("ENTER COMMAND: ");
                 final String command = TerminalUtil.inLine();
                 processCommand(command);
                 System.out.println("[OK]");
+                loggerService.command(command);
             } catch (final Exception e) {
-                System.out.println(e.getMessage());
+                loggerService.error(e);
                 System.out.println("[FAIL]");
             }
         }
+    }
+
+    private void initLogger() {
+        loggerService.info("** WELCOME TO TASK-MANAGER **");
+        Runtime.getRuntime().addShutdownHook(new Thread(() ->
+                loggerService.info("** TASK-MANAGER IS SHUTTING DOWN **")));
     }
 
     private void processArgument(final String argument) throws CommandNotSupportedException {
@@ -138,7 +148,7 @@ public class Bootstrap {
                 commandController.showSystemInfo();
                 break;
             case CommandConst.EXIT:
-                commandController.showExit();
+                close();
                 break;
             case CommandConst.PROJECT_ADD:
                 projectController.addProject();

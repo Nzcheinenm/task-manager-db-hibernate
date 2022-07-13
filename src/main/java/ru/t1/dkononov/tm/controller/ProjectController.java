@@ -53,7 +53,6 @@ public final class ProjectController implements IProjectController {
     public void clearProjects() {
         System.out.println("[CLEAR LIST PROJECT]");
         projectService.clear();
-        System.out.println("[OK]");
     }
 
     @Override

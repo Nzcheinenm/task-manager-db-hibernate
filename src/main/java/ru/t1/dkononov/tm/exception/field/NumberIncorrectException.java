@@ -6,7 +6,7 @@ public final class NumberIncorrectException extends AbstractFieldException {
         super("Error! Number is incorrect...");
     }
 
-    public NumberIncorrectException(final String value, Throwable e) {
+    public NumberIncorrectException(final String value,final Throwable e) {
         super("Error! Is value\"" + value + "\" is incorrect...");
     }
 

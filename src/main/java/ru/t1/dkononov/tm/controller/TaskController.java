@@ -46,7 +46,6 @@ public final class TaskController implements ITaskController {
     public void clearTasks() {
         System.out.println("[CLEAR LIST TASKS]");
         taskService.clear();
-        System.out.println("[OK]");
     }
 
     @Override

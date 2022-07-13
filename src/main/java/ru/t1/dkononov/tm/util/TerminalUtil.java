@@ -17,7 +17,7 @@ public interface TerminalUtil {
         try {
             return Integer.parseInt(value);
         } catch (final Exception e) {
-            throw new NumberIncorrectException(value,e);
+            throw new NumberIncorrectException(value, e);
         }
     }
 
