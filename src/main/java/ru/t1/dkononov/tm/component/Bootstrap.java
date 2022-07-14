@@ -68,7 +68,7 @@ public class Bootstrap {
         try {
             processArgument(argument);
         } catch (final Exception e) {
-            System.out.println(e.getMessage());
+            loggerService.error(e);
         }
     }
 
