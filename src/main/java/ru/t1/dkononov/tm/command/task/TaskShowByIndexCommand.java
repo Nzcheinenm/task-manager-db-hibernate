@@ -6,16 +6,18 @@ import ru.t1.dkononov.tm.util.TerminalUtil;
 
 public final class TaskShowByIndexCommand extends AbstractTaskCommand {
 
-    public static final String TASK_SHOW_BY_INDEX = "task-show-by-index";
+    public static final String NAME = "task-show-by-index";
+
+    public static final String DESCRIPTION = "Показать задачу по индексу.";
 
     @Override
     public String getDescription() {
-        return "Показать задачу по индексу.";
+        return DESCRIPTION;
     }
 
     @Override
     public String getName() {
-        return TASK_SHOW_BY_INDEX;
+        return NAME;
     }
 
     @Override

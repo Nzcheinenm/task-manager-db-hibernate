@@ -5,16 +5,18 @@ import ru.t1.dkononov.tm.util.TerminalUtil;
 
 public final class TaskAddCommand extends AbstractTaskCommand {
 
-    public static final String TASK_ADD = "task-add";
+    public static final String NAME = "task-add";
+
+    public static final String DESCRIPTION = "Создать новую задачу.";
 
     @Override
     public String getDescription() {
-        return "Создать новую задачу.";
+        return DESCRIPTION;
     }
 
     @Override
     public String getName() {
-        return TASK_ADD;
+        return NAME;
     }
 
     @Override

@@ -8,16 +8,18 @@ import java.util.Arrays;
 
 public final class ProjectChangeStatusByIdCommand extends AbstractProjectCommand {
 
-    public static final String PROJECT_CHANGE_STATUS_BY_ID = "project-change-status-by-id";
+    public static final String DESCRIPTION = "Поменять статус у проекта по Id.";
+
+    public static final String NAME = "project-change-status-by-id";
 
     @Override
     public String getDescription() {
-        return "Поменять статус у проекта по Id.";
+        return DESCRIPTION;
     }
 
     @Override
     public String getName() {
-        return PROJECT_CHANGE_STATUS_BY_ID;
+        return NAME;
     }
 
     @Override

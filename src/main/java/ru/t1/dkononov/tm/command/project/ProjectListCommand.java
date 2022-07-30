@@ -9,16 +9,18 @@ import java.util.List;
 
 public final class ProjectListCommand extends AbstractProjectCommand {
 
-    public static final String PROJECT_LIST = "project-list";
+    public static final String NAME = "project-list";
+
+    public static final String DESCRIPTION = "Вывести список проектов.";
 
     @Override
     public String getDescription() {
-        return "Вывести список проектов.";
+        return DESCRIPTION;
     }
 
     @Override
     public String getName() {
-        return PROJECT_LIST;
+        return NAME;
     }
 
     @Override

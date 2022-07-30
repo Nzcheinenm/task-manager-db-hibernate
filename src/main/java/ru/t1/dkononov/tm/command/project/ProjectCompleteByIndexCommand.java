@@ -6,16 +6,18 @@ import ru.t1.dkononov.tm.util.TerminalUtil;
 
 public final class ProjectCompleteByIndexCommand extends AbstractProjectCommand {
 
-    public static final String PROJECT_COMPLETE_BY_INDEX = "project-complete-by-index";
+    public static final String NAME = "project-complete-by-index";
+
+    public static final String DESCRIPTION = "Завершить проект по индексу.";
 
     @Override
     public String getDescription() {
-        return "Завершить проект по индексу.";
+        return DESCRIPTION;
     }
 
     @Override
     public String getName() {
-        return PROJECT_COMPLETE_BY_INDEX;
+        return NAME;
     }
 
     @Override

@@ -6,16 +6,18 @@ import ru.t1.dkononov.tm.util.TerminalUtil;
 
 public final class TaskCompleteByIndexCommand extends AbstractTaskCommand {
 
-    public static final String TASK_COMPLETE_BY_INDEX = "task-complete-by-index";
+    public static final String NAME = "task-complete-by-index";
+
+    public static final String DESCRIPTION = "Завершить задачу по индексу.";
 
     @Override
     public String getDescription() {
-        return "Завершить задачу по индексу.";
+        return DESCRIPTION;
     }
 
     @Override
     public String getName() {
-        return TASK_COMPLETE_BY_INDEX;
+        return NAME;
     }
 
     @Override

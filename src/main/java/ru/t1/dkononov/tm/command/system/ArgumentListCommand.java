@@ -6,19 +6,25 @@ import java.util.Collection;
 
 public final class ArgumentListCommand extends AbstractSystemCommand {
 
+    public static final String DESCRIPTION = "Показать список аргументов";
+
+    public static final String NAME = "arguments";
+
+    public static final String ARGUMENT = "-args";
+
     @Override
     public String getArgument() {
-        return "-args";
+        return ARGUMENT;
     }
 
     @Override
     public String getDescription() {
-        return "Показать список аргументов";
+        return DESCRIPTION;
     }
 
     @Override
     public String getName() {
-        return "arguments";
+        return NAME;
     }
 
     @Override

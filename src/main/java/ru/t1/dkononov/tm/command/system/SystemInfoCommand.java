@@ -4,6 +4,11 @@ import ru.t1.dkononov.tm.util.FormatUtil;
 
 public final class SystemInfoCommand extends AbstractSystemCommand {
 
+    public static final String DESCRIPTION = "Показать описание системы";
+
+    public static final String NAME = "info";
+
+
     @Override
     public String getArgument() {
         return null;
@@ -11,12 +16,12 @@ public final class SystemInfoCommand extends AbstractSystemCommand {
 
     @Override
     public String getDescription() {
-        return "Показать описание системы";
+        return DESCRIPTION;
     }
 
     @Override
     public String getName() {
-        return "info";
+        return NAME;
     }
 
     @Override

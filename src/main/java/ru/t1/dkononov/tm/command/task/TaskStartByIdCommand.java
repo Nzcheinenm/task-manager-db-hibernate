@@ -6,16 +6,18 @@ import ru.t1.dkononov.tm.util.TerminalUtil;
 
 public final class TaskStartByIdCommand extends AbstractTaskCommand {
 
-    public static final String TASK_START_BY_ID = "task-start-by-id";
+    public static final String NAME = "task-start-by-id";
+
+    public static final String DESCRIPTION = "Начать задачу по Id.";
 
     @Override
     public String getDescription() {
-        return "Начать задачу по Id.";
+        return DESCRIPTION;
     }
 
     @Override
     public String getName() {
-        return TASK_START_BY_ID;
+        return NAME;
     }
 
     @Override

@@ -8,16 +8,18 @@ import java.util.Arrays;
 
 public final class ProjectChangeStatusByIndexCommand extends AbstractProjectCommand {
 
-    public static final String PROJECT_CHANGE_STATUS_BY_INDEX = "project-change-status-by-index";
+    public static final String NAME = "project-change-status-by-index";
+
+    public static final String DESCRIPTION = "Поменять статус у проекта по индексу.";
 
     @Override
     public String getDescription() {
-        return "Поменять статус у проекта по индексу.";
+        return DESCRIPTION;
     }
 
     @Override
     public String getName() {
-        return PROJECT_CHANGE_STATUS_BY_INDEX;
+        return NAME;
     }
 
     @Override

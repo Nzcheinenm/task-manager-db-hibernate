@@ -6,16 +6,18 @@ import ru.t1.dkononov.tm.util.TerminalUtil;
 
 public final class ProjectStartByIdCommand extends AbstractProjectCommand {
 
-    public static final String PROJECT_START_BY_ID = "project-start-by-id";
+    public static final String NAME = "project-start-by-id";
+
+    public static final String DESCRIPTION = "Начать проект по Id.";
 
     @Override
     public String getDescription() {
-        return "Начать проект по Id.";
+        return DESCRIPTION;
     }
 
     @Override
     public String getName() {
-        return PROJECT_START_BY_ID;
+        return NAME;
     }
 
     @Override

@@ -5,16 +5,18 @@ import ru.t1.dkononov.tm.util.TerminalUtil;
 
 public final class ProjectUpdateByIndexCommand extends AbstractProjectCommand {
 
-    public static final String PROJECT_UPDATE_BY_INDEX = "project-update-by-index";
+    public static final String NAME = "project-update-by-index";
+
+    public static final String DESCRIPTION = "Обновить проект по индексу.";
 
     @Override
     public String getDescription() {
-        return "Обновить проект по индексу.";
+        return DESCRIPTION;
     }
 
     @Override
     public String getName() {
-        return PROJECT_UPDATE_BY_INDEX;
+        return NAME;
     }
 
     @Override

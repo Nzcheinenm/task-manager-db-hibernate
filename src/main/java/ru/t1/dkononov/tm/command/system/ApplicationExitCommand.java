@@ -2,6 +2,10 @@ package ru.t1.dkononov.tm.command.system;
 
 public final class ApplicationExitCommand extends AbstractSystemCommand {
 
+    public static final String DESCRIPTION = "Закрыть приложение";
+
+    public static final String NAME = "exit";
+
     @Override
     public String getArgument() {
         return null;
@@ -9,12 +13,12 @@ public final class ApplicationExitCommand extends AbstractSystemCommand {
 
     @Override
     public String getDescription() {
-        return "Закрыть приложение";
+        return DESCRIPTION;
     }
 
     @Override
     public String getName() {
-        return "exit";
+        return NAME;
     }
 
     @Override

@@ -9,16 +9,18 @@ import java.util.List;
 
 public final class TaskListCommand extends AbstractTaskCommand {
 
-    public static final String TASK_LIST = "task-list";
+    public static final String NAME = "task-list";
+
+    public static final String DESCRIPTION = "Вывести список задач.";
 
     @Override
     public String getDescription() {
-        return "Вывести список задач.";
+        return DESCRIPTION;
     }
 
     @Override
     public String getName() {
-        return TASK_LIST;
+        return NAME;
     }
 
     @Override

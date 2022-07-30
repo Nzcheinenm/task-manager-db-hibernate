@@ -6,16 +6,18 @@ import ru.t1.dkononov.tm.util.TerminalUtil;
 
 public final class ProjectShowByIdCommand extends AbstractProjectCommand {
 
-    public static final String PROJECT_SHOW_BY_ID = "project-show-by-id";
+    public static final String NAME = "project-show-by-id";
+
+    public static final String DESCRIPTION = "Показать проект по Id.";
 
     @Override
     public String getDescription() {
-        return "Показать проект по Id.";
+        return DESCRIPTION;
     }
 
     @Override
     public String getName() {
-        return PROJECT_SHOW_BY_ID;
+        return NAME;
     }
 
     @Override

@@ -5,16 +5,18 @@ import ru.t1.dkononov.tm.util.TerminalUtil;
 
 public final class TaskUnbindFromProjectCommand extends AbstractTaskCommand {
 
-    public static final String TASK_UNBIND_FROM_PROJECT = "task-unbind-from-project";
+    public static final String NAME = "task-unbind-from-project";
+
+    public static final String DESCRIPTION = "Отвязать задачу от Проекта";
 
     @Override
     public String getDescription() {
-        return "Отвязать задачу от Проекта";
+        return DESCRIPTION;
     }
 
     @Override
     public String getName() {
-        return TASK_UNBIND_FROM_PROJECT;
+        return NAME;
     }
 
     @Override

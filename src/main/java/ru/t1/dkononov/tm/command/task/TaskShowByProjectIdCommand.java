@@ -8,16 +8,18 @@ import java.util.List;
 
 public final class TaskShowByProjectIdCommand extends AbstractTaskCommand {
 
-    public static final String TASK_SHOW_BY_PROJECT_ID = "task-show-by-project-id";
+    public static final String NAME = "task-show-by-project-id";
+
+    public static final String DESCRIPTION = "Вывести задачи с нужным Project Id.";
 
     @Override
     public String getDescription() {
-        return "Вывести задачи с нужным Project Id.";
+        return DESCRIPTION;
     }
 
     @Override
     public String getName() {
-        return TASK_SHOW_BY_PROJECT_ID;
+        return NAME;
     }
 
     @Override

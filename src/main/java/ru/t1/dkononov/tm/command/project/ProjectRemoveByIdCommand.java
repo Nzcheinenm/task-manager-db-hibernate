@@ -6,16 +6,18 @@ import ru.t1.dkononov.tm.util.TerminalUtil;
 
 public final class ProjectRemoveByIdCommand extends AbstractProjectCommand {
 
-    public static final String PROJECT_REMOVE_BY_ID = "project-remove-by-id";
+    public static final String NAME = "project-remove-by-id";
+
+    public static final String DESCRIPTION = "Удалить проект по Id.";
 
     @Override
     public String getDescription() {
-        return "Удалить проект по Id.";
+        return DESCRIPTION;
     }
 
     @Override
     public String getName() {
-        return PROJECT_REMOVE_BY_ID;
+        return NAME;
     }
 
     @Override

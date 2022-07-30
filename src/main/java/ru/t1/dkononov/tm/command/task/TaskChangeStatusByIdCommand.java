@@ -8,16 +8,18 @@ import java.util.Arrays;
 
 public final class TaskChangeStatusByIdCommand extends AbstractTaskCommand {
 
-    public static final String TASK_CHANGE_STATUS_BY_ID = "task-change-status-by-id";
+    public static final String NAME = "task-change-status-by-id";
+
+    public static final String DESCRIPTION = "Поменять статус задачи по Id.";
 
     @Override
     public String getDescription() {
-        return "Поменять статус задачи по Id.";
+        return DESCRIPTION;
     }
 
     @Override
     public String getName() {
-        return TASK_CHANGE_STATUS_BY_ID;
+        return NAME;
     }
 
     @Override

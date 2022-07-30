@@ -5,16 +5,18 @@ import ru.t1.dkononov.tm.util.TerminalUtil;
 
 public final class TaskRemoveByIdCommand extends AbstractTaskCommand {
 
-    public static final String TASK_REMOVE_BY_ID = "task-remove-by-id";
+    public static final String NAME = "task-remove-by-id";
+
+    public static final String DESCRIPTION = "Удалить задачу по Id.";
 
     @Override
     public String getDescription() {
-        return "Удалить задачу по Id.";
+        return DESCRIPTION;
     }
 
     @Override
     public String getName() {
-        return TASK_REMOVE_BY_ID;
+        return NAME;
     }
 
     @Override

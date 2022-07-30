@@ -2,19 +2,25 @@ package ru.t1.dkononov.tm.command.system;
 
 public final class ApplicationAboutCommand extends AbstractSystemCommand {
 
+    public static final String DESCRIPTION = "Информация о разработчике";
+
+    public static final String NAME = "about";
+
+    public static final String ARGUMENT = "-a";
+
     @Override
     public String getArgument() {
-        return "-a";
+        return ARGUMENT;
     }
 
     @Override
     public String getDescription() {
-        return "Информация о разработчике";
+        return DESCRIPTION;
     }
 
     @Override
     public String getName() {
-        return "about";
+        return NAME;
     }
 
     @Override

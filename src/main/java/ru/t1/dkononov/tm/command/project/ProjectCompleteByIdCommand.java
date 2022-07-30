@@ -6,16 +6,18 @@ import ru.t1.dkononov.tm.util.TerminalUtil;
 
 public final class ProjectCompleteByIdCommand extends AbstractProjectCommand {
 
-    public static final String PROJECT_COMPLETE_BY_ID = "project-complete-by-id";
+    public static final String NAME = "project-complete-by-id";
+
+    public static final String DESCRIPTION = "Завершить проект по Id.";
 
     @Override
     public String getDescription() {
-        return "Завершить проект по Id.";
+        return DESCRIPTION;
     }
 
     @Override
     public String getName() {
-        return PROJECT_COMPLETE_BY_ID;
+        return NAME;
     }
 
     @Override

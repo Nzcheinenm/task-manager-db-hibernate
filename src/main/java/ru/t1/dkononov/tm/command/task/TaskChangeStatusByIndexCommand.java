@@ -8,16 +8,18 @@ import java.util.Arrays;
 
 public final class TaskChangeStatusByIndexCommand extends AbstractTaskCommand {
 
-    public static final String TASK_CHANGE_STATUS_BY_INDEX = "task-change-status-by-index";
+    public static final String NAME = "task-change-status-by-index";
+
+    public static final String DESCRIPTION = "Поменять статус задачи по индексу.";
 
     @Override
     public String getDescription() {
-        return "Поменять статус задачи по индексу.";
+        return DESCRIPTION;
     }
 
     @Override
     public String getName() {
-        return TASK_CHANGE_STATUS_BY_INDEX;
+        return NAME;
     }
 
     @Override

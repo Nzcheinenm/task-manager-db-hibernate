@@ -6,16 +6,18 @@ import ru.t1.dkononov.tm.util.TerminalUtil;
 
 public final class ProjectRemoveByIndexCommand extends AbstractProjectCommand {
 
-    public static final String PROJECT_REMOVE_BY_INDEX = "project-remove-by-index";
+    public static final String NAME = "project-remove-by-index";
+
+    public static final String DESCRIPTION = "Удалить проект по индексу.";
 
     @Override
     public String getDescription() {
-        return "Удалить проект по индексу.";
+        return DESCRIPTION;
     }
 
     @Override
     public String getName() {
-        return PROJECT_REMOVE_BY_INDEX;
+        return NAME;
     }
 
     @Override

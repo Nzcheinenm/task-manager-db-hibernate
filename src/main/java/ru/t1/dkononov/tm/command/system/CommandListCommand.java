@@ -7,19 +7,25 @@ import java.util.Collection;
 
 public final class CommandListCommand extends AbstractSystemCommand {
 
+    public static final String DESCRIPTION = "Показать список команд";
+
+    public static final String NAME = "commands";
+
+    public static final String ARGUMENT = "-cmd";
+
     @Override
     public String getArgument() {
-        return "-cmd";
+        return ARGUMENT;
     }
 
     @Override
     public String getDescription() {
-        return "Показать список команд";
+        return DESCRIPTION;
     }
 
     @Override
     public String getName() {
-        return "commands";
+        return NAME;
     }
 
     @Override

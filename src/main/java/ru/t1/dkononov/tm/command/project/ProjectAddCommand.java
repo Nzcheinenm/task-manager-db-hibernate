@@ -5,16 +5,17 @@ import ru.t1.dkononov.tm.util.TerminalUtil;
 
 public final class ProjectAddCommand extends AbstractProjectCommand {
 
-    public static final String PROJECT_ADD = "project-add";
+    public static final String DESCRIPTION = "Создать новый проект.";
+    public static final String NAME = "project-add";
 
     @Override
     public String getDescription() {
-        return "Создать новый проект.";
+        return DESCRIPTION;
     }
 
     @Override
     public String getName() {
-        return PROJECT_ADD;
+        return NAME;
     }
 
     @Override

@@ -6,6 +6,6 @@ import ru.t1.dkononov.tm.model.Command;
 
 import java.util.Collection;
 
-public interface ICommandService  extends ICommandRepository {
+public interface ICommandService extends ICommandRepository {
 
 }

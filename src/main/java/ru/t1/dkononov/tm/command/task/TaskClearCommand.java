@@ -2,16 +2,18 @@ package ru.t1.dkononov.tm.command.task;
 
 public final class TaskClearCommand extends AbstractTaskCommand {
 
-    public static final String TASK_CLEAR = "task-clear";
+    public static final String NAME = "task-clear";
+
+    public static final String DESCRIPTION = "Очистить список задач.";
 
     @Override
     public String getDescription() {
-        return "Очистить список задач.";
+        return DESCRIPTION;
     }
 
     @Override
     public String getName() {
-        return TASK_CLEAR;
+        return NAME;
     }
 
     @Override

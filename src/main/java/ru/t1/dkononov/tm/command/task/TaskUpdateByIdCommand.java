@@ -5,16 +5,18 @@ import ru.t1.dkononov.tm.util.TerminalUtil;
 
 public final class TaskUpdateByIdCommand extends AbstractTaskCommand {
 
-    public static final String TASK_UPDATE_BY_ID = "task-update-by-id";
+    public static final String NAME = "task-update-by-id";
+
+    public static final String DESCRIPTION = "Обновить задачу по Id.";
 
     @Override
     public String getDescription() {
-        return "Обновить задачу по Id.";
+        return DESCRIPTION;
     }
 
     @Override
     public String getName() {
-        return TASK_UPDATE_BY_ID;
+        return NAME;
     }
 
     @Override

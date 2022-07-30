@@ -5,16 +5,18 @@ import ru.t1.dkononov.tm.util.TerminalUtil;
 
 public final class ProjectUpdateByIdCommand extends AbstractProjectCommand {
 
-    public static final String PROJECT_UPDATE_BY_ID = "project-update-by-id";
+    public static final String NAME = "project-update-by-id";
+
+    public static final String DESCRIPTION = "Обновить проект по Id.";
 
     @Override
     public String getDescription() {
-        return "Обновить проект по Id.";
+        return DESCRIPTION;
     }
 
     @Override
     public String getName() {
-        return PROJECT_UPDATE_BY_ID;
+        return NAME;
     }
 
     @Override

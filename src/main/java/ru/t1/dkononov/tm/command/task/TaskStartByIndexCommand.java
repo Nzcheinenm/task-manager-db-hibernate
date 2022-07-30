@@ -6,16 +6,18 @@ import ru.t1.dkononov.tm.util.TerminalUtil;
 
 public final class TaskStartByIndexCommand extends AbstractTaskCommand {
 
-    public static final String TASK_START_BY_INDEX = "task-start-by-index";
+    public static final String NAME = "task-start-by-index";
+
+    public static final String DESCRIPTION = "Начать задачу по индексу.";
 
     @Override
     public String getDescription() {
-        return "Начать задачу по индексу.";
+        return DESCRIPTION;
     }
 
     @Override
     public String getName() {
-        return TASK_START_BY_INDEX;
+        return NAME;
     }
 
     @Override

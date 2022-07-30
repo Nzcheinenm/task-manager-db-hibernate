@@ -6,16 +6,18 @@ import ru.t1.dkononov.tm.util.TerminalUtil;
 
 public final class ProjectStartByIndexCommand extends AbstractProjectCommand {
 
-    public static final String PROJECT_START_BY_INDEX = "project-start-by-index";
+    public static final String NAME = "project-start-by-index";
+
+    public static final String DESCRIPTION = "Начать проект по индексу.";
 
     @Override
     public String getDescription() {
-        return "Начать проект по индексу.";
+        return DESCRIPTION;
     }
 
     @Override
     public String getName() {
-        return PROJECT_START_BY_INDEX;
+        return NAME;
     }
 
     @Override

@@ -2,16 +2,18 @@ package ru.t1.dkononov.tm.command.project;
 
 public final class ProjectClearCommand extends AbstractProjectCommand {
 
-    public static final String PROJECT_CLEAR = "project-clear";
+    public static final String NAME = "project-clear";
+
+    public static final String DESCRIPTION = "Очистить список проектов.";
 
     @Override
     public String getDescription() {
-        return "Очистить список проектов.";
+        return DESCRIPTION;
     }
 
     @Override
     public String getName() {
-        return PROJECT_CLEAR;
+        return NAME;
     }
 
     @Override

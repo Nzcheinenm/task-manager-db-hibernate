@@ -6,16 +6,18 @@ import ru.t1.dkononov.tm.util.TerminalUtil;
 
 public final class TaskShowByIdCommand extends AbstractTaskCommand {
 
-    public static final String TASK_SHOW_BY_ID = "task-show-by-id";
+    public static final String NAME = "task-show-by-id";
+
+    public static final String DESCRIPTION = "Показать задачу по Id.";
 
     @Override
     public String getDescription() {
-        return "Показать задачу по Id.";
+        return DESCRIPTION;
     }
 
     @Override
     public String getName() {
-        return TASK_SHOW_BY_ID;
+        return NAME;
     }
 
     @Override

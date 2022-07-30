@@ -5,16 +5,18 @@ import ru.t1.dkononov.tm.util.TerminalUtil;
 
 public final class TaskUpdateByIndexCommand extends AbstractTaskCommand {
 
-    public static final String TASK_UPDATE_BY_INDEX = "task-update-by-index";
+    public static final String DESCRIPTION = "Обновить задачу по индексу.";
+
+    public static final String NAME = "task-update-by-index";
 
     @Override
     public String getDescription() {
-        return "Обновить задачу по индексу.";
+        return DESCRIPTION;
     }
 
     @Override
     public String getName() {
-        return TASK_UPDATE_BY_INDEX;
+        return NAME;
     }
 
     @Override

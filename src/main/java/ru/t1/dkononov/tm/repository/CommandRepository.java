@@ -11,15 +11,15 @@ public class CommandRepository implements ICommandRepository {
 
     private final Map<String, AbstractCommand> mapByArgument = new LinkedHashMap<>();
 
-    private final Map<String,AbstractCommand> mapByName = new LinkedHashMap<>();
+    private final Map<String, AbstractCommand> mapByName = new LinkedHashMap<>();
 
     @Override
     public void add(final AbstractCommand command) {
         if (command == null) return;
         final String name = command.getName();
-        if (name != null && !name.isEmpty()) mapByName.put(name,command);
+        if (name != null && !name.isEmpty()) mapByName.put(name, command);
         final String argument = command.getArgument();
-        if (argument != null && !argument.isEmpty()) mapByArgument.put(argument,command);
+        if (argument != null && !argument.isEmpty()) mapByArgument.put(argument, command);
     }
 
     @Override

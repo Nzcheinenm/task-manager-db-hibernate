@@ -5,16 +5,18 @@ import ru.t1.dkononov.tm.util.TerminalUtil;
 
 public final class TaskBindFromProjectCommand extends AbstractTaskCommand {
 
-    public static final String TASK_BIND_TO_PROJECT = "task-bind-to-project";
+    public static final String NAME = "task-bind-to-project";
+
+    public static final String DESCRIPTION = "Привязать задачу к проекту.";
 
     @Override
     public String getDescription() {
-        return "Привязать задачу к проекту.";
+        return DESCRIPTION;
     }
 
     @Override
     public String getName() {
-        return TASK_BIND_TO_PROJECT;
+        return NAME;
     }
 
     @Override
