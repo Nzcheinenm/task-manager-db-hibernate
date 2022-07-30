@@ -1,19 +1,13 @@
 package ru.t1.dkononov.tm.component;
 
-import ru.t1.dkononov.tm.api.controllers.ICommandController;
-import ru.t1.dkononov.tm.api.controllers.IProjectController;
-import ru.t1.dkononov.tm.api.controllers.IProjectTaskController;
 import ru.t1.dkononov.tm.api.repository.ICommandRepository;
 import ru.t1.dkononov.tm.api.repository.IProjectRepository;
 import ru.t1.dkononov.tm.api.repository.ITaskRepository;
 import ru.t1.dkononov.tm.api.services.*;
-import ru.t1.dkononov.tm.constant.ArgumentConst;
-import ru.t1.dkononov.tm.constant.CommandConst;
-import ru.t1.dkononov.tm.controller.CommandController;
-import ru.t1.dkononov.tm.api.controllers.ITaskController;
-import ru.t1.dkononov.tm.controller.ProjectController;
-import ru.t1.dkononov.tm.controller.ProjectTaskController;
-import ru.t1.dkononov.tm.controller.TaskController;
+import ru.t1.dkononov.tm.command.AbstractCommand;
+import ru.t1.dkononov.tm.command.project.*;
+import ru.t1.dkononov.tm.command.system.*;
+import ru.t1.dkononov.tm.command.task.*;
 import ru.t1.dkononov.tm.enumerated.Status;
 import ru.t1.dkononov.tm.exception.AbstractException;
 import ru.t1.dkononov.tm.exception.system.ArgumentNotSupportedException;
@@ -25,15 +19,12 @@ import ru.t1.dkononov.tm.repository.ProjectRepository;
 import ru.t1.dkononov.tm.repository.TaskRepository;
 import ru.t1.dkononov.tm.service.*;
 import ru.t1.dkononov.tm.util.TerminalUtil;
-import sun.rmi.runtime.Log;
 
-public class Bootstrap {
+public class Bootstrap implements IServiceLocator {
 
     private final ICommandRepository commandRepository = new CommandRepository();
 
     private final ICommandService commandService = new CommandService(commandRepository);
-
-    private final ICommandController commandController = new CommandController(commandService);
 
     private final IProjectRepository projectRepository = new ProjectRepository();
 
@@ -45,30 +36,93 @@ public class Bootstrap {
 
     private final IProjectTaskService projectTaskService = new ProjectTaskService(projectRepository, taskRepository);
 
-    private final IProjectController projectController = new ProjectController(projectService, projectTaskService);
-
-    private final IProjectTaskController projectTaskController = new ProjectTaskController(projectTaskService);
-
-    private final ITaskController taskController = new TaskController(taskService);
-
     private final ILoggerService loggerService = new LoggerService();
 
+    {
+        registry(new ApplicationAboutCommand());
+        registry(new ApplicationExitCommand());
+        registry(new ApplicationHelpCommand());
+        registry(new ApplicationVersionCommand());
+        registry(new ArgumentListCommand());
+        registry(new CommandListCommand());
+        registry(new SystemInfoCommand());
+
+        registry(new ProjectAddCommand());
+        registry(new ProjectChangeStatusByIdCommand());
+        registry(new ProjectChangeStatusByIndexCommand());
+        registry(new ProjectClearCommand());
+        registry(new ProjectCompleteByIdCommand());
+        registry(new ProjectCompleteByIndexCommand());
+        registry(new ProjectListCommand());
+        registry(new ProjectRemoveByIdCommand());
+        registry(new ProjectRemoveByIndexCommand());
+        registry(new ProjectShowByIdCommand());
+        registry(new ProjectShowByIndexCommand());
+        registry(new ProjectStartByIdCommand());
+        registry(new ProjectStartByIndexCommand());
+        registry(new ProjectUpdateByIdCommand());
+        registry(new ProjectUpdateByIndexCommand());
+
+        registry(new TaskAddCommand());
+        registry(new TaskChangeStatusByIdCommand());
+        registry(new TaskChangeStatusByIndexCommand());
+        registry(new TaskClearCommand());
+        registry(new TaskCompleteByIdCommand());
+        registry(new TaskCompleteByIndexCommand());
+        registry(new TaskListCommand());
+        registry(new TaskRemoveByIdCommand());
+        registry(new TaskRemoveByIndexCommand());
+        registry(new TaskShowByIdCommand());
+        registry(new TaskShowByIndexCommand());
+        registry(new TaskShowByProjectIdCommand());
+        registry(new TaskStartByIdCommand());
+        registry(new TaskStartByIndexCommand());
+        registry(new TaskUnbindFromProjectCommand());
+        registry(new TaskBindFromProjectCommand());
+        registry(new TaskUpdateByIdCommand());
+        registry(new TaskUpdateByIndexCommand());
+    }
+
     public void run(final String[] args) {
-        processArguments(args);
-        processCommands();
+        if (processArgument(args)) System.exit(0);
+
+        try {
+
+            initData();
+            initLogger();
+
+            while (true) {
+                try {
+                    System.out.println("ENTER COMMAND:");
+                    final String command = TerminalUtil.inLine();
+                    processCommand(command);
+                    System.out.println("[OK]");
+                    loggerService.command(command);
+                } catch (final Exception e) {
+                    loggerService.error(e);
+                    System.err.println("[FAIL]");
+                }
+            }
+        } catch (final AbstractException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    public void close() {
-        System.exit(0);
+    private void processArgument(final String argument) throws AbstractException {
+        final AbstractCommand abstractCommand = commandService.getCommandByArgument(argument);
+        if (abstractCommand == null) throw new ArgumentNotSupportedException(argument);
+        abstractCommand.execute();
     }
 
-    private void processArguments(final String[] args) {
-        if (args == null || args.length == 0) return;
+    private boolean processArgument(final String[] args) {
+        if (args == null || args.length == 0) return false;
         final String argument = args[0];
         try {
             processArgument(argument);
+            return true;
         } catch (final Exception e) {
             loggerService.error(e);
+            return false;
         }
     }
 
@@ -81,179 +135,46 @@ public class Bootstrap {
         taskService.add(new Task("Homework", Status.NOT_STARTED));
     }
 
-    private void processCommands() {
-        try {
-            initData();
-        } catch (final AbstractException e) {
-            loggerService.error(e);
-            System.out.println("[FAIL TO INIT TEST DATA]");
-        }
-
-        initLogger();
-
-        while (!Thread.currentThread().isInterrupted()) {
-            try {
-                System.out.println("ENTER COMMAND: ");
-                final String command = TerminalUtil.inLine();
-                processCommand(command);
-                System.out.println("[OK]");
-                loggerService.command(command);
-            } catch (final Exception e) {
-                loggerService.error(e);
-                System.out.println("[FAIL]");
-            }
-        }
-    }
-
     private void initLogger() {
         loggerService.info("** WELCOME TO TASK-MANAGER **");
         Runtime.getRuntime().addShutdownHook(new Thread(() ->
                 loggerService.info("** TASK-MANAGER IS SHUTTING DOWN **")));
     }
 
-    private void processArgument(final String argument) throws CommandNotSupportedException {
-        if (argument == null || argument.isEmpty()) return;
-        switch (argument) {
-            case ArgumentConst.HELP:
-                commandController.showHelp();
-                break;
-            case ArgumentConst.ABOUT:
-                commandController.showAbout();
-                break;
-            case ArgumentConst.VERSION:
-                commandController.showVersion();
-                break;
-            case ArgumentConst.INFO:
-                commandController.showSystemInfo();
-                break;
-            default:
-                throw new CommandNotSupportedException(argument);
-        }
-        System.exit(0);
+    private void processCommand(final String command) throws AbstractException {
+        final AbstractCommand abstractCommand = commandService.getCommandByName(command);
+        if (abstractCommand == null) throw new CommandNotSupportedException(command);
+        abstractCommand.execute();
     }
 
-    private void processCommand(final String argument) throws AbstractException {
-        if (argument == null || argument.isEmpty()) return;
-        switch (argument) {
-            case CommandConst.HELP:
-                commandController.showHelp();
-                break;
-            case CommandConst.ABOUT:
-                commandController.showAbout();
-                break;
-            case CommandConst.VERSION:
-                commandController.showVersion();
-                break;
-            case CommandConst.INFO:
-                commandController.showSystemInfo();
-                break;
-            case CommandConst.EXIT:
-                close();
-                break;
-            case CommandConst.PROJECT_ADD:
-                projectController.addProject();
-                break;
-            case CommandConst.PROJECT_CLEAR:
-                projectController.clearProjects();
-                break;
-            case CommandConst.PROJECT_LIST:
-                projectController.showProjects();
-                break;
-            case CommandConst.PROJECT_SHOW_BY_ID:
-                projectController.showProjectById();
-                break;
-            case CommandConst.PROJECT_SHOW_BY_INDEX:
-                projectController.showProjectByIndex();
-                break;
-            case CommandConst.PROJECT_REMOVE_BY_ID:
-                projectController.removeProjectById();
-                break;
-            case CommandConst.PROJECT_REMOVE_BY_INDEX:
-                projectController.removeProjectByIndex();
-                break;
-            case CommandConst.PROJECT_UPDATE_BY_ID:
-                projectController.updateProjectById();
-                break;
-            case CommandConst.PROJECT_UPDATE_BY_INDEX:
-                projectController.updateProjectByIndex();
-                break;
-            case CommandConst.PROJECT_CHANGE_STATUS_BY_ID:
-                projectController.changeProjectStatusById();
-                break;
-            case CommandConst.PROJECT_CHANGE_STATUS_BY_INDEX:
-                projectController.changeProjectStatusByIndex();
-                break;
-            case CommandConst.PROJECT_COMPLETE_BY_ID:
-                projectController.completeProjectById();
-                break;
-            case CommandConst.PROJECT_COMPLETE_BY_INDEX:
-                projectController.completeProjectByIndex();
-                break;
-            case CommandConst.PROJECT_START_BY_ID:
-                projectController.startProjectById();
-                break;
-            case CommandConst.PROJECT_START_BY_INDEX:
-                projectController.startProjectByIndex();
-                break;
+    private void registry(final AbstractCommand command) {
+        command.setServiceLocator(this);
+        commandService.add(command);
+    }
 
-            case CommandConst.TASK_ADD:
-                taskController.addTask();
-                break;
-            case CommandConst.TASK_CLEAR:
-                taskController.clearTasks();
-                break;
-            case CommandConst.TASK_LIST:
-                taskController.showTasks();
-                break;
-            case CommandConst.TASK_SHOW_BY_ID:
-                taskController.showTaskById();
-                break;
-            case CommandConst.TASK_SHOW_BY_INDEX:
-                taskController.showTaskByIndex();
-                break;
-            case CommandConst.TASK_REMOVE_BY_ID:
-                taskController.removeTaskById();
-                break;
-            case CommandConst.TASK_REMOVE_BY_INDEX:
-                taskController.removeTaskByIndex();
-                break;
-            case CommandConst.TASK_UPDATE_BY_ID:
-                taskController.updateTaskById();
-                break;
-            case CommandConst.TASK_UPDATE_BY_INDEX:
-                taskController.updateTaskByIndex();
-                break;
-            case CommandConst.TASK_CHANGE_STATUS_BY_ID:
-                taskController.changeTaskStatusById();
-                break;
-            case CommandConst.TASK_CHANGE_STATUS_BY_INDEX:
-                taskController.changeTaskStatusByIndex();
-                break;
-            case CommandConst.TASK_COMPLETE_BY_ID:
-                taskController.completeTaskById();
-                break;
-            case CommandConst.TASK_COMPLETE_BY_INDEX:
-                taskController.completeTaskByIndex();
-                break;
-            case CommandConst.TASK_START_BY_ID:
-                taskController.startTaskById();
-                break;
-            case CommandConst.TASK_START_BY_INDEX:
-                taskController.startTaskByIndex();
-                break;
-            case CommandConst.TASK_UNBIND_FROM_PROJECT:
-                projectTaskController.unbindTaskFromProject();
-                break;
-            case CommandConst.TASK_SHOW_BY_PROJECT_ID:
-                taskController.showTaskByProjectId();
-                break;
-            case CommandConst.TASK_BIND_TO_PROJECT:
-                projectTaskController.bindTaskToProject();
-                break;
+    @Override
+    public ICommandService getCommandService() {
+        return commandService;
+    }
 
-            default:
-                throw new ArgumentNotSupportedException(argument);
-        }
+    @Override
+    public ILoggerService getLoggerService() {
+        return loggerService;
+    }
+
+    @Override
+    public IProjectService getProjectService() {
+        return projectService;
+    }
+
+    @Override
+    public IProjectTaskService getProjectTaskService() {
+        return projectTaskService;
+    }
+
+    @Override
+    public ITaskService getTaskService() {
+        return taskService;
     }
 
 }
