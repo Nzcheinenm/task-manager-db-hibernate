@@ -85,12 +85,9 @@ public class Bootstrap implements IServiceLocator {
 
     public void run(final String[] args) {
         if (processArgument(args)) System.exit(0);
-
         try {
-
             initData();
             initLogger();
-
             while (true) {
                 try {
                     System.out.println("ENTER COMMAND:");
@@ -130,7 +127,6 @@ public class Bootstrap implements IServiceLocator {
         projectService.add(new Project("Jira", Status.NOT_STARTED));
         projectService.add(new Project("Confluence", Status.IN_PROGRESS));
         projectService.add(new Project("SoapUI", Status.IN_PROGRESS));
-
         taskService.add(new Task("Work", Status.IN_PROGRESS));
         taskService.add(new Task("Homework", Status.NOT_STARTED));
     }
