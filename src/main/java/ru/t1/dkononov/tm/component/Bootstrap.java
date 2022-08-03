@@ -3,11 +3,14 @@ package ru.t1.dkononov.tm.component;
 import ru.t1.dkononov.tm.api.repository.ICommandRepository;
 import ru.t1.dkononov.tm.api.repository.IProjectRepository;
 import ru.t1.dkononov.tm.api.repository.ITaskRepository;
+import ru.t1.dkononov.tm.api.repository.IUserRepository;
 import ru.t1.dkononov.tm.api.services.*;
 import ru.t1.dkononov.tm.command.AbstractCommand;
 import ru.t1.dkononov.tm.command.project.*;
 import ru.t1.dkononov.tm.command.system.*;
 import ru.t1.dkononov.tm.command.task.*;
+import ru.t1.dkononov.tm.command.user.*;
+import ru.t1.dkononov.tm.enumerated.Role;
 import ru.t1.dkononov.tm.enumerated.Status;
 import ru.t1.dkononov.tm.exception.AbstractException;
 import ru.t1.dkononov.tm.exception.system.ArgumentNotSupportedException;
@@ -17,6 +20,7 @@ import ru.t1.dkononov.tm.model.Task;
 import ru.t1.dkononov.tm.repository.CommandRepository;
 import ru.t1.dkononov.tm.repository.ProjectRepository;
 import ru.t1.dkononov.tm.repository.TaskRepository;
+import ru.t1.dkononov.tm.repository.UserRepository;
 import ru.t1.dkononov.tm.service.*;
 import ru.t1.dkononov.tm.util.TerminalUtil;
 
@@ -37,6 +41,12 @@ public class Bootstrap implements IServiceLocator {
     private final IProjectTaskService projectTaskService = new ProjectTaskService(projectRepository, taskRepository);
 
     private final ILoggerService loggerService = new LoggerService();
+
+    private final IUserRepository userRepository = new UserRepository();
+
+    private final IUserService userService = new UserService(userRepository);
+
+    private final IAuthService authService = new AuthService(userService);
 
     {
         registry(new ApplicationAboutCommand());
@@ -81,6 +91,13 @@ public class Bootstrap implements IServiceLocator {
         registry(new TaskBindFromProjectCommand());
         registry(new TaskUpdateByIdCommand());
         registry(new TaskUpdateByIndexCommand());
+
+        registry(new UserViewProfileCommand());
+        registry(new UserChangePasswordCommand());
+        registry(new UserRegistryCommand());
+        registry(new UserUpdateProfileCommand());
+        registry(new UserLogoutCommand());
+        registry(new UserLoginCommand());
     }
 
     public void run(final String[] args) {
@@ -130,9 +147,13 @@ public class Bootstrap implements IServiceLocator {
     }
 
     private void initData() throws AbstractException {
+        userService.create("test", "test", "test@test.ru");
+        userService.create("admin", "admin", Role.ADMIN);
+
         projectService.add(new Project("Jira", Status.NOT_STARTED));
         projectService.add(new Project("Confluence", Status.IN_PROGRESS));
         projectService.add(new Project("SoapUI", Status.IN_PROGRESS));
+
         taskService.add(new Task("Work", Status.IN_PROGRESS));
         taskService.add(new Task("Homework", Status.NOT_STARTED));
     }
@@ -152,6 +173,16 @@ public class Bootstrap implements IServiceLocator {
     private void registry(final AbstractCommand command) {
         command.setServiceLocator(this);
         commandService.add(command);
+    }
+
+    @Override
+    public IAuthService getAuthService() {
+        return authService;
+    }
+
+    @Override
+    public IUserService getUserService() {
+        return userService;
     }
 
     @Override
