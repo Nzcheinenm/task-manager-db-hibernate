@@ -85,23 +85,29 @@ public class Bootstrap implements IServiceLocator {
 
     public void run(final String[] args) {
         if (processArgument(args)) System.exit(0);
+        init();
+        while (!Thread.currentThread().isInterrupted()) {
+            try {
+                System.out.println("ENTER COMMAND:");
+                final String command = TerminalUtil.inLine();
+                processCommand(command);
+                System.out.println("[OK]");
+                loggerService.command(command);
+            } catch (final Exception e) {
+                loggerService.error(e);
+                System.err.println("[FAIL]");
+            }
+        }
+
+    }
+
+    private void init() {
         try {
             initData();
             initLogger();
-            while (true) {
-                try {
-                    System.out.println("ENTER COMMAND:");
-                    final String command = TerminalUtil.inLine();
-                    processCommand(command);
-                    System.out.println("[OK]");
-                    loggerService.command(command);
-                } catch (final Exception e) {
-                    loggerService.error(e);
-                    System.err.println("[FAIL]");
-                }
-            }
         } catch (final AbstractException e) {
-            throw new RuntimeException(e);
+            loggerService.error(e);
+            System.err.println("[INIT FAIL]");
         }
     }
 
