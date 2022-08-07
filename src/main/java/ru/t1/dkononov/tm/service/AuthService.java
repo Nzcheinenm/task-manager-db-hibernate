@@ -1,7 +1,11 @@
 package ru.t1.dkononov.tm.service;
 
 import ru.t1.dkononov.tm.api.services.IUserService;
-import ru.t1.dkononov.tm.exception.field.*;
+import ru.t1.dkononov.tm.exception.AbstractException;
+import ru.t1.dkononov.tm.exception.field.AbstractFieldException;
+import ru.t1.dkononov.tm.exception.field.AccessDeniedException;
+import ru.t1.dkononov.tm.exception.field.LoginEmptyException;
+import ru.t1.dkononov.tm.exception.field.PasswordEmptyException;
 import ru.t1.dkononov.tm.model.User;
 import ru.t1.dkononov.tm.util.HashUtil;
 
@@ -18,7 +22,7 @@ public class AuthService implements ru.t1.dkononov.tm.api.services.IAuthService 
 
     @Override
     public User registry(final String login, final String password, final String email)
-            throws AbstractFieldException {
+            throws AbstractException {
         return userService.create(login, password, email);
     }
 

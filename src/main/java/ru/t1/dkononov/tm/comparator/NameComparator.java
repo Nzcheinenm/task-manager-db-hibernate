@@ -1,6 +1,5 @@
 package ru.t1.dkononov.tm.comparator;
 
-import ru.t1.dkononov.tm.api.model.IHasCreated;
 import ru.t1.dkononov.tm.api.model.IHasName;
 
 import java.util.Comparator;

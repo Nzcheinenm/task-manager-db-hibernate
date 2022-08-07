@@ -1,6 +1,5 @@
 package ru.t1.dkononov.tm.command.task;
 
-import ru.t1.dkononov.tm.api.services.ICommandService;
 import ru.t1.dkononov.tm.api.services.IProjectTaskService;
 import ru.t1.dkononov.tm.api.services.ITaskService;
 import ru.t1.dkononov.tm.command.AbstractCommand;

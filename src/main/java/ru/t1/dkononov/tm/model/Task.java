@@ -4,11 +4,8 @@ import ru.t1.dkononov.tm.api.model.IWBS;
 import ru.t1.dkononov.tm.enumerated.Status;
 
 import java.util.Date;
-import java.util.UUID;
 
-public final class Task implements IWBS {
-
-    private String id = UUID.randomUUID().toString();
+public final class Task extends AbstractModel implements IWBS {
 
     private String name = "";
 
@@ -42,14 +39,6 @@ public final class Task implements IWBS {
 
     public void setProjectId(final String projectId) {
         this.projectId = projectId;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(final String id) {
-        this.id = id;
     }
 
     public String getName() {

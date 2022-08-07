@@ -1,8 +1,8 @@
 package ru.t1.dkononov.tm;
 
-import static org.junit.Assert.assertTrue;
-
 import org.junit.Test;
+
+import static org.junit.Assert.assertTrue;
 
 public class ApplicationTest {
 

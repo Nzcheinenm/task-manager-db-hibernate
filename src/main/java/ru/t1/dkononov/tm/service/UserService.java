@@ -3,22 +3,19 @@ package ru.t1.dkononov.tm.service;
 import ru.t1.dkononov.tm.api.repository.IUserRepository;
 import ru.t1.dkononov.tm.api.services.IUserService;
 import ru.t1.dkononov.tm.enumerated.Role;
+import ru.t1.dkononov.tm.exception.AbstractException;
 import ru.t1.dkononov.tm.exception.field.*;
 import ru.t1.dkononov.tm.model.User;
 import ru.t1.dkononov.tm.util.HashUtil;
 
-import java.util.List;
+public final class UserService extends AbstractService<User, IUserRepository> implements IUserService {
 
-public final class UserService implements IUserService {
-
-    private final IUserRepository userRepository;
-
-    public UserService(IUserRepository userRepository) {
-        this.userRepository = userRepository;
+    public UserService(IUserRepository repository) {
+        super(repository);
     }
 
     @Override
-    public User create(final String login, final String password) throws AbstractFieldException {
+    public User create(final String login, final String password) throws AbstractException {
         if (login == null || login.isEmpty()) throw new LoginEmptyException();
         if (isLoginExist(login)) throw new ExistsLoginException();
         if (password == null || password.isEmpty()) throw new PasswordEmptyException();
@@ -26,11 +23,11 @@ public final class UserService implements IUserService {
         user.setLogin(login);
         user.setPasswordHash(HashUtil.salt(password));
         user.setRole(Role.USUAL);
-        return userRepository.add(user);
+        return repository.add(user);
     }
 
     @Override
-    public User create(final String login, final String password, final String email) throws AbstractFieldException {
+    public User create(final String login, final String password, final String email) throws AbstractException {
         if (login == null || login.isEmpty()) throw new LoginEmptyException();
         if (isLoginExist(login)) throw new ExistsLoginException();
         if (password == null || password.isEmpty()) throw new PasswordEmptyException();
@@ -41,7 +38,7 @@ public final class UserService implements IUserService {
     }
 
     @Override
-    public User create(final String login, final String password, final Role role) throws AbstractFieldException {
+    public User create(final String login, final String password, final Role role) throws AbstractException {
         if (login == null || login.isEmpty()) throw new LoginEmptyException();
         if (isLoginExist(login)) throw new ExistsLoginException();
         if (password == null || password.isEmpty()) throw new PasswordEmptyException();
@@ -52,28 +49,9 @@ public final class UserService implements IUserService {
     }
 
     @Override
-    public User add(final User user) throws UserNotFoundException {
-        if (user == null) throw new UserNotFoundException();
-        return userRepository.add(user);
-    }
-
-    @Override
-    public List<User> findAll() {
-        return userRepository.findAll();
-    }
-
-    @Override
-    public User findById(final String id) throws IdEmptyException {
-        if (id == null || id.isEmpty()) throw new IdEmptyException();
-        final User user = userRepository.findById(id);
-        if (user == null) return null;
-        return user;
-    }
-
-    @Override
     public User findByLogin(final String login) throws LoginEmptyException {
         if (login == null || login.isEmpty()) throw new LoginEmptyException();
-        final User user = userRepository.findByLogin(login);
+        final User user = repository.findByLogin(login);
         if (user == null) return null;
         return user;
     }
@@ -81,23 +59,11 @@ public final class UserService implements IUserService {
     @Override
     public User findByEmail(final String email) throws EmailEmptyException {
         if (email == null || email.isEmpty()) throw new EmailEmptyException();
-        final User user = userRepository.findByEmail(email);
+        final User user = repository.findByEmail(email);
         if (user == null) return null;
         return user;
     }
 
-    @Override
-    public User remove(final User user) throws UserNotFoundException {
-        if (user == null) throw new UserNotFoundException();
-        return userRepository.remove(user);
-    }
-
-    @Override
-    public User removeById(final String id) throws AbstractFieldException {
-        if (id == null || id.isEmpty()) throw new IdEmptyException();
-        final User user = findById(id);
-        return remove(user);
-    }
 
     @Override
     public User removeByLogin(final String login) throws AbstractFieldException {
@@ -142,13 +108,13 @@ public final class UserService implements IUserService {
     @Override
     public Boolean isLoginExist(final String login) {
         if (login == null || login.isEmpty()) return false;
-        return userRepository.isLoginExist(login);
+        return repository.isLoginExist(login);
     }
 
     @Override
     public Boolean isEmailExist(final String email) {
         if (email == null || email.isEmpty()) return false;
-        return userRepository.isEmailExist(email);
+        return repository.isEmailExist(email);
     }
 
 }

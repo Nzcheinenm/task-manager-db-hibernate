@@ -1,31 +1,22 @@
 package ru.t1.dkononov.tm.api.services;
 
 import ru.t1.dkononov.tm.enumerated.Role;
-import ru.t1.dkononov.tm.exception.field.*;
+import ru.t1.dkononov.tm.exception.AbstractException;
+import ru.t1.dkononov.tm.exception.field.AbstractFieldException;
+import ru.t1.dkononov.tm.exception.field.EmailEmptyException;
+import ru.t1.dkononov.tm.exception.field.LoginEmptyException;
 import ru.t1.dkononov.tm.model.User;
 
-import java.util.List;
+public interface IUserService extends IService<User> {
+    User create(String login, String password) throws AbstractException;
 
-public interface IUserService {
-    User create(String login, String password) throws AbstractFieldException;
+    User create(String login, String password, String email) throws AbstractException;
 
-    User create(String login, String password, String email) throws AbstractFieldException;
-
-    User create(String login, String password, Role role) throws AbstractFieldException;
-
-    User add(User user) throws UserNotFoundException;
-
-    List<User> findAll();
-
-    User findById(String id) throws IdEmptyException;
+    User create(String login, String password, Role role) throws AbstractException;
 
     User findByLogin(String login) throws LoginEmptyException;
 
     User findByEmail(String email) throws EmailEmptyException;
-
-    User remove(User user) throws UserNotFoundException;
-
-    User removeById(String id) throws AbstractFieldException;
 
     User removeByLogin(String login) throws AbstractFieldException;
 

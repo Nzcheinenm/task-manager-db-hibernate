@@ -1,8 +1,6 @@
 package ru.t1.dkononov.tm.command.user;
 
-import org.w3c.dom.ls.LSOutput;
 import ru.t1.dkononov.tm.exception.AbstractException;
-import ru.t1.dkononov.tm.model.User;
 import ru.t1.dkononov.tm.util.TerminalUtil;
 
 public final class UserUpdateProfileCommand extends AbstractUserCommand {

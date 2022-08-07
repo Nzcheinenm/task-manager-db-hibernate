@@ -3,38 +3,11 @@ package ru.t1.dkononov.tm.repository;
 import ru.t1.dkononov.tm.api.repository.ITaskRepository;
 import ru.t1.dkononov.tm.model.Task;
 
-import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-public final class TaskRepository implements ITaskRepository {
-
-    private final List<Task> tasks = new ArrayList<>();
-
-    @Override
-    public List<Task> findAll() {
-        return tasks;
-    }
-
-    @Override
-    public List<Task> findAll(final Comparator<Task> comparator) {
-        final List<Task> result = new ArrayList<>(tasks);
-        result.sort(comparator);
-        return result;
-    }
-
-    @Override
-    public Task add(final Task task) {
-        tasks.add(task);
-        return task;
-    }
-
-    @Override
-    public void clear() {
-        tasks.clear();
-    }
+public final class TaskRepository extends AbstractRepository<Task> implements ITaskRepository {
 
     @Override
     public Task create(final String name) {
@@ -52,46 +25,8 @@ public final class TaskRepository implements ITaskRepository {
     }
 
     @Override
-    public Task findById(final String id) {
-        for (final Task task : tasks) {
-            if (Objects.equals(id, task.getId())) {
-                return task;
-            }
-        }
-        return null;
-    }
-
-    @Override
-    public Task findByIndex(final Integer index) {
-        return tasks.get(index);
-    }
-
-    @Override
-    public Task remove(final Task task) {
-        if (task == null) return null;
-        tasks.remove(task);
-        return task;
-    }
-
-    @Override
-    public Task removeById(final String id) {
-        final Task task = findById(id);
-        if (task == null) return null;
-        remove(task);
-        return task;
-    }
-
-    @Override
-    public Task removeByIndex(final Integer index) {
-        final Task task = findByIndex(index);
-        if (task == null) return null;
-        remove(task);
-        return task;
-    }
-
-    @Override
     public List<Task> findAllByProjectId(final String projectId) {
-        return tasks.stream()
+        return models.stream()
                 .filter(x -> Objects.equals(x.getProjectId(), projectId))
                 .collect(Collectors.toList());
     }
