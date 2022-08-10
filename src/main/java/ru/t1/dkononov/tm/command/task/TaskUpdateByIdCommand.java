@@ -21,13 +21,14 @@ public final class TaskUpdateByIdCommand extends AbstractTaskCommand {
 
     @Override
     public void execute() throws AbstractException {
+        final String userId = getUserId();
         System.out.println("[ENTER ID]");
         final String id = TerminalUtil.inLine();
         System.out.println("[ENTER NAME]");
         final String name = TerminalUtil.inLine();
         System.out.println("[ENTER DESCRIPTION]");
         final String description = TerminalUtil.inLine();
-        getTaskService().updateById(id, name, description);
+        getTaskService().updateById(userId, id, name, description);
     }
 
 }

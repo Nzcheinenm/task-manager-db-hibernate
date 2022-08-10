@@ -22,10 +22,11 @@ public final class TaskShowByIdCommand extends AbstractTaskCommand {
 
     @Override
     public void execute() throws AbstractFieldException {
+        final String userId = getUserId();
         System.out.println("[SHOW TASK]");
         System.out.println("[ENTER ID]");
         final String scanner = TerminalUtil.inLine();
-        final Task task = getTaskService().findById(scanner);
+        final Task task = getTaskService().findById(userId, scanner);
         System.out.println(show(task));
     }
 

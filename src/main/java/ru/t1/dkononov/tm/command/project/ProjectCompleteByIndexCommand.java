@@ -22,10 +22,11 @@ public final class ProjectCompleteByIndexCommand extends AbstractProjectCommand 
 
     @Override
     public void execute() throws AbstractException {
+        final String userId = getUserId();
         System.out.println("[COMPLETE PROJECT BY INDEX]");
         System.out.println("ENTER INDEX:");
         final Integer index = TerminalUtil.nextNumber() - 1;
-        getProjectService().changeProjectStatusByIndex(index, Status.COMPLETED);
+        getProjectService().changeProjectStatusByIndex(userId, index, Status.COMPLETED);
     }
 
 }

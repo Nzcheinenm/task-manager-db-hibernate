@@ -1,5 +1,7 @@
 package ru.t1.dkononov.tm.command.project;
 
+import ru.t1.dkononov.tm.exception.AbstractException;
+
 public final class ProjectClearCommand extends AbstractProjectCommand {
 
     public static final String NAME = "project-clear";
@@ -17,9 +19,10 @@ public final class ProjectClearCommand extends AbstractProjectCommand {
     }
 
     @Override
-    public void execute() {
+    public void execute() throws AbstractException {
+        final String userId = getUserId();
         System.out.println("[PROJECT_CLEAR]");
-        getProjectService().clear();
+        getProjectService().clear(userId);
     }
 
 }

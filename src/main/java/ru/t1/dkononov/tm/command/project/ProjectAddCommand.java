@@ -20,12 +20,13 @@ public final class ProjectAddCommand extends AbstractProjectCommand {
 
     @Override
     public void execute() throws AbstractFieldException {
+        final String userId = getUserId();
         System.out.println("[CREATE NEW PROJECT]");
         System.out.println("ENTER NAME:");
         final String name = TerminalUtil.inLine();
         System.out.println("ENTER DESCRIPTION:");
         final String description = TerminalUtil.inLine();
-        getProjectService().create(name, description);
+        getProjectService().create(userId, name, description);
     }
 
 }

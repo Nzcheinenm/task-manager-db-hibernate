@@ -21,12 +21,13 @@ public final class TaskBindFromProjectCommand extends AbstractTaskCommand {
 
     @Override
     public void execute() throws AbstractException {
+        final String userId = getUserId();
         System.out.println("[BIND TASK TO PROJECT]");
         System.out.println("[ENTER PROJECT ID:]");
         final String projectId = TerminalUtil.inLine();
         System.out.println("[ENTER TASK ID:]");
         final String taskId = TerminalUtil.inLine();
-        getProjectTaskService().bindTaskToProject(projectId, taskId);
+        getProjectTaskService().bindTaskToProject(userId, projectId, taskId);
     }
 
 }

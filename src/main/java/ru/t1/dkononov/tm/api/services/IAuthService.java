@@ -1,5 +1,6 @@
 package ru.t1.dkononov.tm.api.services;
 
+import ru.t1.dkononov.tm.enumerated.Role;
 import ru.t1.dkononov.tm.exception.AbstractException;
 import ru.t1.dkononov.tm.exception.field.AbstractFieldException;
 import ru.t1.dkononov.tm.exception.field.AccessDeniedException;
@@ -19,4 +20,6 @@ public interface IAuthService {
     String getUserId() throws AccessDeniedException;
 
     User getUser() throws AbstractFieldException;
+
+    void checkRoles(Role[] roles) throws AbstractException;
 }

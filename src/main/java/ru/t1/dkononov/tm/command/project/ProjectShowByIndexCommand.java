@@ -22,9 +22,10 @@ public final class ProjectShowByIndexCommand extends AbstractProjectCommand {
 
     @Override
     public void execute() throws AbstractFieldException {
+        final String userId = getUserId();
         System.out.println("[ENTER INDEX]");
         final Integer value = TerminalUtil.nextNumber() - 1;
-        final Project project = getProjectService().findByIndex(value);
+        final Project project = getProjectService().findByIndex(userId, value);
         System.out.println(show(project));
     }
 

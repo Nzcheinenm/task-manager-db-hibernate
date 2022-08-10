@@ -22,10 +22,11 @@ public final class ProjectCompleteByIdCommand extends AbstractProjectCommand {
 
     @Override
     public void execute() throws AbstractException {
+        final String userId = getUserId();
         System.out.println("[COMPLETE PROJECT BY ID]");
         System.out.println("ENTER ID:");
         final String id = TerminalUtil.inLine();
-        getProjectService().changeProjectStatusById(id, Status.COMPLETED);
+        getProjectService().changeProjectStatusById(userId, id, Status.COMPLETED);
     }
 
 }

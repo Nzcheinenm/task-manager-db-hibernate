@@ -22,10 +22,11 @@ public final class TaskCompleteByIndexCommand extends AbstractTaskCommand {
 
     @Override
     public void execute() throws AbstractException {
+        final String userId = getUserId();
         System.out.println("[COMPLETE PROJECT BY INDEX]");
         System.out.println("ENTER INDEX:");
         final Integer index = TerminalUtil.nextNumber() - 1;
-        getTaskService().changeTaskStatusByIndex(index, Status.COMPLETED);
+        getTaskService().changeTaskStatusByIndex(userId, index, Status.COMPLETED);
     }
 
 }

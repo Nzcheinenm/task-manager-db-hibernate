@@ -22,10 +22,11 @@ public final class ProjectStartByIndexCommand extends AbstractProjectCommand {
 
     @Override
     public void execute() throws AbstractException {
+        final String userId = getUserId();
         System.out.println("[IN PROGRESS PROJECT BY INDEX]");
         System.out.println("ENTER INDEX:");
         final Integer index = TerminalUtil.nextNumber() - 1;
-        getProjectService().changeProjectStatusByIndex(index, Status.IN_PROGRESS);
+        getProjectService().changeProjectStatusByIndex(userId, index, Status.IN_PROGRESS);
     }
 
 }

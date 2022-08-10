@@ -3,7 +3,9 @@ package ru.t1.dkononov.tm.command.project;
 import ru.t1.dkononov.tm.api.services.IProjectService;
 import ru.t1.dkononov.tm.api.services.IProjectTaskService;
 import ru.t1.dkononov.tm.command.AbstractCommand;
+import ru.t1.dkononov.tm.enumerated.Role;
 import ru.t1.dkononov.tm.enumerated.Status;
+import ru.t1.dkononov.tm.exception.field.AccessDeniedException;
 import ru.t1.dkononov.tm.model.Project;
 
 public abstract class AbstractProjectCommand extends AbstractCommand {
@@ -16,6 +18,7 @@ public abstract class AbstractProjectCommand extends AbstractCommand {
         return getServiceLocator().getProjectTaskService();
     }
 
+
     @Override
     public String getArgument() {
         return null;
@@ -27,6 +30,15 @@ public abstract class AbstractProjectCommand extends AbstractCommand {
         System.out.println("NAME: " + project.getName());
         System.out.println("DESCRIPTION: " + project.getDescription());
         System.out.println("STATUS: " + Status.toName(project.getStatus()));
+    }
+
+    @Override
+    public String getUserId() throws AccessDeniedException {
+        return getAuthService().getUserId();
+    }
+
+    public Role[] getRoles() {
+        return Role.values();
     }
 
 }

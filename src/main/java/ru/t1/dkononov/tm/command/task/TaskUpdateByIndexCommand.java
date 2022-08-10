@@ -21,13 +21,14 @@ public final class TaskUpdateByIndexCommand extends AbstractTaskCommand {
 
     @Override
     public void execute() throws AbstractException {
+        final String userId = getUserId();
         System.out.println("[ENTER INDEX]");
         final Integer index = TerminalUtil.nextNumber() - 1;
         System.out.println("[ENTER NAME]");
         final String name = TerminalUtil.inLine();
         System.out.println("[ENTER DESCRIPTION]");
         final String description = TerminalUtil.inLine();
-        getTaskService().updateByIndex(index, name, description);
+        getTaskService().updateByIndex(userId, index, name, description);
     }
 
 }

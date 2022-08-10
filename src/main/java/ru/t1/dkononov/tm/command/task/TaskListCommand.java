@@ -1,6 +1,7 @@
 package ru.t1.dkononov.tm.command.task;
 
 import ru.t1.dkononov.tm.enumerated.Sort;
+import ru.t1.dkononov.tm.exception.AbstractException;
 import ru.t1.dkononov.tm.model.Task;
 import ru.t1.dkononov.tm.util.TerminalUtil;
 
@@ -24,13 +25,14 @@ public final class TaskListCommand extends AbstractTaskCommand {
     }
 
     @Override
-    public void execute() {
+    public void execute() throws AbstractException {
+        final String userId = getUserId();
         System.out.println("[SHOW TASKS]");
         System.out.println("[ENTER SORT: ]");
         System.out.println(Arrays.toString(Sort.values()));
         final String sortType = TerminalUtil.inLine();
         final Sort sort = Sort.toSort(sortType);
-        final List<Task> tasks = getTaskService().findAll(sort);
+        final List<Task> tasks = getTaskService().findAll(userId, sort);
         showTasks(tasks);
     }
 

@@ -8,6 +8,8 @@ import ru.t1.dkononov.tm.exception.field.*;
 import ru.t1.dkononov.tm.model.User;
 import ru.t1.dkononov.tm.util.HashUtil;
 
+import java.util.List;
+
 public final class UserService extends AbstractService<User, IUserRepository> implements IUserService {
 
     public UserService(IUserRepository repository) {
@@ -117,4 +119,8 @@ public final class UserService extends AbstractService<User, IUserRepository> im
         return repository.isEmailExist(email);
     }
 
+    @Override
+    public void removeAll(List<User> modelsRemove) {
+        return;
+    }
 }

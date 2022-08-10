@@ -24,6 +24,7 @@ public final class ProjectChangeStatusByIndexCommand extends AbstractProjectComm
 
     @Override
     public void execute() throws AbstractException {
+        final String userId = getUserId();
         System.out.println("[CHANGE PROJECT STATUS BY INDEX]");
         System.out.println("ENTER INDEX:");
         final Integer index = TerminalUtil.nextNumber() - 1;
@@ -31,7 +32,7 @@ public final class ProjectChangeStatusByIndexCommand extends AbstractProjectComm
         System.out.println(Arrays.toString(Status.values()));
         final String statusValue = TerminalUtil.inLine();
         final Status status = Status.toStatus(statusValue);
-        getProjectService().changeProjectStatusByIndex(index, status);
+        getProjectService().changeProjectStatusByIndex(userId, index, status);
     }
 
 }

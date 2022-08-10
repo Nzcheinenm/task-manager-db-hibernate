@@ -22,10 +22,11 @@ public final class ProjectRemoveByIndexCommand extends AbstractProjectCommand {
 
     @Override
     public void execute() throws AbstractException {
+        final String userId = getUserId();
         System.out.println("[ENTER INDEX]");
         final Integer value = TerminalUtil.nextNumber() - 1;
-        final Project project = getProjectService().removeByIndex(value);
-        getProjectTaskService().removeProjectById(project.getId());
+        final Project project = getProjectService().removeByIndex(userId, value);
+        getProjectTaskService().removeProjectById(userId, project.getId());
     }
 
 }

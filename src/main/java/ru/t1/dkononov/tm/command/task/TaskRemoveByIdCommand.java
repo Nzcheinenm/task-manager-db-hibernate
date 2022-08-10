@@ -21,9 +21,10 @@ public final class TaskRemoveByIdCommand extends AbstractTaskCommand {
 
     @Override
     public void execute() throws AbstractFieldException {
+        final String userId = getUserId();
         System.out.println("[ENTER ID]");
         final String value = TerminalUtil.inLine();
-        getTaskService().removeById(value);
+        getTaskService().removeById(userId, value);
     }
 
 }

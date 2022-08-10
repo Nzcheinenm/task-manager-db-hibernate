@@ -22,10 +22,11 @@ public final class TaskShowByIndexCommand extends AbstractTaskCommand {
 
     @Override
     public void execute() throws AbstractFieldException {
+        final String userId = getUserId();
         System.out.println("[SHOW TASK]");
         System.out.println("[ENTER INDEX]");
         final Integer value = TerminalUtil.nextNumber() - 1;
-        final Task task = getTaskService().findByIndex(value);
+        final Task task = getTaskService().findByIndex(userId, value);
         System.out.println(show(task));
     }
 

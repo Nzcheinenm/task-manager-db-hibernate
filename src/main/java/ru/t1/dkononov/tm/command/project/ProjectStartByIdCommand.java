@@ -22,10 +22,11 @@ public final class ProjectStartByIdCommand extends AbstractProjectCommand {
 
     @Override
     public void execute() throws AbstractException {
+        final String userId = getUserId();
         System.out.println("[IN PROGRESS PROJECT BY ID]");
         System.out.println("ENTER ID:");
         final String id = TerminalUtil.inLine();
-        getProjectService().changeProjectStatusById(id, Status.IN_PROGRESS);
+        getProjectService().changeProjectStatusById(userId, id, Status.IN_PROGRESS);
     }
 
 }

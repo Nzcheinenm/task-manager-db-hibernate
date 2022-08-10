@@ -22,10 +22,11 @@ public final class TaskStartByIndexCommand extends AbstractTaskCommand {
 
     @Override
     public void execute() throws AbstractException {
+        final String userId = getUserId();
         System.out.println("[IN PROGRESS PROJECT BY INDEX]");
         System.out.println("ENTER INDEX:");
         final Integer index = TerminalUtil.nextNumber() - 1;
-        getTaskService().changeTaskStatusByIndex(index, Status.IN_PROGRESS);
+        getTaskService().changeTaskStatusByIndex(userId, index, Status.IN_PROGRESS);
     }
 
 }

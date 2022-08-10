@@ -17,6 +17,7 @@ import ru.t1.dkononov.tm.exception.system.ArgumentNotSupportedException;
 import ru.t1.dkononov.tm.exception.system.CommandNotSupportedException;
 import ru.t1.dkononov.tm.model.Project;
 import ru.t1.dkononov.tm.model.Task;
+import ru.t1.dkononov.tm.model.User;
 import ru.t1.dkononov.tm.repository.CommandRepository;
 import ru.t1.dkononov.tm.repository.ProjectRepository;
 import ru.t1.dkononov.tm.repository.TaskRepository;
@@ -147,15 +148,15 @@ public class Bootstrap implements IServiceLocator {
     }
 
     private void initData() throws AbstractException {
-        userService.create("test", "test", "test@test.ru");
-        userService.create("admin", "admin", Role.ADMIN);
+        final User test = userService.create("test", "test", "test@test.ru");
+        final User admin = userService.create("admin", "admin", Role.ADMIN);
 
-        projectService.add(new Project("Jira", Status.NOT_STARTED));
-        projectService.add(new Project("Confluence", Status.IN_PROGRESS));
-        projectService.add(new Project("SoapUI", Status.IN_PROGRESS));
+        projectService.add(test.getId(), new Project("Jira", Status.NOT_STARTED));
+        projectService.add(test.getId(), new Project("Confluence", Status.IN_PROGRESS));
+        projectService.add(admin.getId(), new Project("SoapUI", Status.IN_PROGRESS));
 
-        taskService.add(new Task("Work", Status.IN_PROGRESS));
-        taskService.add(new Task("Homework", Status.NOT_STARTED));
+        taskService.add(test.getId(), new Task("Work", Status.IN_PROGRESS));
+        taskService.add(admin.getId(), new Task("Homework", Status.NOT_STARTED));
     }
 
     private void initLogger() {
@@ -167,6 +168,7 @@ public class Bootstrap implements IServiceLocator {
     private void processCommand(final String command) throws AbstractException {
         final AbstractCommand abstractCommand = commandService.getCommandByName(command);
         if (abstractCommand == null) throw new CommandNotSupportedException(command);
+        authService.checkRoles(abstractCommand.getRoles());
         abstractCommand.execute();
     }
 

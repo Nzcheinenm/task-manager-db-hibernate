@@ -30,4 +30,5 @@ public interface IRepository<M extends AbstractModel> {
 
     M removeByIndex(final Integer index) throws IndexIncorrectException;
 
+    void removeAll(List<M> modelsRemove);
 }

@@ -1,11 +1,24 @@
 package ru.t1.dkononov.tm.command;
 
 import ru.t1.dkononov.tm.api.model.ICommand;
+import ru.t1.dkononov.tm.api.services.IAuthService;
 import ru.t1.dkononov.tm.api.services.IServiceLocator;
+import ru.t1.dkononov.tm.enumerated.Role;
+import ru.t1.dkononov.tm.exception.field.AccessDeniedException;
 
 public abstract class AbstractCommand implements ICommand {
 
     protected IServiceLocator serviceLocator;
+
+    public abstract Role[] getRoles();
+
+    public IAuthService getAuthService() {
+        return serviceLocator.getAuthService();
+    }
+
+    public String getUserId() throws AccessDeniedException {
+        return getAuthService().getUserId();
+    }
 
     public IServiceLocator getServiceLocator() {
         return serviceLocator;

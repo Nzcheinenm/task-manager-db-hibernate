@@ -1,5 +1,6 @@
 package ru.t1.dkononov.tm.command.user;
 
+import ru.t1.dkononov.tm.enumerated.Role;
 import ru.t1.dkononov.tm.exception.AbstractException;
 import ru.t1.dkononov.tm.model.User;
 
@@ -30,6 +31,11 @@ public final class UserViewProfileCommand extends AbstractUserCommand {
         System.out.println("LAST NAME: " + user.getLastName());
         System.out.println("E-MAIL: " + user.getEmail());
         System.out.println("ROLE: " + user.getRole().getDisplayName());
+    }
+
+    @Override
+    public Role[] getRoles() {
+        return Role.values();
     }
 
 }

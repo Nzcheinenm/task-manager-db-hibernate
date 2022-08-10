@@ -3,6 +3,7 @@ package ru.t1.dkononov.tm.command.task;
 import ru.t1.dkononov.tm.api.services.IProjectTaskService;
 import ru.t1.dkononov.tm.api.services.ITaskService;
 import ru.t1.dkononov.tm.command.AbstractCommand;
+import ru.t1.dkononov.tm.enumerated.Role;
 import ru.t1.dkononov.tm.enumerated.Status;
 import ru.t1.dkononov.tm.model.Task;
 
@@ -38,6 +39,10 @@ public abstract class AbstractTaskCommand extends AbstractCommand {
         System.out.println("NAME: " + task.getName());
         System.out.println("DESCRIPTION: " + task.getDescription());
         System.out.println("STATUS: " + Status.toName(task.getStatus()));
+    }
+
+    public Role[] getRoles() {
+        return Role.values();
     }
 
 }

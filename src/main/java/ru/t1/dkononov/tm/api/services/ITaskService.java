@@ -3,24 +3,25 @@ package ru.t1.dkononov.tm.api.services;
 import ru.t1.dkononov.tm.enumerated.Status;
 import ru.t1.dkononov.tm.exception.AbstractException;
 import ru.t1.dkononov.tm.exception.field.AbstractFieldException;
+import ru.t1.dkononov.tm.exception.field.UserIdEmptyException;
 import ru.t1.dkononov.tm.model.Task;
 
 import java.util.List;
 
-public interface ITaskService extends IService<Task> {
+public interface ITaskService extends IUserOwnedService<Task> {
 
-    List<Task> findAllByProjectId(final String projectId);
+    List<Task> findAllByProjectId(String userId, String projectId) throws UserIdEmptyException;
 
-    Task create(final String name, final String description) throws AbstractFieldException;
+    Task create(String userId, String name, String description) throws AbstractFieldException;
 
-    Task create(final String name) throws AbstractFieldException;
+    Task create(String userId, String name) throws AbstractFieldException;
 
-    void updateById(final String id, final String name, final String description) throws AbstractException;
+    void updateById(String userId, String id, String name, String description) throws AbstractException;
 
-    void updateByIndex(final Integer index, final String name, final String description) throws AbstractException;
+    void updateByIndex(String userId, Integer index, String name, String description) throws AbstractException;
 
-    void changeTaskStatusById(final String id, final Status status) throws AbstractException;
+    void changeTaskStatusById(String userId, String id, Status status) throws AbstractException;
 
-    void changeTaskStatusByIndex(final Integer index, final Status status) throws AbstractException;
+    void changeTaskStatusByIndex(String userId, Integer index, Status status) throws AbstractException;
 
 }

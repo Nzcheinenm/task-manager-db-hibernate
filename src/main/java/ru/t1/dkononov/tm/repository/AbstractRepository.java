@@ -2,7 +2,6 @@ package ru.t1.dkononov.tm.repository;
 
 import ru.t1.dkononov.tm.api.repository.IRepository;
 import ru.t1.dkononov.tm.model.AbstractModel;
-import ru.t1.dkononov.tm.model.Project;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -77,6 +76,14 @@ public abstract class AbstractRepository<M extends AbstractModel> implements IRe
         if (model == null) return null;
         remove(model);
         return model;
+    }
+
+    @Override
+    public void removeAll(final List<M> modelsRemove) {
+        if (modelsRemove == null) return;
+        for (final M model : modelsRemove) {
+            models.remove(model);
+        }
     }
 
 }

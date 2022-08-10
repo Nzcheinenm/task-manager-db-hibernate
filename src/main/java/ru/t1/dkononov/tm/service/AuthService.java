@@ -1,13 +1,13 @@
 package ru.t1.dkononov.tm.service;
 
 import ru.t1.dkononov.tm.api.services.IUserService;
+import ru.t1.dkononov.tm.enumerated.Role;
 import ru.t1.dkononov.tm.exception.AbstractException;
-import ru.t1.dkononov.tm.exception.field.AbstractFieldException;
-import ru.t1.dkononov.tm.exception.field.AccessDeniedException;
-import ru.t1.dkononov.tm.exception.field.LoginEmptyException;
-import ru.t1.dkononov.tm.exception.field.PasswordEmptyException;
+import ru.t1.dkononov.tm.exception.field.*;
 import ru.t1.dkononov.tm.model.User;
 import ru.t1.dkononov.tm.util.HashUtil;
+
+import java.util.Arrays;
 
 
 public class AuthService implements ru.t1.dkononov.tm.api.services.IAuthService {
@@ -60,6 +60,16 @@ public class AuthService implements ru.t1.dkononov.tm.api.services.IAuthService 
         final User user = userService.findById(userId);
         if (user == null) throw new AccessDeniedException();
         return user;
+    }
+
+    @Override
+    public void checkRoles(final Role[] roles) throws AbstractException {
+        if (roles == null) return;
+        final User user = getUser();
+        final Role role = user.getRole();
+        if (role == null) throw new PermissionException();
+        final boolean hasRole = Arrays.asList(roles).contains(role);
+        if (!hasRole) throw new PermissionException();
     }
 
 }

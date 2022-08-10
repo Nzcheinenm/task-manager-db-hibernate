@@ -27,32 +27,33 @@ public final class ProjectTaskService implements IProjectTaskService {
     }
 
     @Override
-    public void bindTaskToProject(final String projectId, final String taskId)
+    public void bindTaskToProject(final String userId, final String projectId, final String taskId)
             throws AbstractException {
         if (projectId == null || projectId.isEmpty()) throw new ProjectIdEmptyException();
         if (taskId == null || taskId.isEmpty()) throw new TaskIdEmptyException();
-        if (!projectRepository.existsById(projectId)) throw new ProjectNotFoundException();
-        final Task task = taskRepository.findById(taskId);
+        if (!projectRepository.existsById(userId, projectId)) throw new ProjectNotFoundException();
+        final Task task = taskRepository.findById(userId, taskId);
         if (task == null) throw new TaskNotFoundException();
         task.setProjectId(projectId);
     }
 
     @Override
-    public void removeProjectById(final String projectId)
+    public void removeProjectById(final String userId, final String projectId)
             throws AbstractException {
         if (projectId == null || projectId.isEmpty()) throw new ProjectIdEmptyException();
-        if (!projectRepository.existsById(projectId)) throw new ProjectNotFoundException();
-        final List<Task> tasks = taskRepository.findAllByProjectId(projectId);
-        for (final Task task : tasks) taskRepository.removeById(task.getId());
-        projectRepository.removeById(projectId);
+        if (!projectRepository.existsById(userId, projectId)) throw new ProjectNotFoundException();
+        final List<Task> tasks = taskRepository.findAllByProjectId(userId, projectId);
+        for (final Task task : tasks) taskRepository.removeById(userId, task.getId());
+        projectRepository.removeById(userId, projectId);
     }
 
     @Override
-    public void unbindTaskFromProject(final String projectId, final String taskId) throws AbstractException {
+    public void unbindTaskFromProject(final String userId, final String projectId, final String taskId)
+            throws AbstractException {
         if (projectId == null || projectId.isEmpty()) throw new ProjectIdEmptyException();
         if (taskId == null || taskId.isEmpty()) throw new TaskIdEmptyException();
-        if (!projectRepository.existsById(projectId)) throw new ProjectNotFoundException();
-        final Task task = taskRepository.findById(taskId);
+        if (!projectRepository.existsById(userId, projectId)) throw new ProjectNotFoundException();
+        final Task task = taskRepository.findById(userId, taskId);
         if (task == null) throw new TaskNotFoundException();
         task.setProjectId(null);
     }

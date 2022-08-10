@@ -1,5 +1,6 @@
 package ru.t1.dkononov.tm.command.user;
 
+import ru.t1.dkononov.tm.enumerated.Role;
 import ru.t1.dkononov.tm.exception.AbstractException;
 import ru.t1.dkononov.tm.util.TerminalUtil;
 
@@ -27,5 +28,10 @@ public final class UserLoginCommand extends AbstractUserCommand {
         System.out.println("ENTER PASSWORD");
         final String password = TerminalUtil.inLine();
         serviceLocator.getAuthService().login(login, password);
+    }
+
+    @Override
+    public Role[] getRoles() {
+        return null;
     }
 }

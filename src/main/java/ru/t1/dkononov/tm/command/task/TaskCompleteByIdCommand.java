@@ -22,10 +22,11 @@ public final class TaskCompleteByIdCommand extends AbstractTaskCommand {
 
     @Override
     public void execute() throws AbstractException {
+        final String userId = getUserId();
         System.out.println("[COMPLETE PROJECT BY ID]");
         System.out.println("ENTER ID:");
         final String id = TerminalUtil.inLine();
-        getTaskService().changeTaskStatusById(id, Status.COMPLETED);
+        getTaskService().changeTaskStatusById(userId, id, Status.COMPLETED);
     }
 
 }

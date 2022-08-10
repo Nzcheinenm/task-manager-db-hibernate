@@ -22,10 +22,11 @@ public final class ProjectRemoveByIdCommand extends AbstractProjectCommand {
 
     @Override
     public void execute() throws AbstractException {
+        final String userId = getUserId();
         System.out.println("[ENTER ID]");
         final String value = TerminalUtil.inLine();
-        final Project project = getProjectService().removeById(value);
-        getProjectTaskService().removeProjectById(project.getId());
+        final Project project = getProjectService().removeById(userId, value);
+        getProjectTaskService().removeProjectById(userId, project.getId());
     }
 
 }

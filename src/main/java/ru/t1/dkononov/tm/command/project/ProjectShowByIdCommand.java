@@ -22,10 +22,11 @@ public final class ProjectShowByIdCommand extends AbstractProjectCommand {
 
     @Override
     public void execute() throws AbstractFieldException {
+        final String userId = getUserId();
         System.out.println("[SHOW PROJECT]");
         System.out.println("[ENTER ID]");
         final String scanner = TerminalUtil.inLine();
-        final Project project = getProjectService().findById(scanner);
+        final Project project = getProjectService().findById(userId, scanner);
         System.out.println(show(project));
     }
 

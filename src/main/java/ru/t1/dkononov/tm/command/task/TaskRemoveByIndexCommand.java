@@ -21,9 +21,10 @@ public final class TaskRemoveByIndexCommand extends AbstractTaskCommand {
 
     @Override
     public void execute() throws AbstractFieldException {
+        final String userId = getUserId();
         System.out.println("[ENTER INDEX]");
         final Integer value = TerminalUtil.nextNumber() - 1;
-        getTaskService().removeByIndex(value);
+        getTaskService().removeByIndex(userId, value);
     }
 
 }

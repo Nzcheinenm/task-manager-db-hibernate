@@ -24,6 +24,7 @@ public final class ProjectChangeStatusByIdCommand extends AbstractProjectCommand
 
     @Override
     public void execute() throws AbstractException {
+        final String userId = getUserId();
         System.out.println("[CHANGE PROJECT STATUS BY ID]");
         System.out.println("ENTER ID:");
         final String id = TerminalUtil.inLine();
@@ -31,7 +32,7 @@ public final class ProjectChangeStatusByIdCommand extends AbstractProjectCommand
         System.out.println(Arrays.toString(Status.values()));
         final String statusValue = TerminalUtil.inLine();
         final Status status = Status.toStatus(statusValue);
-        getProjectService().changeProjectStatusById(id, status);
+        getProjectService().changeProjectStatusById(userId, id, status);
     }
 
 }

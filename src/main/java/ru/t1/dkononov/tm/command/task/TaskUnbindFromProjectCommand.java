@@ -21,12 +21,13 @@ public final class TaskUnbindFromProjectCommand extends AbstractTaskCommand {
 
     @Override
     public void execute() throws AbstractException {
+        final String userId = getUserId();
         System.out.println("[UNBIND TASK TO PROJECT]");
         System.out.println("[ENTER PROJECT ID:]");
         final String projectId = TerminalUtil.inLine();
         System.out.println("[ENTER TASK ID:]");
         final String taskId = TerminalUtil.inLine();
-        getProjectTaskService().unbindTaskFromProject(projectId, taskId);
+        getProjectTaskService().unbindTaskFromProject(userId, projectId, taskId);
     }
 
 }

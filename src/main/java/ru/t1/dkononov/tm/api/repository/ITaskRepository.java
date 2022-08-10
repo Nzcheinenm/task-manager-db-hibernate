@@ -4,11 +4,11 @@ import ru.t1.dkononov.tm.model.Task;
 
 import java.util.List;
 
-public interface ITaskRepository extends IRepository<Task> {
+public interface ITaskRepository extends IUserOwnedRepository<Task> {
 
-    Task create(final String name);
+    Task create(final String userId, final String name);
 
-    Task create(final String name, final String description);
+    Task create(final String userId, final String name, final String description);
 
-    List<Task> findAllByProjectId(final String projectId);
+    List<Task> findAllByProjectId(final String userId, final String projectId);
 }

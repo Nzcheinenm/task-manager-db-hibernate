@@ -24,10 +24,11 @@ public final class TaskShowByProjectIdCommand extends AbstractTaskCommand {
 
     @Override
     public void execute() throws AbstractException {
+        final String userId = getUserId();
         System.out.println("[TASK LIST BY PROJECT ID]");
         System.out.println("[ENTER PROJECT ID:]");
         final String projectId = TerminalUtil.inLine();
-        final List<Task> tasks = getTaskService().findAllByProjectId(projectId);
+        final List<Task> tasks = getTaskService().findAllByProjectId(userId, projectId);
         showTasks(tasks);
     }
 

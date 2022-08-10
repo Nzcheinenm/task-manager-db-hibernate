@@ -5,7 +5,7 @@ import ru.t1.dkononov.tm.enumerated.Status;
 
 import java.util.Date;
 
-public final class Project extends AbstractModel implements IWBS {
+public final class Project extends AbstractUserOwnedModel implements IWBS {
 
     private String name = "";
 
