@@ -123,4 +123,5 @@ public final class UserService extends AbstractService<User, IUserRepository> im
     public void removeAll(List<User> modelsRemove) {
         return;
     }
+
 }

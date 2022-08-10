@@ -17,7 +17,6 @@ public final class TaskService extends AbstractUserOwnedService<Task, ITaskRepos
         super(repository);
     }
 
-
     @Override
     public List<Task> findAllByProjectId(final String userId, final String projectId)
             throws UserIdEmptyException {

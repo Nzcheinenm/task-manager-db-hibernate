@@ -36,7 +36,6 @@ public abstract class AbstractService<M extends AbstractModel, R extends IReposi
         return findAll(sort.getComparator());
     }
 
-
     @Override
     public M add(final M model) throws ProjectNotFoundException {
         if (model == null) throw new ProjectNotFoundException();
@@ -53,7 +52,6 @@ public abstract class AbstractService<M extends AbstractModel, R extends IReposi
         if (id == null || id.isEmpty()) return false;
         return repository.existsById(id);
     }
-
 
     @Override
     public M findById(final String id) throws IdEmptyException {

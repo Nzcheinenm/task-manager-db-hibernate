@@ -40,7 +40,6 @@ public abstract class AbstractUserOwnedService<M extends AbstractUserOwnedModel,
         return findAll(userId, sort.getComparator());
     }
 
-
     @Override
     public M add(final String userId, final M model) throws ProjectNotFoundException, UserIdEmptyException {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
@@ -60,7 +59,6 @@ public abstract class AbstractUserOwnedService<M extends AbstractUserOwnedModel,
         if (id == null || id.isEmpty()) return false;
         return repository.existsById(userId, id);
     }
-
 
     @Override
     public M findById(final String userId, final String id) throws IdEmptyException, UserIdEmptyException {

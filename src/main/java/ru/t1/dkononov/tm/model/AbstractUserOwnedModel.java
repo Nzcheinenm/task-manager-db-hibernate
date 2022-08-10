@@ -11,4 +11,5 @@ public abstract class AbstractUserOwnedModel extends AbstractModel {
     public void setUserId(String userId) {
         this.userId = userId;
     }
+
 }

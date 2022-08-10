@@ -18,7 +18,6 @@ public abstract class AbstractUserOwnedRepository<M extends AbstractUserOwnedMod
             if (userId.equals(m.getUserId())) result.add((m));
         }
         return result;
-
     }
 
     @Override
