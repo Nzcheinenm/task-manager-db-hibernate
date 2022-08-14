@@ -7,17 +7,17 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public abstract class AbstractUserOwnedRepository<M extends AbstractUserOwnedModel> extends AbstractRepository<M> implements IUserOwnedRepository<M> {
 
     @Override
     public List<M> findAll(String userId) {
         if (userId == null) return Collections.emptyList();
-        final List<M> result = new ArrayList<>(models);
-        for (final M m : models) {
-            if (userId.equals(m.getUserId())) result.add((m));
-        }
-        return result;
+        return models
+                .stream()
+                .filter(m -> userId.equals(m.getUserId()))
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -48,12 +48,12 @@ public abstract class AbstractUserOwnedRepository<M extends AbstractUserOwnedMod
     @Override
     public M findById(final String userId, final String id) {
         if (userId == null || id == null) return null;
-        for (final M model : models) {
-            if (!id.equals(model.getId())) continue;
-            if (!userId.equals(model.getUserId())) continue;
-            return model;
-        }
-        return null;
+        return models
+                .stream()
+                .filter(m -> userId.equals(m.getUserId()))
+                .filter(m -> id.equals(m.getId()))
+                .findFirst()
+                .orElse(null);
     }
 
     @Override

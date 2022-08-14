@@ -7,35 +7,35 @@ public class UserRepository extends AbstractRepository<User> implements IUserRep
 
     @Override
     public User findByLogin(final String login) {
-        for (final User user : models) {
-            if (login.equals(user.getLogin())) return user;
-        }
-        return null;
+        return models
+                .stream()
+                .filter(u -> login.equals(u.getLogin()))
+                .findFirst()
+                .orElse(null);
     }
 
     @Override
     public User findByEmail(final String email) {
-        for (final User user : models) {
-            if (email.equals(user.getEmail())) return user;
-        }
-        return null;
+        return models
+                .stream()
+                .filter(u -> email.equals(u.getEmail()))
+                .findFirst()
+                .orElse(null);
     }
 
 
     @Override
     public Boolean isLoginExist(final String login) {
-        for (final User user : models) {
-            if (login.equals(user.getLogin())) return true;
-        }
-        return false;
+        return models
+                .stream()
+                .anyMatch(u -> login.equals(u.getLogin()));
     }
 
     @Override
     public Boolean isEmailExist(final String email) {
-        for (final User user : models) {
-            if (email.equals(user.getEmail())) return true;
-        }
-        return false;
+        return models
+                .stream()
+                .anyMatch(u -> email.equals(u.getEmail()));
     }
 
 }

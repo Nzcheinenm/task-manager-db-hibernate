@@ -42,12 +42,11 @@ public abstract class AbstractRepository<M extends AbstractModel> implements IRe
 
     @Override
     public M findById(final String id) {
-        for (final M model : models) {
-            if (Objects.equals(id, model.getId())) {
-                return model;
-            }
-        }
-        return null;
+        return models
+                .stream()
+                .filter(m -> id.equals(m.getId()))
+                .findFirst()
+                .orElse(null);
     }
 
     @Override
@@ -81,9 +80,7 @@ public abstract class AbstractRepository<M extends AbstractModel> implements IRe
     @Override
     public void removeAll(final List<M> modelsRemove) {
         if (modelsRemove == null) return;
-        for (final M model : modelsRemove) {
-            models.remove(model);
-        }
+        modelsRemove.forEach(models::remove);
     }
 
 }

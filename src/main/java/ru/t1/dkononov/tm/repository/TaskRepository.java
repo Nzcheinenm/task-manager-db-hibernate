@@ -5,6 +5,7 @@ import ru.t1.dkononov.tm.model.Task;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public final class TaskRepository extends AbstractUserOwnedRepository<Task> implements ITaskRepository {
 
@@ -27,14 +28,12 @@ public final class TaskRepository extends AbstractUserOwnedRepository<Task> impl
 
     @Override
     public List<Task> findAllByProjectId(final String userId, final String projectId) {
-        final List<Task> result = new ArrayList<>();
-        for (final Task task : models) {
-            if (task.getProjectId() == null) continue;
-            if (!task.getProjectId().equals(projectId)) continue;
-            if (!task.getUserId().equals(userId)) continue;
-            result.add(task);
-        }
-        return result;
+        return models
+                .stream()
+                .filter(m -> m.getProjectId() != null)
+                .filter(m -> m.getProjectId().equals(projectId))
+                .filter(m -> m.getUserId().equals(userId))
+                .collect(Collectors.toList());
     }
 
 }
