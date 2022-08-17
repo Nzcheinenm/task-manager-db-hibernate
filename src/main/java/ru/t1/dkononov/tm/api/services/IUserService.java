@@ -5,6 +5,7 @@ import ru.t1.dkononov.tm.exception.AbstractException;
 import ru.t1.dkononov.tm.exception.field.AbstractFieldException;
 import ru.t1.dkononov.tm.exception.field.EmailEmptyException;
 import ru.t1.dkononov.tm.exception.field.LoginEmptyException;
+import ru.t1.dkononov.tm.exception.field.UserIdEmptyException;
 import ru.t1.dkononov.tm.model.User;
 
 public interface IUserService extends IService<User> {
@@ -17,6 +18,8 @@ public interface IUserService extends IService<User> {
     User findByLogin(String login) throws LoginEmptyException;
 
     User findByEmail(String email) throws EmailEmptyException;
+
+    User removeOne (User model) throws UserIdEmptyException;
 
     User removeByLogin(String login) throws AbstractFieldException;
 
@@ -34,4 +37,9 @@ public interface IUserService extends IService<User> {
     Boolean isLoginExist(String login);
 
     Boolean isEmailExist(String email);
+
+    void lockUserByLogin(String login) throws LoginEmptyException;
+
+    void unlockUserByLogin(String login) throws LoginEmptyException;
+
 }

@@ -18,6 +18,8 @@ public final class User extends AbstractModel {
 
     private Role role = Role.USUAL;
 
+    private Boolean locked = false;
+
     public String getLogin() {
         return login;
     }
@@ -73,4 +75,13 @@ public final class User extends AbstractModel {
     public void setRole(Role role) {
         this.role = role;
     }
+
+    public Boolean isLocked() {
+        return locked;
+    }
+
+    public void setLocked(Boolean locked) {
+        this.locked = locked;
+    }
+
 }

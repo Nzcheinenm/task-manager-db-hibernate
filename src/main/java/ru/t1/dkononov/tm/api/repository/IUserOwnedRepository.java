@@ -31,4 +31,5 @@ public interface IUserOwnedRepository<M extends AbstractUserOwnedModel> {
 
     M removeByIndex(String userId, Integer index) throws IndexIncorrectException, UserIdEmptyException;
 
+    void removeAll(String userId) throws UserIdEmptyException;
 }

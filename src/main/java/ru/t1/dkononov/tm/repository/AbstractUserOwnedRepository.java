@@ -1,6 +1,7 @@
 package ru.t1.dkononov.tm.repository;
 
 import ru.t1.dkononov.tm.api.repository.IUserOwnedRepository;
+import ru.t1.dkononov.tm.exception.field.UserIdEmptyException;
 import ru.t1.dkononov.tm.model.AbstractUserOwnedModel;
 
 import java.util.ArrayList;
@@ -80,6 +81,12 @@ public abstract class AbstractUserOwnedRepository<M extends AbstractUserOwnedMod
         final M model = findByIndex(userId, index);
         if (model == null) return null;
         return remove(userId, model);
+    }
+
+    @Override
+    public void removeAll(String userId) throws UserIdEmptyException {
+        if (userId == null ) throw new UserIdEmptyException();
+        removeAll(userId);
     }
 
 }

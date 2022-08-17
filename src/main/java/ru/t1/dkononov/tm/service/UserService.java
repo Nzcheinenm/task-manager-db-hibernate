@@ -1,5 +1,7 @@
 package ru.t1.dkononov.tm.service;
 
+import ru.t1.dkononov.tm.api.repository.IProjectRepository;
+import ru.t1.dkononov.tm.api.repository.ITaskRepository;
 import ru.t1.dkononov.tm.api.repository.IUserRepository;
 import ru.t1.dkononov.tm.api.services.IUserService;
 import ru.t1.dkononov.tm.enumerated.Role;
@@ -12,8 +14,18 @@ import java.util.List;
 
 public final class UserService extends AbstractService<User, IUserRepository> implements IUserService {
 
-    public UserService(IUserRepository repository) {
+    private final IProjectRepository projectRepository;
+
+    private final ITaskRepository taskRepository;
+
+    public UserService(
+            final IUserRepository repository,
+            final IProjectRepository projectRepository,
+            final ITaskRepository taskRepository
+            ) {
         super(repository);
+        this.projectRepository = projectRepository;
+        this.taskRepository = taskRepository;
     }
 
     @Override
@@ -66,6 +78,16 @@ public final class UserService extends AbstractService<User, IUserRepository> im
         return user;
     }
 
+    @Override
+    public User removeOne(final User model) throws UserIdEmptyException {
+        if (model == null) return null;
+        final User user = super.remove(model);
+        if (user == null) return null;
+        final String userId = user.getId();
+        taskRepository.removeAll(userId);
+        projectRepository.removeAll(userId);
+        return user;
+    }
 
     @Override
     public User removeByLogin(final String login) throws AbstractFieldException {
@@ -117,6 +139,20 @@ public final class UserService extends AbstractService<User, IUserRepository> im
     public Boolean isEmailExist(final String email) {
         if (email == null || email.isEmpty()) return false;
         return repository.isEmailExist(email);
+    }
+
+    @Override
+    public void lockUserByLogin(String login) throws LoginEmptyException {
+        if (login == null || login.isEmpty()) throw new LoginEmptyException();
+        final User user = findByLogin(login);
+        user.setLocked(true);
+    }
+
+    @Override
+    public void unlockUserByLogin(String login) throws LoginEmptyException {
+        if (login == null || login.isEmpty()) throw new LoginEmptyException();
+        final User user = findByLogin(login);
+        user.setLocked(false);
     }
 
     @Override

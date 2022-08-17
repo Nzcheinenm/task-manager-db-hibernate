@@ -45,7 +45,9 @@ public class Bootstrap implements IServiceLocator {
 
     private final IUserRepository userRepository = new UserRepository();
 
-    private final IUserService userService = new UserService(userRepository);
+    private final IUserService userService = new UserService(
+            userRepository,projectRepository,taskRepository
+    );
 
     private final IAuthService authService = new AuthService(userService);
 
@@ -99,6 +101,9 @@ public class Bootstrap implements IServiceLocator {
         registry(new UserUpdateProfileCommand());
         registry(new UserLogoutCommand());
         registry(new UserLoginCommand());
+        registry(new UserLockCommand());
+        registry(new UserUnlockCommand());
+        registry(new UserRemoveCommand());
     }
 
     public void run(final String[] args) {
@@ -149,6 +154,7 @@ public class Bootstrap implements IServiceLocator {
 
     private void initData() throws AbstractException {
         final User test = userService.create("test", "test", "test@test.ru");
+        final User user = userService.create("user", "user", "user@test.ru");
         final User admin = userService.create("admin", "admin", Role.ADMIN);
 
         projectService.add(test.getId(), new Project("Jira", Status.NOT_STARTED));

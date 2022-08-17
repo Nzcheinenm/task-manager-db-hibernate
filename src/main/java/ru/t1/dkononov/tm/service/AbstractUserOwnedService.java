@@ -98,4 +98,10 @@ public abstract class AbstractUserOwnedService<M extends AbstractUserOwnedModel,
         return model;
     }
 
+    @Override
+    public void removeAll(final String userId) throws UserIdEmptyException {
+        if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
+        repository.removeAll(userId);
+    }
+
 }

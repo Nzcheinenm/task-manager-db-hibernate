@@ -33,6 +33,8 @@ public class AuthService implements ru.t1.dkononov.tm.api.services.IAuthService 
         if (password == null || password.isEmpty()) throw new PasswordEmptyException();
         final User user = userService.findByLogin(login);
         if (user == null) throw new AccessDeniedException();
+        final boolean locked = user.isLocked() == null || user.isLocked();
+        if (locked) throw new AccessDeniedException();
         final String hash = HashUtil.salt(password);
         if (!hash.equals(user.getPasswordHash())) throw new AccessDeniedException();
         userId = user.getId();
