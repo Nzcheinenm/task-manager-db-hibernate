@@ -1,5 +1,7 @@
 package ru.t1.dkononov.tm.repository;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.api.repository.IUserOwnedRepository;
 import ru.t1.dkononov.tm.exception.field.UserIdEmptyException;
 import ru.t1.dkononov.tm.model.AbstractUserOwnedModel;
@@ -10,10 +12,12 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public abstract class AbstractUserOwnedRepository<M extends AbstractUserOwnedModel> extends AbstractRepository<M> implements IUserOwnedRepository<M> {
+public abstract class AbstractUserOwnedRepository<M extends AbstractUserOwnedModel>
+        extends AbstractRepository<M> implements IUserOwnedRepository<M> {
 
+    @NotNull
     @Override
-    public List<M> findAll(String userId) {
+    public List<M> findAll(@Nullable final String userId) {
         if (userId == null) return Collections.emptyList();
         return models
                 .stream()
@@ -21,33 +25,40 @@ public abstract class AbstractUserOwnedRepository<M extends AbstractUserOwnedMod
                 .collect(Collectors.toList());
     }
 
+    @Nullable
     @Override
-    public List<M> findAll(final String userId, final Comparator<M> comparator) {
-        final List<M> result = findAll(userId);
+    public List<M> findAll(@Nullable final String userId,@Nullable final Comparator<M> comparator) {
+        @NotNull final List<M> result = findAll(userId);
         result.sort(comparator);
         return result;
     }
 
+    @Nullable
     @Override
-    public M add(final String userId, final M model) {
+    public M add(@Nullable final String userId,@NotNull final M model) {
         if (userId == null) return null;
         model.setUserId(userId);
         return add(model);
     }
 
     @Override
-    public void clear(final String userId) {
-        final List<M> models = findAll(userId);
+    public void clear(@Nullable final String userId) {
+        @NotNull final List<M> models = findAll(userId);
         removeAll(models);
     }
 
     @Override
-    public boolean existsById(final String userId, final String id) {
+    public boolean existsById(
+            @Nullable final String userId,@Nullable final String id
+    ) {
         return findById(userId, id) != null;
     }
 
+    @Nullable
     @Override
-    public M findById(final String userId, final String id) {
+    public M findById(
+            @Nullable final String userId,@Nullable final String id
+    ) {
         if (userId == null || id == null) return null;
         return models
                 .stream()
@@ -57,34 +68,46 @@ public abstract class AbstractUserOwnedRepository<M extends AbstractUserOwnedMod
                 .orElse(null);
     }
 
+    @Nullable
     @Override
-    public M findByIndex(final String userId, final Integer index) {
+    public M findByIndex(
+            @NotNull final String userId,@NotNull final Integer index
+    ) {
         return findAll(userId).get(index);
     }
 
+    @Nullable
     @Override
-    public M remove(final String userId, final M model) {
+    public M remove(
+            @Nullable final String userId,@Nullable final M model
+    ) {
         if (userId == null || model == null) return null;
         return removeById(userId, model.getId());
     }
 
+    @Nullable
     @Override
-    public M removeById(final String userId, final String id) {
+    public M removeById(
+            @Nullable final String userId,@Nullable final String id
+    ) {
         if (userId == null || id == null) return null;
-        final M model = findById(userId, id);
+        @Nullable final M model = findById(userId, id);
+        if (model == null) return null;
+        return remove(userId, model);
+    }
+
+    @Nullable
+    @Override
+    public M removeByIndex(
+            @NotNull final String userId,@NotNull final Integer index
+    ) {
+        @Nullable final M model = findByIndex(userId, index);
         if (model == null) return null;
         return remove(userId, model);
     }
 
     @Override
-    public M removeByIndex(final String userId, final Integer index) {
-        final M model = findByIndex(userId, index);
-        if (model == null) return null;
-        return remove(userId, model);
-    }
-
-    @Override
-    public void removeAll(String userId) throws UserIdEmptyException {
+    public void removeAll(@Nullable final String userId) throws UserIdEmptyException {
         if (userId == null ) throw new UserIdEmptyException();
         removeAll(userId);
     }

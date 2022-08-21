@@ -1,5 +1,7 @@
 package ru.t1.dkononov.tm.service;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.api.services.ILoggerService;
 
 import java.io.IOException;
@@ -8,40 +10,56 @@ import java.util.logging.*;
 
 public final class LoggerService implements ILoggerService {
 
+    @NotNull
     private static final String CONFIG_FILE = "/logger.properties";
 
+    @NotNull
     private static final String COMMANDS = "COMMANDS";
 
+    @NotNull
     private static final String COMMANDS_FILE = "./commands.xml";
 
+    @NotNull
     private static final String ERRORS = "ERRORS";
 
+    @NotNull
     private static final String ERRORS_FILE = "./errors.xml";
 
+    @NotNull
     private static final String MESSAGES = "MESSAGES";
 
+    @NotNull
     private static final String MESSAGES_FILE = "./messages.xml";
 
+    @NotNull
     private static final LogManager MANAGER = LogManager.getLogManager();
 
+    @NotNull
     private static final Logger LOGGER_ROOT = Logger.getLogger("");
 
+    @NotNull
     private static final Logger LOGGER_COMMAND = Logger.getLogger("COMMANDS");
 
+    @NotNull
     private static final Logger LOGGER_ERROR = Logger.getLogger("ERRORS");
 
+    @NotNull
     private static final Logger LOGGER_MESSAGE = Logger.getLogger("MESSAGES");
 
+    @NotNull
     private static final ConsoleHandler CONSOLE_HANDLER = getConsoleHandler();
 
+    @NotNull
     public static Logger getLoggerCommand() {
         return Logger.getLogger(COMMANDS);
     }
 
+    @NotNull
     public static Logger getLoggerError() {
         return LOGGER_ERROR;
     }
 
+    @NotNull
     public static Logger getLoggerMessage() {
         return LOGGER_MESSAGE;
     }
@@ -55,8 +73,8 @@ public final class LoggerService implements ILoggerService {
 
     private static void loadConfigFromFile() {
         try {
-            final Class<?> clazz = LoggerService.class;
-            final InputStream inputStream = clazz.getResourceAsStream(CONFIG_FILE);
+            @NotNull final Class<?> clazz = LoggerService.class;
+            @Nullable final InputStream inputStream = clazz.getResourceAsStream(CONFIG_FILE);
             MANAGER.readConfiguration(inputStream);
         } catch (final IOException e) {
             LOGGER_ROOT.severe(e.getMessage());
@@ -64,8 +82,8 @@ public final class LoggerService implements ILoggerService {
     }
 
     private static void registry(
-            final Logger logger,
-            final String commandsFile,
+            @NotNull final Logger logger,
+            @Nullable final String commandsFile,
             final boolean isConsole
     ) {
         try {
@@ -78,6 +96,7 @@ public final class LoggerService implements ILoggerService {
         }
     }
 
+    @NotNull
     private static ConsoleHandler getConsoleHandler() {
         final ConsoleHandler handler = new ConsoleHandler();
         handler.setFormatter(new Formatter() {
@@ -90,25 +109,25 @@ public final class LoggerService implements ILoggerService {
     }
 
     @Override
-    public void info(final String message) {
+    public void info(@Nullable final String message) {
         if (message == null || message.isEmpty()) return;
         LOGGER_MESSAGE.info(message);
     }
 
     @Override
-    public void debug(final String message) {
+    public void debug(@Nullable final String message) {
         if (message == null || message.isEmpty()) return;
         LOGGER_MESSAGE.fine(message);
     }
 
     @Override
-    public void command(final String message) {
+    public void command(@Nullable final String message) {
         if (message == null || message.isEmpty()) return;
         LOGGER_COMMAND.info(message);
     }
 
     @Override
-    public void error(final Exception e) {
+    public void error(@Nullable final Exception e) {
         if (e == null) return;
         LOGGER_ERROR.log(Level.SEVERE, e.getMessage(), e);
     }

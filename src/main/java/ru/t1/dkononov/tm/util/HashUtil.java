@@ -1,12 +1,18 @@
 package ru.t1.dkononov.tm.util;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 public interface HashUtil {
 
+    @NotNull
     String SECRET = "321321";
 
+    @NotNull
     Integer ITERATION = 4040;
 
-    static String salt(final String value) {
+    @Nullable
+    static String salt(@Nullable final String value) {
         if (value == null) return null;
         String result = null;
         for (int i = 0; i < ITERATION; i++) {
@@ -15,7 +21,8 @@ public interface HashUtil {
         return result;
     }
 
-    static String md5(String md5) {
+    @Nullable
+    static String md5(@Nullable String md5) {
         if (md5 == null) return null;
         try {
             java.security.MessageDigest md = java.security.MessageDigest.getInstance("MD5");

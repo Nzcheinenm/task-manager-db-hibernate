@@ -1,27 +1,21 @@
 package ru.t1.dkononov.tm.command.system;
 
+import lombok.Getter;
+import org.jetbrains.annotations.NotNull;
+
 public final class ApplicationAboutCommand extends AbstractSystemCommand {
 
-    public static final String DESCRIPTION = "Информация о разработчике";
+    @Getter
+    @NotNull
+    public final String DESCRIPTION = "Информация о разработчике";
 
-    public static final String NAME = "about";
+    @Getter
+    @NotNull
+    public final String NAME = "about";
 
-    public static final String ARGUMENT = "-a";
-
-    @Override
-    public String getArgument() {
-        return ARGUMENT;
-    }
-
-    @Override
-    public String getDescription() {
-        return DESCRIPTION;
-    }
-
-    @Override
-    public String getName() {
-        return NAME;
-    }
+    @Getter
+    @NotNull
+    public final String ARGUMENT = "-a";
 
     @Override
     public void execute() {

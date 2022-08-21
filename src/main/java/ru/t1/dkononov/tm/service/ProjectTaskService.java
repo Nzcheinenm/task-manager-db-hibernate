@@ -1,5 +1,7 @@
 package ru.t1.dkononov.tm.service;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.api.repository.IProjectRepository;
 import ru.t1.dkononov.tm.api.repository.ITaskRepository;
 import ru.t1.dkononov.tm.api.services.IProjectTaskService;
@@ -14,46 +16,52 @@ import java.util.List;
 
 public final class ProjectTaskService implements IProjectTaskService {
 
+    @Nullable
     private final IProjectRepository projectRepository;
 
+    @Nullable
     private final ITaskRepository taskRepository;
 
     public ProjectTaskService(
-            final IProjectRepository projectRepository,
-            final ITaskRepository taskRepository
+            @Nullable final IProjectRepository projectRepository,
+            @Nullable final ITaskRepository taskRepository
     ) {
         this.projectRepository = projectRepository;
         this.taskRepository = taskRepository;
     }
 
     @Override
-    public void bindTaskToProject(final String userId, final String projectId, final String taskId)
+    public void bindTaskToProject(
+            @Nullable final String userId,
+            @Nullable final String projectId,
+            @Nullable final String taskId
+    )
             throws AbstractException {
         if (projectId == null || projectId.isEmpty()) throw new ProjectIdEmptyException();
         if (taskId == null || taskId.isEmpty()) throw new TaskIdEmptyException();
         if (!projectRepository.existsById(userId, projectId)) throw new ProjectNotFoundException();
-        final Task task = taskRepository.findById(userId, taskId);
+        @Nullable final Task task = taskRepository.findById(userId, taskId);
         if (task == null) throw new TaskNotFoundException();
         task.setProjectId(projectId);
     }
 
     @Override
-    public void removeProjectById(final String userId, final String projectId)
+    public void removeProjectById(@Nullable final String userId,@Nullable final String projectId)
             throws AbstractException {
         if (projectId == null || projectId.isEmpty()) throw new ProjectIdEmptyException();
         if (!projectRepository.existsById(userId, projectId)) throw new ProjectNotFoundException();
-        final List<Task> tasks = taskRepository.findAllByProjectId(userId, projectId);
+        @NotNull final List<Task> tasks = taskRepository.findAllByProjectId(userId, projectId);
         for (final Task task : tasks) taskRepository.removeById(userId, task.getId());
         projectRepository.removeById(userId, projectId);
     }
 
     @Override
-    public void unbindTaskFromProject(final String userId, final String projectId, final String taskId)
+    public void unbindTaskFromProject(@Nullable final String userId,@Nullable final String projectId, final String taskId)
             throws AbstractException {
         if (projectId == null || projectId.isEmpty()) throw new ProjectIdEmptyException();
         if (taskId == null || taskId.isEmpty()) throw new TaskIdEmptyException();
         if (!projectRepository.existsById(userId, projectId)) throw new ProjectNotFoundException();
-        final Task task = taskRepository.findById(userId, taskId);
+        @Nullable final Task task = taskRepository.findById(userId, taskId);
         if (task == null) throw new TaskNotFoundException();
         task.setProjectId(null);
     }

@@ -1,16 +1,20 @@
 package ru.t1.dkononov.tm.api.repository;
 
+import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.command.AbstractCommand;
 
 import java.util.Collection;
 
 public interface ICommandRepository {
 
-    void add(AbstractCommand command);
+    void add(@Nullable AbstractCommand command);
 
-    AbstractCommand getCommandByArgument(String argument);
+    @Nullable
+    AbstractCommand getCommandByArgument(@Nullable String argument);
 
-    AbstractCommand getCommandByName(String name);
+    @Nullable
+    AbstractCommand getCommandByName(@Nullable String name);
 
+    @Nullable
     Collection<AbstractCommand> getTerminalCommands();
 }

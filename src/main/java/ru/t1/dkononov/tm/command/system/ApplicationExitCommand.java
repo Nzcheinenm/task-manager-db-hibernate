@@ -1,25 +1,25 @@
 package ru.t1.dkononov.tm.command.system;
 
+import lombok.Getter;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 public final class ApplicationExitCommand extends AbstractSystemCommand {
 
-    public static final String DESCRIPTION = "Закрыть приложение";
+    @Getter
+    @NotNull
+    public final String DESCRIPTION = "Закрыть приложение";
 
-    public static final String NAME = "exit";
+    @Getter
+    @NotNull
+    public final String NAME = "exit";
 
+    @Nullable
     @Override
-    public String getArgument() {
+    public String getARGUMENT() {
         return null;
     }
 
-    @Override
-    public String getDescription() {
-        return DESCRIPTION;
-    }
-
-    @Override
-    public String getName() {
-        return NAME;
-    }
 
     @Override
     public void execute() {

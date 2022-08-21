@@ -1,5 +1,7 @@
 package ru.t1.dkononov.tm.api.repository;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.exception.entity.ProjectNotFoundException;
 import ru.t1.dkononov.tm.exception.field.IdEmptyException;
 import ru.t1.dkononov.tm.exception.field.IndexIncorrectException;
@@ -11,25 +13,32 @@ import java.util.List;
 
 public interface IUserOwnedRepository<M extends AbstractUserOwnedModel> {
 
-    List<M> findAll(String userId) throws UserIdEmptyException;
+    @NotNull
+    List<M> findAll(@Nullable String userId) throws UserIdEmptyException;
 
-    List<M> findAll(String userId, Comparator<M> comparator) throws UserIdEmptyException;
+    @Nullable
+    List<M> findAll(@Nullable String userId,@Nullable Comparator<M> comparator) throws UserIdEmptyException;
 
-    M add(String userId, M m) throws ProjectNotFoundException, UserIdEmptyException;
+    @Nullable M add(@Nullable String userId,@NotNull M m) throws ProjectNotFoundException, UserIdEmptyException;
 
-    void clear(String userId) throws UserIdEmptyException;
+    void clear(@Nullable String userId) throws UserIdEmptyException;
 
-    boolean existsById(String userId, String id) throws UserIdEmptyException;
+    boolean existsById(@Nullable String userId,@Nullable String id) throws UserIdEmptyException;
 
-    M findById(String userId, String id) throws IdEmptyException, UserIdEmptyException;
+    @Nullable
+    M findById(@Nullable String userId,@Nullable String id) throws IdEmptyException, UserIdEmptyException;
 
-    M findByIndex(String userId, Integer index) throws IndexIncorrectException, UserIdEmptyException;
+    @Nullable
+    M findByIndex(@NotNull String userId,@NotNull Integer index) throws IndexIncorrectException, UserIdEmptyException;
 
-    M remove(String userId, M m) throws UserIdEmptyException;
+    @Nullable
+    M remove(@Nullable String userId,@Nullable M m) throws UserIdEmptyException;
 
-    M removeById(String userId, String id) throws IdEmptyException, UserIdEmptyException;
+    @Nullable
+    M removeById(@Nullable String userId,@Nullable String id) throws IdEmptyException, UserIdEmptyException;
 
-    M removeByIndex(String userId, Integer index) throws IndexIncorrectException, UserIdEmptyException;
+    @Nullable
+    M removeByIndex(@NotNull String userId,@NotNull Integer index) throws IndexIncorrectException, UserIdEmptyException;
 
-    void removeAll(String userId) throws UserIdEmptyException;
+    void removeAll(@Nullable String userId) throws UserIdEmptyException;
 }

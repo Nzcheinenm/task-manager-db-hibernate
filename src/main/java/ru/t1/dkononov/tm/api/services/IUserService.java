@@ -1,5 +1,7 @@
 package ru.t1.dkononov.tm.api.services;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.enumerated.Role;
 import ru.t1.dkononov.tm.exception.AbstractException;
 import ru.t1.dkononov.tm.exception.field.AbstractFieldException;
@@ -9,37 +11,48 @@ import ru.t1.dkononov.tm.exception.field.UserIdEmptyException;
 import ru.t1.dkononov.tm.model.User;
 
 public interface IUserService extends IService<User> {
-    User create(String login, String password) throws AbstractException;
 
-    User create(String login, String password, String email) throws AbstractException;
+    @Nullable
+    User create(@Nullable String login,@Nullable String password) throws AbstractException;
 
-    User create(String login, String password, Role role) throws AbstractException;
+    @NotNull
+    User create(@Nullable String login,@Nullable String password,@Nullable String email) throws AbstractException;
 
-    User findByLogin(String login) throws LoginEmptyException;
+    @NotNull
+    User create(@Nullable String login,@Nullable String password,@Nullable Role role) throws AbstractException;
 
-    User findByEmail(String email) throws EmailEmptyException;
+    @Nullable
+    User findByLogin(@Nullable String login) throws LoginEmptyException;
 
-    User removeOne (User model) throws UserIdEmptyException;
+    @Nullable
+    User findByEmail(@Nullable String email) throws EmailEmptyException;
 
-    User removeByLogin(String login) throws AbstractFieldException;
+    @Nullable
+    User removeOne (@Nullable User model) throws UserIdEmptyException;
 
-    User removeByEmail(String email) throws AbstractFieldException;
+    @NotNull
+    User removeByLogin(@Nullable String login) throws AbstractFieldException;
 
-    User setPassword(String id, String password) throws AbstractFieldException;
+    @Nullable
+    User removeByEmail(@Nullable String email) throws AbstractFieldException;
 
+    @NotNull
+    User setPassword(@Nullable String id,@Nullable String password) throws AbstractFieldException;
+
+    @NotNull
     User updateUser(
-            String id,
-            String firstName,
-            String lastName,
-            String middleName
+            @Nullable String id,
+            @Nullable String firstName,
+            @Nullable String lastName,
+            @Nullable String middleName
     ) throws AbstractFieldException;
 
-    Boolean isLoginExist(String login);
+    Boolean isLoginExist(@Nullable String login);
 
-    Boolean isEmailExist(String email);
+    Boolean isEmailExist(@Nullable String email);
 
-    void lockUserByLogin(String login) throws LoginEmptyException;
+    void lockUserByLogin(@Nullable String login) throws LoginEmptyException;
 
-    void unlockUserByLogin(String login) throws LoginEmptyException;
+    void unlockUserByLogin(@Nullable String login) throws LoginEmptyException;
 
 }

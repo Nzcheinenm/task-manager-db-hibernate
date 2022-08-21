@@ -1,14 +1,19 @@
 package ru.t1.dkononov.tm.api.model;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.exception.AbstractException;
 
 public interface ICommand {
 
-    String getArgument();
+    @Nullable
+    String getARGUMENT();
 
-    String getDescription();
+    @NotNull
+    String getDESCRIPTION();
 
-    String getName();
+    @NotNull
+    String getNAME();
 
     void execute() throws AbstractException;
 

@@ -1,40 +1,38 @@
 package ru.t1.dkononov.tm.command.system;
 
+import lombok.Getter;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.util.FormatUtil;
 
 public final class SystemInfoCommand extends AbstractSystemCommand {
 
-    public static final String DESCRIPTION = "Показать описание системы";
+    @Getter
+    @NotNull
+    public final String DESCRIPTION = "Показать описание системы";
 
-    public static final String NAME = "info";
+    @Getter
+    @NotNull
+    public final String NAME = "info";
 
 
+    @Nullable
     @Override
-    public String getArgument() {
+    public String getARGUMENT() {
         return null;
     }
 
     @Override
-    public String getDescription() {
-        return DESCRIPTION;
-    }
-
-    @Override
-    public String getName() {
-        return NAME;
-    }
-
-    @Override
     public void execute() {
-        final Runtime runtime = Runtime.getRuntime();
+        @NotNull final Runtime runtime = Runtime.getRuntime();
         final long availableProcessors = runtime.availableProcessors();
         final long freeMemory = runtime.freeMemory();
-        final String freeMemoryFormat = FormatUtil.format(freeMemory);
+        @NotNull final String freeMemoryFormat = FormatUtil.format(freeMemory);
         final long maxMemory = runtime.maxMemory();
         final boolean maxMemoryCheck = maxMemory == Long.MAX_VALUE;
-        final String maxMemoryFormat = maxMemoryCheck ? "no limit" : FormatUtil.format(maxMemory);
+        @NotNull final String maxMemoryFormat = maxMemoryCheck ? "no limit" : FormatUtil.format(maxMemory);
         final long totalMemory = runtime.totalMemory();
-        final String totalMemoryFormat = FormatUtil.format(totalMemory);
+        @NotNull final String totalMemoryFormat = FormatUtil.format(totalMemory);
 
         System.out.println("Available processors (cores): " + availableProcessors);
         System.out.println("Free memory (bytes): " + freeMemoryFormat);

@@ -1,5 +1,7 @@
 package ru.t1.dkononov.tm.service;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.api.repository.IRepository;
 import ru.t1.dkononov.tm.api.services.IService;
 import ru.t1.dkononov.tm.enumerated.Sort;
@@ -13,31 +15,36 @@ import java.util.List;
 
 public abstract class AbstractService<M extends AbstractModel, R extends IRepository<M>> implements IService<M> {
 
+    @NotNull
     protected final R repository;
 
-    public AbstractService(final R repository) {
+    public AbstractService(final @NotNull R repository) {
         this.repository = repository;
     }
 
+    @NotNull
     @Override
     public List<M> findAll() {
         return repository.findAll();
     }
 
+    @Nullable
     @Override
     public List<M> findAll(final Comparator<M> comparator) {
         if (comparator == null) return findAll();
         return repository.findAll(comparator);
     }
 
+    @Nullable
     @Override
-    public List<M> findAll(final Sort sort) {
+    public List<M> findAll(@Nullable final Sort sort) {
         if (sort == null) return findAll();
         return findAll(sort.getComparator());
     }
 
+    @Nullable
     @Override
-    public M add(final M model) throws ProjectNotFoundException {
+    public M add(@Nullable final M model) throws ProjectNotFoundException {
         if (model == null) throw new ProjectNotFoundException();
         return repository.add(model);
     }
@@ -48,40 +55,45 @@ public abstract class AbstractService<M extends AbstractModel, R extends IReposi
     }
 
     @Override
-    public boolean existsById(String id) {
+    public boolean existsById(@Nullable final String id) {
         if (id == null || id.isEmpty()) return false;
         return repository.existsById(id);
     }
 
+    @Nullable
     @Override
-    public M findById(final String id) throws IdEmptyException {
+    public M findById(@Nullable final String id) throws IdEmptyException {
         if (id == null || id.isEmpty()) throw new IdEmptyException();
         return repository.findById(id);
     }
 
+    @Nullable
     @Override
-    public M findByIndex(final Integer index) throws IndexIncorrectException {
+    public M findByIndex(@Nullable final Integer index) throws IndexIncorrectException {
         if (index == null || index < 0) throw new IndexIncorrectException();
         return repository.findByIndex(index);
     }
 
+    @Nullable
     @Override
-    public M remove(final M model) {
+    public M remove(@Nullable final M model) {
         return repository.remove(model);
     }
 
+    @Nullable
     @Override
-    public M removeById(final String id) throws IdEmptyException {
+    public M removeById(@Nullable final String id) throws IdEmptyException {
         if (id == null || id.isEmpty()) throw new IdEmptyException();
-        final M model = repository.findById(id);
+        @Nullable final M model = repository.findById(id);
         remove(model);
         return model;
     }
 
+    @Nullable
     @Override
-    public M removeByIndex(final Integer index) throws IndexIncorrectException {
+    public M removeByIndex(@Nullable final Integer index) throws IndexIncorrectException {
         if (index == null || index < 0) throw new IndexIncorrectException();
-        final M model = repository.findByIndex(index);
+        @Nullable final M model = repository.findByIndex(index);
         repository.remove(model);
         return model;
     }

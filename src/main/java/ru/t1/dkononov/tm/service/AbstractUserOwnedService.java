@@ -1,5 +1,7 @@
 package ru.t1.dkononov.tm.service;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.api.repository.IUserOwnedRepository;
 import ru.t1.dkononov.tm.api.services.IUserOwnedService;
 import ru.t1.dkononov.tm.enumerated.Sort;
@@ -14,92 +16,109 @@ import java.util.List;
 
 public abstract class AbstractUserOwnedService<M extends AbstractUserOwnedModel, R extends IUserOwnedRepository<M>> implements IUserOwnedService<M> {
 
+    @NotNull
     protected final R repository;
 
-    public AbstractUserOwnedService(final R repository) {
+
+    public AbstractUserOwnedService(final @NotNull R repository) {
         this.repository = repository;
     }
 
+    @NotNull
     @Override
-    public List<M> findAll(final String userId) throws UserIdEmptyException {
+    public List<M> findAll(@Nullable final String userId) throws UserIdEmptyException {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         return repository.findAll(userId);
     }
 
+    @NotNull
     @Override
-    public List<M> findAll(final String userId, final Comparator<M> comparator) throws UserIdEmptyException {
+    public List<M> findAll(
+            @Nullable final String userId,
+            @Nullable final Comparator<M> comparator
+    ) throws UserIdEmptyException {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (comparator == null) return findAll(userId);
         return repository.findAll(userId, comparator);
     }
 
+    @NotNull
     @Override
-    public List<M> findAll(final String userId, final Sort sort) throws UserIdEmptyException {
+    public List<M> findAll(
+            @Nullable final String userId,
+            @Nullable final Sort sort
+    ) throws UserIdEmptyException {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (sort == null) return findAll(userId);
         return findAll(userId, sort.getComparator());
     }
 
+    @NotNull
     @Override
-    public M add(final String userId, final M model) throws ProjectNotFoundException, UserIdEmptyException {
+    public M add(@Nullable final String userId,@Nullable final M model) throws ProjectNotFoundException, UserIdEmptyException {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (model == null) throw new ProjectNotFoundException();
         return repository.add(userId, model);
     }
 
     @Override
-    public void clear(final String userId) throws UserIdEmptyException {
+    public void clear(@Nullable final String userId) throws UserIdEmptyException {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         repository.clear(userId);
     }
 
     @Override
-    public boolean existsById(final String userId, final String id) throws UserIdEmptyException {
+    public boolean existsById(@Nullable final String userId,@Nullable final String id) throws UserIdEmptyException {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (id == null || id.isEmpty()) return false;
         return repository.existsById(userId, id);
     }
 
+    @Nullable
     @Override
-    public M findById(final String userId, final String id) throws IdEmptyException, UserIdEmptyException {
+    public M findById(@Nullable final String userId,@Nullable final String id) throws IdEmptyException, UserIdEmptyException {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (id == null || id.isEmpty()) throw new IdEmptyException();
         return repository.findById(userId, id);
     }
 
+    @Nullable
     @Override
-    public M findByIndex(final String userId, final Integer index) throws IndexIncorrectException, UserIdEmptyException {
+    public M findByIndex(@Nullable final String userId,@Nullable final Integer index) throws IndexIncorrectException, UserIdEmptyException {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (index == null || index < 0) throw new IndexIncorrectException();
         return repository.findByIndex(userId, index);
     }
 
+    @NotNull
     @Override
-    public M remove(final String userId, final M model) throws UserIdEmptyException {
+    public M remove(@Nullable final String userId,@Nullable final M model) throws UserIdEmptyException {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         return repository.remove(userId, model);
     }
 
+    @NotNull
     @Override
-    public M removeById(final String userId, final String id) throws IdEmptyException, UserIdEmptyException {
+    public M removeById(@Nullable final String userId,@Nullable final String id) throws IdEmptyException, UserIdEmptyException {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (id == null || id.isEmpty()) throw new IdEmptyException();
-        final M model = repository.findById(userId, id);
+        @NotNull final M model = repository.findById(userId, id);
         remove(userId, model);
         return model;
     }
 
+    @NotNull
     @Override
-    public M removeByIndex(final String userId, final Integer index) throws IndexIncorrectException, UserIdEmptyException {
+    public M removeByIndex(@Nullable final String userId,@Nullable final Integer index) throws IndexIncorrectException, UserIdEmptyException {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (index == null || index < 0) throw new IndexIncorrectException();
-        final M model = repository.findByIndex(userId, index);
+        @NotNull final M model = repository.findByIndex(userId, index);
         repository.remove(userId, model);
         return model;
     }
 
     @Override
-    public void removeAll(final String userId) throws UserIdEmptyException {
+    public void removeAll(@Nullable final String userId) throws UserIdEmptyException {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         repository.removeAll(userId);
     }

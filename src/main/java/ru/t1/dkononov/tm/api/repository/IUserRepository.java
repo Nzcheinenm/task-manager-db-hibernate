@@ -1,15 +1,19 @@
 package ru.t1.dkononov.tm.api.repository;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.model.User;
 
 public interface IUserRepository extends IRepository<User> {
 
-    User findByLogin(String login);
+    @Nullable
+    User findByLogin(@NotNull String login);
 
-    User findByEmail(String email);
+    @Nullable
+    User findByEmail(@NotNull String email);
 
-    Boolean isLoginExist(String login);
+    Boolean isLoginExist(@NotNull String login);
 
-    Boolean isEmailExist(String email);
+    Boolean isEmailExist(@NotNull String email);
 
 }

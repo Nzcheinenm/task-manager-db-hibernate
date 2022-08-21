@@ -1,9 +1,12 @@
 package ru.t1.dkononov.tm.api.model;
 
+import org.jetbrains.annotations.NotNull;
+
 public interface IHasName {
 
+    @NotNull
     String getName();
 
-    void setName(final String name);
+    void setName(@NotNull final String name);
 
 }

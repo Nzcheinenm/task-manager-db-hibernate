@@ -1,5 +1,7 @@
 package ru.t1.dkononov.tm.service;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.api.repository.IProjectRepository;
 import ru.t1.dkononov.tm.api.repository.ITaskRepository;
 import ru.t1.dkononov.tm.api.repository.IUserRepository;
@@ -13,73 +15,90 @@ import ru.t1.dkononov.tm.util.HashUtil;
 import java.util.List;
 
 public final class UserService extends AbstractService<User, IUserRepository> implements IUserService {
-
+    @Nullable
     private final IProjectRepository projectRepository;
-
+    @Nullable
     private final ITaskRepository taskRepository;
 
     public UserService(
-            final IUserRepository repository,
-            final IProjectRepository projectRepository,
-            final ITaskRepository taskRepository
+            @NotNull final IUserRepository repository,
+            @Nullable final IProjectRepository projectRepository,
+            @Nullable final ITaskRepository taskRepository
             ) {
         super(repository);
         this.projectRepository = projectRepository;
         this.taskRepository = taskRepository;
     }
 
+    @Nullable
     @Override
-    public User create(final String login, final String password) throws AbstractException {
+    public User create(
+            @Nullable final String login,
+            @Nullable final String password
+    ) throws AbstractException {
         if (login == null || login.isEmpty()) throw new LoginEmptyException();
         if (isLoginExist(login)) throw new ExistsLoginException();
         if (password == null || password.isEmpty()) throw new PasswordEmptyException();
-        final User user = new User();
+        @Nullable final User user = new User();
         user.setLogin(login);
         user.setPasswordHash(HashUtil.salt(password));
         user.setRole(Role.USUAL);
         return repository.add(user);
     }
 
+    @NotNull
     @Override
-    public User create(final String login, final String password, final String email) throws AbstractException {
+    public User create(
+            @Nullable final String login,
+            @Nullable final String password,
+            @Nullable final String email
+    ) throws AbstractException {
         if (login == null || login.isEmpty()) throw new LoginEmptyException();
         if (isLoginExist(login)) throw new ExistsLoginException();
         if (password == null || password.isEmpty()) throw new PasswordEmptyException();
         if (isEmailExist(email)) throw new ExistsEmailException();
-        final User user = create(login, password);
+        @NotNull final User user = create(login, password);
         user.setEmail(email);
         return user;
     }
 
+    @NotNull
     @Override
-    public User create(final String login, final String password, final Role role) throws AbstractException {
+    public User create(
+            @Nullable final String login,
+            @Nullable final String password,
+            @Nullable final Role role
+    ) throws AbstractException {
         if (login == null || login.isEmpty()) throw new LoginEmptyException();
         if (isLoginExist(login)) throw new ExistsLoginException();
         if (password == null || password.isEmpty()) throw new PasswordEmptyException();
         if (role == null) throw new RoleEmptyException();
-        final User user = create(login, password);
+        @NotNull final User user = create(login, password);
         if (role != null) user.setRole(role);
         return user;
     }
 
+    @Nullable
     @Override
-    public User findByLogin(final String login) throws LoginEmptyException {
+    public User findByLogin(@Nullable final String login) throws LoginEmptyException {
         if (login == null || login.isEmpty()) throw new LoginEmptyException();
-        final User user = repository.findByLogin(login);
+        @Nullable final User user = repository.findByLogin(login);
         if (user == null) return null;
         return user;
     }
 
+    @Nullable
     @Override
-    public User findByEmail(final String email) throws EmailEmptyException {
+    public User findByEmail(@Nullable final String email) throws EmailEmptyException {
         if (email == null || email.isEmpty()) throw new EmailEmptyException();
-        final User user = repository.findByEmail(email);
+        @Nullable final User user = repository.findByEmail(email);
         if (user == null) return null;
         return user;
     }
 
+    @Nullable
     @Override
-    public User removeOne(final User model) throws UserIdEmptyException {
+    public User removeOne(@Nullable final User model) throws UserIdEmptyException {
         if (model == null) return null;
         final User user = super.remove(model);
         if (user == null) return null;
@@ -89,22 +108,28 @@ public final class UserService extends AbstractService<User, IUserRepository> im
         return user;
     }
 
+    @NotNull
     @Override
-    public User removeByLogin(final String login) throws AbstractFieldException {
+    public User removeByLogin(@Nullable final String login) throws AbstractFieldException {
         if (login == null || login.isEmpty()) throw new LoginEmptyException();
         final User user = findByLogin(login);
         return remove(user);
     }
 
+    @NotNull
     @Override
-    public User removeByEmail(final String email) throws AbstractFieldException {
+    public User removeByEmail(@Nullable final String email) throws AbstractFieldException {
         if (email == null || email.isEmpty()) throw new EmailEmptyException();
         final User user = findByEmail(email);
         return remove(user);
     }
 
+    @NotNull
     @Override
-    public User setPassword(final String id, final String password) throws AbstractFieldException {
+    public User setPassword(
+            @Nullable final String id,
+            @Nullable final String password
+    ) throws AbstractFieldException {
         if (id == null || id.isEmpty()) throw new IdEmptyException();
         if (password == null || password.isEmpty()) throw new PasswordEmptyException();
         final User user = findById(id);
@@ -113,15 +138,16 @@ public final class UserService extends AbstractService<User, IUserRepository> im
         return user;
     }
 
+    @NotNull
     @Override
     public User updateUser(
-            final String id,
-            final String firstName,
-            final String lastName,
-            final String middleName
+            @Nullable final String id,
+            @Nullable final String firstName,
+            @Nullable final String lastName,
+            @Nullable final String middleName
     ) throws AbstractFieldException {
         if (id == null || id.isEmpty()) throw new IdEmptyException();
-        final User user = findById(id);
+        @Nullable final User user = findById(id);
         if (user == null) throw new UserNotFoundException();
         user.setFirstName(firstName);
         user.setLastName(lastName);
@@ -130,34 +156,33 @@ public final class UserService extends AbstractService<User, IUserRepository> im
     }
 
     @Override
-    public Boolean isLoginExist(final String login) {
+    public Boolean isLoginExist(@Nullable final String login) {
         if (login == null || login.isEmpty()) return false;
         return repository.isLoginExist(login);
     }
 
     @Override
-    public Boolean isEmailExist(final String email) {
+    public Boolean isEmailExist(@Nullable final String email) {
         if (email == null || email.isEmpty()) return false;
         return repository.isEmailExist(email);
     }
 
     @Override
-    public void lockUserByLogin(String login) throws LoginEmptyException {
+    public void lockUserByLogin(@Nullable final String login) throws LoginEmptyException {
         if (login == null || login.isEmpty()) throw new LoginEmptyException();
         final User user = findByLogin(login);
         user.setLocked(true);
     }
 
     @Override
-    public void unlockUserByLogin(String login) throws LoginEmptyException {
+    public void unlockUserByLogin(@Nullable String login) throws LoginEmptyException {
         if (login == null || login.isEmpty()) throw new LoginEmptyException();
         final User user = findByLogin(login);
         user.setLocked(false);
     }
 
     @Override
-    public void removeAll(List<User> modelsRemove) {
-        return;
+    public void removeAll(@Nullable List<User> modelsRemove) {
     }
 
 }

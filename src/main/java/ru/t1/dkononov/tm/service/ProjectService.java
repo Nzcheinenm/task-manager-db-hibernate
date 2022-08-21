@@ -1,5 +1,7 @@
 package ru.t1.dkononov.tm.service;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.api.repository.IProjectRepository;
 import ru.t1.dkononov.tm.api.services.IProjectService;
 import ru.t1.dkononov.tm.enumerated.Status;
@@ -11,12 +13,17 @@ import ru.t1.dkononov.tm.model.Project;
 public final class ProjectService extends AbstractUserOwnedService<Project, IProjectRepository> implements IProjectService {
 
 
-    public ProjectService(final IProjectRepository repository) {
+    public ProjectService(@NotNull final IProjectRepository repository) {
         super(repository);
     }
 
+    @NotNull
     @Override
-    public Project create(final String userId, final String name, final String description)
+    public Project create(
+            @Nullable final String userId,
+            @Nullable final String name,
+            @Nullable final String description
+    )
             throws AbstractFieldException {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (name == null || name.isEmpty()) throw new NameEmptyException();
@@ -24,8 +31,9 @@ public final class ProjectService extends AbstractUserOwnedService<Project, IPro
         return repository.create(userId, name, description);
     }
 
+    @NotNull
     @Override
-    public Project create(final String userId, final String name)
+    public Project create(@Nullable final String userId,@Nullable final String name)
             throws AbstractFieldException {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (name == null || name.isEmpty()) throw new NameEmptyException();
@@ -33,13 +41,18 @@ public final class ProjectService extends AbstractUserOwnedService<Project, IPro
     }
 
     @Override
-    public void updateById(final String userId, final String id, final String name, final String description)
+    public void updateById(
+            @Nullable final String userId,
+            @Nullable final String id,
+            @Nullable final String name,
+            @Nullable final String description
+    )
             throws AbstractException {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (id == null || id.isEmpty()) throw new IdEmptyException();
         if (name == null || name.isEmpty()) throw new NameEmptyException();
         if (description == null || description.isEmpty()) throw new DescriptionEmptyException();
-        final Project project = repository.findById(userId, id);
+        @Nullable final Project project = repository.findById(userId, id);
         if (project == null) throw new ProjectNotFoundException();
         project.setName(name);
         project.setDescription(description);
@@ -47,35 +60,48 @@ public final class ProjectService extends AbstractUserOwnedService<Project, IPro
     }
 
     @Override
-    public void updateByIndex(final String userId, final Integer index, final String name, final String description)
+    public void updateByIndex(
+            @Nullable final String userId,
+            @Nullable final Integer index,
+            @Nullable final String name,
+            @Nullable final String description
+    )
             throws AbstractException {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (index == null || index < 0) throw new IndexIncorrectException();
         if (name == null || name.isEmpty()) throw new NameEmptyException();
         if (description == null || description.isEmpty()) throw new DescriptionEmptyException();
-        final Project project = repository.findByIndex(userId, index);
+        @Nullable final Project project = repository.findByIndex(userId, index);
         if (project == null) throw new ProjectNotFoundException();
         project.setName(name);
         project.setDescription(description);
     }
 
     @Override
-    public void changeProjectStatusById(final String userId, final String id, final Status status)
+    public void changeProjectStatusById(
+            @Nullable final String userId,
+            @Nullable final String id,
+            @NotNull final Status status
+    )
             throws AbstractException {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (id == null || id.isEmpty()) throw new IdEmptyException();
-        final Project project = findById(userId, id);
+        @Nullable final Project project = findById(userId, id);
         if (project == null) throw new ProjectNotFoundException();
         project.setStatus(status);
         project.setUserId(userId);
     }
 
     @Override
-    public void changeProjectStatusByIndex(final String userId, final Integer index, final Status status)
+    public void changeProjectStatusByIndex(
+            @Nullable final String userId,
+            @Nullable final Integer index,
+            @NotNull final Status status
+    )
             throws AbstractException {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (index == null || index < 0) throw new IndexIncorrectException();
-        final Project project = findByIndex(userId, index);
+        @Nullable final Project project = findByIndex(userId, index);
         if (project == null) throw new ProjectNotFoundException();
         project.setStatus(status);
         project.setUserId(userId);

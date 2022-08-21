@@ -1,67 +1,38 @@
 package ru.t1.dkononov.tm.model;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.api.model.IWBS;
 import ru.t1.dkononov.tm.enumerated.Status;
 
 import java.util.Date;
 
+@Getter
+@Setter
+@NoArgsConstructor
 public final class Task extends AbstractUserOwnedModel implements IWBS {
 
+    @NotNull
     private String name = "";
 
+    @NotNull
     private String description = "";
 
+    @NotNull
     private Status status = Status.NOT_STARTED;
 
+    @Nullable
     private String projectId;
 
+    @NotNull
     private Date created = new Date();
-
-    public Task() {
-    }
 
     public Task(String name, Status status) {
         this.name = name;
         this.status = status;
     }
 
-    public Date getCreated() {
-        return created;
-    }
-
-    public void setCreated(final Date created) {
-        this.created = created;
-    }
-
-    public String getProjectId() {
-        return projectId;
-    }
-
-    public void setProjectId(final String projectId) {
-        this.projectId = projectId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(final String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(final String description) {
-        this.description = description;
-    }
-
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
-    }
 }

@@ -1,31 +1,31 @@
 package ru.t1.dkononov.tm.command.project;
 
+import lombok.Getter;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.exception.field.AbstractFieldException;
 import ru.t1.dkononov.tm.util.TerminalUtil;
 
+
 public final class ProjectAddCommand extends AbstractProjectCommand {
 
-    public static final String DESCRIPTION = "Создать новый проект.";
-    public static final String NAME = "project-add";
+    @Getter
+    @Nullable
+    public final String DESCRIPTION = "Создать новый проект.";
 
-    @Override
-    public String getDescription() {
-        return DESCRIPTION;
-    }
+    @Getter
+    @Nullable
+    public final String NAME = "project-add";
 
-    @Override
-    public String getName() {
-        return NAME;
-    }
 
     @Override
     public void execute() throws AbstractFieldException {
-        final String userId = getUserId();
+        @Nullable final String userId = getUserId();
         System.out.println("[CREATE NEW PROJECT]");
         System.out.println("ENTER NAME:");
-        final String name = TerminalUtil.inLine();
+        @NotNull final String name = TerminalUtil.inLine();
         System.out.println("ENTER DESCRIPTION:");
-        final String description = TerminalUtil.inLine();
+        @NotNull final String description = TerminalUtil.inLine();
         getProjectService().create(userId, name, description);
     }
 

@@ -1,5 +1,9 @@
 package ru.t1.dkononov.tm.component;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.api.repository.ICommandRepository;
 import ru.t1.dkononov.tm.api.repository.IProjectRepository;
 import ru.t1.dkononov.tm.api.repository.ITaskRepository;
@@ -25,30 +29,51 @@ import ru.t1.dkononov.tm.repository.UserRepository;
 import ru.t1.dkononov.tm.service.*;
 import ru.t1.dkononov.tm.util.TerminalUtil;
 
-public class Bootstrap implements IServiceLocator {
 
+@NoArgsConstructor
+public final class Bootstrap implements IServiceLocator {
+
+    @NotNull
     private final ICommandRepository commandRepository = new CommandRepository();
 
+    @Getter
+    @NotNull
     private final ICommandService commandService = new CommandService(commandRepository);
 
+    @NotNull
     private final IProjectRepository projectRepository = new ProjectRepository();
 
+    @Getter
+    @NotNull
     private final IProjectService projectService = new ProjectService(projectRepository);
 
+
+    @NotNull
     private final ITaskRepository taskRepository = new TaskRepository();
 
+    @Getter
+    @NotNull
     private final ITaskService taskService = new TaskService(taskRepository);
 
+    @Getter
+    @NotNull
     private final IProjectTaskService projectTaskService = new ProjectTaskService(projectRepository, taskRepository);
 
+    @Getter
+    @NotNull
     private final ILoggerService loggerService = new LoggerService();
 
+    @NotNull
     private final IUserRepository userRepository = new UserRepository();
 
+    @Getter
+    @NotNull
     private final IUserService userService = new UserService(
             userRepository,projectRepository,taskRepository
     );
 
+    @Getter
+    @NotNull
     private final IAuthService authService = new AuthService(userService);
 
     {
@@ -106,41 +131,41 @@ public class Bootstrap implements IServiceLocator {
         registry(new UserRemoveCommand());
     }
 
-    public void run(final String[] args) {
+    public void run(@NotNull final String[] args) {
         if (processArgument(args)) System.exit(0);
         init();
         while (!Thread.currentThread().isInterrupted()) {
             try {
                 System.out.println("ENTER COMMAND:");
-                final String command = TerminalUtil.inLine();
+                @NotNull final String command = TerminalUtil.inLine();
                 processCommand(command);
                 System.out.println("[OK]");
                 loggerService.command(command);
-            } catch (final Exception e) {
+            } catch (@NotNull final Exception e) {
                 loggerService.error(e);
                 System.err.println("[FAIL]");
             }
         }
-
     }
 
     private void init() {
         try {
             initData();
             initLogger();
-        } catch (final AbstractException e) {
+        } catch (@NotNull final AbstractException e) {
             loggerService.error(e);
             System.err.println("[INIT FAIL]");
         }
     }
 
-    private void processArgument(final String argument) throws AbstractException {
-        final AbstractCommand abstractCommand = commandService.getCommandByArgument(argument);
+    private void processArgument(@Nullable final String argument)
+            throws AbstractException {
+        @Nullable final AbstractCommand abstractCommand = commandService.getCommandByArgument(argument);
         if (abstractCommand == null) throw new ArgumentNotSupportedException(argument);
         abstractCommand.execute();
     }
 
-    private boolean processArgument(final String[] args) {
+    private boolean processArgument(@Nullable final String[] args) {
         if (args == null || args.length == 0) return false;
         final String argument = args[0];
         try {
@@ -153,13 +178,14 @@ public class Bootstrap implements IServiceLocator {
     }
 
     private void initData() throws AbstractException {
-        final User test = userService.create("test", "test", "test@test.ru");
-        final User user = userService.create("user", "user", "user@test.ru");
-        final User admin = userService.create("admin", "admin", Role.ADMIN);
+        @NotNull final User test = userService.create("test", "test", "test@test.ru");
+        @NotNull final User user = userService.create("user", "user", "user@test.ru");
+        @NotNull final User admin = userService.create("admin", "admin", Role.ADMIN);
 
         projectService.add(test.getId(), new Project("Jira", Status.NOT_STARTED));
         projectService.add(test.getId(), new Project("Confluence", Status.IN_PROGRESS));
         projectService.add(admin.getId(), new Project("SoapUI", Status.IN_PROGRESS));
+        projectService.add(user.getId(), new Project("Postman", Status.IN_PROGRESS));
 
         taskService.add(test.getId(), new Task("Work", Status.IN_PROGRESS));
         taskService.add(admin.getId(), new Task("Homework", Status.NOT_STARTED));
@@ -171,51 +197,16 @@ public class Bootstrap implements IServiceLocator {
                 loggerService.info("** TASK-MANAGER IS SHUTTING DOWN **")));
     }
 
-    private void processCommand(final String command) throws AbstractException {
-        final AbstractCommand abstractCommand = commandService.getCommandByName(command);
+    private void processCommand(@Nullable final String command) throws AbstractException {
+        @Nullable final AbstractCommand abstractCommand = commandService.getCommandByName(command);
         if (abstractCommand == null) throw new CommandNotSupportedException(command);
         authService.checkRoles(abstractCommand.getRoles());
         abstractCommand.execute();
     }
 
-    private void registry(final AbstractCommand command) {
+    private void registry(@NotNull final AbstractCommand command) {
         command.setServiceLocator(this);
         commandService.add(command);
-    }
-
-    @Override
-    public IAuthService getAuthService() {
-        return authService;
-    }
-
-    @Override
-    public IUserService getUserService() {
-        return userService;
-    }
-
-    @Override
-    public ICommandService getCommandService() {
-        return commandService;
-    }
-
-    @Override
-    public ILoggerService getLoggerService() {
-        return loggerService;
-    }
-
-    @Override
-    public IProjectService getProjectService() {
-        return projectService;
-    }
-
-    @Override
-    public IProjectTaskService getProjectTaskService() {
-        return projectTaskService;
-    }
-
-    @Override
-    public ITaskService getTaskService() {
-        return taskService;
     }
 
 }

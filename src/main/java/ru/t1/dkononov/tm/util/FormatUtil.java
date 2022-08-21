@@ -1,7 +1,10 @@
 package ru.t1.dkononov.tm.util;
 
+import org.jetbrains.annotations.NotNull;
+
 public interface FormatUtil {
 
+    @NotNull
     static String format(long bytes) {
         final long kilobyte = 1024;
         final long megabyte = kilobyte * 1024;

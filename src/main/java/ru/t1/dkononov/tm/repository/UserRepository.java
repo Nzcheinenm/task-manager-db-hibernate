@@ -1,12 +1,15 @@
 package ru.t1.dkononov.tm.repository;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.api.repository.IUserRepository;
 import ru.t1.dkononov.tm.model.User;
 
 public class UserRepository extends AbstractRepository<User> implements IUserRepository {
 
+    @Nullable
     @Override
-    public User findByLogin(final String login) {
+    public User findByLogin(@NotNull final String login) {
         return models
                 .stream()
                 .filter(u -> login.equals(u.getLogin()))
@@ -14,8 +17,9 @@ public class UserRepository extends AbstractRepository<User> implements IUserRep
                 .orElse(null);
     }
 
+    @Nullable
     @Override
-    public User findByEmail(final String email) {
+    public User findByEmail(@NotNull final String email) {
         return models
                 .stream()
                 .filter(u -> email.equals(u.getEmail()))
@@ -25,14 +29,14 @@ public class UserRepository extends AbstractRepository<User> implements IUserRep
 
 
     @Override
-    public Boolean isLoginExist(final String login) {
+    public Boolean isLoginExist(@NotNull final String login) {
         return models
                 .stream()
                 .anyMatch(u -> login.equals(u.getLogin()));
     }
 
     @Override
-    public Boolean isEmailExist(final String email) {
+    public Boolean isEmailExist(@NotNull final String email) {
         return models
                 .stream()
                 .anyMatch(u -> email.equals(u.getEmail()));

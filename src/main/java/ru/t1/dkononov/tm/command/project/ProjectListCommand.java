@@ -1,5 +1,7 @@
 package ru.t1.dkononov.tm.command.project;
 
+import lombok.Getter;
+import org.jetbrains.annotations.NotNull;
 import ru.t1.dkononov.tm.enumerated.Sort;
 import ru.t1.dkononov.tm.exception.AbstractException;
 import ru.t1.dkononov.tm.model.Project;
@@ -10,19 +12,14 @@ import java.util.List;
 
 public final class ProjectListCommand extends AbstractProjectCommand {
 
-    public static final String NAME = "project-list";
+    @Getter
+    @NotNull
+    public final String NAME = "project-list";
 
-    public static final String DESCRIPTION = "Вывести список проектов.";
+    @Getter
+    @NotNull
+    public final String DESCRIPTION = "Вывести список проектов.";
 
-    @Override
-    public String getDescription() {
-        return DESCRIPTION;
-    }
-
-    @Override
-    public String getName() {
-        return NAME;
-    }
 
     @Override
     public void execute() throws AbstractException {

@@ -1,5 +1,7 @@
 package ru.t1.dkononov.tm.command.task;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.api.services.IProjectTaskService;
 import ru.t1.dkononov.tm.api.services.ITaskService;
 import ru.t1.dkononov.tm.command.AbstractCommand;
@@ -11,29 +13,32 @@ import java.util.List;
 
 public abstract class AbstractTaskCommand extends AbstractCommand {
 
+    @NotNull
     protected ITaskService getTaskService() {
         return serviceLocator.getTaskService();
     }
 
+    @NotNull
     protected IProjectTaskService getProjectTaskService() {
         return getServiceLocator().getProjectTaskService();
     }
 
+    @Nullable
     @Override
-    public String getArgument() {
+    public String getARGUMENT() {
         return null;
     }
 
-    protected void renderTasks(final List<Task> tasks) {
+    protected void renderTasks(@NotNull final List<Task> tasks) {
         int index = 1;
-        for (final Task task : tasks) {
+        for (@Nullable final Task task : tasks) {
             if (task == null) continue;
             System.out.println(index + ". " + task);
             index++;
         }
     }
 
-    protected void showTask(final Task task) {
+    protected void showTask(@Nullable final Task task) {
         if (task == null) return;
         System.out.println("ID: " + task.getId());
         System.out.println("NAME: " + task.getName());
@@ -41,6 +46,7 @@ public abstract class AbstractTaskCommand extends AbstractCommand {
         System.out.println("STATUS: " + Status.toName(task.getStatus()));
     }
 
+    @Nullable
     public Role[] getRoles() {
         return Role.values();
     }

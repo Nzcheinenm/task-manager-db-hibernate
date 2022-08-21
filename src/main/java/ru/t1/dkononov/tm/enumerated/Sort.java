@@ -1,10 +1,14 @@
 package ru.t1.dkononov.tm.enumerated;
 
+import lombok.Getter;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.comparator.CreatedComparator;
 import ru.t1.dkononov.tm.comparator.NameComparator;
 import ru.t1.dkononov.tm.comparator.StatusComparator;
 
 import java.util.Comparator;
+
 
 public enum Sort {
 
@@ -12,10 +16,14 @@ public enum Sort {
     BY_STATUS("Сортировка по статусу", StatusComparator.INSTANCE),
     BY_CREATED("Сортировка по дате создания", CreatedComparator.INSTANCE);
 
+    @Getter
+    @NotNull
     private final String displayName;
 
+    @Nullable
     private final Comparator<?> comparator;
 
+    @Nullable
     public static Sort toSort(final String value) {
         if (value == null || value.isEmpty()) return null;
         for (final Sort sort : values()) {
@@ -24,15 +32,12 @@ public enum Sort {
         return null;
     }
 
-    Sort(final String displayName, final Comparator<?> comparator) {
+    Sort(final @NotNull String displayName, final Comparator<?> comparator) {
         this.displayName = displayName;
         this.comparator = comparator;
     }
 
-    public String getDisplayName() {
-        return displayName;
-    }
-
+    @Nullable
     @SuppressWarnings("rawtypes")
     public Comparator getComparator() {
         return comparator;

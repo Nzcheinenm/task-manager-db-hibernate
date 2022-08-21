@@ -1,24 +1,20 @@
 package ru.t1.dkononov.tm.command.project;
 
+import lombok.Getter;
+import org.jetbrains.annotations.NotNull;
 import ru.t1.dkononov.tm.exception.field.AbstractFieldException;
 import ru.t1.dkononov.tm.model.Project;
 import ru.t1.dkononov.tm.util.TerminalUtil;
 
 public final class ProjectShowByIndexCommand extends AbstractProjectCommand {
 
-    public static final String NAME = "project-show-by-index";
+    @Getter
+    @NotNull
+    public final String NAME = "project-show-by-index";
 
-    public static final String DESCRIPTION = "Показать проект по индексу.";
-
-    @Override
-    public String getDescription() {
-        return DESCRIPTION;
-    }
-
-    @Override
-    public String getName() {
-        return NAME;
-    }
+    @Getter
+    @NotNull
+    public final String DESCRIPTION = "Показать проект по индексу.";
 
     @Override
     public void execute() throws AbstractFieldException {

@@ -1,5 +1,7 @@
 package ru.t1.dkononov.tm.repository;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.api.repository.ICommandRepository;
 import ru.t1.dkononov.tm.command.AbstractCommand;
 
@@ -9,31 +11,36 @@ import java.util.Map;
 
 public class CommandRepository implements ICommandRepository {
 
+    @NotNull
     private final Map<String, AbstractCommand> mapByArgument = new LinkedHashMap<>();
 
+    @NotNull
     private final Map<String, AbstractCommand> mapByName = new LinkedHashMap<>();
 
     @Override
-    public void add(final AbstractCommand command) {
+    public void add(@Nullable final AbstractCommand command) {
         if (command == null) return;
-        final String name = command.getName();
+        @Nullable final String name = command.getNAME();
         if (name != null && !name.isEmpty()) mapByName.put(name, command);
-        final String argument = command.getArgument();
+        @Nullable final String argument = command.getARGUMENT();
         if (argument != null && !argument.isEmpty()) mapByArgument.put(argument, command);
     }
 
+    @Nullable
     @Override
-    public AbstractCommand getCommandByArgument(final String argument) {
+    public AbstractCommand getCommandByArgument(@Nullable final String argument) {
         if (argument == null || argument.isEmpty()) return null;
         return mapByArgument.get(argument);
     }
 
+    @Nullable
     @Override
-    public AbstractCommand getCommandByName(final String name) {
+    public AbstractCommand getCommandByName(@Nullable final String name) {
         if (name == null || name.isEmpty()) return null;
         return mapByName.get(name);
     }
 
+    @Nullable
     @Override
     public Collection<AbstractCommand> getTerminalCommands() {
         return mapByName.values();
