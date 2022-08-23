@@ -18,7 +18,7 @@ public interface TerminalUtil {
 
     @NotNull
     static Integer nextNumber() throws NumberIncorrectException {
-        final String value = inLine();
+        @NotNull final String value = inLine();
         try {
             return Integer.parseInt(value);
         } catch (final Exception e) {

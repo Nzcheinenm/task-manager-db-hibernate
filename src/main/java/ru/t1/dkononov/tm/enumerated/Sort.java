@@ -26,13 +26,13 @@ public enum Sort {
     @Nullable
     public static Sort toSort(final String value) {
         if (value == null || value.isEmpty()) return null;
-        for (final Sort sort : values()) {
+        for (@NotNull final Sort sort : values()) {
             if (sort.name().equals(value)) return sort;
         }
         return null;
     }
 
-    Sort(final @NotNull String displayName, final Comparator<?> comparator) {
+    Sort(final @NotNull String displayName,@NotNull final Comparator<?> comparator) {
         this.displayName = displayName;
         this.comparator = comparator;
     }

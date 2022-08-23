@@ -29,6 +29,7 @@ public final class TaskShowByProjectIdCommand extends AbstractTaskCommand {
         showTasks(tasks);
     }
 
+    @NotNull
     public String show(@NotNull final Task task) {
         return "[ID: " + task.getId() + "]\n" +
                 "[NAME: " + task.getName() + "]\n" +

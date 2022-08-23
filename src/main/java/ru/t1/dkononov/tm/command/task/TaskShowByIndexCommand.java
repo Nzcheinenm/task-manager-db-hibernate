@@ -27,6 +27,7 @@ public final class TaskShowByIndexCommand extends AbstractTaskCommand {
         System.out.println(show(task));
     }
 
+    @NotNull
     public String show(@NotNull final Task task) {
         return "[ID: " + task.getId() + "]\n" +
                 "[NAME: " + task.getName() + "]\n" +

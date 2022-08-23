@@ -25,7 +25,7 @@ public final class ApplicationHelpCommand extends AbstractSystemCommand {
     public void execute() {
         System.out.println("[HELP]");
         @NotNull final Collection<AbstractCommand> commands = getCommandService().getTerminalCommands();
-        for (final ICommand command : commands) System.out.println(command);
+        for (@NotNull final ICommand command : commands) System.out.println(command);
     }
 
 }

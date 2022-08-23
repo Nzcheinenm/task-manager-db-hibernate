@@ -100,9 +100,9 @@ public final class UserService extends AbstractService<User, IUserRepository> im
     @Override
     public User removeOne(@Nullable final User model) throws UserIdEmptyException {
         if (model == null) return null;
-        final User user = super.remove(model);
+        @Nullable final User user = super.remove(model);
         if (user == null) return null;
-        final String userId = user.getId();
+        @Nullable final String userId = user.getId();
         taskRepository.removeAll(userId);
         projectRepository.removeAll(userId);
         return user;
@@ -112,7 +112,7 @@ public final class UserService extends AbstractService<User, IUserRepository> im
     @Override
     public User removeByLogin(@Nullable final String login) throws AbstractFieldException {
         if (login == null || login.isEmpty()) throw new LoginEmptyException();
-        final User user = findByLogin(login);
+        @Nullable final User user = findByLogin(login);
         return remove(user);
     }
 
@@ -120,7 +120,7 @@ public final class UserService extends AbstractService<User, IUserRepository> im
     @Override
     public User removeByEmail(@Nullable final String email) throws AbstractFieldException {
         if (email == null || email.isEmpty()) throw new EmailEmptyException();
-        final User user = findByEmail(email);
+        @Nullable final User user = findByEmail(email);
         return remove(user);
     }
 
@@ -132,7 +132,7 @@ public final class UserService extends AbstractService<User, IUserRepository> im
     ) throws AbstractFieldException {
         if (id == null || id.isEmpty()) throw new IdEmptyException();
         if (password == null || password.isEmpty()) throw new PasswordEmptyException();
-        final User user = findById(id);
+        @Nullable final User user = findById(id);
         if (user == null) throw new UserNotFoundException();
         user.setPasswordHash(HashUtil.salt(password));
         return user;
@@ -170,14 +170,14 @@ public final class UserService extends AbstractService<User, IUserRepository> im
     @Override
     public void lockUserByLogin(@Nullable final String login) throws LoginEmptyException {
         if (login == null || login.isEmpty()) throw new LoginEmptyException();
-        final User user = findByLogin(login);
+        @Nullable final User user = findByLogin(login);
         user.setLocked(true);
     }
 
     @Override
     public void unlockUserByLogin(@Nullable String login) throws LoginEmptyException {
         if (login == null || login.isEmpty()) throw new LoginEmptyException();
-        final User user = findByLogin(login);
+        @Nullable final User user = findByLogin(login);
         user.setLocked(false);
     }
 

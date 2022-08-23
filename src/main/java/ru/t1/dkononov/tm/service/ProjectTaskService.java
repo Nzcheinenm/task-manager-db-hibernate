@@ -51,7 +51,7 @@ public final class ProjectTaskService implements IProjectTaskService {
         if (projectId == null || projectId.isEmpty()) throw new ProjectIdEmptyException();
         if (!projectRepository.existsById(userId, projectId)) throw new ProjectNotFoundException();
         @NotNull final List<Task> tasks = taskRepository.findAllByProjectId(userId, projectId);
-        for (final Task task : tasks) taskRepository.removeById(userId, task.getId());
+        for (@NotNull final Task task : tasks) taskRepository.removeById(userId, task.getId());
         projectRepository.removeById(userId, projectId);
     }
 

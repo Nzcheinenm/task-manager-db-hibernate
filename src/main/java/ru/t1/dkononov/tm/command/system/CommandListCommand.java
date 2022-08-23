@@ -24,9 +24,9 @@ public final class CommandListCommand extends AbstractSystemCommand {
 
     @Override
     public void execute() {
-        @NotNull final Collection<AbstractCommand> commands = getCommandService().getTerminalCommands();
-        for (final ICommand command : commands) {
-            @Nullable final String name = command.getNAME();
+        @Nullable final Collection<AbstractCommand> commands = getCommandService().getTerminalCommands();
+        for (@NotNull final ICommand command : commands) {
+            @NotNull final String name = command.getNAME();
             if (name == null || name.isEmpty()) continue;
             System.out.println(name);
         }

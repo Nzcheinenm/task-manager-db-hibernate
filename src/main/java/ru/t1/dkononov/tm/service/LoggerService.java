@@ -98,7 +98,7 @@ public final class LoggerService implements ILoggerService {
 
     @NotNull
     private static ConsoleHandler getConsoleHandler() {
-        final ConsoleHandler handler = new ConsoleHandler();
+        @NotNull final ConsoleHandler handler = new ConsoleHandler();
         handler.setFormatter(new Formatter() {
             @Override
             public String format(LogRecord record) {

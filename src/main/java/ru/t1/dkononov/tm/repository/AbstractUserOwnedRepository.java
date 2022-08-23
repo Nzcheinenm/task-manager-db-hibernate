@@ -49,7 +49,8 @@ public abstract class AbstractUserOwnedRepository<M extends AbstractUserOwnedMod
 
     @Override
     public boolean existsById(
-            @Nullable final String userId,@Nullable final String id
+            @Nullable final String userId,
+            @Nullable final String id
     ) {
         return findById(userId, id) != null;
     }
@@ -57,7 +58,8 @@ public abstract class AbstractUserOwnedRepository<M extends AbstractUserOwnedMod
     @Nullable
     @Override
     public M findById(
-            @Nullable final String userId,@Nullable final String id
+            @Nullable final String userId,
+            @Nullable final String id
     ) {
         if (userId == null || id == null) return null;
         return models
@@ -71,7 +73,8 @@ public abstract class AbstractUserOwnedRepository<M extends AbstractUserOwnedMod
     @Nullable
     @Override
     public M findByIndex(
-            @NotNull final String userId,@NotNull final Integer index
+            @NotNull final String userId,
+            @NotNull final Integer index
     ) {
         return findAll(userId).get(index);
     }
@@ -79,7 +82,8 @@ public abstract class AbstractUserOwnedRepository<M extends AbstractUserOwnedMod
     @Nullable
     @Override
     public M remove(
-            @Nullable final String userId,@Nullable final M model
+            @Nullable final String userId,
+            @Nullable final M model
     ) {
         if (userId == null || model == null) return null;
         return removeById(userId, model.getId());
@@ -88,7 +92,8 @@ public abstract class AbstractUserOwnedRepository<M extends AbstractUserOwnedMod
     @Nullable
     @Override
     public M removeById(
-            @Nullable final String userId,@Nullable final String id
+            @Nullable final String userId,
+            @Nullable final String id
     ) {
         if (userId == null || id == null) return null;
         @Nullable final M model = findById(userId, id);
@@ -99,7 +104,8 @@ public abstract class AbstractUserOwnedRepository<M extends AbstractUserOwnedMod
     @Nullable
     @Override
     public M removeByIndex(
-            @NotNull final String userId,@NotNull final Integer index
+            @NotNull final String userId,
+            @NotNull final Integer index
     ) {
         @Nullable final M model = findByIndex(userId, index);
         if (model == null) return null;

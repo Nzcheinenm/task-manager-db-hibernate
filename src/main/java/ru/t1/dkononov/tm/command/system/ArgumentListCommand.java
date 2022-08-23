@@ -24,7 +24,7 @@ public final class ArgumentListCommand extends AbstractSystemCommand {
     @Override
     public void execute() {
         @NotNull final Collection<AbstractCommand> commands = getCommandService().getTerminalCommands();
-        for (final AbstractCommand command : commands) {
+        for (@NotNull final AbstractCommand command : commands) {
             @Nullable final String argument = command.getARGUMENT();
             if (argument == null || argument.isEmpty()) continue;
             System.out.println(argument);
