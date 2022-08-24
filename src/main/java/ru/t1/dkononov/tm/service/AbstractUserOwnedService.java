@@ -20,7 +20,7 @@ public abstract class AbstractUserOwnedService<M extends AbstractUserOwnedModel,
     protected final R repository;
 
 
-    public AbstractUserOwnedService(final @NotNull R repository) {
+    public AbstractUserOwnedService(@NotNull final R repository) {
         this.repository = repository;
     }
 

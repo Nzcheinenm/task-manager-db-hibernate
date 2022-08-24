@@ -36,7 +36,7 @@ public abstract class AbstractCommand implements ICommand {
         @NotNull final String name = getNAME();
         @Nullable final String argument = getARGUMENT();
         @NotNull final String description = getDESCRIPTION();
-        String result = "";
+        @Nullable String result = "";
         if (name != null && !name.isEmpty()) result += name + " : ";
         if (argument != null && !argument.isEmpty()) result += argument + " : ";
         if (description != null && !description.isEmpty()) result += description;

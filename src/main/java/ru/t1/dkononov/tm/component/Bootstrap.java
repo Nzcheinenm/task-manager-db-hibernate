@@ -167,11 +167,11 @@ public final class Bootstrap implements IServiceLocator {
 
     private boolean processArgument(@Nullable final String[] args) {
         if (args == null || args.length == 0) return false;
-        final String argument = args[0];
+        @Nullable final String argument = args[0];
         try {
             processArgument(argument);
             return true;
-        } catch (final Exception e) {
+        } catch (@NotNull final Exception e) {
             loggerService.error(e);
             return false;
         }

@@ -18,7 +18,7 @@ public abstract class AbstractService<M extends AbstractModel, R extends IReposi
     @NotNull
     protected final R repository;
 
-    public AbstractService(final @NotNull R repository) {
+    public AbstractService(@NotNull final R repository) {
         this.repository = repository;
     }
 
@@ -30,7 +30,7 @@ public abstract class AbstractService<M extends AbstractModel, R extends IReposi
 
     @Nullable
     @Override
-    public List<M> findAll(final Comparator<M> comparator) {
+    public List<M> findAll(@Nullable final Comparator<M> comparator) {
         if (comparator == null) return findAll();
         return repository.findAll(comparator);
     }

@@ -36,7 +36,7 @@ public final class CommandService implements ICommandService {
         return commandRepository.getCommandByName(name);
     }
 
-    @NotNull
+    @Nullable
     @Override
     public Collection<AbstractCommand> getTerminalCommands() {
         return commandRepository.getTerminalCommands();

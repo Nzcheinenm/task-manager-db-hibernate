@@ -30,7 +30,7 @@ public final class Task extends AbstractUserOwnedModel implements IWBS {
     @NotNull
     private Date created = new Date();
 
-    public Task(String name, Status status) {
+    public Task(@NotNull final String name,@NotNull final Status status) {
         this.name = name;
         this.status = status;
     }

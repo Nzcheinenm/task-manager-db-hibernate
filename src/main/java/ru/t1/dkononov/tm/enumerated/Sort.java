@@ -24,7 +24,7 @@ public enum Sort {
     private final Comparator<?> comparator;
 
     @Nullable
-    public static Sort toSort(final String value) {
+    public static Sort toSort(@Nullable final String value) {
         if (value == null || value.isEmpty()) return null;
         for (@NotNull final Sort sort : values()) {
             if (sort.name().equals(value)) return sort;
@@ -32,7 +32,7 @@ public enum Sort {
         return null;
     }
 
-    Sort(final @NotNull String displayName,@NotNull final Comparator<?> comparator) {
+    Sort(@NotNull final String displayName,@NotNull final Comparator<?> comparator) {
         this.displayName = displayName;
         this.comparator = comparator;
     }

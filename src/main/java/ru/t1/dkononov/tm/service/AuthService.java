@@ -21,7 +21,7 @@ public class AuthService implements ru.t1.dkononov.tm.api.services.IAuthService 
     @Nullable
     private String userId;
 
-    public AuthService(final @Nullable IUserService userService) {
+    public AuthService(@Nullable final IUserService userService) {
         this.userService = userService;
     }
 

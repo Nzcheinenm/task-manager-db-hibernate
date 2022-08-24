@@ -18,7 +18,7 @@ public enum Status {
     }
 
     @Nullable
-    public static Status toStatus(final String value) {
+    public static Status toStatus(@Nullable final String value) {
         if (value == null || value.isEmpty()) return null;
         for (@NotNull final Status status : values()) {
             if (status.name().equals(value)) return status;
@@ -29,7 +29,7 @@ public enum Status {
     @NotNull
     private final String displayName;
 
-    Status(final @NotNull String displayName) {
+    Status(@NotNull final String displayName) {
         this.displayName = displayName;
     }
 

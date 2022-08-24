@@ -56,7 +56,11 @@ public final class ProjectTaskService implements IProjectTaskService {
     }
 
     @Override
-    public void unbindTaskFromProject(@Nullable final String userId,@Nullable final String projectId, final String taskId)
+    public void unbindTaskFromProject(
+            @Nullable final String userId,
+            @Nullable final String projectId,
+            @Nullable final String taskId
+    )
             throws AbstractException {
         if (projectId == null || projectId.isEmpty()) throw new ProjectIdEmptyException();
         if (taskId == null || taskId.isEmpty()) throw new TaskIdEmptyException();

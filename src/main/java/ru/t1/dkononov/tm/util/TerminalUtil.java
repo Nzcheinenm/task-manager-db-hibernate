@@ -21,7 +21,7 @@ public interface TerminalUtil {
         @NotNull final String value = inLine();
         try {
             return Integer.parseInt(value);
-        } catch (final Exception e) {
+        } catch (@NotNull final Exception e) {
             throw new NumberIncorrectException(value, e);
         }
     }

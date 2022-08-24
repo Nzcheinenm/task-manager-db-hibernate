@@ -14,7 +14,7 @@ public interface HashUtil {
     @Nullable
     static String salt(@Nullable final String value) {
         if (value == null) return null;
-        String result = null;
+        @Nullable String result = null;
         for (int i = 0; i < ITERATION; i++) {
             result = md5(SECRET + result + SECRET);
         }
@@ -32,7 +32,7 @@ public interface HashUtil {
                 sb.append(Integer.toHexString((array[i] & 0xFF) | 0x100).substring(1, 3));
             }
             return sb.toString();
-        } catch (java.security.NoSuchAlgorithmException e) {
+        } catch (@NotNull java.security.NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
         return null;

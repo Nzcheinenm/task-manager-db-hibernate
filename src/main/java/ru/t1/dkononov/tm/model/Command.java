@@ -20,7 +20,7 @@ public class Command {
     @Nullable
     private String description;
 
-    public Command(final String name, final String argument, final String description) {
+    public Command(@Nullable final String name,@Nullable final String argument,@Nullable final String description) {
         this.name = name;
         this.argument = argument;
         this.description = description;
@@ -29,7 +29,7 @@ public class Command {
     @NotNull
     @Override
     public String toString() {
-        String result = "";
+        @Nullable String result = "";
         if (name != null && !name.isEmpty())
             result += name;
         if (argument != null && !argument.isEmpty())
