@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.reflections.Reflections;
 import ru.t1.dkononov.tm.api.repository.ICommandRepository;
 import ru.t1.dkononov.tm.api.repository.IProjectRepository;
 import ru.t1.dkononov.tm.api.repository.ITaskRepository;
@@ -29,9 +30,15 @@ import ru.t1.dkononov.tm.repository.UserRepository;
 import ru.t1.dkononov.tm.service.*;
 import ru.t1.dkononov.tm.util.TerminalUtil;
 
+import java.lang.reflect.Modifier;
+import java.util.Set;
+
 
 @NoArgsConstructor
 public final class Bootstrap implements IServiceLocator {
+
+    @NotNull
+    private static final String PACKAGE_COMMAND = "ru.t1.dkononov.tm.command";
 
     @NotNull
     private final ICommandRepository commandRepository = new CommandRepository();
@@ -77,58 +84,16 @@ public final class Bootstrap implements IServiceLocator {
     private final IAuthService authService = new AuthService(userService);
 
     {
-        registry(new ApplicationAboutCommand());
-        registry(new ApplicationExitCommand());
-        registry(new ApplicationHelpCommand());
-        registry(new ApplicationVersionCommand());
-        registry(new ArgumentListCommand());
-        registry(new CommandListCommand());
-        registry(new SystemInfoCommand());
-
-        registry(new ProjectAddCommand());
-        registry(new ProjectChangeStatusByIdCommand());
-        registry(new ProjectChangeStatusByIndexCommand());
-        registry(new ProjectClearCommand());
-        registry(new ProjectCompleteByIdCommand());
-        registry(new ProjectCompleteByIndexCommand());
-        registry(new ProjectListCommand());
-        registry(new ProjectRemoveByIdCommand());
-        registry(new ProjectRemoveByIndexCommand());
-        registry(new ProjectShowByIdCommand());
-        registry(new ProjectShowByIndexCommand());
-        registry(new ProjectStartByIdCommand());
-        registry(new ProjectStartByIndexCommand());
-        registry(new ProjectUpdateByIdCommand());
-        registry(new ProjectUpdateByIndexCommand());
-
-        registry(new TaskAddCommand());
-        registry(new TaskChangeStatusByIdCommand());
-        registry(new TaskChangeStatusByIndexCommand());
-        registry(new TaskClearCommand());
-        registry(new TaskCompleteByIdCommand());
-        registry(new TaskCompleteByIndexCommand());
-        registry(new TaskListCommand());
-        registry(new TaskRemoveByIdCommand());
-        registry(new TaskRemoveByIndexCommand());
-        registry(new TaskShowByIdCommand());
-        registry(new TaskShowByIndexCommand());
-        registry(new TaskShowByProjectIdCommand());
-        registry(new TaskStartByIdCommand());
-        registry(new TaskStartByIndexCommand());
-        registry(new TaskUnbindFromProjectCommand());
-        registry(new TaskBindFromProjectCommand());
-        registry(new TaskUpdateByIdCommand());
-        registry(new TaskUpdateByIndexCommand());
-
-        registry(new UserViewProfileCommand());
-        registry(new UserChangePasswordCommand());
-        registry(new UserRegistryCommand());
-        registry(new UserUpdateProfileCommand());
-        registry(new UserLogoutCommand());
-        registry(new UserLoginCommand());
-        registry(new UserLockCommand());
-        registry(new UserUnlockCommand());
-        registry(new UserRemoveCommand());
+        @NotNull final Reflections reflections = new Reflections(PACKAGE_COMMAND);
+        @NotNull final Set<Class<? extends AbstractCommand>> classes =
+                reflections.getSubTypesOf(AbstractCommand.class);
+        for (@NotNull final Class<? extends AbstractCommand> clazz : classes) {
+            try {
+                registry(clazz);
+            } catch (@NotNull final InstantiationException | @NotNull IllegalAccessException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
     public void run(@NotNull final String[] args) {
@@ -202,6 +167,13 @@ public final class Bootstrap implements IServiceLocator {
         if (abstractCommand == null) throw new CommandNotSupportedException(command);
         authService.checkRoles(abstractCommand.getRoles());
         abstractCommand.execute();
+    }
+
+    private void registry(@NotNull final Class<? extends AbstractCommand> clazz) throws InstantiationException, IllegalAccessException {
+        if (Modifier.isAbstract(clazz.getModifiers())) return;
+        if (!AbstractCommand.class.isAssignableFrom(clazz)) return;
+        @NotNull final AbstractCommand command = clazz.newInstance();
+        registry(command);
     }
 
     private void registry(@NotNull final AbstractCommand command) {

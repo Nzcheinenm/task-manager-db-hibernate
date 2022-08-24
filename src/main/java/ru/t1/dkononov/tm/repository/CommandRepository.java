@@ -8,14 +8,15 @@ import ru.t1.dkononov.tm.command.AbstractCommand;
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 public class CommandRepository implements ICommandRepository {
 
     @NotNull
-    private final Map<String, AbstractCommand> mapByArgument = new LinkedHashMap<>();
+    private final Map<String, AbstractCommand> mapByArgument = new TreeMap<>();
 
     @NotNull
-    private final Map<String, AbstractCommand> mapByName = new LinkedHashMap<>();
+    private final Map<String, AbstractCommand> mapByName = new TreeMap<>();
 
     @Override
     public void add(@Nullable final AbstractCommand command) {
