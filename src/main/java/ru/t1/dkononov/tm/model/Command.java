@@ -20,7 +20,7 @@ public class Command {
     @Nullable
     private String description;
 
-    public Command(@Nullable final String name,@Nullable final String argument,@Nullable final String description) {
+    public Command(@Nullable final String name, @Nullable final String argument, @Nullable final String description) {
         this.name = name;
         this.argument = argument;
         this.description = description;

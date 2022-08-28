@@ -28,7 +28,7 @@ public final class UserRemoveCommand extends AbstractUserCommand {
     @Nullable
     @Override
     public Role[] getRoles() {
-        return new Role[] { Role.ADMIN };
+        return new Role[]{Role.ADMIN};
     }
 
 }

@@ -13,20 +13,20 @@ import java.util.List;
 public interface ITaskService extends IUserOwnedService<Task> {
 
     @NotNull
-    List<Task> findAllByProjectId(@Nullable String userId,@Nullable String projectId) throws UserIdEmptyException;
+    List<Task> findAllByProjectId(@Nullable String userId, @Nullable String projectId) throws UserIdEmptyException;
 
     @NotNull
-    Task create(@Nullable String userId,@Nullable String name,@Nullable String description) throws AbstractFieldException;
+    Task create(@Nullable String userId, @Nullable String name, @Nullable String description) throws AbstractFieldException;
 
     @NotNull
-    Task create(@Nullable String userId,@Nullable String name) throws AbstractFieldException;
+    Task create(@Nullable String userId, @Nullable String name) throws AbstractFieldException;
 
-    void updateById(@Nullable String userId,@Nullable String id,@Nullable String name,@Nullable String description) throws AbstractException;
+    void updateById(@Nullable String userId, @Nullable String id, @Nullable String name, @Nullable String description) throws AbstractException;
 
-    void updateByIndex(@Nullable String userId,@Nullable Integer index,@Nullable String name,@Nullable String description) throws AbstractException;
+    void updateByIndex(@Nullable String userId, @Nullable Integer index, @Nullable String name, @Nullable String description) throws AbstractException;
 
-    void changeTaskStatusById(@Nullable String userId,@Nullable String id,@Nullable Status status) throws AbstractException;
+    void changeTaskStatusById(@Nullable String userId, @Nullable String id, @Nullable Status status) throws AbstractException;
 
-    void changeTaskStatusByIndex(@Nullable String userId,@Nullable Integer index,@Nullable Status status) throws AbstractException;
+    void changeTaskStatusByIndex(@Nullable String userId, @Nullable Integer index, @Nullable Status status) throws AbstractException;
 
 }

@@ -1,6 +1,5 @@
 package ru.t1.dkononov.tm.api.services;
 
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.api.repository.IRepository;
 import ru.t1.dkononov.tm.enumerated.Sort;

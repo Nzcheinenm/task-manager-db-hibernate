@@ -11,10 +11,10 @@ import ru.t1.dkononov.tm.model.User;
 public interface IAuthService {
 
     @Nullable
-    User registry(@NotNull String login, @NotNull String password,@NotNull String email)
+    User registry(@NotNull String login, @NotNull String password, @NotNull String email)
             throws AbstractException;
 
-    void login(@Nullable String login,@Nullable String password)
+    void login(@Nullable String login, @Nullable String password)
             throws AbstractFieldException;
 
     void logout();

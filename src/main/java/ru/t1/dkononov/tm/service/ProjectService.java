@@ -33,7 +33,7 @@ public final class ProjectService extends AbstractUserOwnedService<Project, IPro
 
     @NotNull
     @Override
-    public Project create(@Nullable final String userId,@Nullable final String name)
+    public Project create(@Nullable final String userId, @Nullable final String name)
             throws AbstractFieldException {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (name == null || name.isEmpty()) throw new NameEmptyException();

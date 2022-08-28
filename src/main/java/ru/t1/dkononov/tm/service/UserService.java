@@ -5,6 +5,7 @@ import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.api.repository.IProjectRepository;
 import ru.t1.dkononov.tm.api.repository.ITaskRepository;
 import ru.t1.dkononov.tm.api.repository.IUserRepository;
+import ru.t1.dkononov.tm.api.services.IPropertyService;
 import ru.t1.dkononov.tm.api.services.IUserService;
 import ru.t1.dkononov.tm.enumerated.Role;
 import ru.t1.dkononov.tm.exception.AbstractException;
@@ -20,14 +21,18 @@ public final class UserService extends AbstractService<User, IUserRepository> im
     @Nullable
     private final ITaskRepository taskRepository;
 
+    @Nullable
+    private final IPropertyService propertyService;
+
     public UserService(
             @NotNull final IUserRepository repository,
             @Nullable final IProjectRepository projectRepository,
-            @Nullable final ITaskRepository taskRepository
-            ) {
+            @Nullable final ITaskRepository taskRepository,
+            @Nullable IPropertyService propertyService) {
         super(repository);
         this.projectRepository = projectRepository;
         this.taskRepository = taskRepository;
+        this.propertyService = propertyService;
     }
 
     @Nullable
@@ -41,7 +46,7 @@ public final class UserService extends AbstractService<User, IUserRepository> im
         if (password == null || password.isEmpty()) throw new PasswordEmptyException();
         @Nullable final User user = new User();
         user.setLogin(login);
-        user.setPasswordHash(HashUtil.salt(password));
+        user.setPasswordHash(HashUtil.salt(propertyService, password));
         user.setRole(Role.USUAL);
         return repository.add(user);
     }
@@ -134,7 +139,7 @@ public final class UserService extends AbstractService<User, IUserRepository> im
         if (password == null || password.isEmpty()) throw new PasswordEmptyException();
         @Nullable final User user = findById(id);
         if (user == null) throw new UserNotFoundException();
-        user.setPasswordHash(HashUtil.salt(password));
+        user.setPasswordHash(HashUtil.salt(propertyService, password));
         return user;
     }
 

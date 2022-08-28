@@ -11,7 +11,7 @@ public abstract class AbstractException extends Exception {
         super(message);
     }
 
-    public AbstractException(@NotNull String message,@NotNull Throwable cause) {
+    public AbstractException(@NotNull String message, @NotNull Throwable cause) {
         super(message, cause);
     }
 
@@ -19,7 +19,7 @@ public abstract class AbstractException extends Exception {
         super(cause);
     }
 
-    public AbstractException(@NotNull String message,@NotNull Throwable cause,@NotNull boolean enableSuppression,@NotNull boolean writableStackTrace) {
+    public AbstractException(@NotNull String message, @NotNull Throwable cause, @NotNull boolean enableSuppression, @NotNull boolean writableStackTrace) {
         super(message, cause, enableSuppression, writableStackTrace);
     }
 

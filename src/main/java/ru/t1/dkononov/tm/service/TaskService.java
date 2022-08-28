@@ -21,7 +21,7 @@ public final class TaskService extends AbstractUserOwnedService<Task, ITaskRepos
 
     @NotNull
     @Override
-    public List<Task> findAllByProjectId(@Nullable final String userId,@Nullable final String projectId)
+    public List<Task> findAllByProjectId(@Nullable final String userId, @Nullable final String projectId)
             throws UserIdEmptyException {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (projectId == null || projectId.isEmpty()) return Collections.emptyList();
@@ -30,7 +30,7 @@ public final class TaskService extends AbstractUserOwnedService<Task, ITaskRepos
 
     @NotNull
     @Override
-    public Task create(@Nullable final String userId,@Nullable final String name,@Nullable final String description)
+    public Task create(@Nullable final String userId, @Nullable final String name, @Nullable final String description)
             throws AbstractFieldException {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (name == null || name.isEmpty()) throw new NameEmptyException();
@@ -40,7 +40,7 @@ public final class TaskService extends AbstractUserOwnedService<Task, ITaskRepos
 
     @NotNull
     @Override
-    public Task create(@Nullable final String userId,@Nullable final String name) throws AbstractFieldException {
+    public Task create(@Nullable final String userId, @Nullable final String name) throws AbstractFieldException {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (name == null || name.isEmpty()) throw new NameEmptyException();
         return repository.create(userId, name);

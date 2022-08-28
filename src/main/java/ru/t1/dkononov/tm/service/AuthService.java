@@ -2,6 +2,7 @@ package ru.t1.dkononov.tm.service;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import ru.t1.dkononov.tm.api.services.IPropertyService;
 import ru.t1.dkononov.tm.api.services.IUserService;
 import ru.t1.dkononov.tm.enumerated.Role;
 import ru.t1.dkononov.tm.exception.AbstractException;
@@ -19,10 +20,17 @@ public class AuthService implements ru.t1.dkononov.tm.api.services.IAuthService 
     private final IUserService userService;
 
     @Nullable
+    private final IPropertyService propertyService;
+
+    @Nullable
     private String userId;
 
-    public AuthService(@Nullable final IUserService userService) {
+    public AuthService(
+            @Nullable final IUserService userService,
+            @Nullable IPropertyService propertyService
+    ) {
         this.userService = userService;
+        this.propertyService = propertyService;
     }
 
     @Nullable
@@ -48,7 +56,7 @@ public class AuthService implements ru.t1.dkononov.tm.api.services.IAuthService 
         if (user == null) throw new AccessDeniedException();
         final boolean locked = user.isLocked() == null || user.isLocked();
         if (locked) throw new AccessDeniedException();
-        @NotNull final String hash = HashUtil.salt(password);
+        @NotNull final String hash = HashUtil.salt(propertyService, password);
         if (!hash.equals(user.getPasswordHash())) throw new AccessDeniedException();
         userId = user.getId();
     }

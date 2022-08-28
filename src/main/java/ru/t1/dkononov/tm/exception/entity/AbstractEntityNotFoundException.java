@@ -12,7 +12,7 @@ public abstract class AbstractEntityNotFoundException extends AbstractException 
         super(message);
     }
 
-    public AbstractEntityNotFoundException(@NotNull String message,@NotNull Throwable cause) {
+    public AbstractEntityNotFoundException(@NotNull String message, @NotNull Throwable cause) {
         super(message, cause);
     }
 
@@ -20,7 +20,7 @@ public abstract class AbstractEntityNotFoundException extends AbstractException 
         super(cause);
     }
 
-    public AbstractEntityNotFoundException(@NotNull String message,@NotNull Throwable cause,@NotNull boolean enableSuppression,@NotNull boolean writableStackTrace) {
+    public AbstractEntityNotFoundException(@NotNull String message, @NotNull Throwable cause, @NotNull boolean enableSuppression, @NotNull boolean writableStackTrace) {
         super(message, cause, enableSuppression, writableStackTrace);
     }
 }

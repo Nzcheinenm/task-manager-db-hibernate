@@ -17,28 +17,28 @@ public interface IUserOwnedRepository<M extends AbstractUserOwnedModel> {
     List<M> findAll(@Nullable String userId) throws UserIdEmptyException;
 
     @Nullable
-    List<M> findAll(@Nullable String userId,@Nullable Comparator<M> comparator) throws UserIdEmptyException;
+    List<M> findAll(@Nullable String userId, @Nullable Comparator<M> comparator) throws UserIdEmptyException;
 
-    @Nullable M add(@Nullable String userId,@NotNull M m) throws ProjectNotFoundException, UserIdEmptyException;
+    @Nullable M add(@Nullable String userId, @NotNull M m) throws ProjectNotFoundException, UserIdEmptyException;
 
     void clear(@Nullable String userId) throws UserIdEmptyException;
 
-    boolean existsById(@Nullable String userId,@Nullable String id) throws UserIdEmptyException;
+    boolean existsById(@Nullable String userId, @Nullable String id) throws UserIdEmptyException;
 
     @Nullable
-    M findById(@Nullable String userId,@Nullable String id) throws IdEmptyException, UserIdEmptyException;
+    M findById(@Nullable String userId, @Nullable String id) throws IdEmptyException, UserIdEmptyException;
 
     @Nullable
-    M findByIndex(@NotNull String userId,@NotNull Integer index) throws IndexIncorrectException, UserIdEmptyException;
+    M findByIndex(@NotNull String userId, @NotNull Integer index) throws IndexIncorrectException, UserIdEmptyException;
 
     @Nullable
-    M remove(@Nullable String userId,@Nullable M m) throws UserIdEmptyException;
+    M remove(@Nullable String userId, @Nullable M m) throws UserIdEmptyException;
 
     @Nullable
-    M removeById(@Nullable String userId,@Nullable String id) throws IdEmptyException, UserIdEmptyException;
+    M removeById(@Nullable String userId, @Nullable String id) throws IdEmptyException, UserIdEmptyException;
 
     @Nullable
-    M removeByIndex(@NotNull String userId,@NotNull Integer index) throws IndexIncorrectException, UserIdEmptyException;
+    M removeByIndex(@NotNull String userId, @NotNull Integer index) throws IndexIncorrectException, UserIdEmptyException;
 
     void removeAll(@Nullable String userId) throws UserIdEmptyException;
 }

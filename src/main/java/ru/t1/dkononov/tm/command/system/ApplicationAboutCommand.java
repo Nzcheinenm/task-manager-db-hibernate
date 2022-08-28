@@ -20,8 +20,8 @@ public final class ApplicationAboutCommand extends AbstractSystemCommand {
     @Override
     public void execute() {
         System.out.println("[ABOUT]");
-        System.out.println("Имя: Дмитрий Кононов");
-        System.out.println("E-mail: dkononov@t1-consulting.ru");
+        System.out.println(getPropertyService().getAuthorName());
+        System.out.println(getPropertyService().getAuthorEmail());
     }
 
 }

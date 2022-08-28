@@ -25,4 +25,7 @@ public interface IServiceLocator {
     @NotNull
     ITaskService getTaskService();
 
+    @NotNull
+    IPropertyService getPropertyService();
+
 }

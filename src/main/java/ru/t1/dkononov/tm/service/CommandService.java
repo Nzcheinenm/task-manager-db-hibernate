@@ -22,6 +22,7 @@ public final class CommandService implements ICommandService {
         if (command == null) return;
         commandRepository.add(command);
     }
+
     @Nullable
     @Override
     public AbstractCommand getCommandByArgument(@Nullable final String argument) {

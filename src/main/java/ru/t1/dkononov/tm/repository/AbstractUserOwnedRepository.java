@@ -6,7 +6,6 @@ import ru.t1.dkononov.tm.api.repository.IUserOwnedRepository;
 import ru.t1.dkononov.tm.exception.field.UserIdEmptyException;
 import ru.t1.dkononov.tm.model.AbstractUserOwnedModel;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -27,7 +26,7 @@ public abstract class AbstractUserOwnedRepository<M extends AbstractUserOwnedMod
 
     @Nullable
     @Override
-    public List<M> findAll(@Nullable final String userId,@Nullable final Comparator<M> comparator) {
+    public List<M> findAll(@Nullable final String userId, @Nullable final Comparator<M> comparator) {
         @NotNull final List<M> result = findAll(userId);
         result.sort(comparator);
         return result;
@@ -35,7 +34,7 @@ public abstract class AbstractUserOwnedRepository<M extends AbstractUserOwnedMod
 
     @Nullable
     @Override
-    public M add(@Nullable final String userId,@NotNull final M model) {
+    public M add(@Nullable final String userId, @NotNull final M model) {
         if (userId == null) return null;
         model.setUserId(userId);
         return add(model);
@@ -114,7 +113,7 @@ public abstract class AbstractUserOwnedRepository<M extends AbstractUserOwnedMod
 
     @Override
     public void removeAll(@Nullable final String userId) throws UserIdEmptyException {
-        if (userId == null ) throw new UserIdEmptyException();
+        if (userId == null) throw new UserIdEmptyException();
         removeAll(userId);
     }
 

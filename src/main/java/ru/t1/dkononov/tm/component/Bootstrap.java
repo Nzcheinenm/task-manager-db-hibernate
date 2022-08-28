@@ -11,10 +11,6 @@ import ru.t1.dkononov.tm.api.repository.ITaskRepository;
 import ru.t1.dkononov.tm.api.repository.IUserRepository;
 import ru.t1.dkononov.tm.api.services.*;
 import ru.t1.dkononov.tm.command.AbstractCommand;
-import ru.t1.dkononov.tm.command.project.*;
-import ru.t1.dkononov.tm.command.system.*;
-import ru.t1.dkononov.tm.command.task.*;
-import ru.t1.dkononov.tm.command.user.*;
 import ru.t1.dkononov.tm.enumerated.Role;
 import ru.t1.dkononov.tm.enumerated.Status;
 import ru.t1.dkononov.tm.exception.AbstractException;
@@ -70,18 +66,22 @@ public final class Bootstrap implements IServiceLocator {
     @NotNull
     private final ILoggerService loggerService = new LoggerService();
 
+    @Getter
+    @NotNull
+    private final IPropertyService propertyService = new PropertyService();
+
     @NotNull
     private final IUserRepository userRepository = new UserRepository();
 
     @Getter
     @NotNull
     private final IUserService userService = new UserService(
-            userRepository,projectRepository,taskRepository
-    );
+            userRepository, projectRepository, taskRepository,
+            propertyService);
 
     @Getter
     @NotNull
-    private final IAuthService authService = new AuthService(userService);
+    private final IAuthService authService = new AuthService(userService, propertyService);
 
     {
         @NotNull final Reflections reflections = new Reflections(PACKAGE_COMMAND);

@@ -10,7 +10,7 @@ public final class ProjectRepository extends AbstractUserOwnedRepository<Project
 
     @NotNull
     @Override
-    public Project create(@NotNull final String userId,@NotNull final String name) {
+    public Project create(@NotNull final String userId, @NotNull final String name) {
         @NotNull final Project project = new Project();
         project.setName(name);
         project.setUserId(userId);

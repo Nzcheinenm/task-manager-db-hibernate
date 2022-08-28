@@ -46,7 +46,7 @@ public final class ProjectTaskService implements IProjectTaskService {
     }
 
     @Override
-    public void removeProjectById(@Nullable final String userId,@Nullable final String projectId)
+    public void removeProjectById(@Nullable final String userId, @Nullable final String projectId)
             throws AbstractException {
         if (projectId == null || projectId.isEmpty()) throw new ProjectIdEmptyException();
         if (!projectRepository.existsById(userId, projectId)) throw new ProjectNotFoundException();

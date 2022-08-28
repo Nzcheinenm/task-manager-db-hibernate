@@ -12,7 +12,7 @@ import java.util.List;
 public interface IUserOwnedService<M extends AbstractUserOwnedModel> extends IUserOwnedRepository<M> {
 
     @NotNull
-    List<M> findAll(@Nullable String userId,@Nullable Sort sort) throws UserIdEmptyException;
+    List<M> findAll(@Nullable String userId, @Nullable Sort sort) throws UserIdEmptyException;
 
 
 }

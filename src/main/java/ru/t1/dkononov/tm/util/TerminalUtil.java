@@ -1,7 +1,6 @@
 package ru.t1.dkononov.tm.util;
 
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.exception.field.NumberIncorrectException;
 
 import java.util.Scanner;

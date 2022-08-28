@@ -32,7 +32,7 @@ public enum Sort {
         return null;
     }
 
-    Sort(@NotNull final String displayName,@NotNull final Comparator<?> comparator) {
+    Sort(@NotNull final String displayName, @NotNull final Comparator<?> comparator) {
         this.displayName = displayName;
         this.comparator = comparator;
     }

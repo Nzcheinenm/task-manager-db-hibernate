@@ -10,17 +10,17 @@ import ru.t1.dkononov.tm.model.Project;
 public interface IProjectService extends IUserOwnedService<Project> {
 
     @NotNull
-    Project create(@Nullable String userId, @Nullable String name,@Nullable String description) throws AbstractFieldException;
+    Project create(@Nullable String userId, @Nullable String name, @Nullable String description) throws AbstractFieldException;
 
     @NotNull
-    Project create(@Nullable String userId,@Nullable String name) throws AbstractFieldException;
+    Project create(@Nullable String userId, @Nullable String name) throws AbstractFieldException;
 
-    void updateById(@Nullable String userId,@Nullable String id,@Nullable String name,@Nullable String description) throws AbstractException;
+    void updateById(@Nullable String userId, @Nullable String id, @Nullable String name, @Nullable String description) throws AbstractException;
 
-    void updateByIndex(@Nullable String userId,@Nullable Integer index,@Nullable String name,@Nullable String description) throws AbstractException;
+    void updateByIndex(@Nullable String userId, @Nullable Integer index, @Nullable String name, @Nullable String description) throws AbstractException;
 
-    void changeProjectStatusById(@Nullable String userId,@Nullable String id,@NotNull Status status) throws AbstractException;
+    void changeProjectStatusById(@Nullable String userId, @Nullable String id, @NotNull Status status) throws AbstractException;
 
-    void changeProjectStatusByIndex(@Nullable String userId,@Nullable Integer index,@NotNull Status status) throws AbstractException;
+    void changeProjectStatusByIndex(@Nullable String userId, @Nullable Integer index, @NotNull Status status) throws AbstractException;
 
 }
