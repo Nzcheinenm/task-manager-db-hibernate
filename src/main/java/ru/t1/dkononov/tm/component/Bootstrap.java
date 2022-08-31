@@ -2,6 +2,7 @@ package ru.t1.dkononov.tm.component;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.apache.log4j.BasicConfigurator;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.reflections.Reflections;
@@ -24,9 +25,14 @@ import ru.t1.dkononov.tm.repository.ProjectRepository;
 import ru.t1.dkononov.tm.repository.TaskRepository;
 import ru.t1.dkononov.tm.repository.UserRepository;
 import ru.t1.dkononov.tm.service.*;
+import ru.t1.dkononov.tm.util.SystemUtil;
 import ru.t1.dkononov.tm.util.TerminalUtil;
 
+import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Modifier;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Set;
 
 
@@ -68,7 +74,7 @@ public final class Bootstrap implements IServiceLocator {
 
     @Getter
     @NotNull
-    private final IPropertyService propertyService = new PropertyService();
+    private final IPropertyService propertyService =  new PropertyService();
 
     @NotNull
     private final IUserRepository userRepository = new UserRepository();
@@ -117,7 +123,8 @@ public final class Bootstrap implements IServiceLocator {
         try {
             initData();
             initLogger();
-        } catch (@NotNull final AbstractException e) {
+            initPID();
+        } catch (@NotNull final AbstractException | IOException e) {
             loggerService.error(e);
             System.err.println("[INIT FAIL]");
         }
@@ -140,6 +147,14 @@ public final class Bootstrap implements IServiceLocator {
             loggerService.error(e);
             return false;
         }
+    }
+
+    private void initPID() throws IOException {
+        @NotNull final String filename = "task-manager.pid";
+        @NotNull final String pid = Long.toString(SystemUtil.getPID());
+        Files.write(Paths.get(filename), pid.getBytes());
+        @NotNull final File file = new File(filename);
+        file.deleteOnExit();
     }
 
     private void initData() throws AbstractException {

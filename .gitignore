@@ -93,4 +93,6 @@ commands.xml
 commands.xml.lck
 messages.xml
 messages.xml.lck
+*.pid
+*.log
 

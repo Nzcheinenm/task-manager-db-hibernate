@@ -4,8 +4,10 @@ import org.jetbrains.annotations.NotNull;
 
 public interface ISaltProvider {
 
-    @NotNull Integer getPasswordIteration();
+    @NotNull
+    Integer getPasswordIteration();
 
-    @NotNull String getPasswordSecret();
+    @NotNull
+    String getPasswordSecret();
 
 }

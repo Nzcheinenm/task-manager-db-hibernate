@@ -9,6 +9,6 @@ public interface IHasCreated {
     @NotNull
     Date getCreated();
 
-    void setCreated(@NotNull final Date date);
+    void setCreated(@NotNull Date date);
 
 }

@@ -19,7 +19,8 @@ public interface IUserOwnedRepository<M extends AbstractUserOwnedModel> {
     @Nullable
     List<M> findAll(@Nullable String userId, @Nullable Comparator<M> comparator) throws UserIdEmptyException;
 
-    @Nullable M add(@Nullable String userId, @NotNull M m) throws ProjectNotFoundException, UserIdEmptyException;
+    @Nullable
+    M add(@Nullable String userId, @NotNull M m) throws ProjectNotFoundException, UserIdEmptyException;
 
     void clear(@Nullable String userId) throws UserIdEmptyException;
 

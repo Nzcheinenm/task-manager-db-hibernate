@@ -5,8 +5,9 @@ import ru.t1.dkononov.tm.enumerated.Status;
 
 public interface IHasStatus {
 
+    @NotNull
     Status getStatus();
 
-    void setStatus(@NotNull final Status status);
+    void setStatus(@NotNull Status status);
 
 }

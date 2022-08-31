@@ -7,6 +7,6 @@ public interface IHasName {
     @NotNull
     String getName();
 
-    void setName(@NotNull final String name);
+    void setName(@NotNull String name);
 
 }

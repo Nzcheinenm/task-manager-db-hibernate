@@ -12,8 +12,10 @@ public interface IUserRepository extends IRepository<User> {
     @Nullable
     User findByEmail(@NotNull String email);
 
+    @Nullable
     Boolean isLoginExist(@NotNull String login);
 
+    @Nullable
     Boolean isEmailExist(@NotNull String email);
 
 }

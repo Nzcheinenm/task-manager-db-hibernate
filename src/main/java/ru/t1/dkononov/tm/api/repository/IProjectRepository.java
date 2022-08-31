@@ -6,10 +6,10 @@ import ru.t1.dkononov.tm.model.Project;
 public interface IProjectRepository extends IUserOwnedRepository<Project> {
 
     @NotNull
-    Project create(@NotNull final String userId, @NotNull final String name);
+    Project create(@NotNull String userId, @NotNull String name);
 
     @NotNull
-    Project create(@NotNull final String userId, @NotNull final String name, final String description);
+    Project create(@NotNull String userId, @NotNull String name, @NotNull String description);
 
 
 }

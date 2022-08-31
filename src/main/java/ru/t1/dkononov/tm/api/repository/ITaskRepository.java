@@ -8,11 +8,11 @@ import java.util.List;
 public interface ITaskRepository extends IUserOwnedRepository<Task> {
 
     @NotNull
-    Task create(@NotNull final String userId, @NotNull final String name);
+    Task create(@NotNull String userId, @NotNull String name);
 
     @NotNull
-    Task create(@NotNull final String userId, @NotNull final String name, final String description);
+    Task create(@NotNull String userId, @NotNull String name, String description);
 
     @NotNull
-    List<Task> findAllByProjectId(@NotNull final String userId, @NotNull final String projectId);
+    List<Task> findAllByProjectId(@NotNull String userId, @NotNull String projectId);
 }
