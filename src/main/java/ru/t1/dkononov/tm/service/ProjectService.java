@@ -10,6 +10,7 @@ import ru.t1.dkononov.tm.exception.entity.ProjectNotFoundException;
 import ru.t1.dkononov.tm.exception.field.*;
 import ru.t1.dkononov.tm.model.Project;
 
+
 public final class ProjectService extends AbstractUserOwnedService<Project, IProjectRepository> implements IProjectService {
 
 

@@ -3,7 +3,7 @@ package ru.t1.dkononov.tm.api.repository;
 import org.jetbrains.annotations.NotNull;
 import ru.t1.dkononov.tm.model.Project;
 
-public interface IProjectRepository extends IUserOwnedRepository<Project> {
+public interface IProjectRepository extends IUserOwnedRepository<Project>, IRepository<Project> {
 
     @NotNull
     Project create(@NotNull String userId, @NotNull String name);

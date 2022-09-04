@@ -14,6 +14,8 @@ import java.util.Date;
 @NoArgsConstructor
 public final class Project extends AbstractUserOwnedModel implements IWBS {
 
+    private final static long serialVersionUID = 1;
+
     @NotNull
     private String name = "";
 

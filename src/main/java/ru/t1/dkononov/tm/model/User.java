@@ -12,6 +12,8 @@ import ru.t1.dkononov.tm.enumerated.Role;
 @NoArgsConstructor
 public final class User extends AbstractModel {
 
+    private final static long serialVersionUID = 1;
+
     @Nullable
     private String login;
 

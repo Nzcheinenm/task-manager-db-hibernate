@@ -11,6 +11,8 @@ import ru.t1.dkononov.tm.exception.field.IndexIncorrectException;
 import ru.t1.dkononov.tm.exception.field.UserIdEmptyException;
 import ru.t1.dkononov.tm.model.AbstractUserOwnedModel;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -55,10 +57,28 @@ public abstract class AbstractUserOwnedService<M extends AbstractUserOwnedModel,
 
     @NotNull
     @Override
+    public List<M> findAll() {
+        return repository.findAll();
+    }
+
+    @NotNull
+    @Override
     public M add(@Nullable final String userId, @Nullable final M model) throws ProjectNotFoundException, UserIdEmptyException {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (model == null) throw new ProjectNotFoundException();
         return repository.add(userId, model);
+    }
+
+    @Override
+    public @NotNull Collection<M> add(@NotNull Collection<M> models) {
+        if (models.isEmpty()) return Collections.emptyList();
+        return repository.add(models);
+    }
+
+    @Override
+    public @NotNull Collection<M> set(@NotNull Collection<M> models) {
+        if (models.isEmpty()) return Collections.emptyList();
+        return repository.set(models);
     }
 
     @Override

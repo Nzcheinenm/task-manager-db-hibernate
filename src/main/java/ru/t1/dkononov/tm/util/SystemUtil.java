@@ -9,7 +9,7 @@ public interface SystemUtil {
 
     static long getPID() {
         @Nullable final String processName = ManagementFactory.getRuntimeMXBean().getName();
-        if(processName != null && processName.length() > 0) {
+        if (processName != null && processName.length() > 0) {
             try {
                 return Long.parseLong(processName.split("@")[0]);
             } catch (@NotNull final Exception e) {

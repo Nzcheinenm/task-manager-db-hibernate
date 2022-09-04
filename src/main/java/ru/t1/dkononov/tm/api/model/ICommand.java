@@ -4,6 +4,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.exception.AbstractException;
 
+import java.io.IOException;
+
 public interface ICommand {
 
     @Nullable
@@ -15,6 +17,6 @@ public interface ICommand {
     @NotNull
     String getNAME();
 
-    void execute() throws AbstractException;
+    void execute() throws AbstractException, IOException, ClassNotFoundException;
 
 }

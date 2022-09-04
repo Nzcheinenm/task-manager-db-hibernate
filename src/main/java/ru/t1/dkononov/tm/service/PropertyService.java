@@ -4,10 +4,12 @@ import com.jcabi.manifests.Manifests;
 import lombok.Cleanup;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import ru.t1.dkononov.tm.api.services.ILoggerService;
 import ru.t1.dkononov.tm.api.services.IPropertyService;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Properties;
 
 import static java.lang.ClassLoader.getSystemResourceAsStream;
@@ -122,7 +124,7 @@ public final class PropertyService implements IPropertyService {
     @Override
     @NotNull
     public String getApplicationConfig() {
-        return getStringValue(APPLICATION_FILE_NAME_KEY,APPLICATION_FILE_NAME_DEFAULT);
+        return getStringValue(APPLICATION_FILE_NAME_KEY, APPLICATION_FILE_NAME_DEFAULT);
     }
 
     @Override

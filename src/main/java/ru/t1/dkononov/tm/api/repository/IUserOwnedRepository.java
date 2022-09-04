@@ -8,6 +8,7 @@ import ru.t1.dkononov.tm.exception.field.IndexIncorrectException;
 import ru.t1.dkononov.tm.exception.field.UserIdEmptyException;
 import ru.t1.dkononov.tm.model.AbstractUserOwnedModel;
 
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 
@@ -21,6 +22,12 @@ public interface IUserOwnedRepository<M extends AbstractUserOwnedModel> {
 
     @Nullable
     M add(@Nullable String userId, @NotNull M m) throws ProjectNotFoundException, UserIdEmptyException;
+
+    @NotNull
+    Collection<M> add(@NotNull Collection<M> models);
+
+    @NotNull
+    Collection<M> set(@NotNull Collection<M> models);
 
     void clear(@Nullable String userId) throws UserIdEmptyException;
 
@@ -42,4 +49,7 @@ public interface IUserOwnedRepository<M extends AbstractUserOwnedModel> {
     M removeByIndex(@NotNull String userId, @NotNull Integer index) throws IndexIncorrectException, UserIdEmptyException;
 
     void removeAll(@Nullable String userId) throws UserIdEmptyException;
+
+    @NotNull
+    List<M> findAll();
 }

@@ -7,6 +7,7 @@ import ru.t1.dkononov.tm.exception.field.IdEmptyException;
 import ru.t1.dkononov.tm.exception.field.IndexIncorrectException;
 import ru.t1.dkononov.tm.model.AbstractModel;
 
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 
@@ -20,6 +21,12 @@ public interface IRepository<M extends AbstractModel> {
 
     @Nullable
     M add(@NotNull M m) throws ProjectNotFoundException;
+
+    @NotNull
+    Collection<M> add(@NotNull Collection<M> models);
+
+    @NotNull
+    Collection<M> set(@NotNull Collection<M> models);
 
     void clear();
 

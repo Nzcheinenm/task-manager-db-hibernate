@@ -2,7 +2,6 @@ package ru.t1.dkononov.tm.component;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.apache.log4j.BasicConfigurator;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.reflections.Reflections;
@@ -12,6 +11,9 @@ import ru.t1.dkononov.tm.api.repository.ITaskRepository;
 import ru.t1.dkononov.tm.api.repository.IUserRepository;
 import ru.t1.dkononov.tm.api.services.*;
 import ru.t1.dkononov.tm.command.AbstractCommand;
+import ru.t1.dkononov.tm.command.data.AbstractDataCommand;
+import ru.t1.dkononov.tm.command.data.DataBase64LoadCommand;
+import ru.t1.dkononov.tm.command.data.DataBinaryLoadCommand;
 import ru.t1.dkononov.tm.enumerated.Role;
 import ru.t1.dkononov.tm.enumerated.Status;
 import ru.t1.dkononov.tm.exception.AbstractException;
@@ -74,7 +76,7 @@ public final class Bootstrap implements IServiceLocator {
 
     @Getter
     @NotNull
-    private final IPropertyService propertyService =  new PropertyService();
+    private final IPropertyService propertyService = new PropertyService();
 
     @NotNull
     private final IUserRepository userRepository = new UserRepository();
@@ -124,14 +126,14 @@ public final class Bootstrap implements IServiceLocator {
             initData();
             initLogger();
             initPID();
-        } catch (@NotNull final AbstractException | IOException e) {
+        } catch (final AbstractException | IOException | ClassNotFoundException e) {
             loggerService.error(e);
             System.err.println("[INIT FAIL]");
         }
     }
 
     private void processArgument(@Nullable final String argument)
-            throws AbstractException {
+            throws AbstractException, IOException, ClassNotFoundException {
         @Nullable final AbstractCommand abstractCommand = commandService.getCommandByArgument(argument);
         if (abstractCommand == null) throw new ArgumentNotSupportedException(argument);
         abstractCommand.execute();
@@ -157,7 +159,15 @@ public final class Bootstrap implements IServiceLocator {
         file.deleteOnExit();
     }
 
-    private void initData() throws AbstractException {
+    private void initData() throws AbstractException, IOException, ClassNotFoundException {
+        final boolean checkBinary = Files.exists(Paths.get(AbstractDataCommand.FILE_BINARY));
+        if (checkBinary) processCommand(DataBinaryLoadCommand.NAME, false);
+        if (checkBinary) return;
+        final boolean checkBase64 = Files.exists(Paths.get(AbstractDataCommand.FILE_BASE64));
+        if (checkBase64) processCommand(DataBase64LoadCommand.NAME, false);
+    }
+
+    private void initDemoData() throws AbstractException {
         @NotNull final User test = userService.create("test", "test", "test@test.ru");
         @NotNull final User user = userService.create("user", "user", "user@test.ru");
         @NotNull final User admin = userService.create("admin", "admin", Role.ADMIN);
@@ -177,11 +187,15 @@ public final class Bootstrap implements IServiceLocator {
                 loggerService.info("** TASK-MANAGER IS SHUTTING DOWN **")));
     }
 
-    private void processCommand(@Nullable final String command) throws AbstractException {
+    private void processCommand(@Nullable final String command, final boolean checkRoles) throws AbstractException, IOException, ClassNotFoundException {
         @Nullable final AbstractCommand abstractCommand = commandService.getCommandByName(command);
         if (abstractCommand == null) throw new CommandNotSupportedException(command);
-        authService.checkRoles(abstractCommand.getRoles());
+        if (checkRoles) authService.checkRoles(abstractCommand.getRoles());
         abstractCommand.execute();
+    }
+
+    private void processCommand(@Nullable final String command) throws AbstractException, IOException, ClassNotFoundException {
+        processCommand(command, true);
     }
 
     private void registry(@NotNull final Class<? extends AbstractCommand> clazz) throws InstantiationException, IllegalAccessException {

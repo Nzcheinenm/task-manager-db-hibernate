@@ -6,6 +6,7 @@ import ru.t1.dkononov.tm.api.repository.IRepository;
 import ru.t1.dkononov.tm.model.AbstractModel;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 
@@ -33,6 +34,18 @@ public abstract class AbstractRepository<M extends AbstractModel> implements IRe
     public M add(@NotNull final M model) {
         models.add(model);
         return model;
+    }
+
+    @Override
+    public @NotNull Collection<M> add(@NotNull Collection<M> models) {
+        this.models.addAll(models);
+        return models;
+    }
+
+    @Override
+    public @NotNull Collection<M> set(@NotNull Collection<M> models) {
+        clear();
+        return add(models);
     }
 
     @Override

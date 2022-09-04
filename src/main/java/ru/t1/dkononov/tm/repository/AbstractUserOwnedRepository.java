@@ -6,6 +6,7 @@ import ru.t1.dkononov.tm.api.repository.IUserOwnedRepository;
 import ru.t1.dkononov.tm.exception.field.UserIdEmptyException;
 import ru.t1.dkononov.tm.model.AbstractUserOwnedModel;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -38,6 +39,18 @@ public abstract class AbstractUserOwnedRepository<M extends AbstractUserOwnedMod
         if (userId == null) return null;
         model.setUserId(userId);
         return add(model);
+    }
+
+    @Override
+    public @NotNull Collection<M> add(@NotNull Collection<M> models) {
+        this.models.addAll(models);
+        return models;
+    }
+
+    @Override
+    public @NotNull Collection<M> set(@NotNull Collection<M> models) {
+        clear();
+        return add(models);
     }
 
     @Override

@@ -14,5 +14,7 @@ public interface IUserOwnedService<M extends AbstractUserOwnedModel> extends IUs
     @NotNull
     List<M> findAll(@Nullable String userId, @Nullable Sort sort) throws UserIdEmptyException;
 
+    @NotNull
+    List<M> findAll();
 
 }
