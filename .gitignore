@@ -95,4 +95,6 @@ messages.xml
 messages.xml.lck
 *.pid
 *.log
+*.base64
+*.bin
 
