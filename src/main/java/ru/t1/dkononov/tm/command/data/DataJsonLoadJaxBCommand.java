@@ -43,7 +43,6 @@ public final class DataJsonLoadJaxBCommand extends AbstractDataCommand {
         @NotNull final File file = new File(FILE_JSON);
         @NotNull final Domain domain = (Domain) unmarshaller.unmarshal(file);
         setDomain(domain);
-
     }
 
     @Override
