@@ -13,6 +13,27 @@ public abstract class AbstractDataCommand extends AbstractCommand {
     @NotNull
     public static final String FILE_BINARY = "./data.bin";
 
+    @NotNull
+    public static final String FILE_XML = "./data.xml";
+
+    @NotNull
+    public static final String FILE_JSON = "./data.json";
+
+    @NotNull
+    public static final String FILE_YAML = "./data.yaml";
+
+    @NotNull
+    public final String CONTEXT_FACTORY = "javax.xml.bind.context.factory";
+
+    @NotNull
+    public final String CONTEXT_FACTORY_JAXB = "org.eclipse.persistence.jaxb.JAXBContextFactory";
+
+    @NotNull
+    public final String MEDIA_TYPE = "eclipselink.media-type";
+
+    @NotNull
+    public final String APPLICATION_TYPE_JSON = "application/json";
+
     public AbstractDataCommand() {
     }
 

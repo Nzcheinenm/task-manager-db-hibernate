@@ -1,5 +1,6 @@
 package ru.t1.dkononov.tm.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,6 +11,7 @@ import ru.t1.dkononov.tm.enumerated.Role;
 @Getter
 @Setter
 @NoArgsConstructor
+@JsonIgnoreProperties(ignoreUnknown = true)
 public final class User extends AbstractModel {
 
     private final static long serialVersionUID = 1;

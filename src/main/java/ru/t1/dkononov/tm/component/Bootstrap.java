@@ -30,6 +30,7 @@ import ru.t1.dkononov.tm.service.*;
 import ru.t1.dkononov.tm.util.SystemUtil;
 import ru.t1.dkononov.tm.util.TerminalUtil;
 
+import javax.xml.bind.JAXBException;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Modifier;
@@ -123,17 +124,18 @@ public final class Bootstrap implements IServiceLocator {
 
     private void init() {
         try {
+            initDemoData();
             initData();
             initLogger();
             initPID();
-        } catch (final AbstractException | IOException | ClassNotFoundException e) {
+        } catch (final AbstractException | IOException | ClassNotFoundException | JAXBException e) {
             loggerService.error(e);
             System.err.println("[INIT FAIL]");
         }
     }
 
     private void processArgument(@Nullable final String argument)
-            throws AbstractException, IOException, ClassNotFoundException {
+            throws AbstractException, IOException, ClassNotFoundException, JAXBException {
         @Nullable final AbstractCommand abstractCommand = commandService.getCommandByArgument(argument);
         if (abstractCommand == null) throw new ArgumentNotSupportedException(argument);
         abstractCommand.execute();
@@ -159,7 +161,8 @@ public final class Bootstrap implements IServiceLocator {
         file.deleteOnExit();
     }
 
-    private void initData() throws AbstractException, IOException, ClassNotFoundException {
+    private void initData() throws
+            AbstractException, IOException, ClassNotFoundException, JAXBException {
         final boolean checkBinary = Files.exists(Paths.get(AbstractDataCommand.FILE_BINARY));
         if (checkBinary) processCommand(DataBinaryLoadCommand.NAME, false);
         if (checkBinary) return;
@@ -187,14 +190,16 @@ public final class Bootstrap implements IServiceLocator {
                 loggerService.info("** TASK-MANAGER IS SHUTTING DOWN **")));
     }
 
-    private void processCommand(@Nullable final String command, final boolean checkRoles) throws AbstractException, IOException, ClassNotFoundException {
+    private void processCommand(@Nullable final String command, final boolean checkRoles)
+            throws AbstractException, IOException, ClassNotFoundException, JAXBException {
         @Nullable final AbstractCommand abstractCommand = commandService.getCommandByName(command);
         if (abstractCommand == null) throw new CommandNotSupportedException(command);
         if (checkRoles) authService.checkRoles(abstractCommand.getRoles());
         abstractCommand.execute();
     }
 
-    private void processCommand(@Nullable final String command) throws AbstractException, IOException, ClassNotFoundException {
+    private void processCommand(@Nullable final String command)
+            throws AbstractException, IOException, ClassNotFoundException, JAXBException {
         processCommand(command, true);
     }
 

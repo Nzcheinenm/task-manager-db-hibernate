@@ -14,7 +14,7 @@ import java.io.ObjectOutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-public class DateBinarySaveCommand extends AbstractDataCommand {
+public class DataBinarySaveCommand extends AbstractDataCommand {
 
     @NotNull
     public static final String DESCRIPTION = "Сохранить данные в бинарный файл";

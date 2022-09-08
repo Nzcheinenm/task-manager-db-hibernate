@@ -97,5 +97,8 @@ messages.xml.lck
 *.log
 data.base64
 data.bin
+data.json
+data.xml
+data.yaml
 
 

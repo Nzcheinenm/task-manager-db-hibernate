@@ -1,5 +1,6 @@
 package ru.t1.dkononov.tm.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,6 +14,7 @@ import java.util.Date;
 @Getter
 @Setter
 @NoArgsConstructor
+@JsonIgnoreProperties(ignoreUnknown = true)
 public final class Task extends AbstractUserOwnedModel implements IWBS {
 
     private final static long serialVersionUID = 1;
