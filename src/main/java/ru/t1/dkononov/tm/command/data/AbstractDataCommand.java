@@ -20,6 +20,9 @@ public abstract class AbstractDataCommand extends AbstractCommand {
     public static final String FILE_JSON = "./data.json";
 
     @NotNull
+    public static final String FILE_BACKUP = "./backup.json";
+
+    @NotNull
     public static final String FILE_YAML = "./data.yaml";
 
     @NotNull

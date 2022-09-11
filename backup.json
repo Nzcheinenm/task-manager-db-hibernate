@@ -1,0 +1,88 @@
+{
+  "id" : "6a169593-7db6-4054-8c84-f64c36af855b",
+  "created" : 1662894833860,
+  "user" : [ {
+    "id" : "018c279c-bef9-44c4-adcd-1ee98cb2983a",
+    "login" : "test",
+    "passwordHash" : "b72e511a2cae04774acf07241e25efa4",
+    "email" : "test@test.ru",
+    "firstName" : null,
+    "middleName" : null,
+    "lastName" : null,
+    "role" : "USUAL",
+    "locked" : false
+  }, {
+    "id" : "167d4751-df6d-4d3a-ac5a-2bd7f7d4a976",
+    "login" : "user",
+    "passwordHash" : "b72e511a2cae04774acf07241e25efa4",
+    "email" : "user@test.ru",
+    "firstName" : null,
+    "middleName" : null,
+    "lastName" : null,
+    "role" : "USUAL",
+    "locked" : false
+  }, {
+    "id" : "c5a7f22d-b4aa-4c99-b212-40f3a60be00f",
+    "login" : "admin",
+    "passwordHash" : "b72e511a2cae04774acf07241e25efa4",
+    "email" : null,
+    "firstName" : null,
+    "middleName" : null,
+    "lastName" : null,
+    "role" : "ADMIN",
+    "locked" : false
+  } ],
+  "project" : [ {
+    "id" : "c4f402de-f059-41c0-b9cc-7b47c071ad5b",
+    "userId" : "018c279c-bef9-44c4-adcd-1ee98cb2983a",
+    "name" : "Jira",
+    "status" : "NOT_STARTED",
+    "description" : "",
+    "created" : 1662894260728
+  }, {
+    "id" : "f0e410fc-836f-405d-8a9a-4a1bd675a061",
+    "userId" : "018c279c-bef9-44c4-adcd-1ee98cb2983a",
+    "name" : "Confluence",
+    "status" : "IN_PROGRESS",
+    "description" : "",
+    "created" : 1662894260728
+  }, {
+    "id" : "0db3769f-2d72-475f-96bb-eb3f7101da1c",
+    "userId" : "c5a7f22d-b4aa-4c99-b212-40f3a60be00f",
+    "name" : "SoapUI",
+    "status" : "IN_PROGRESS",
+    "description" : "",
+    "created" : 1662894260728
+  }, {
+    "id" : "6067d3a7-cb3d-4cb9-9644-94c6140801d0",
+    "userId" : "167d4751-df6d-4d3a-ac5a-2bd7f7d4a976",
+    "name" : "Postman",
+    "status" : "IN_PROGRESS",
+    "description" : "",
+    "created" : 1662894260728
+  }, {
+    "id" : "422ff404-6b50-4f10-bcbc-c3812c9d410f",
+    "userId" : "018c279c-bef9-44c4-adcd-1ee98cb2983a",
+    "name" : "Testing",
+    "status" : "NOT_STARTED",
+    "description" : "Free",
+    "created" : 1662894821061
+  } ],
+  "task" : [ {
+    "id" : "1287784a-45b6-4ebc-9f8a-178f02ea347e",
+    "userId" : "018c279c-bef9-44c4-adcd-1ee98cb2983a",
+    "name" : "Work",
+    "description" : "",
+    "status" : "IN_PROGRESS",
+    "projectId" : null,
+    "created" : 1662894260729
+  }, {
+    "id" : "96936cab-6cff-4dbe-8b0e-5e7b41ab63d5",
+    "userId" : "c5a7f22d-b4aa-4c99-b212-40f3a60be00f",
+    "name" : "Homework",
+    "description" : "",
+    "status" : "NOT_STARTED",
+    "projectId" : null,
+    "created" : 1662894260729
+  } ]
+}

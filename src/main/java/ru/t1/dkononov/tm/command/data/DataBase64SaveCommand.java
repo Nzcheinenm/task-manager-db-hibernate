@@ -12,7 +12,7 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-public class DataBase64SaveCommand extends AbstractDataCommand {
+public final class DataBase64SaveCommand extends AbstractDataCommand {
 
     @NotNull
     public static final String DESCRIPTION = "Сохранить данные в base64 файл.";

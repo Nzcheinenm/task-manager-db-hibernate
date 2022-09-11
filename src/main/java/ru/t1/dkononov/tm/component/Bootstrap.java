@@ -55,6 +55,9 @@ public final class Bootstrap implements IServiceLocator {
     @NotNull
     private final IProjectRepository projectRepository = new ProjectRepository();
 
+    @NotNull
+    private final Backup backup = new Backup(this);
+
     @Getter
     @NotNull
     private final IProjectService projectService = new ProjectService(projectRepository);
@@ -125,13 +128,17 @@ public final class Bootstrap implements IServiceLocator {
     private void init() {
         try {
             initDemoData();
-            initData();
+            initBackup();
             initLogger();
             initPID();
-        } catch (final AbstractException | IOException | ClassNotFoundException | JAXBException e) {
+        } catch (final AbstractException | IOException | JAXBException | ClassNotFoundException e) {
             loggerService.error(e);
             System.err.println("[INIT FAIL]");
         }
+    }
+
+    private void initBackup() throws AbstractException, JAXBException, IOException, ClassNotFoundException {
+        backup.init();
     }
 
     private void processArgument(@Nullable final String argument)
@@ -161,15 +168,6 @@ public final class Bootstrap implements IServiceLocator {
         file.deleteOnExit();
     }
 
-    private void initData() throws
-            AbstractException, IOException, ClassNotFoundException, JAXBException {
-        final boolean checkBinary = Files.exists(Paths.get(AbstractDataCommand.FILE_BINARY));
-        if (checkBinary) processCommand(DataBinaryLoadCommand.NAME, false);
-        if (checkBinary) return;
-        final boolean checkBase64 = Files.exists(Paths.get(AbstractDataCommand.FILE_BASE64));
-        if (checkBase64) processCommand(DataBase64LoadCommand.NAME, false);
-    }
-
     private void initDemoData() throws AbstractException {
         @NotNull final User test = userService.create("test", "test", "test@test.ru");
         @NotNull final User user = userService.create("user", "user", "user@test.ru");
@@ -190,7 +188,7 @@ public final class Bootstrap implements IServiceLocator {
                 loggerService.info("** TASK-MANAGER IS SHUTTING DOWN **")));
     }
 
-    private void processCommand(@Nullable final String command, final boolean checkRoles)
+    public void processCommand(@Nullable final String command, final boolean checkRoles)
             throws AbstractException, IOException, ClassNotFoundException, JAXBException {
         @Nullable final AbstractCommand abstractCommand = commandService.getCommandByName(command);
         if (abstractCommand == null) throw new CommandNotSupportedException(command);

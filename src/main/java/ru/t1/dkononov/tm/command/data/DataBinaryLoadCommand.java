@@ -11,7 +11,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 
-public class DataBinaryLoadCommand extends AbstractDataCommand {
+public final class DataBinaryLoadCommand extends AbstractDataCommand {
 
     @NotNull
     public static final String DESCRIPTION = "Загрузить данные из бинарного файла";

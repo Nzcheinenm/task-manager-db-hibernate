@@ -15,7 +15,7 @@ import java.io.ObjectInputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-public class DataBase64LoadCommand extends AbstractDataCommand {
+public final class DataBase64LoadCommand extends AbstractDataCommand {
 
     @NotNull
     public static final String NAME = "data-load-base64";
