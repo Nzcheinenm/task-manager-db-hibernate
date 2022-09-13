@@ -41,13 +41,8 @@ public final class Backup extends Thread {
             try {
                 Thread.sleep(3000);
                 save();
-            } catch (@NotNull final InterruptedException |
-                                    AbstractException |
-                                    JAXBException |
-                                    IOException |
-                                    ClassNotFoundException e
-            ) {
-                System.out.println("[FAIL BACKUP]");
+            } catch (@NotNull final Exception e) {
+                bootstrap.getLoggerService().error(e);
             }
         }
     }
