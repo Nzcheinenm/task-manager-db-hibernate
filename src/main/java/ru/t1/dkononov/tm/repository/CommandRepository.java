@@ -46,4 +46,9 @@ public class CommandRepository implements ICommandRepository {
         return mapByName.values();
     }
 
+    @Override
+    public @Nullable Iterable<AbstractCommand> getCommandsByArgument() {
+        return mapByArgument.values();
+    }
+
 }

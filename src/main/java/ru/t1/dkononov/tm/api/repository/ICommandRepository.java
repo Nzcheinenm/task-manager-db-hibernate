@@ -17,4 +17,8 @@ public interface ICommandRepository {
 
     @Nullable
     Collection<AbstractCommand> getTerminalCommands();
+
+    @Nullable
+    Iterable<AbstractCommand> getCommandsByArgument();
+
 }

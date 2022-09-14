@@ -43,4 +43,10 @@ public final class CommandService implements ICommandService {
         return commandRepository.getTerminalCommands();
     }
 
+    @Nullable
+    @Override
+    public Iterable<AbstractCommand> getCommandsByArgument() {
+        return commandRepository.getCommandsByArgument();
+    }
+
 }

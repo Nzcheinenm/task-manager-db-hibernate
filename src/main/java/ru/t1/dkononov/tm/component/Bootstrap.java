@@ -85,6 +85,9 @@ public final class Bootstrap implements IServiceLocator {
     @NotNull
     private final IUserRepository userRepository = new UserRepository();
 
+    @NotNull
+    private final FileScanner fileScanner = new FileScanner(this);
+
     @Getter
     @NotNull
     private final IUserService userService = new UserService(
@@ -131,14 +134,22 @@ public final class Bootstrap implements IServiceLocator {
             initBackup();
             initLogger();
             initPID();
-        } catch (final AbstractException | IOException | JAXBException | ClassNotFoundException e) {
+        } catch (final Exception e) {
             loggerService.error(e);
             System.err.println("[INIT FAIL]");
         }
     }
 
-    private void initBackup() throws AbstractException, JAXBException, IOException, ClassNotFoundException {
+    private void initBackup() throws Exception {
+        Runtime.getRuntime().addShutdownHook(new Thread(this::prepareShutdown));
         backup.init();
+        fileScanner.init();
+    }
+
+    private void prepareShutdown() {
+        backup.stop();
+        fileScanner.stop();
+        loggerService.info("** TASK-MANAGER IS SHUTTING DOWN **");
     }
 
     private void processArgument(@Nullable final String argument)
@@ -184,8 +195,6 @@ public final class Bootstrap implements IServiceLocator {
 
     private void initLogger() {
         loggerService.info("** WELCOME TO TASK-MANAGER **");
-        Runtime.getRuntime().addShutdownHook(new Thread(() ->
-                loggerService.info("** TASK-MANAGER IS SHUTTING DOWN **")));
     }
 
     public void processCommand(@Nullable final String command, final boolean checkRoles)
@@ -196,7 +205,7 @@ public final class Bootstrap implements IServiceLocator {
         abstractCommand.execute();
     }
 
-    private void processCommand(@Nullable final String command)
+    void processCommand(@Nullable final String command)
             throws AbstractException, IOException, ClassNotFoundException, JAXBException {
         processCommand(command, true);
     }
