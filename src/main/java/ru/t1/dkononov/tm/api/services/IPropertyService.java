@@ -16,6 +16,8 @@ public interface IPropertyService extends ISaltProvider {
     @NotNull
     String getApplicationConfig();
 
+    @NotNull Integer getServerPort();
+
     @NotNull
     String getGitBranch();
 

@@ -38,6 +38,12 @@ public final class PropertyService implements IPropertyService {
     public static final String PASSWORD_ITERATION_KEY = "password.iteration";
 
     @NotNull
+    public static final String SERVER_PORT_KEY_DEFAULT = "6050";
+
+    @NotNull
+    public static final String SERVER_PORT_KEY = "server.port";
+
+    @NotNull
     public static final String PASSWORD_SECRET_DEFAULT = "5437612";
 
     @NotNull
@@ -125,6 +131,13 @@ public final class PropertyService implements IPropertyService {
     @NotNull
     public String getApplicationConfig() {
         return getStringValue(APPLICATION_FILE_NAME_KEY, APPLICATION_FILE_NAME_DEFAULT);
+    }
+
+    @Override
+    @NotNull
+    public Integer getServerPort() {
+        @NotNull final String value = getStringValue(SERVER_PORT_KEY, SERVER_PORT_KEY_DEFAULT);
+        return Integer.parseInt(value);
     }
 
     @Override

@@ -1,14 +1,10 @@
 package ru.t1.dkononov.tm.component;
 
-import lombok.SneakyThrows;
 import org.jetbrains.annotations.NotNull;
 import ru.t1.dkononov.tm.command.data.AbstractDataCommand;
 import ru.t1.dkononov.tm.command.data.DataBackupLoadCommand;
 import ru.t1.dkononov.tm.command.data.DataBackupSaveCommand;
-import ru.t1.dkononov.tm.exception.AbstractException;
 
-import javax.xml.bind.JAXBException;
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.concurrent.Executors;

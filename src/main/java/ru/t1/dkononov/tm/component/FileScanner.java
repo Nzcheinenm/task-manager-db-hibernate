@@ -40,7 +40,7 @@ public final class FileScanner {
     }
 
     private void process() {
-        for (File file: folder.listFiles()) {
+        for (File file : folder.listFiles()) {
             if (file.isDirectory()) continue;
             @Nullable final String fileName = file.getName();
             final boolean check = commands.contains(fileName);

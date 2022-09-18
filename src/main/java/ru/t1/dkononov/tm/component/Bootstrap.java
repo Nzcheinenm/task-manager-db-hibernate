@@ -5,15 +5,16 @@ import lombok.NoArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.reflections.Reflections;
+import ru.t1.dkononov.tm.api.endpoint.ISystemEndpoint;
 import ru.t1.dkononov.tm.api.repository.ICommandRepository;
 import ru.t1.dkononov.tm.api.repository.IProjectRepository;
 import ru.t1.dkononov.tm.api.repository.ITaskRepository;
 import ru.t1.dkononov.tm.api.repository.IUserRepository;
 import ru.t1.dkononov.tm.api.services.*;
 import ru.t1.dkononov.tm.command.AbstractCommand;
-import ru.t1.dkononov.tm.command.data.AbstractDataCommand;
-import ru.t1.dkononov.tm.command.data.DataBase64LoadCommand;
-import ru.t1.dkononov.tm.command.data.DataBinaryLoadCommand;
+import ru.t1.dkononov.tm.dto.request.ServerAboutRequest;
+import ru.t1.dkononov.tm.dto.request.ServerVersionRequest;
+import ru.t1.dkononov.tm.endpoint.SystemEndpoint;
 import ru.t1.dkononov.tm.enumerated.Role;
 import ru.t1.dkononov.tm.enumerated.Status;
 import ru.t1.dkononov.tm.exception.AbstractException;
@@ -83,6 +84,12 @@ public final class Bootstrap implements IServiceLocator {
     private final IPropertyService propertyService = new PropertyService();
 
     @NotNull
+    private final ISystemEndpoint systemEndpoint = new SystemEndpoint(this);
+
+    @NotNull
+    private final Server server = new Server(this);
+
+    @NotNull
     private final IUserRepository userRepository = new UserRepository();
 
     @NotNull
@@ -109,6 +116,11 @@ public final class Bootstrap implements IServiceLocator {
                 throw new RuntimeException(e);
             }
         }
+    }
+
+    {
+        server.registry(ServerAboutRequest.class, systemEndpoint::getAbout);
+        server.registry(ServerVersionRequest.class, systemEndpoint::getVersion);
     }
 
     public void run(@NotNull final String[] args) {
@@ -144,11 +156,17 @@ public final class Bootstrap implements IServiceLocator {
         Runtime.getRuntime().addShutdownHook(new Thread(this::prepareShutdown));
         backup.init();
         fileScanner.init();
+        server.start();
     }
 
     private void prepareShutdown() {
         backup.stop();
         fileScanner.stop();
+        try {
+            server.stop();
+        } catch (IOException e) {
+            loggerService.error(e);
+        }
         loggerService.info("** TASK-MANAGER IS SHUTTING DOWN **");
     }
 

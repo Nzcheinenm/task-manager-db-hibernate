@@ -52,8 +52,8 @@ public final class Domain implements Serializable {
     private List<Project> projects = new ArrayList<>();
 
     @NotNull
-    @JsonProperty("task")
-    @XmlElement(name = "task")
+    @JsonProperty("ru/t1/dkononov/tm/task")
+    @XmlElement(name = "ru/t1/dkononov/tm/task")
     @XmlElementWrapper(name = "tasks")
     @JacksonXmlElementWrapper(localName = "tasks")
     private List<Task> tasks = new ArrayList<>();
