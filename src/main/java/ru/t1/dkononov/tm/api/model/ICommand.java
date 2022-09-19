@@ -18,6 +18,6 @@ public interface ICommand {
     @NotNull
     String getNAME();
 
-    void execute() throws AbstractException, IOException, ClassNotFoundException, JAXBException;
+    void execute() throws AbstractException, IOException, JAXBException, ClassNotFoundException;
 
 }

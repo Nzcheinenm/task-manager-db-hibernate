@@ -14,19 +14,19 @@ public final class SystemEndpointClient extends AbstractEndpoint implements ISys
     @Override
     @NotNull
     public ServerAboutResponse getAbout(@NotNull ServerAboutRequest request)
-            throws IOException, ClassNotFoundException {
+            throws Exception {
         return (ServerAboutResponse) call(request);
     }
 
     @Override
     @NotNull
     public ServerVersionResponse getVersion(@NotNull ServerVersionRequest request)
-            throws IOException, ClassNotFoundException {
+            throws Exception {
         return (ServerVersionResponse) call(request);
     }
 
     public static void main(String[] args)
-            throws IOException, ClassNotFoundException {
+            throws Exception {
         @NotNull final SystemEndpointClient client = new SystemEndpointClient();
         client.connect();
         @NotNull final ServerAboutResponse serverAboutResponse = client.getAbout(new ServerAboutRequest());

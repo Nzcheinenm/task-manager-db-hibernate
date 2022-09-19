@@ -1,5 +1,6 @@
 package ru.t1.dkononov.tm.task;
 
+import lombok.SneakyThrows;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.component.Server;
@@ -13,18 +14,15 @@ public final class ServerAcceptTask extends AbstractServerTask {
         super(server);
     }
 
+    @SneakyThrows
     @Override
     public void run() {
         @Nullable final ServerSocket serverSocket = server.getSocketServer();
         if (serverSocket == null) return;
         @NotNull final Socket socket;
-        try {
-            socket = serverSocket.accept();
-            server.submit(new ServerRequestTask(server, socket));
-            server.submit(new ServerAcceptTask(server));
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        socket = serverSocket.accept();
+        server.submit(new ServerRequestTask(server, socket));
+        server.submit(new ServerAcceptTask(server));
     }
 
 }

@@ -3,6 +3,7 @@ package ru.t1.dkononov.tm.command.project;
 import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import ru.t1.dkononov.tm.exception.AbstractException;
 import ru.t1.dkononov.tm.exception.field.AbstractFieldException;
 import ru.t1.dkononov.tm.model.Project;
 import ru.t1.dkononov.tm.util.TerminalUtil;
@@ -18,7 +19,7 @@ public final class ProjectShowByIndexCommand extends AbstractProjectCommand {
     public final String DESCRIPTION = "Показать проект по индексу.";
 
     @Override
-    public void execute() throws AbstractFieldException {
+    public void execute() throws AbstractException {
         @Nullable final String userId = getUserId();
         System.out.println("[ENTER INDEX]");
         @NotNull final Integer value = TerminalUtil.nextNumber() - 1;

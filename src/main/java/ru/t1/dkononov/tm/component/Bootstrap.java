@@ -112,7 +112,7 @@ public final class Bootstrap implements IServiceLocator {
         for (@NotNull final Class<? extends AbstractCommand> clazz : classes) {
             try {
                 registry(clazz);
-            } catch (@NotNull final InstantiationException | @NotNull IllegalAccessException e) {
+            } catch (@NotNull final Exception e) {
                 throw new RuntimeException(e);
             }
         }
@@ -171,7 +171,7 @@ public final class Bootstrap implements IServiceLocator {
     }
 
     private void processArgument(@Nullable final String argument)
-            throws AbstractException, IOException, ClassNotFoundException, JAXBException {
+            throws Exception {
         @Nullable final AbstractCommand abstractCommand = commandService.getCommandByArgument(argument);
         if (abstractCommand == null) throw new ArgumentNotSupportedException(argument);
         abstractCommand.execute();
@@ -216,7 +216,7 @@ public final class Bootstrap implements IServiceLocator {
     }
 
     public void processCommand(@Nullable final String command, final boolean checkRoles)
-            throws AbstractException, IOException, ClassNotFoundException, JAXBException {
+            throws Exception {
         @Nullable final AbstractCommand abstractCommand = commandService.getCommandByName(command);
         if (abstractCommand == null) throw new CommandNotSupportedException(command);
         if (checkRoles) authService.checkRoles(abstractCommand.getRoles());
@@ -224,11 +224,11 @@ public final class Bootstrap implements IServiceLocator {
     }
 
     void processCommand(@Nullable final String command)
-            throws AbstractException, IOException, ClassNotFoundException, JAXBException {
+            throws Exception {
         processCommand(command, true);
     }
 
-    private void registry(@NotNull final Class<? extends AbstractCommand> clazz) throws InstantiationException, IllegalAccessException {
+    private void registry(@NotNull final Class<? extends AbstractCommand> clazz) throws Exception {
         if (Modifier.isAbstract(clazz.getModifiers())) return;
         if (!AbstractCommand.class.isAssignableFrom(clazz)) return;
         @NotNull final AbstractCommand command = clazz.newInstance();

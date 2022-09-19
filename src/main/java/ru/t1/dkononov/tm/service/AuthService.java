@@ -2,6 +2,7 @@ package ru.t1.dkononov.tm.service;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import ru.t1.dkononov.tm.api.services.IAuthService;
 import ru.t1.dkononov.tm.api.services.IPropertyService;
 import ru.t1.dkononov.tm.api.services.IUserService;
 import ru.t1.dkononov.tm.enumerated.Role;
@@ -13,7 +14,7 @@ import ru.t1.dkononov.tm.util.HashUtil;
 import java.util.Arrays;
 
 
-public class AuthService implements ru.t1.dkononov.tm.api.services.IAuthService {
+public class AuthService implements IAuthService {
 
 
     @Nullable

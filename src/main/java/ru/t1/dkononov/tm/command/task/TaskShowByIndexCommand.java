@@ -3,6 +3,7 @@ package ru.t1.dkononov.tm.command.task;
 import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import ru.t1.dkononov.tm.exception.AbstractException;
 import ru.t1.dkononov.tm.exception.field.AbstractFieldException;
 import ru.t1.dkononov.tm.model.Task;
 import ru.t1.dkononov.tm.util.TerminalUtil;
@@ -18,7 +19,7 @@ public final class TaskShowByIndexCommand extends AbstractTaskCommand {
     public final String DESCRIPTION = "Показать задачу по индексу.";
 
     @Override
-    public void execute() throws AbstractFieldException {
+    public void execute() throws AbstractException {
         @Nullable final String userId = getUserId();
         System.out.println("[SHOW TASK]");
         System.out.println("[ENTER INDEX]");

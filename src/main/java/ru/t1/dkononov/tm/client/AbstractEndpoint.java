@@ -31,7 +31,7 @@ public abstract class AbstractEndpoint {
         this.port = port;
     }
 
-    protected Object call(@NotNull final Object data) throws IOException, ClassNotFoundException {
+    protected Object call(@NotNull final Object data) throws Exception {
         getObjectOutputStream().writeObject(data);
         return getObjectInputStream().readObject();
     }

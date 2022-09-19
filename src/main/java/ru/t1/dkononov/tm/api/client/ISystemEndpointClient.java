@@ -10,8 +10,8 @@ import java.io.IOException;
 
 public interface ISystemEndpointClient {
     @NotNull ServerAboutResponse getAbout(@NotNull ServerAboutRequest request)
-            throws IOException, ClassNotFoundException;
+            throws Exception;
 
     @NotNull ServerVersionResponse getVersion(@NotNull ServerVersionRequest request)
-            throws IOException, ClassNotFoundException;
+            throws Exception;
 }

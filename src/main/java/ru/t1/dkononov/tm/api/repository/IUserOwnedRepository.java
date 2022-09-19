@@ -2,6 +2,7 @@ package ru.t1.dkononov.tm.api.repository;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import ru.t1.dkononov.tm.exception.AbstractException;
 import ru.t1.dkononov.tm.exception.entity.ProjectNotFoundException;
 import ru.t1.dkononov.tm.exception.field.IdEmptyException;
 import ru.t1.dkononov.tm.exception.field.IndexIncorrectException;
@@ -34,19 +35,19 @@ public interface IUserOwnedRepository<M extends AbstractUserOwnedModel> {
     boolean existsById(@Nullable String userId, @Nullable String id) throws UserIdEmptyException;
 
     @Nullable
-    M findById(@Nullable String userId, @Nullable String id) throws IdEmptyException, UserIdEmptyException;
+    M findById(@Nullable String userId, @Nullable String id) throws AbstractException;
 
     @Nullable
-    M findByIndex(@NotNull String userId, @NotNull Integer index) throws IndexIncorrectException, UserIdEmptyException;
+    M findByIndex(@NotNull String userId, @NotNull Integer index) throws AbstractException;
 
     @Nullable
     M remove(@Nullable String userId, @Nullable M m) throws UserIdEmptyException;
 
     @Nullable
-    M removeById(@Nullable String userId, @Nullable String id) throws IdEmptyException, UserIdEmptyException;
+    M removeById(@Nullable String userId, @Nullable String id) throws AbstractException;
 
     @Nullable
-    M removeByIndex(@NotNull String userId, @NotNull Integer index) throws IndexIncorrectException, UserIdEmptyException;
+    M removeByIndex(@NotNull String userId, @NotNull Integer index) throws AbstractException;
 
     void removeAll(@Nullable String userId) throws UserIdEmptyException;
 

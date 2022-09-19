@@ -5,6 +5,7 @@ import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.api.repository.IUserOwnedRepository;
 import ru.t1.dkononov.tm.api.services.IUserOwnedService;
 import ru.t1.dkononov.tm.enumerated.Sort;
+import ru.t1.dkononov.tm.exception.AbstractException;
 import ru.t1.dkononov.tm.exception.entity.ProjectNotFoundException;
 import ru.t1.dkononov.tm.exception.field.IdEmptyException;
 import ru.t1.dkononov.tm.exception.field.IndexIncorrectException;
@@ -63,7 +64,8 @@ public abstract class AbstractUserOwnedService<M extends AbstractUserOwnedModel,
 
     @NotNull
     @Override
-    public M add(@Nullable final String userId, @Nullable final M model) throws ProjectNotFoundException, UserIdEmptyException {
+    public M add(@Nullable final String userId, @Nullable final M model)
+            throws ProjectNotFoundException, UserIdEmptyException {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (model == null) throw new ProjectNotFoundException();
         return repository.add(userId, model);
@@ -96,7 +98,8 @@ public abstract class AbstractUserOwnedService<M extends AbstractUserOwnedModel,
 
     @Nullable
     @Override
-    public M findById(@Nullable final String userId, @Nullable final String id) throws IdEmptyException, UserIdEmptyException {
+    public M findById(@Nullable final String userId, @Nullable final String id)
+            throws AbstractException {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (id == null || id.isEmpty()) throw new IdEmptyException();
         return repository.findById(userId, id);
@@ -104,7 +107,8 @@ public abstract class AbstractUserOwnedService<M extends AbstractUserOwnedModel,
 
     @Nullable
     @Override
-    public M findByIndex(@Nullable final String userId, @Nullable final Integer index) throws IndexIncorrectException, UserIdEmptyException {
+    public M findByIndex(@Nullable final String userId, @Nullable final Integer index)
+            throws AbstractException {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (index == null || index < 0) throw new IndexIncorrectException();
         return repository.findByIndex(userId, index);
@@ -119,7 +123,7 @@ public abstract class AbstractUserOwnedService<M extends AbstractUserOwnedModel,
 
     @NotNull
     @Override
-    public M removeById(@Nullable final String userId, @Nullable final String id) throws IdEmptyException, UserIdEmptyException {
+    public M removeById(@Nullable final String userId, @Nullable final String id) throws AbstractException {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (id == null || id.isEmpty()) throw new IdEmptyException();
         @NotNull final M model = repository.findById(userId, id);
@@ -129,7 +133,7 @@ public abstract class AbstractUserOwnedService<M extends AbstractUserOwnedModel,
 
     @NotNull
     @Override
-    public M removeByIndex(@Nullable final String userId, @Nullable final Integer index) throws IndexIncorrectException, UserIdEmptyException {
+    public M removeByIndex(@Nullable final String userId, @Nullable final Integer index) throws AbstractException {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (index == null || index < 0) throw new IndexIncorrectException();
         @NotNull final M model = repository.findByIndex(userId, index);
