@@ -39,7 +39,7 @@ public final class DataBase64SaveCommand extends AbstractDataCommand {
     }
 
     @Override
-    public void execute() throws AbstractException, IOException, ClassNotFoundException {
+    public void execute() throws Exception {
         System.out.println("[DATA BASE64 SAVE]");
         @NotNull final Domain domain = getDomain();
         @NotNull final File file = new File(FILE_BASE64);

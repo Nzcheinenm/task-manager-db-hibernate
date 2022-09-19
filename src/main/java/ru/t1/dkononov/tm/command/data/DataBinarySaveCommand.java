@@ -41,7 +41,7 @@ public final class DataBinarySaveCommand extends AbstractDataCommand {
     }
 
     @Override
-    public void execute() throws AbstractException, IOException {
+    public void execute() throws Exception {
         System.out.println("[DATA SAVE BINARY]");
         @NotNull final Domain domain = getDomain();
         @NotNull final File file = new File(FILE_BINARY);

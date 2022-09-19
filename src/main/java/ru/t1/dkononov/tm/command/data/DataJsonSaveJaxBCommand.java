@@ -38,7 +38,7 @@ public final class DataJsonSaveJaxBCommand extends AbstractDataCommand {
     }
 
     @Override
-    public void execute() throws IOException, JAXBException {
+    public void execute() throws Exception {
         System.out.println("[DATA SAVE JSON]");
         System.setProperty(CONTEXT_FACTORY, CONTEXT_FACTORY_JAXB);
         @NotNull final Domain domain = getDomain();

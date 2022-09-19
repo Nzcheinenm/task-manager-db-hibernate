@@ -38,7 +38,7 @@ public final class DataBinaryLoadCommand extends AbstractDataCommand {
     }
 
     @Override
-    public void execute() throws AbstractException, IOException, ClassNotFoundException {
+    public void execute() throws Exception {
         System.out.println("[DATA BINARY LOAD]");
         @Cleanup @NotNull final FileInputStream fileInputStream = new FileInputStream(FILE_BINARY);
         @Cleanup @NotNull final ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);

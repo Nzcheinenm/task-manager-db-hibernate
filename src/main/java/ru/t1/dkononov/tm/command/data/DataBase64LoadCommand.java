@@ -45,7 +45,7 @@ public final class DataBase64LoadCommand extends AbstractDataCommand {
 
     @SneakyThrows
     @Override
-    public void execute() throws AbstractException, IOException {
+    public void execute() throws Exception {
         System.out.println("[DATA BASE64 LOAD]");
         @NotNull final byte[] base64Byte = Files.readAllBytes(Paths.get(FILE_BASE64));
         @Nullable final String base64Date = new String(base64Byte);
