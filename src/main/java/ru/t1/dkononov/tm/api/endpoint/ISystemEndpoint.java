@@ -1,13 +1,13 @@
 package ru.t1.dkononov.tm.api.endpoint;
 
 import org.jetbrains.annotations.NotNull;
-import ru.t1.dkononov.tm.dto.request.ServerAboutRequest;
-import ru.t1.dkononov.tm.dto.request.ServerVersionRequest;
-import ru.t1.dkononov.tm.dto.response.ServerAboutResponse;
-import ru.t1.dkononov.tm.dto.response.ServerVersionResponse;
+import ru.t1.dkononov.tm.dto.request.ApplicationAboutRequest;
+import ru.t1.dkononov.tm.dto.request.ApplicationVersionRequest;
+import ru.t1.dkononov.tm.dto.response.ApplicationAboutResponse;
+import ru.t1.dkononov.tm.dto.response.ApplicationVersionResponse;
 
 public interface ISystemEndpoint {
-    @NotNull ServerAboutResponse getAbout(@NotNull ServerAboutRequest request);
+    @NotNull ApplicationAboutResponse getAbout(@NotNull ApplicationAboutRequest request);
 
-    @NotNull ServerVersionResponse getVersion(@NotNull ServerVersionRequest request);
+    @NotNull ApplicationVersionResponse getVersion(@NotNull ApplicationVersionRequest request);
 }

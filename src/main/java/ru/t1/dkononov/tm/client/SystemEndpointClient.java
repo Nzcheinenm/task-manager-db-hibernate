@@ -2,39 +2,37 @@ package ru.t1.dkononov.tm.client;
 
 import org.jetbrains.annotations.NotNull;
 import ru.t1.dkononov.tm.api.client.ISystemEndpointClient;
-import ru.t1.dkononov.tm.dto.request.ServerAboutRequest;
-import ru.t1.dkononov.tm.dto.request.ServerVersionRequest;
-import ru.t1.dkononov.tm.dto.response.ServerAboutResponse;
-import ru.t1.dkononov.tm.dto.response.ServerVersionResponse;
-
-import java.io.IOException;
+import ru.t1.dkononov.tm.dto.request.ApplicationAboutRequest;
+import ru.t1.dkononov.tm.dto.request.ApplicationVersionRequest;
+import ru.t1.dkononov.tm.dto.response.ApplicationAboutResponse;
+import ru.t1.dkononov.tm.dto.response.ApplicationVersionResponse;
 
 public final class SystemEndpointClient extends AbstractEndpoint implements ISystemEndpointClient {
 
     @Override
     @NotNull
-    public ServerAboutResponse getAbout(@NotNull ServerAboutRequest request)
+    public ApplicationAboutResponse getAbout(@NotNull ApplicationAboutRequest request)
             throws Exception {
-        return (ServerAboutResponse) call(request);
+        return (ApplicationAboutResponse) call(request);
     }
 
     @Override
     @NotNull
-    public ServerVersionResponse getVersion(@NotNull ServerVersionRequest request)
+    public ApplicationVersionResponse getVersion(@NotNull ApplicationVersionRequest request)
             throws Exception {
-        return (ServerVersionResponse) call(request);
+        return (ApplicationVersionResponse) call(request);
     }
 
     public static void main(String[] args)
             throws Exception {
         @NotNull final SystemEndpointClient client = new SystemEndpointClient();
         client.connect();
-        @NotNull final ServerAboutResponse serverAboutResponse = client.getAbout(new ServerAboutRequest());
+        @NotNull final ApplicationAboutResponse serverAboutResponse = client.getAbout(new ApplicationAboutRequest());
         System.out.println(serverAboutResponse.getEmail());
         System.out.println(serverAboutResponse.getName());
 
-        @NotNull final ServerVersionResponse serverVersionResponse = client.getVersion(new ServerVersionRequest());
-        System.out.println(serverVersionResponse.getVersion());
+        @NotNull final ApplicationVersionResponse applicationVersionResponse = client.getVersion(new ApplicationVersionRequest());
+        System.out.println(applicationVersionResponse.getVersion());
 
         client.disconnect();
     }

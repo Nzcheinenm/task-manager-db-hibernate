@@ -5,6 +5,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.component.Server;
 import ru.t1.dkononov.tm.dto.request.AbstractRequest;
+import ru.t1.dkononov.tm.dto.response.AbstractResponse;
 
 import java.io.InputStream;
 import java.io.ObjectInputStream;
@@ -14,12 +15,26 @@ import java.net.Socket;
 
 public final class ServerRequestTask extends AbstractServerSocketTask {
 
+    @Nullable
+    private AbstractRequest request;
+
+    @Nullable
+    private AbstractResponse response;
+
     public ServerRequestTask(
             @NotNull final Server server,
             @NotNull final Socket socket
     ) {
         super(server, socket);
     }
+
+//    public ServerRequestTask(
+//            @NotNull final Server server,
+//            @NotNull final Socket socket,
+//            @NotNull final String userId
+//    ) {
+//        super(server, socket, userId);
+//    }
 
     @SneakyThrows
     @Override

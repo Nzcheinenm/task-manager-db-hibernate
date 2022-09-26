@@ -1,17 +1,15 @@
 package ru.t1.dkononov.tm.api.client;
 
 import org.jetbrains.annotations.NotNull;
-import ru.t1.dkononov.tm.dto.request.ServerAboutRequest;
-import ru.t1.dkononov.tm.dto.request.ServerVersionRequest;
-import ru.t1.dkononov.tm.dto.response.ServerAboutResponse;
-import ru.t1.dkononov.tm.dto.response.ServerVersionResponse;
-
-import java.io.IOException;
+import ru.t1.dkononov.tm.dto.request.ApplicationAboutRequest;
+import ru.t1.dkononov.tm.dto.request.ApplicationVersionRequest;
+import ru.t1.dkononov.tm.dto.response.ApplicationAboutResponse;
+import ru.t1.dkononov.tm.dto.response.ApplicationVersionResponse;
 
 public interface ISystemEndpointClient {
-    @NotNull ServerAboutResponse getAbout(@NotNull ServerAboutRequest request)
+    @NotNull ApplicationAboutResponse getAbout(@NotNull ApplicationAboutRequest request)
             throws Exception;
 
-    @NotNull ServerVersionResponse getVersion(@NotNull ServerVersionRequest request)
+    @NotNull ApplicationVersionResponse getVersion(@NotNull ApplicationVersionRequest request)
             throws Exception;
 }

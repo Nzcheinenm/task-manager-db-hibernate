@@ -12,8 +12,8 @@ import ru.t1.dkononov.tm.api.repository.ITaskRepository;
 import ru.t1.dkononov.tm.api.repository.IUserRepository;
 import ru.t1.dkononov.tm.api.services.*;
 import ru.t1.dkononov.tm.command.AbstractCommand;
-import ru.t1.dkononov.tm.dto.request.ServerAboutRequest;
-import ru.t1.dkononov.tm.dto.request.ServerVersionRequest;
+import ru.t1.dkononov.tm.dto.request.ApplicationAboutRequest;
+import ru.t1.dkononov.tm.dto.request.ApplicationVersionRequest;
 import ru.t1.dkononov.tm.endpoint.SystemEndpoint;
 import ru.t1.dkononov.tm.enumerated.Role;
 import ru.t1.dkononov.tm.enumerated.Status;
@@ -31,7 +31,6 @@ import ru.t1.dkononov.tm.service.*;
 import ru.t1.dkononov.tm.util.SystemUtil;
 import ru.t1.dkononov.tm.util.TerminalUtil;
 
-import javax.xml.bind.JAXBException;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Modifier;
@@ -119,8 +118,8 @@ public final class Bootstrap implements IServiceLocator {
     }
 
     {
-        server.registry(ServerAboutRequest.class, systemEndpoint::getAbout);
-        server.registry(ServerVersionRequest.class, systemEndpoint::getVersion);
+        server.registry(ApplicationAboutRequest.class, systemEndpoint::getAbout);
+        server.registry(ApplicationVersionRequest.class, systemEndpoint::getVersion);
     }
 
     public void run(@NotNull final String[] args) {

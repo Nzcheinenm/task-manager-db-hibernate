@@ -4,10 +4,10 @@ import org.jetbrains.annotations.NotNull;
 import ru.t1.dkononov.tm.api.endpoint.ISystemEndpoint;
 import ru.t1.dkononov.tm.api.services.IPropertyService;
 import ru.t1.dkononov.tm.api.services.IServiceLocator;
-import ru.t1.dkononov.tm.dto.request.ServerAboutRequest;
-import ru.t1.dkononov.tm.dto.request.ServerVersionRequest;
-import ru.t1.dkononov.tm.dto.response.ServerAboutResponse;
-import ru.t1.dkononov.tm.dto.response.ServerVersionResponse;
+import ru.t1.dkononov.tm.dto.request.ApplicationAboutRequest;
+import ru.t1.dkononov.tm.dto.request.ApplicationVersionRequest;
+import ru.t1.dkononov.tm.dto.response.ApplicationAboutResponse;
+import ru.t1.dkononov.tm.dto.response.ApplicationVersionResponse;
 
 public final class SystemEndpoint implements ISystemEndpoint {
 
@@ -20,9 +20,9 @@ public final class SystemEndpoint implements ISystemEndpoint {
 
     @Override
     @NotNull
-    public ServerAboutResponse getAbout(@NotNull final ServerAboutRequest request) {
+    public ApplicationAboutResponse getAbout(@NotNull final ApplicationAboutRequest request) {
         @NotNull final IPropertyService propertyService = serviceLocator.getPropertyService();
-        @NotNull final ServerAboutResponse response = new ServerAboutResponse();
+        @NotNull final ApplicationAboutResponse response = new ApplicationAboutResponse();
         response.setEmail(propertyService.getAuthorEmail());
         response.setName(propertyService.getAuthorName());
         return response;
@@ -30,9 +30,9 @@ public final class SystemEndpoint implements ISystemEndpoint {
 
     @Override
     @NotNull
-    public ServerVersionResponse getVersion(@NotNull final ServerVersionRequest request) {
+    public ApplicationVersionResponse getVersion(@NotNull final ApplicationVersionRequest request) {
         @NotNull final IPropertyService propertyService = serviceLocator.getPropertyService();
-        @NotNull final ServerVersionResponse response = new ServerVersionResponse();
+        @NotNull final ApplicationVersionResponse response = new ApplicationVersionResponse();
         response.setVersion(propertyService.getApplicationVersion());
         return response;
     }

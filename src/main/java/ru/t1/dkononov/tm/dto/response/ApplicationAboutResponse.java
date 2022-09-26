@@ -6,7 +6,7 @@ import org.jetbrains.annotations.Nullable;
 
 @Getter
 @Setter
-public class ServerAboutResponse extends AbstractResponse {
+public class ApplicationAboutResponse extends AbstractResponse {
 
     @Nullable
     private String email;
