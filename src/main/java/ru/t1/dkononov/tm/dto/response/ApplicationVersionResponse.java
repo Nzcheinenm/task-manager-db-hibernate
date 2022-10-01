@@ -6,7 +6,7 @@ import org.jetbrains.annotations.Nullable;
 
 @Getter
 @Setter
-public class ApplicationVersionResponse extends AbstractResponse {
+public final class ApplicationVersionResponse extends AbstractResponse {
 
     @Nullable
     private String version;

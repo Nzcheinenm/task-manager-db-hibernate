@@ -1,4 +1,18 @@
 package ru.t1.dkononov.tm.dto.response;
 
-public class ProjectUpdateByIdResponse {
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.jetbrains.annotations.Nullable;
+import ru.t1.dkononov.tm.model.Project;
+
+@Getter
+@Setter
+@NoArgsConstructor
+public final class ProjectUpdateByIdResponse extends AbstractProjectResponse{
+
+    public ProjectUpdateByIdResponse(@Nullable final Project project) {
+        super(project);
+    }
+
 }

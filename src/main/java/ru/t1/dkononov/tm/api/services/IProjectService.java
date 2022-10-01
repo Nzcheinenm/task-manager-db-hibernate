@@ -19,8 +19,8 @@ public interface IProjectService extends IUserOwnedService<Project> {
 
     void updateByIndex(@Nullable String userId, @Nullable Integer index, @Nullable String name, @Nullable String description) throws AbstractException;
 
-    void changeProjectStatusById(@Nullable String userId, @Nullable String id, @NotNull Status status) throws AbstractException;
+    @Nullable Project changeProjectStatusById(@Nullable String userId, @Nullable String id, @NotNull Status status) throws AbstractException;
 
-    void changeProjectStatusByIndex(@Nullable String userId, @Nullable Integer index, @NotNull Status status) throws AbstractException;
+    @Nullable Project changeProjectStatusByIndex(@Nullable String userId, @Nullable Integer index, @NotNull Status status) throws AbstractException;
 
 }

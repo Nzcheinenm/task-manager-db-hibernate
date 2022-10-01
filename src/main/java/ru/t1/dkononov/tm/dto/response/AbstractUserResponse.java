@@ -1,4 +1,21 @@
 package ru.t1.dkononov.tm.dto.response;
 
-public abstract class AbstractUserResponse {
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import ru.t1.dkononov.tm.model.User;
+
+@Getter
+@Setter
+@NoArgsConstructor
+public abstract class AbstractUserResponse extends AbstractResponse {
+
+    @NotNull
+    private User user;
+
+    public AbstractUserResponse(@NotNull User user) {
+        this.user = user;
+    }
 }

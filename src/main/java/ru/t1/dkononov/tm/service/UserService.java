@@ -173,17 +173,19 @@ public final class UserService extends AbstractService<User, IUserRepository> im
     }
 
     @Override
-    public void lockUserByLogin(@Nullable final String login) throws LoginEmptyException {
+    public @Nullable User lockUserByLogin(@Nullable final String login) throws LoginEmptyException {
         if (login == null || login.isEmpty()) throw new LoginEmptyException();
         @Nullable final User user = findByLogin(login);
         user.setLocked(true);
+        return user;
     }
 
     @Override
-    public void unlockUserByLogin(@Nullable String login) throws LoginEmptyException {
+    public @Nullable User unlockUserByLogin(@Nullable String login) throws LoginEmptyException {
         if (login == null || login.isEmpty()) throw new LoginEmptyException();
         @Nullable final User user = findByLogin(login);
         user.setLocked(false);
+        return user;
     }
 
     @Override

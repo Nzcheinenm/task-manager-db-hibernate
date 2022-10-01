@@ -79,7 +79,8 @@ public final class ProjectService extends AbstractUserOwnedService<Project, IPro
     }
 
     @Override
-    public void changeProjectStatusById(
+    @Nullable
+    public Project changeProjectStatusById(
             @Nullable final String userId,
             @Nullable final String id,
             @NotNull final Status status
@@ -91,10 +92,11 @@ public final class ProjectService extends AbstractUserOwnedService<Project, IPro
         if (project == null) throw new ProjectNotFoundException();
         project.setStatus(status);
         project.setUserId(userId);
+        return project;
     }
 
     @Override
-    public void changeProjectStatusByIndex(
+    public @Nullable Project changeProjectStatusByIndex(
             @Nullable final String userId,
             @Nullable final Integer index,
             @NotNull final Status status
@@ -106,6 +108,7 @@ public final class ProjectService extends AbstractUserOwnedService<Project, IPro
         if (project == null) throw new ProjectNotFoundException();
         project.setStatus(status);
         project.setUserId(userId);
+        return project;
     }
 
 }

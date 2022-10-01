@@ -11,6 +11,7 @@ import ru.t1.dkononov.tm.exception.field.*;
 import ru.t1.dkononov.tm.model.User;
 import ru.t1.dkononov.tm.util.HashUtil;
 
+import javax.naming.AuthenticationException;
 import java.util.Arrays;
 
 
@@ -98,4 +99,17 @@ public class AuthService implements IAuthService {
         if (!hasRole) throw new PermissionException();
     }
 
+    @Override
+    public @NotNull User check(String login, String password) throws AbstractException {
+        if (login == null || login.isEmpty()) throw new LoginEmptyException();
+        if (password == null || password.isEmpty()) throw new PasswordEmptyException();
+        @Nullable final User user = userService.findByLogin(login);
+        if (user == null) throw new PermissionException();
+        if (user.getLocked()) throw new PermissionException();
+        @Nullable final String hash = HashUtil.salt(propertyService,password);
+        if (hash == null) throw new PermissionException();
+        if (!hash.equals(user.getPasswordHash())) throw new PermissionException();
+        return user;
+
+    }
 }

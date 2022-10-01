@@ -1,4 +1,4 @@
 package ru.t1.dkononov.tm.endpoint;
 
-public class DomianEndpoint {
+public class DomainEndpoint {
 }

@@ -6,6 +6,7 @@ import ru.t1.dkononov.tm.enumerated.Role;
 import ru.t1.dkononov.tm.exception.AbstractException;
 import ru.t1.dkononov.tm.exception.field.AbstractFieldException;
 import ru.t1.dkononov.tm.exception.field.AccessDeniedException;
+import ru.t1.dkononov.tm.exception.field.PermissionException;
 import ru.t1.dkononov.tm.model.User;
 
 public interface IAuthService {
@@ -28,4 +29,8 @@ public interface IAuthService {
     User getUser() throws AbstractFieldException;
 
     void checkRoles(@Nullable Role[] roles) throws AbstractException;
+
+    @NotNull
+    User check(String login, String password) throws AbstractException;
+
 }

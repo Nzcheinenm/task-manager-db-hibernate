@@ -14,7 +14,8 @@ import ru.t1.dkononov.tm.api.services.*;
 import ru.t1.dkononov.tm.command.AbstractCommand;
 import ru.t1.dkononov.tm.dto.request.ApplicationAboutRequest;
 import ru.t1.dkononov.tm.dto.request.ApplicationVersionRequest;
-import ru.t1.dkononov.tm.endpoint.SystemEndpoint;
+import ru.t1.dkononov.tm.dto.request.DataBackupLoadRequest;
+import ru.t1.dkononov.tm.endpoint.*;
 import ru.t1.dkononov.tm.enumerated.Role;
 import ru.t1.dkononov.tm.enumerated.Status;
 import ru.t1.dkononov.tm.exception.AbstractException;
@@ -86,6 +87,18 @@ public final class Bootstrap implements IServiceLocator {
     private final ISystemEndpoint systemEndpoint = new SystemEndpoint(this);
 
     @NotNull
+    private final IDomainEndpoint domainEnpdoint = new DomainEndpoint(this);
+
+    @NotNull
+    private final IProjectEndpoint projectEnpdoint = new ProjectEndpoint(this);
+
+    @NotNull
+    private final ITaskEndpoint taskEnpdoint = new TaskEndpoint(this);
+
+    @NotNull
+    private final IUserEndpoint userEnpdoint = new UserEndpoint(this);
+
+    @NotNull
     private final Server server = new Server(this);
 
     @NotNull
@@ -120,6 +133,9 @@ public final class Bootstrap implements IServiceLocator {
     {
         server.registry(ApplicationAboutRequest.class, systemEndpoint::getAbout);
         server.registry(ApplicationVersionRequest.class, systemEndpoint::getVersion);
+
+        server.registry(DataBackupLoadRequest.class, domainEndpoint::loadDataBackup);
+
     }
 
     public void run(@NotNull final String[] args) {

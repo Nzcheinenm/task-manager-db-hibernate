@@ -1,4 +1,4 @@
 package ru.t1.dkononov.tm.dto.response;
 
-public class ProjectClearResponse {
+public final class ProjectClearResponse extends AbstractProjectResponse {
 }

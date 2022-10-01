@@ -13,7 +13,7 @@ import org.jetbrains.annotations.Nullable;
 public final class ProjectChangeStatusByIndexRequest extends AbstractUserRequest {
 
     @Nullable
-    private String index;
+    private Integer index;
 
     @Nullable
     private String statusValue;

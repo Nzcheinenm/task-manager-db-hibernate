@@ -51,8 +51,8 @@ public interface IUserService extends IService<User> {
 
     Boolean isEmailExist(@Nullable String email);
 
-    void lockUserByLogin(@Nullable String login) throws LoginEmptyException;
+    @Nullable User lockUserByLogin(@Nullable String login) throws LoginEmptyException;
 
-    void unlockUserByLogin(@Nullable String login) throws LoginEmptyException;
+    @Nullable User unlockUserByLogin(@Nullable String login) throws LoginEmptyException;
 
 }
