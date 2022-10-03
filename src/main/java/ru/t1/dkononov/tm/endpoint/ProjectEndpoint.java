@@ -2,6 +2,7 @@ package ru.t1.dkononov.tm.endpoint;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import ru.t1.dkononov.tm.api.endpoint.IProjectEndpoint;
 import ru.t1.dkononov.tm.api.services.IProjectService;
 import ru.t1.dkononov.tm.api.services.IServiceLocator;
 import ru.t1.dkononov.tm.dto.request.*;
@@ -16,16 +17,19 @@ import ru.t1.dkononov.tm.model.Project;
 
 import java.util.List;
 
-public final class ProjectEndpoint extends AbstractEndpoint {
+public final class ProjectEndpoint extends AbstractEndpoint implements IProjectEndpoint {
 
     public ProjectEndpoint(@NotNull IServiceLocator serviceLocator) {
         super(serviceLocator);
     }
 
-    @NotNull IProjectService getProjectService() {
+    @Override
+    @NotNull
+    public IProjectService getProjectService() {
         return getServiceLocator().getProjectService();
     }
 
+    @Override
     @NotNull
     public ProjectChangeStatusByIdResponse changeStatusById(
             @NotNull final ProjectChangeStatusByIdRequest request
@@ -38,6 +42,7 @@ public final class ProjectEndpoint extends AbstractEndpoint {
         return new ProjectChangeStatusByIdResponse(project);
     }
 
+    @Override
     @NotNull
     public ProjectChangeStatusByIndexResponse changeStatusByIndex(
             @NotNull final ProjectChangeStatusByIndexRequest request
@@ -50,6 +55,7 @@ public final class ProjectEndpoint extends AbstractEndpoint {
         return new ProjectChangeStatusByIndexResponse(project);
     }
 
+    @Override
     @NotNull
     public ProjectClearResponse clearProject(@NotNull final ProjectClearRequest request)
             throws UserIdEmptyException, AccessDeniedException {
@@ -59,6 +65,7 @@ public final class ProjectEndpoint extends AbstractEndpoint {
         return new ProjectClearResponse();
     }
 
+    @Override
     @NotNull
     public ProjectCreateResponse createProject(@NotNull final ProjectCreateRequest request) throws AbstractFieldException {
         check(request);
@@ -69,6 +76,7 @@ public final class ProjectEndpoint extends AbstractEndpoint {
         return new ProjectCreateResponse(project);
     }
 
+    @Override
     @NotNull
     public ProjectGetByIdResponse getProjectById(@NotNull ProjectGetByIdRequest request) throws AbstractException {
         check(request);
@@ -78,6 +86,7 @@ public final class ProjectEndpoint extends AbstractEndpoint {
         return new ProjectGetByIdResponse(project);
     }
 
+    @Override
     @NotNull
     public ProjectGetByIndexResponse getProjectByIndex(@NotNull final ProjectGetByIndexRequest request) throws AbstractException {
         check(request);
@@ -87,6 +96,7 @@ public final class ProjectEndpoint extends AbstractEndpoint {
         return new ProjectGetByIndexResponse(project);
     }
 
+    @Override
     @NotNull
     public ProjectListResponse listProject(@NotNull ProjectListRequest request) throws AccessDeniedException, UserIdEmptyException {
         check(request);
@@ -94,6 +104,78 @@ public final class ProjectEndpoint extends AbstractEndpoint {
         @Nullable final Sort sort = request.getSort();
         @Nullable final List<Project> projects = getProjectService().findAll(userId,sort);
         return new ProjectListResponse(projects);
+    }
+
+    @Override
+    @NotNull
+    public ProjectRemoveByIdResponse removeProjectById(
+            @NotNull final ProjectRemoveByIdRequest request
+    ) throws Exception {
+        check(request);
+        @Nullable final String userId = request.getUserId();
+        @Nullable final String id = request.getId();
+        getProjectService().removeById(userId,id);
+        return new ProjectRemoveByIdResponse();
+    }
+
+    @Override
+    @NotNull
+    public ProjectRemoveByIndexResponse removeProjectById(
+            @NotNull final ProjectRemoveByIndexRequest request
+    ) throws Exception {
+        check(request);
+        @Nullable final String userId = request.getUserId();
+        @Nullable final Integer index = request.getIndex();
+        @Nullable final Project project = getProjectService().removeById(userId, String.valueOf(index));
+        return new ProjectRemoveByIndexResponse(project);
+    }
+
+    @Override
+    @NotNull
+    public ProjectStartByIdResponse startProjectById(
+            @NotNull final ProjectStartByIdRequest request
+    ) throws Exception {
+        check(request);
+        @Nullable final String userId = request.getUserId();
+        @Nullable final String id = request.getId();
+        @Nullable final Project project = getProjectService().changeProjectStatusById(userId,id,Status.IN_PROGRESS);
+        return new ProjectStartByIdResponse(project);
+    }
+
+    @Override
+    @NotNull
+    public ProjectStartByIndexResponse startProjectByIndex(
+            @NotNull final ProjectStartByIndexRequest request
+    ) throws Exception {
+        check(request);
+        @Nullable final String userId = request.getUserId();
+        @Nullable final Integer index = request.getIndex();
+        @Nullable final Project project = getProjectService().changeProjectStatusByIndex(userId, index,Status.IN_PROGRESS);
+        return new ProjectStartByIndexResponse(project);
+    }
+
+    @Override
+    @NotNull
+    public ProjectCompleteByIdResponse completeProjectById(
+            @NotNull final ProjectCompleteByIdRequest request
+    ) throws Exception {
+        check(request);
+        @Nullable final String userId = request.getUserId();
+        @Nullable final String id = request.getId();
+        @Nullable final Project project = getProjectService().changeProjectStatusById(userId, id, Status.COMPLETED);
+        return new ProjectCompleteByIdResponse(project);
+    }
+
+    @Override
+    @NotNull
+    public ProjectCompleteByIndexResponse completeProjectByIndex(
+            @NotNull final ProjectCompleteByIndexRequest request
+    ) throws Exception {
+        check(request);
+        @Nullable final String userId = request.getUserId();
+        @Nullable final Integer index = request.getIndex();
+        @Nullable final Project project = getProjectService().changeProjectStatusByIndex(userId, index, Status.COMPLETED);
+        return new ProjectCompleteByIndexResponse(project);
     }
 
 }

@@ -6,6 +6,6 @@ import ru.t1.dkononov.tm.dto.response.AbstractResponse;
 @FunctionalInterface
 public interface Operation<RQ extends AbstractRequest, RS extends AbstractResponse> {
 
-    RS execute(RQ request);
+    RS execute(RQ request) throws Exception;
 
 }

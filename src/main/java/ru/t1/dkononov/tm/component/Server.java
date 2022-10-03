@@ -53,7 +53,7 @@ public final class Server {
     }
 
     @NotNull
-    public Object call(@NotNull final AbstractRequest request) {
+    public Object call(@NotNull final AbstractRequest request) throws Exception {
         return dispatcher.call(request);
     }
 

@@ -13,6 +13,6 @@ import org.jetbrains.annotations.Nullable;
 public final class TaskGetByIndexRequest extends AbstractUserRequest {
 
     @Nullable
-    private String index;
+    private Integer index;
 
 }

@@ -10,10 +10,9 @@ import org.jetbrains.annotations.Nullable;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public final class TaskRemoveByIndexRequest extends AbstractUserRequest {
+public class ProjectStartByIdRequest extends AbstractUserRequest {
 
     @Nullable
-    private Integer index;
-
+    private String id;
 
 }

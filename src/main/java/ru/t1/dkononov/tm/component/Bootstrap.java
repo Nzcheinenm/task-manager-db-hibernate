@@ -5,16 +5,16 @@ import lombok.NoArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.reflections.Reflections;
-import ru.t1.dkononov.tm.api.endpoint.ISystemEndpoint;
+import ru.t1.dkononov.tm.api.endpoint.*;
 import ru.t1.dkononov.tm.api.repository.ICommandRepository;
 import ru.t1.dkononov.tm.api.repository.IProjectRepository;
 import ru.t1.dkononov.tm.api.repository.ITaskRepository;
 import ru.t1.dkononov.tm.api.repository.IUserRepository;
 import ru.t1.dkononov.tm.api.services.*;
 import ru.t1.dkononov.tm.command.AbstractCommand;
-import ru.t1.dkononov.tm.dto.request.ApplicationAboutRequest;
-import ru.t1.dkononov.tm.dto.request.ApplicationVersionRequest;
-import ru.t1.dkononov.tm.dto.request.DataBackupLoadRequest;
+import ru.t1.dkononov.tm.dto.request.*;
+import ru.t1.dkononov.tm.dto.response.DataXmlLoadJaxBResponse;
+import ru.t1.dkononov.tm.dto.response.TaskCreateResponse;
 import ru.t1.dkononov.tm.endpoint.*;
 import ru.t1.dkononov.tm.enumerated.Role;
 import ru.t1.dkononov.tm.enumerated.Status;
@@ -57,7 +57,7 @@ public final class Bootstrap implements IServiceLocator {
     private final IProjectRepository projectRepository = new ProjectRepository();
 
     @NotNull
-    private final Backup backup = new Backup(this);
+    public final Backup backup = new Backup(this);
 
     @Getter
     @NotNull
@@ -81,22 +81,26 @@ public final class Bootstrap implements IServiceLocator {
 
     @Getter
     @NotNull
+    private final IDomainService domainService = new DomainService(this);
+
+    @Getter
+    @NotNull
     private final IPropertyService propertyService = new PropertyService();
 
     @NotNull
     private final ISystemEndpoint systemEndpoint = new SystemEndpoint(this);
 
     @NotNull
-    private final IDomainEndpoint domainEnpdoint = new DomainEndpoint(this);
+    private final IDomainEndpoint domainEndpoint = new DomainEndpoint(this);
 
     @NotNull
-    private final IProjectEndpoint projectEnpdoint = new ProjectEndpoint(this);
+    private final IProjectEndpoint projectEndpoint = new ProjectEndpoint(this);
 
     @NotNull
-    private final ITaskEndpoint taskEnpdoint = new TaskEndpoint(this);
+    private final ITaskEndpoint taskEndpoint = new TaskEndpoint(this);
 
     @NotNull
-    private final IUserEndpoint userEnpdoint = new UserEndpoint(this);
+    private final IUserEndpoint userEndpoint = new UserEndpoint(this);
 
     @NotNull
     private final Server server = new Server(this);
@@ -135,7 +139,55 @@ public final class Bootstrap implements IServiceLocator {
         server.registry(ApplicationVersionRequest.class, systemEndpoint::getVersion);
 
         server.registry(DataBackupLoadRequest.class, domainEndpoint::loadDataBackup);
+        server.registry(DataBackupSaveRequest.class, domainEndpoint::saveDataBackup);
+        server.registry(DataBase64LoadRequest.class, domainEndpoint::loadDataBase64);
+        server.registry(DataBase64SaveRequest.class, domainEndpoint::saveDataBase64);
+        server.registry(DataBinarySaveRequest.class, domainEndpoint::saveDataBinary);
+        server.registry(DataBinaryLoadRequest.class, domainEndpoint::loadDataBinary);
+        server.registry(DataJsonSaveFasterXmlRequest.class, domainEndpoint::saveDataJsonFasterXml);
+        server.registry(DataJsonLoadFasterXmlRequest.class, domainEndpoint::loadDataJsonFasterXml);
+        server.registry(DataJsonSaveJaxBRequest.class, domainEndpoint::saveDataJsonJaxB);
+        server.registry(DataJsonLoadJaxBRequest.class, domainEndpoint::loadDataJsonJaxB);
+        server.registry(DataXmlSaveFasterXmlRequest.class, domainEndpoint::saveDataXmlFasterXml);
+        server.registry(DataXmlLoadFasterXmlRequest.class, domainEndpoint::loadDataXmlFasterXml);
+        server.registry(DataXmlSaveJaxBRequest.class, domainEndpoint::saveDataXmlJaxB);
+        server.registry(DataXmlLoadJaxBRequest.class, domainEndpoint::loadDataXmlJaxB);
 
+        server.registry(TaskChangeStatusByIdRequest.class, taskEndpoint::changeStatusById);
+        server.registry(TaskChangeStatusByIndexRequest.class, taskEndpoint::changeStatusByIndex);
+        server.registry(TaskClearRequest.class, taskEndpoint::clearTask);
+        server.registry(TaskCreateRequest.class, taskEndpoint::createTask);
+        server.registry(TaskGetByIdRequest.class, taskEndpoint::getTaskById);
+        server.registry(TaskGetByIndexRequest.class, taskEndpoint::getTaskByIndex);
+        server.registry(TaskListRequest.class, taskEndpoint::listTask);
+        server.registry(TaskRemoveByIdRequest.class, taskEndpoint::removeTaskById);
+        server.registry(TaskRemoveByIndexRequest.class, taskEndpoint::removeTaskById);
+        server.registry(TaskStartByIdRequest.class, taskEndpoint::startTaskById);
+        server.registry(TaskStartByIndexRequest.class, taskEndpoint::startTaskByIndex);
+        server.registry(TaskCompleteByIdRequest.class, taskEndpoint::completeTaskById);
+        server.registry(TaskCompleteByIndexRequest.class, taskEndpoint::completeTaskByIndex);
+        server.registry(TaskBindToProjectRequest.class, taskEndpoint::bindTaskToProject);
+
+        server.registry(ProjectChangeStatusByIdRequest.class, projectEndpoint::changeStatusById);
+        server.registry(ProjectChangeStatusByIndexRequest.class, projectEndpoint::changeStatusByIndex);
+        server.registry(ProjectClearRequest.class, projectEndpoint::clearProject);
+        server.registry(ProjectCreateRequest.class, projectEndpoint::createProject);
+        server.registry(ProjectGetByIdRequest.class, projectEndpoint::getProjectById);
+        server.registry(ProjectGetByIndexRequest.class, projectEndpoint::getProjectByIndex);
+        server.registry(ProjectListRequest.class, projectEndpoint::listProject);
+        server.registry(ProjectRemoveByIdRequest.class, projectEndpoint::removeProjectById);
+        server.registry(ProjectRemoveByIndexRequest.class, projectEndpoint::removeProjectById);
+        server.registry(ProjectStartByIdRequest.class, projectEndpoint::startProjectById);
+        server.registry(ProjectStartByIndexRequest.class, projectEndpoint::startProjectByIndex);
+        server.registry(ProjectCompleteByIdRequest.class, projectEndpoint::completeProjectById);
+        server.registry(ProjectCompleteByIndexRequest.class, projectEndpoint::completeProjectByIndex);
+
+        server.registry(UserLockRequest.class, userEndpoint::lockUser);
+        server.registry(UserUnlockRequest.class, userEndpoint::unlockUser);
+        server.registry(UserRemoveRequest.class, userEndpoint::removeUser);
+        server.registry(UserUpdateProfileRequest.class, userEndpoint::updateUserProfile);
+        server.registry(UserChangePasswordRequest.class, userEndpoint::changeUserPassword);
+        server.registry(UserRegistryRequest.class, userEndpoint::registryUser);
     }
 
     public void run(@NotNull final String[] args) {

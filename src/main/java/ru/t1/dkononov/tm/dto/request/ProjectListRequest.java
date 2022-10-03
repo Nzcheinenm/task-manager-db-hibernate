@@ -16,10 +16,4 @@ public final class ProjectListRequest extends AbstractUserRequest {
     @Nullable
     private Sort sort;
 
-    @Nullable
-    private String name;
-
-    @Nullable
-    private String description;
-
 }

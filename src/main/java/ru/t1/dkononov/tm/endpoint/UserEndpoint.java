@@ -2,6 +2,7 @@ package ru.t1.dkononov.tm.endpoint;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import ru.t1.dkononov.tm.api.endpoint.IUserEndpoint;
 import ru.t1.dkononov.tm.api.services.IAuthService;
 import ru.t1.dkononov.tm.api.services.IServiceLocator;
 import ru.t1.dkononov.tm.api.services.IUserService;
@@ -12,7 +13,7 @@ import ru.t1.dkononov.tm.exception.AbstractException;
 import ru.t1.dkononov.tm.exception.field.AbstractFieldException;
 import ru.t1.dkononov.tm.model.User;
 
-public class UserEndpoint extends AbstractEndpoint{
+public class UserEndpoint extends AbstractEndpoint implements IUserEndpoint {
     public UserEndpoint(@NotNull IServiceLocator serviceLocator) {
         super(serviceLocator);
     }
@@ -22,6 +23,7 @@ public class UserEndpoint extends AbstractEndpoint{
         return this.getServiceLocator().getUserService();
     }
 
+    @Override
     @NotNull
     public UserLockResponse lockUser(@NotNull final UserLockRequest request) throws Exception {
         check(request, Role.ADMIN);
@@ -30,6 +32,7 @@ public class UserEndpoint extends AbstractEndpoint{
         return new UserLockResponse(user);
     }
 
+    @Override
     @NotNull
     public UserUnlockResponse unlockUser(@NotNull final UserUnlockRequest request) throws Exception {
         check(request, Role.ADMIN);
@@ -38,6 +41,7 @@ public class UserEndpoint extends AbstractEndpoint{
         return new UserUnlockResponse(user);
     }
 
+    @Override
     @NotNull
     public UserRemoveResponse removeUser(@NotNull final UserRemoveRequest request) throws Exception {
         check(request,Role.ADMIN);
@@ -46,6 +50,7 @@ public class UserEndpoint extends AbstractEndpoint{
         return new UserRemoveResponse(user);
     }
 
+    @Override
     @NotNull
     public UserUpdateProfileResponse updateUserProfile(@NotNull final UserUpdateProfileRequest request) throws AbstractFieldException {
         check(request);
@@ -59,6 +64,7 @@ public class UserEndpoint extends AbstractEndpoint{
         return new UserUpdateProfileResponse(user);
     }
 
+    @Override
     @NotNull
     public UserChangePasswordResponse changeUserPassword(@NotNull final UserChangePasswordRequest request) throws AbstractFieldException {
         check(request);
@@ -68,6 +74,7 @@ public class UserEndpoint extends AbstractEndpoint{
         return new UserChangePasswordResponse(user);
     }
 
+    @Override
     @NotNull
     public UserRegistryResponse registryUser(@NotNull final UserRegistryRequest request) throws AbstractException {
         @Nullable final String login = request.getLogin();

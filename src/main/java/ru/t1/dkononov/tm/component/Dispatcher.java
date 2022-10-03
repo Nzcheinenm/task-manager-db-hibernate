@@ -21,7 +21,7 @@ public class Dispatcher {
         map.put(reqClass, operation);
     }
 
-    @NotNull Object call(@NotNull final AbstractRequest request) {
+    @NotNull Object call(@NotNull final AbstractRequest request) throws Exception {
         @NotNull final Operation operation = map.get(request.getClass());
         return operation.execute(request);
     }

@@ -5,15 +5,16 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.jetbrains.annotations.Nullable;
+import ru.t1.dkononov.tm.enumerated.Sort;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public final class TaskRemoveByIndexRequest extends AbstractUserRequest {
+public class TaskListRequest extends AbstractUserRequest {
 
     @Nullable
-    private Integer index;
+    private Sort sort;
 
 
 }
