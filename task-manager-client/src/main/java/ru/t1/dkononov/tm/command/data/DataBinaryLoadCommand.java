@@ -4,6 +4,7 @@ import lombok.Cleanup;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.dto.Domain;
+import ru.t1.dkononov.tm.dto.request.DataBinaryLoadRequest;
 import ru.t1.dkononov.tm.enumerated.Role;
 import ru.t1.dkononov.tm.exception.AbstractException;
 
@@ -40,10 +41,8 @@ public final class DataBinaryLoadCommand extends AbstractDataCommand {
     @Override
     public void execute() throws Exception {
         System.out.println("[DATA BINARY LOAD]");
-        @Cleanup @NotNull final FileInputStream fileInputStream = new FileInputStream(FILE_BINARY);
-        @Cleanup @NotNull final ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-        @NotNull final Domain domain = (Domain) objectInputStream.readObject();
-        setDomain(domain);
+        @NotNull final DataBinaryLoadRequest request = new DataBinaryLoadRequest();
+        getDomainEndpoint().loadDataBinary(request);
     }
 
     @Override

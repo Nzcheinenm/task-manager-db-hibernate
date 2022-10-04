@@ -4,6 +4,7 @@ import lombok.Cleanup;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.dto.Domain;
+import ru.t1.dkononov.tm.dto.request.DataJsonSaveJaxBRequest;
 import ru.t1.dkononov.tm.enumerated.Role;
 
 import javax.xml.bind.JAXBContext;
@@ -40,18 +41,8 @@ public final class DataJsonSaveJaxBCommand extends AbstractDataCommand {
     @Override
     public void execute() throws Exception {
         System.out.println("[DATA SAVE JSON]");
-        System.setProperty(CONTEXT_FACTORY, CONTEXT_FACTORY_JAXB);
-        @NotNull final Domain domain = getDomain();
-        @NotNull final File file = new File(FILE_JSON);
-        Files.deleteIfExists(file.toPath());
-        Files.createFile(file.toPath());
-        @NotNull JAXBContext jaxbContext = JAXBContext.newInstance(Domain.class);
-        @NotNull final Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
-        jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-        jaxbMarshaller.setProperty(MEDIA_TYPE, APPLICATION_TYPE_JSON);
-        @Cleanup @NotNull final FileOutputStream fileOutputStream = new FileOutputStream(file);
-        jaxbMarshaller.marshal(domain, fileOutputStream);
-        fileOutputStream.flush();
+        @NotNull final DataJsonSaveJaxBRequest request = new DataJsonSaveJaxBRequest();
+        getDomainEndpoint().saveDataJsonJaxB(request);
     }
 
     @Override

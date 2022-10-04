@@ -5,6 +5,7 @@ import lombok.SneakyThrows;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.dto.Domain;
+import ru.t1.dkononov.tm.dto.request.DataBase64LoadRequest;
 import ru.t1.dkononov.tm.enumerated.Role;
 import ru.t1.dkononov.tm.exception.AbstractException;
 import sun.misc.BASE64Decoder;
@@ -47,13 +48,8 @@ public final class DataBase64LoadCommand extends AbstractDataCommand {
     @Override
     public void execute() throws Exception {
         System.out.println("[DATA BASE64 LOAD]");
-        @NotNull final byte[] base64Byte = Files.readAllBytes(Paths.get(FILE_BASE64));
-        @Nullable final String base64Date = new String(base64Byte);
-        @Nullable final byte[] bytes = new BASE64Decoder().decodeBuffer(base64Date);
-        @Cleanup @NotNull final ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(bytes);
-        @Cleanup @NotNull final ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream);
-        @NotNull final Domain domain = (Domain) objectInputStream.readObject();
-        setDomain(domain);
+        @NotNull final DataBase64LoadRequest request = new DataBase64LoadRequest();
+        getDomainEndpoint().loadDataBase64(request);
     }
 
     @Override

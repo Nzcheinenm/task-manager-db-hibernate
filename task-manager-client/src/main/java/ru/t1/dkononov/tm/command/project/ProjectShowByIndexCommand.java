@@ -3,8 +3,12 @@ package ru.t1.dkononov.tm.command.project;
 import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import ru.t1.dkononov.tm.dto.request.ProjectGetByIdRequest;
+import ru.t1.dkononov.tm.dto.request.ProjectGetByIndexRequest;
+import ru.t1.dkononov.tm.dto.response.ProjectGetByIdResponse;
+import ru.t1.dkononov.tm.dto.response.ProjectGetByIndexResponse;
 import ru.t1.dkononov.tm.exception.AbstractException;
-import ru.t1.dkononov.tm.exception.field.AbstractFieldException;
+import ru.t1.dkononov.tm.exception.entity.ProjectNotFoundException;
 import ru.t1.dkononov.tm.model.Project;
 import ru.t1.dkononov.tm.util.TerminalUtil;
 
@@ -20,11 +24,14 @@ public final class ProjectShowByIndexCommand extends AbstractProjectCommand {
 
     @Override
     public void execute() throws AbstractException {
-        @Nullable final String userId = getUserId();
         System.out.println("[ENTER INDEX]");
         @NotNull final Integer value = TerminalUtil.nextNumber() - 1;
-        @Nullable final Project project = getProjectService().findByIndex(userId, value);
-        System.out.println(show(project));
+
+        @NotNull final ProjectGetByIndexRequest request = new ProjectGetByIndexRequest();
+        request.setIndex(value);
+        @NotNull final ProjectGetByIndexResponse projectResponse = getProjectEndpoint().getProjectByIndex(request);
+        if (projectResponse == null) throw new ProjectNotFoundException();
+        System.out.println(show(projectResponse.getProject()));
     }
 
     @NotNull

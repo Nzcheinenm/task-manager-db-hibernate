@@ -3,6 +3,7 @@ package ru.t1.dkononov.tm.command.task;
 import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import ru.t1.dkononov.tm.dto.request.TaskChangeStatusByIdRequest;
 import ru.t1.dkononov.tm.enumerated.Status;
 import ru.t1.dkononov.tm.exception.AbstractException;
 import ru.t1.dkononov.tm.util.TerminalUtil;
@@ -21,7 +22,6 @@ public final class TaskChangeStatusByIdCommand extends AbstractTaskCommand {
 
     @Override
     public void execute() throws AbstractException {
-        @Nullable final String userId = getUserId();
         System.out.println("[CHANGE PROJECT STATUS BY ID]");
         System.out.println("ENTER ID:");
         @NotNull final String id = TerminalUtil.inLine();
@@ -29,7 +29,10 @@ public final class TaskChangeStatusByIdCommand extends AbstractTaskCommand {
         System.out.println(Arrays.toString(Status.values()));
         @NotNull final String statusValue = TerminalUtil.inLine();
         @Nullable final Status status = Status.toStatus(statusValue);
-        getTaskService().changeTaskStatusById(userId, id, status);
+        @NotNull final TaskChangeStatusByIdRequest request = new TaskChangeStatusByIdRequest();
+        request.setId(id);
+        request.setStatusValue(status.getDisplayName());
+        getTaskEndpointClient().changeStatusById(request);
     }
 
 }

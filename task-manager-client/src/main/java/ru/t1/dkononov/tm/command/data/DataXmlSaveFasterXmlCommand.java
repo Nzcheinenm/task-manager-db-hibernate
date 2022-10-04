@@ -6,6 +6,7 @@ import lombok.Cleanup;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.dto.Domain;
+import ru.t1.dkononov.tm.dto.request.DataXmlSaveFasterXmlRequest;
 import ru.t1.dkononov.tm.enumerated.Role;
 
 import java.io.File;
@@ -37,17 +38,10 @@ public final class DataXmlSaveFasterXmlCommand extends AbstractDataCommand {
     }
 
     @Override
-    public void execute() throws IOException {
+    public void execute() throws Exception {
         System.out.println("[DATA SAVE XML]");
-        @NotNull final Domain domain = getDomain();
-        @NotNull final File file = new File(FILE_XML);
-        Files.deleteIfExists(file.toPath());
-        Files.createFile(file.toPath());
-        @Cleanup @NotNull final FileOutputStream fileOutputStream = new FileOutputStream(file);
-        @NotNull final ObjectMapper objectMapper = new XmlMapper();
-        @NotNull final String xml = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(domain);
-        fileOutputStream.write(xml.getBytes());
-        fileOutputStream.flush();
+        @NotNull final DataXmlSaveFasterXmlRequest request = new DataXmlSaveFasterXmlRequest();
+        getDomainEndpoint().saveDataXmlFasterXml(request);
     }
 
     @Override

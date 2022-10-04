@@ -5,6 +5,7 @@ import lombok.Cleanup;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.dto.Domain;
+import ru.t1.dkononov.tm.dto.request.DataJsonSaveFasterXmlRequest;
 import ru.t1.dkononov.tm.enumerated.Role;
 
 import java.io.File;
@@ -36,17 +37,10 @@ public final class DataJsonSaveFasterXmlCommand extends AbstractDataCommand {
     }
 
     @Override
-    public void execute() throws IOException {
+    public void execute() throws Exception {
         System.out.println("[DATA SAVE JSON]");
-        @NotNull final Domain domain = getDomain();
-        @NotNull final File file = new File(FILE_JSON);
-        Files.deleteIfExists(file.toPath());
-        Files.createFile(file.toPath());
-        @Cleanup @NotNull final FileOutputStream fileOutputStream = new FileOutputStream(file);
-        @NotNull final ObjectMapper objectMapper = new ObjectMapper();
-        @NotNull final String json = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(domain);
-        fileOutputStream.write(json.getBytes());
-        fileOutputStream.flush();
+        @NotNull final DataJsonSaveFasterXmlRequest request = new DataJsonSaveFasterXmlRequest();
+        getDomainEndpoint().saveDataJsonFasterXml(request);
     }
 
     @Override

@@ -2,8 +2,8 @@ package ru.t1.dkononov.tm.command.project;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import ru.t1.dkononov.tm.api.services.IProjectService;
-import ru.t1.dkononov.tm.api.services.IProjectTaskService;
+import ru.t1.dkononov.tm.api.client.IProjectEndpointClient;
+import ru.t1.dkononov.tm.api.client.ITaskEndpointClient;
 import ru.t1.dkononov.tm.command.AbstractCommand;
 import ru.t1.dkononov.tm.enumerated.Role;
 import ru.t1.dkononov.tm.enumerated.Status;
@@ -13,13 +13,13 @@ import ru.t1.dkononov.tm.model.Project;
 public abstract class AbstractProjectCommand extends AbstractCommand {
 
     @NotNull
-    protected IProjectService getProjectService() {
-        return serviceLocator.getProjectService();
+    protected IProjectEndpointClient getProjectEndpoint() {
+        return serviceLocator.getProjectEndpointClient();
     }
 
     @NotNull
-    protected IProjectTaskService getProjectTaskService() {
-        return getServiceLocator().getProjectTaskService();
+    protected ITaskEndpointClient getProjectTaskEndpoint() {
+        return getServiceLocator().getTaskEndpointClient();
     }
 
     @Nullable
@@ -36,11 +36,6 @@ public abstract class AbstractProjectCommand extends AbstractCommand {
         System.out.println("STATUS: " + Status.toName(project.getStatus()));
     }
 
-    @Nullable
-    @Override
-    public String getUserId() throws AccessDeniedException {
-        return getAuthService().getUserId();
-    }
 
     @Nullable
     public Role[] getRoles() {

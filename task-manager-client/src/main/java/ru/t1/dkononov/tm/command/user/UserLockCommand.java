@@ -3,6 +3,7 @@ package ru.t1.dkononov.tm.command.user;
 import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import ru.t1.dkononov.tm.dto.request.UserLockRequest;
 import ru.t1.dkononov.tm.enumerated.Role;
 import ru.t1.dkononov.tm.exception.AbstractException;
 import ru.t1.dkononov.tm.util.TerminalUtil;
@@ -18,11 +19,13 @@ public final class UserLockCommand extends AbstractUserCommand {
     private final String NAME = "user-lock";
 
     @Override
-    public void execute() throws AbstractException {
+    public void execute() throws Exception {
         System.out.println("[USER LOCK]");
         System.out.println("ENTER LOGIN:");
         @NotNull final String login = TerminalUtil.inLine();
-        serviceLocator.getUserService().lockUserByLogin(login);
+        @NotNull final UserLockRequest request = new UserLockRequest();
+        request.setLogin(login);
+        getUserEndpoint().lockUser(request);
     }
 
     @Nullable

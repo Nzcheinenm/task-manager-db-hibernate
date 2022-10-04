@@ -60,4 +60,13 @@ public interface IDomainEndpoint {
     @NotNull DataXmlLoadJaxBResponse loadDataXmlJaxB(
             @NotNull DataXmlLoadJaxBRequest request
     ) throws Exception;
+
+    @NotNull DataYamlLoadFasterXmlResponse loadDataYaml(
+            @NotNull DataYamlLoadFasterXmlRequest request
+    ) throws Exception;
+
+    @NotNull DataYamlSaveFasterXmlResponse saveDataYaml(
+            @NotNull DataYamlSaveFasterXmlRequest request
+    ) throws Exception;
+
 }

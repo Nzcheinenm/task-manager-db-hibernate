@@ -3,7 +3,7 @@ package ru.t1.dkononov.tm.command.user;
 import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import ru.t1.dkononov.tm.api.services.IAuthService;
+import ru.t1.dkononov.tm.dto.request.UserRegistryRequest;
 import ru.t1.dkononov.tm.enumerated.Role;
 import ru.t1.dkononov.tm.exception.AbstractException;
 import ru.t1.dkononov.tm.model.User;
@@ -28,8 +28,11 @@ public final class UserRegistryCommand extends AbstractUserCommand {
         @NotNull final String password = TerminalUtil.inLine();
         System.out.println("ENTER EMAIL:");
         @NotNull final String email = TerminalUtil.inLine();
-        @NotNull final IAuthService authService = serviceLocator.getAuthService();
-        @NotNull final User user = authService.registry(login, password, email);
+        @NotNull final UserRegistryRequest request = new UserRegistryRequest();
+        request.setPassword(password);
+        request.setLogin(login);
+        request.setEmail(email);
+        @NotNull final User user = getUserEndpoint().registryUser(request).getUser();
         showUser(user);
     }
 

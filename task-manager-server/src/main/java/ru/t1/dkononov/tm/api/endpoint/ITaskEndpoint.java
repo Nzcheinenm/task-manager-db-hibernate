@@ -58,4 +58,21 @@ public interface ITaskEndpoint {
     @NotNull TaskBindToProjectResponse bindTaskToProject(
             @NotNull TaskBindToProjectRequest request
     ) throws Exception;
+
+    @NotNull TaskUnbindFromProjectResponse unbindTaskToProject(
+            @NotNull TaskUnbindFromProjectRequest request
+    ) throws Exception;
+
+    @NotNull TaskUpdateByIdResponse updateTaskById(
+            @NotNull TaskUpdateByIdRequest request
+    ) throws Exception;
+
+    @NotNull TaskUpdateByIndexResponse updateTaskByIndex(
+            @NotNull TaskUpdateByIndexRequest request
+    ) throws Exception;
+
+    @NotNull TaskListByProjectIdResponse listTasksToProjectId(
+            @NotNull TaskListByProjectIdRequest request
+    ) throws Exception;
+
 }

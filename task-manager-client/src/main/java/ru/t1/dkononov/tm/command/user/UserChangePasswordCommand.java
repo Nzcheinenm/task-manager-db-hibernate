@@ -3,6 +3,7 @@ package ru.t1.dkononov.tm.command.user;
 import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import ru.t1.dkononov.tm.dto.request.UserChangePasswordRequest;
 import ru.t1.dkononov.tm.enumerated.Role;
 import ru.t1.dkononov.tm.exception.AbstractException;
 import ru.t1.dkononov.tm.util.TerminalUtil;
@@ -19,11 +20,12 @@ public final class UserChangePasswordCommand extends AbstractUserCommand {
 
     @Override
     public void execute() throws AbstractException {
-        @Nullable final String userId = serviceLocator.getAuthService().getUserId();
         System.out.println("[USER CHANGE PASSWORD]");
         System.out.println("ENTER NEW PASSWORD:");
         @NotNull final String password = TerminalUtil.inLine();
-        serviceLocator.getUserService().setPassword(userId, password);
+        @NotNull final UserChangePasswordRequest request = new UserChangePasswordRequest();
+        request.setPassword(password);
+        getUserEndpoint().changeUserPassword(request);
     }
 
     @Nullable

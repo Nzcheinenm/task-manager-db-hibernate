@@ -3,8 +3,8 @@ package ru.t1.dkononov.tm.command.task;
 import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import ru.t1.dkononov.tm.dto.request.TaskRemoveByIdRequest;
 import ru.t1.dkononov.tm.exception.AbstractException;
-import ru.t1.dkononov.tm.exception.field.AbstractFieldException;
 import ru.t1.dkononov.tm.util.TerminalUtil;
 
 public final class TaskRemoveByIdCommand extends AbstractTaskCommand {
@@ -18,11 +18,12 @@ public final class TaskRemoveByIdCommand extends AbstractTaskCommand {
     public final String DESCRIPTION = "Удалить задачу по Id.";
 
     @Override
-    public void execute() throws AbstractException {
-        @Nullable final String userId = getUserId();
+    public void execute() throws Exception {
         System.out.println("[ENTER ID]");
         @NotNull final String value = TerminalUtil.inLine();
-        getTaskService().removeById(userId, value);
+        @NotNull final TaskRemoveByIdRequest request = new TaskRemoveByIdRequest();
+        request.setId(value);
+        getTaskEndpointClient().removeTaskById(request);
     }
 
 }

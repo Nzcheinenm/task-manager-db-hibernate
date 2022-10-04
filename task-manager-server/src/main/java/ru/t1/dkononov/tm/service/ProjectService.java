@@ -42,7 +42,7 @@ public final class ProjectService extends AbstractUserOwnedService<Project, IPro
     }
 
     @Override
-    public void updateById(
+    public @Nullable Project updateById(
             @Nullable final String userId,
             @Nullable final String id,
             @Nullable final String name,
@@ -58,10 +58,11 @@ public final class ProjectService extends AbstractUserOwnedService<Project, IPro
         project.setName(name);
         project.setDescription(description);
         project.setUserId(userId);
+        return project;
     }
 
     @Override
-    public void updateByIndex(
+    public @Nullable Project updateByIndex(
             @Nullable final String userId,
             @Nullable final Integer index,
             @Nullable final String name,
@@ -76,6 +77,7 @@ public final class ProjectService extends AbstractUserOwnedService<Project, IPro
         if (project == null) throw new ProjectNotFoundException();
         project.setName(name);
         project.setDescription(description);
+        return project;
     }
 
     @Override

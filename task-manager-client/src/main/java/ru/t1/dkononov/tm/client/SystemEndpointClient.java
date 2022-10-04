@@ -7,7 +7,7 @@ import ru.t1.dkononov.tm.dto.request.ApplicationVersionRequest;
 import ru.t1.dkononov.tm.dto.response.ApplicationAboutResponse;
 import ru.t1.dkononov.tm.dto.response.ApplicationVersionResponse;
 
-public final class SystemEndpointClient extends AbstractEndpoint implements ISystemEndpointClient {
+public final class SystemEndpointClient extends AbstractEndpointClient implements ISystemEndpointClient {
 
     @Override
     @NotNull

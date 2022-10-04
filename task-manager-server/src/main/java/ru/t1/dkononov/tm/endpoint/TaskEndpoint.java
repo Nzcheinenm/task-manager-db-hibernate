@@ -17,9 +17,9 @@ import ru.t1.dkononov.tm.model.Task;
 
 import java.util.List;
 
-public class TaskEndpoint extends AbstractEndpoint implements ITaskEndpoint {
+public final class TaskEndpoint extends AbstractEndpoint implements ITaskEndpoint {
 
-    public TaskEndpoint(@NotNull IServiceLocator serviceLocator) {
+    public TaskEndpoint(@NotNull final IServiceLocator serviceLocator) {
         super(serviceLocator);
     }
 
@@ -189,6 +189,47 @@ public class TaskEndpoint extends AbstractEndpoint implements ITaskEndpoint {
         @Nullable final String taskId = request.getTaskId();
         getServiceLocator().getProjectTaskService().bindTaskToProject(userId,projectId,taskId);
         return new TaskBindToProjectResponse();
+    }
+
+    @Override
+    public @NotNull TaskUnbindFromProjectResponse unbindTaskToProject(@NotNull TaskUnbindFromProjectRequest request) throws Exception {
+        check(request);
+        @Nullable final String userId = request.getUserId();
+        @Nullable final String projectId = request.getProjectId();
+        @Nullable final String taskId = request.getTaskId();
+        getServiceLocator().getProjectTaskService().unbindTaskFromProject(userId,projectId,taskId);
+        return new TaskUnbindFromProjectResponse();
+    }
+
+    @Override
+    public @NotNull TaskUpdateByIdResponse updateTaskById(@NotNull TaskUpdateByIdRequest request) throws Exception {
+        check(request);
+        @Nullable final String userId = request.getUserId();
+        @Nullable final String id = request.getId();
+        @Nullable final String name = request.getName();
+        @Nullable final String description = request.getDescription();
+        getTaskService().updateById(userId, id, name, description);
+        return new TaskUpdateByIdResponse();
+    }
+
+    @Override
+    public @NotNull TaskUpdateByIndexResponse updateTaskByIndex(@NotNull TaskUpdateByIndexRequest request) throws Exception {
+        check(request);
+        @Nullable final String userId = request.getUserId();
+        @Nullable final Integer index = request.getIndex();
+        @Nullable final String name = request.getName();
+        @Nullable final String description = request.getDescription();
+        getTaskService().updateByIndex(userId, index, name, description);
+        return new TaskUpdateByIndexResponse();
+    }
+
+    @Override
+    public @NotNull TaskListByProjectIdResponse listTasksToProjectId(@NotNull TaskListByProjectIdRequest request) throws Exception {
+        check(request);
+        @Nullable final String userId = request.getUserId();
+        @Nullable final String projectId = request.getProjectId();
+        @Nullable final List<Task> tasks = getTaskService().findAllByProjectId(userId,projectId);
+        return new TaskListByProjectIdResponse(tasks);
     }
 
 }

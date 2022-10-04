@@ -4,11 +4,11 @@ import lombok.Getter;
 import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import ru.t1.dkononov.tm.api.client.IAuthEndpointClient;
 import ru.t1.dkononov.tm.api.model.ICommand;
-import ru.t1.dkononov.tm.api.services.IAuthService;
+
 import ru.t1.dkononov.tm.api.services.IServiceLocator;
 import ru.t1.dkononov.tm.enumerated.Role;
-import ru.t1.dkononov.tm.exception.field.AccessDeniedException;
 
 @Getter
 @Setter
@@ -21,14 +21,10 @@ public abstract class AbstractCommand implements ICommand {
     public abstract Role[] getRoles();
 
     @Nullable
-    public IAuthService getAuthService() {
-        return serviceLocator.getAuthService();
+    public IAuthEndpointClient getAuthEndpointClient() {
+        return serviceLocator.getAuthEndpointClient();
     }
 
-    @Nullable
-    public String getUserId() throws AccessDeniedException {
-        return getAuthService().getUserId();
-    }
 
     @NotNull
     @Override

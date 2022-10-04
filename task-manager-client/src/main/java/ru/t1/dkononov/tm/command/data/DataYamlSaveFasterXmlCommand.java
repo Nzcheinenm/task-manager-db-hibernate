@@ -6,6 +6,8 @@ import lombok.Cleanup;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.dto.Domain;
+import ru.t1.dkononov.tm.dto.request.DataYamlLoadFasterXmlRequest;
+import ru.t1.dkononov.tm.dto.request.DataYamlSaveFasterXmlRequest;
 import ru.t1.dkononov.tm.enumerated.Role;
 
 import java.io.File;
@@ -37,17 +39,10 @@ public final class DataYamlSaveFasterXmlCommand extends AbstractDataCommand {
     }
 
     @Override
-    public void execute() throws IOException {
+    public void execute() throws Exception {
         System.out.println("[DATA SAVE YAML]");
-        @NotNull final Domain domain = getDomain();
-        @NotNull final File file = new File(FILE_YAML);
-        Files.deleteIfExists(file.toPath());
-        Files.createFile(file.toPath());
-        @Cleanup @NotNull final FileOutputStream fileOutputStream = new FileOutputStream(file);
-        @NotNull final ObjectMapper objectMapper = new YAMLMapper();
-        @NotNull final String json = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(domain);
-        fileOutputStream.write(json.getBytes());
-        fileOutputStream.flush();
+        @NotNull final DataYamlSaveFasterXmlRequest request = new DataYamlSaveFasterXmlRequest();
+        getDomainEndpoint().saveDataYaml(request);
     }
 
     @Override

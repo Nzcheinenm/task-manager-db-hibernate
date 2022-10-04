@@ -3,8 +3,9 @@ package ru.t1.dkononov.tm.command.task;
 import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import ru.t1.dkononov.tm.dto.request.TaskRemoveByIdRequest;
+import ru.t1.dkononov.tm.dto.request.TaskRemoveByIndexRequest;
 import ru.t1.dkononov.tm.exception.AbstractException;
-import ru.t1.dkononov.tm.exception.field.AbstractFieldException;
 import ru.t1.dkononov.tm.util.TerminalUtil;
 
 public final class TaskRemoveByIndexCommand extends AbstractTaskCommand {
@@ -18,11 +19,12 @@ public final class TaskRemoveByIndexCommand extends AbstractTaskCommand {
     public final String DESCRIPTION = "Удалить задачу по индексу.";
 
     @Override
-    public void execute() throws AbstractException {
-        @Nullable final String userId = getUserId();
+    public void execute() throws Exception {
         System.out.println("[ENTER INDEX]");
         @NotNull final Integer value = TerminalUtil.nextNumber() - 1;
-        getTaskService().removeByIndex(userId, value);
+        @NotNull final TaskRemoveByIndexRequest request = new TaskRemoveByIndexRequest();
+        request.setIndex(value);
+        getTaskEndpointClient().removeTaskByIndex(request);
     }
 
 }

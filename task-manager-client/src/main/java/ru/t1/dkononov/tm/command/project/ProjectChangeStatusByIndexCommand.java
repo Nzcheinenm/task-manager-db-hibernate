@@ -3,6 +3,8 @@ package ru.t1.dkononov.tm.command.project;
 import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import ru.t1.dkononov.tm.dto.request.ProjectChangeStatusByIdRequest;
+import ru.t1.dkononov.tm.dto.request.ProjectChangeStatusByIndexRequest;
 import ru.t1.dkononov.tm.enumerated.Status;
 import ru.t1.dkononov.tm.exception.AbstractException;
 import ru.t1.dkononov.tm.util.TerminalUtil;
@@ -22,7 +24,6 @@ public final class ProjectChangeStatusByIndexCommand extends AbstractProjectComm
 
     @Override
     public void execute() throws AbstractException {
-        @Nullable final String userId = getUserId();
         System.out.println("[CHANGE PROJECT STATUS BY INDEX]");
         System.out.println("ENTER INDEX:");
         @NotNull final Integer index = TerminalUtil.nextNumber() - 1;
@@ -30,7 +31,10 @@ public final class ProjectChangeStatusByIndexCommand extends AbstractProjectComm
         System.out.println(Arrays.toString(Status.values()));
         @NotNull final String statusValue = TerminalUtil.inLine();
         @Nullable final Status status = Status.toStatus(statusValue);
-        getProjectService().changeProjectStatusByIndex(userId, index, status);
+        @NotNull final ProjectChangeStatusByIndexRequest request = new ProjectChangeStatusByIndexRequest();
+        request.setIndex(index);
+        request.setStatusValue(status.getDisplayName());
+        getProjectEndpoint().changeStatusByIndex(request);
     }
 
 }

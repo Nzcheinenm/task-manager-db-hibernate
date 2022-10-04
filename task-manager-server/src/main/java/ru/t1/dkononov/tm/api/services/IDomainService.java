@@ -30,4 +30,9 @@ public interface IDomainService {
     void saveDataXmlJaxB() throws Exception;
 
     void loadDataXmlJaxB() throws Exception;
+
+    void saveDataYaml() throws Exception;
+
+    void loadDataYaml() throws Exception;
+
 }

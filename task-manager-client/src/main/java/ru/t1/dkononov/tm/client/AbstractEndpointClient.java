@@ -1,15 +1,20 @@
 package ru.t1.dkononov.tm.client;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import ru.t1.dkononov.tm.api.client.IEndpointClient;
+import ru.t1.dkononov.tm.dto.response.ApplicationErrorResponse;
 
 import java.io.*;
 import java.net.Socket;
 
 @Getter
 @Setter
-public abstract class AbstractEndpoint {
+@NoArgsConstructor
+public abstract class AbstractEndpointClient implements IEndpointClient {
 
     @NotNull
     private String host = "localhost";
@@ -20,10 +25,7 @@ public abstract class AbstractEndpoint {
     @NotNull
     private Socket socket;
 
-    public AbstractEndpoint() {
-    }
-
-    public AbstractEndpoint(
+    public AbstractEndpointClient(
             @NotNull final String host,
             @NotNull final Integer port
     ) {
@@ -31,9 +33,27 @@ public abstract class AbstractEndpoint {
         this.port = port;
     }
 
+    public AbstractEndpointClient(
+            @NotNull final AbstractEndpointClient client
+    ) {
+        this.host = client.host;
+        this.port = client.port;
+        this.socket = client.socket;
+    }
+
     protected Object call(@NotNull final Object data) throws Exception {
         getObjectOutputStream().writeObject(data);
         return getObjectInputStream().readObject();
+    }
+
+    protected <T> T call(@NotNull final Object data,@NotNull final Class<T> clazz) throws Exception {
+        getObjectOutputStream().writeObject(data);
+        @NotNull final Object result = getObjectInputStream().readObject();
+        if (result instanceof ApplicationErrorResponse) {
+            @NotNull final ApplicationErrorResponse response = (ApplicationErrorResponse) result;
+            throw new RuntimeException(response.getMessage());
+        }
+        return (T) result;
     }
 
     private ObjectOutputStream getObjectOutputStream() throws IOException {
@@ -52,10 +72,14 @@ public abstract class AbstractEndpoint {
         return socket.getInputStream();
     }
 
-    public void connect() throws IOException {
+    @Override
+    @Nullable
+    public Socket connect() throws IOException {
         socket = new Socket(host, port);
+        return null;
     }
 
+    @Override
     public void disconnect() throws IOException {
         socket.close();
     }

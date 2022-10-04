@@ -177,4 +177,26 @@ public final class ProjectEndpoint extends AbstractEndpoint implements IProjectE
         return new ProjectCompleteByIndexResponse(project);
     }
 
+    @Override
+    public @NotNull ProjectUpdateByIdResponse updateProjectById(@NotNull ProjectUpdateByIdRequest request) throws Exception {
+        check(request);
+        @Nullable final String userId = request.getUserId();
+        @Nullable final String id = request.getId();
+        @Nullable final String name = request.getName();
+        @Nullable final String description = request.getDescription();
+        @Nullable final Project project = getProjectService().updateById(userId, id, name, description);
+        return new ProjectUpdateByIdResponse(project);
+    }
+
+    @Override
+    public @NotNull ProjectUpdateByIndexResponse updateProjectByIndex(@NotNull ProjectUpdateByIndexRequest request) throws Exception {
+        check(request);
+        @Nullable final String userId = request.getUserId();
+        @Nullable final Integer index = request.getIndex();
+        @Nullable final String name = request.getName();
+        @Nullable final String description = request.getDescription();
+        @Nullable final Project project = getProjectService().updateByIndex(userId, index, name, description);
+        return new ProjectUpdateByIndexResponse(project);
+    }
+
 }

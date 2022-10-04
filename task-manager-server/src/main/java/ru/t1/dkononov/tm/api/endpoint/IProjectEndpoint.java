@@ -54,4 +54,13 @@ public interface IProjectEndpoint {
     @NotNull ProjectCompleteByIndexResponse completeProjectByIndex(
             @NotNull ProjectCompleteByIndexRequest request
     ) throws Exception;
+
+    @NotNull ProjectUpdateByIdResponse updateProjectById(
+            @NotNull ProjectUpdateByIdRequest request
+    ) throws Exception;
+
+    @NotNull ProjectUpdateByIndexResponse updateProjectByIndex(
+            @NotNull ProjectUpdateByIndexRequest request
+    ) throws Exception;
+
 }

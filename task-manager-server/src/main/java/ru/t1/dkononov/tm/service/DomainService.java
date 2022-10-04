@@ -2,6 +2,7 @@ package ru.t1.dkononov.tm.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
 import lombok.Cleanup;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -73,7 +74,7 @@ public final class DomainService implements IDomainService {
         bootstrap.getProjectService().set(domain.getProjects());
         bootstrap.getTaskService().set(domain.getTasks());
         bootstrap.getUserService().set(domain.getUsers());
-        bootstrap.getAuthService().logout();
+//        bootstrap.getAuthService().logout();
     }
 
     @Override
@@ -255,6 +256,28 @@ public final class DomainService implements IDomainService {
         @NotNull final Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
         @NotNull final File file = new File(FILE_XML);
         @NotNull final Domain domain = (Domain) unmarshaller.unmarshal(file);
+        setDomain(domain);
+    }
+
+    @Override
+    public void saveDataYaml() throws Exception {
+        @NotNull final Domain domain = getDomain();
+        @NotNull final File file = new File(FILE_YAML);
+        Files.deleteIfExists(file.toPath());
+        Files.createFile(file.toPath());
+        @Cleanup @NotNull final FileOutputStream fileOutputStream = new FileOutputStream(file);
+        @NotNull final ObjectMapper objectMapper = new YAMLMapper();
+        @NotNull final String json = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(domain);
+        fileOutputStream.write(json.getBytes());
+        fileOutputStream.flush();
+    }
+
+    @Override
+    public void loadDataYaml() throws Exception {
+        @NotNull final byte[] bytes = Files.readAllBytes(Paths.get(FILE_YAML));
+        @NotNull final String json = new String(bytes);
+        @NotNull final ObjectMapper objectMapper = new YAMLMapper();
+        @NotNull final Domain domain = objectMapper.readValue(json, Domain.class);
         setDomain(domain);
     }
 

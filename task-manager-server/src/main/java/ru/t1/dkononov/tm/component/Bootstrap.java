@@ -86,6 +86,9 @@ public final class Bootstrap implements IServiceLocator {
     @NotNull
     private final Server server = new Server(this);
 
+    @NotNull
+    private final Backup backup = new Backup(this);
+
 
     @NotNull
     private final IUserRepository userRepository = new UserRepository();
@@ -171,11 +174,13 @@ public final class Bootstrap implements IServiceLocator {
 
     private void initBackup() throws Exception {
         Runtime.getRuntime().addShutdownHook(new Thread(this::stop));
+        backup.init();
         server.start();
     }
 
     private void stop() {
         try {
+            backup.stop();
             server.stop();
         } catch (IOException e) {
             loggerService.error(e);

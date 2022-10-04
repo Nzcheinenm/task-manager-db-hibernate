@@ -3,6 +3,7 @@ package ru.t1.dkononov.tm.command.project;
 import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import ru.t1.dkononov.tm.dto.request.ProjectClearRequest;
 import ru.t1.dkononov.tm.exception.AbstractException;
 
 public final class ProjectClearCommand extends AbstractProjectCommand {
@@ -17,9 +18,9 @@ public final class ProjectClearCommand extends AbstractProjectCommand {
 
     @Override
     public void execute() throws AbstractException {
-        @Nullable final String userId = getUserId();
         System.out.println("[PROJECT_CLEAR]");
-        getProjectService().clear(userId);
+        @NotNull final ProjectClearRequest request = new ProjectClearRequest();
+        getProjectEndpoint().clearProject(request);
     }
 
 }

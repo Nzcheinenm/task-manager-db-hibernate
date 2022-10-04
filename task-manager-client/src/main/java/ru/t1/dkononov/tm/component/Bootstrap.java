@@ -5,17 +5,13 @@ import lombok.NoArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.reflections.Reflections;
-import ru.t1.dkononov.tm.api.endpoint.*;
+import ru.t1.dkononov.tm.api.client.*;
 import ru.t1.dkononov.tm.api.repository.ICommandRepository;
-import ru.t1.dkononov.tm.api.repository.IProjectRepository;
-import ru.t1.dkononov.tm.api.repository.ITaskRepository;
-import ru.t1.dkononov.tm.api.repository.IUserRepository;
 import ru.t1.dkononov.tm.api.services.*;
+import ru.t1.dkononov.tm.client.*;
 import ru.t1.dkononov.tm.command.AbstractCommand;
-import ru.t1.dkononov.tm.dto.request.*;
-import ru.t1.dkononov.tm.dto.response.DataXmlLoadJaxBResponse;
-import ru.t1.dkononov.tm.dto.response.TaskCreateResponse;
-import ru.t1.dkononov.tm.endpoint.*;
+import ru.t1.dkononov.tm.command.server.ConnectCommand;
+import ru.t1.dkononov.tm.command.server.DisonnectCommand;
 import ru.t1.dkononov.tm.enumerated.Role;
 import ru.t1.dkononov.tm.enumerated.Status;
 import ru.t1.dkononov.tm.exception.AbstractException;
@@ -25,9 +21,6 @@ import ru.t1.dkononov.tm.model.Project;
 import ru.t1.dkononov.tm.model.Task;
 import ru.t1.dkononov.tm.model.User;
 import ru.t1.dkononov.tm.repository.CommandRepository;
-import ru.t1.dkononov.tm.repository.ProjectRepository;
-import ru.t1.dkononov.tm.repository.TaskRepository;
-import ru.t1.dkononov.tm.repository.UserRepository;
 import ru.t1.dkononov.tm.service.*;
 import ru.t1.dkononov.tm.util.SystemUtil;
 import ru.t1.dkononov.tm.util.TerminalUtil;
@@ -53,73 +46,46 @@ public final class Bootstrap implements IServiceLocator {
     @NotNull
     private final ICommandService commandService = new CommandService(commandRepository);
 
-    @NotNull
-    private final IProjectRepository projectRepository = new ProjectRepository();
-
-    @NotNull
-    public final Backup backup = new Backup(this);
-
-    @Getter
-    @NotNull
-    private final IProjectService projectService = new ProjectService(projectRepository);
-
-
-    @NotNull
-    private final ITaskRepository taskRepository = new TaskRepository();
-
-    @Getter
-    @NotNull
-    private final ITaskService taskService = new TaskService(taskRepository);
-
-    @Getter
-    @NotNull
-    private final IProjectTaskService projectTaskService = new ProjectTaskService(projectRepository, taskRepository);
-
     @Getter
     @NotNull
     private final ILoggerService loggerService = new LoggerService();
 
-    @Getter
-    @NotNull
-    private final IDomainService domainService = new DomainService(this);
 
     @Getter
     @NotNull
     private final IPropertyService propertyService = new PropertyService();
 
+    @Getter
     @NotNull
-    private final ISystemEndpoint systemEndpoint = new SystemEndpoint(this);
+    private final IEndpointClient connectionEndpointClient = new ConnectionEndpointClient();
 
+    @Getter
     @NotNull
-    private final IDomainEndpoint domainEndpoint = new DomainEndpoint(this);
+    private final SystemEndpointClient systemEndpointClient = new SystemEndpointClient();
 
+    @Getter
     @NotNull
-    private final IProjectEndpoint projectEndpoint = new ProjectEndpoint(this);
+    private final DomainEndpointClient domainEndpointClient = new DomainEndpointClient();
 
+    @Getter
     @NotNull
-    private final ITaskEndpoint taskEndpoint = new TaskEndpoint(this);
+    private final ProjectEndpointClient projectEndpointClient = new ProjectEndpointClient();
 
+    @Getter
     @NotNull
-    private final IUserEndpoint userEndpoint = new UserEndpoint(this);
+    private final TaskEndpointClient taskEndpointClient = new TaskEndpointClient();
 
+    @Getter
     @NotNull
-    private final Server server = new Server(this);
+    private final UserEndpointClient userEndpointClient = new UserEndpointClient();
 
+    @Getter
     @NotNull
-    private final IUserRepository userRepository = new UserRepository();
+    private final AuthEndpointClient authEndpointClient = new AuthEndpointClient();
+
 
     @NotNull
     private final FileScanner fileScanner = new FileScanner(this);
-
-    @Getter
-    @NotNull
-    private final IUserService userService = new UserService(
-            userRepository, projectRepository, taskRepository,
-            propertyService);
-
-    @Getter
-    @NotNull
-    private final IAuthService authService = new AuthService(userService, propertyService);
 
     {
         @NotNull final Reflections reflections = new Reflections(PACKAGE_COMMAND);
@@ -134,61 +100,6 @@ public final class Bootstrap implements IServiceLocator {
         }
     }
 
-    {
-        server.registry(ApplicationAboutRequest.class, systemEndpoint::getAbout);
-        server.registry(ApplicationVersionRequest.class, systemEndpoint::getVersion);
-
-        server.registry(DataBackupLoadRequest.class, domainEndpoint::loadDataBackup);
-        server.registry(DataBackupSaveRequest.class, domainEndpoint::saveDataBackup);
-        server.registry(DataBase64LoadRequest.class, domainEndpoint::loadDataBase64);
-        server.registry(DataBase64SaveRequest.class, domainEndpoint::saveDataBase64);
-        server.registry(DataBinarySaveRequest.class, domainEndpoint::saveDataBinary);
-        server.registry(DataBinaryLoadRequest.class, domainEndpoint::loadDataBinary);
-        server.registry(DataJsonSaveFasterXmlRequest.class, domainEndpoint::saveDataJsonFasterXml);
-        server.registry(DataJsonLoadFasterXmlRequest.class, domainEndpoint::loadDataJsonFasterXml);
-        server.registry(DataJsonSaveJaxBRequest.class, domainEndpoint::saveDataJsonJaxB);
-        server.registry(DataJsonLoadJaxBRequest.class, domainEndpoint::loadDataJsonJaxB);
-        server.registry(DataXmlSaveFasterXmlRequest.class, domainEndpoint::saveDataXmlFasterXml);
-        server.registry(DataXmlLoadFasterXmlRequest.class, domainEndpoint::loadDataXmlFasterXml);
-        server.registry(DataXmlSaveJaxBRequest.class, domainEndpoint::saveDataXmlJaxB);
-        server.registry(DataXmlLoadJaxBRequest.class, domainEndpoint::loadDataXmlJaxB);
-
-        server.registry(TaskChangeStatusByIdRequest.class, taskEndpoint::changeStatusById);
-        server.registry(TaskChangeStatusByIndexRequest.class, taskEndpoint::changeStatusByIndex);
-        server.registry(TaskClearRequest.class, taskEndpoint::clearTask);
-        server.registry(TaskCreateRequest.class, taskEndpoint::createTask);
-        server.registry(TaskGetByIdRequest.class, taskEndpoint::getTaskById);
-        server.registry(TaskGetByIndexRequest.class, taskEndpoint::getTaskByIndex);
-        server.registry(TaskListRequest.class, taskEndpoint::listTask);
-        server.registry(TaskRemoveByIdRequest.class, taskEndpoint::removeTaskById);
-        server.registry(TaskRemoveByIndexRequest.class, taskEndpoint::removeTaskById);
-        server.registry(TaskStartByIdRequest.class, taskEndpoint::startTaskById);
-        server.registry(TaskStartByIndexRequest.class, taskEndpoint::startTaskByIndex);
-        server.registry(TaskCompleteByIdRequest.class, taskEndpoint::completeTaskById);
-        server.registry(TaskCompleteByIndexRequest.class, taskEndpoint::completeTaskByIndex);
-        server.registry(TaskBindToProjectRequest.class, taskEndpoint::bindTaskToProject);
-
-        server.registry(ProjectChangeStatusByIdRequest.class, projectEndpoint::changeStatusById);
-        server.registry(ProjectChangeStatusByIndexRequest.class, projectEndpoint::changeStatusByIndex);
-        server.registry(ProjectClearRequest.class, projectEndpoint::clearProject);
-        server.registry(ProjectCreateRequest.class, projectEndpoint::createProject);
-        server.registry(ProjectGetByIdRequest.class, projectEndpoint::getProjectById);
-        server.registry(ProjectGetByIndexRequest.class, projectEndpoint::getProjectByIndex);
-        server.registry(ProjectListRequest.class, projectEndpoint::listProject);
-        server.registry(ProjectRemoveByIdRequest.class, projectEndpoint::removeProjectById);
-        server.registry(ProjectRemoveByIndexRequest.class, projectEndpoint::removeProjectById);
-        server.registry(ProjectStartByIdRequest.class, projectEndpoint::startProjectById);
-        server.registry(ProjectStartByIndexRequest.class, projectEndpoint::startProjectByIndex);
-        server.registry(ProjectCompleteByIdRequest.class, projectEndpoint::completeProjectById);
-        server.registry(ProjectCompleteByIndexRequest.class, projectEndpoint::completeProjectByIndex);
-
-        server.registry(UserLockRequest.class, userEndpoint::lockUser);
-        server.registry(UserUnlockRequest.class, userEndpoint::unlockUser);
-        server.registry(UserRemoveRequest.class, userEndpoint::removeUser);
-        server.registry(UserUpdateProfileRequest.class, userEndpoint::updateUserProfile);
-        server.registry(UserChangePasswordRequest.class, userEndpoint::changeUserPassword);
-        server.registry(UserRegistryRequest.class, userEndpoint::registryUser);
-    }
 
     public void run(@NotNull final String[] args) {
         if (processArgument(args)) System.exit(0);
@@ -209,7 +120,6 @@ public final class Bootstrap implements IServiceLocator {
 
     private void init() {
         try {
-            initDemoData();
             initBackup();
             initLogger();
             initPID();
@@ -219,19 +129,25 @@ public final class Bootstrap implements IServiceLocator {
         }
     }
 
+    private void connect() throws Exception {
+        processCommand(ConnectCommand.NAME);
+    }
+
+    private void disconnect() throws Exception {
+        processCommand(DisonnectCommand.NAME);
+    }
+
     private void initBackup() throws Exception {
         Runtime.getRuntime().addShutdownHook(new Thread(this::prepareShutdown));
-        backup.init();
         fileScanner.init();
-        server.start();
+        connect();
     }
 
     private void prepareShutdown() {
-        backup.stop();
         fileScanner.stop();
         try {
-            server.stop();
-        } catch (IOException e) {
+            disconnect();
+        } catch (Exception e) {
             loggerService.error(e);
         }
         loggerService.info("** TASK-MANAGER IS SHUTTING DOWN **");
@@ -264,19 +180,6 @@ public final class Bootstrap implements IServiceLocator {
         file.deleteOnExit();
     }
 
-    private void initDemoData() throws AbstractException {
-        @NotNull final User test = userService.create("test", "test", "test@test.ru");
-        @NotNull final User user = userService.create("user", "user", "user@test.ru");
-        @NotNull final User admin = userService.create("admin", "admin", Role.ADMIN);
-
-        projectService.add(test.getId(), new Project("Jira", Status.NOT_STARTED));
-        projectService.add(test.getId(), new Project("Confluence", Status.IN_PROGRESS));
-        projectService.add(admin.getId(), new Project("SoapUI", Status.IN_PROGRESS));
-        projectService.add(user.getId(), new Project("Postman", Status.IN_PROGRESS));
-
-        taskService.add(test.getId(), new Task("Work", Status.IN_PROGRESS));
-        taskService.add(admin.getId(), new Task("Homework", Status.NOT_STARTED));
-    }
 
     private void initLogger() {
         loggerService.info("** WELCOME TO TASK-MANAGER **");
@@ -286,7 +189,7 @@ public final class Bootstrap implements IServiceLocator {
             throws Exception {
         @Nullable final AbstractCommand abstractCommand = commandService.getCommandByName(command);
         if (abstractCommand == null) throw new CommandNotSupportedException(command);
-        if (checkRoles) authService.checkRoles(abstractCommand.getRoles());
+//        if (checkRoles) authService.checkRoles(abstractCommand.getRoles());
         abstractCommand.execute();
     }
 

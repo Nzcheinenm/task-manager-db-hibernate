@@ -8,9 +8,9 @@ import ru.t1.dkononov.tm.dto.request.*;
 import ru.t1.dkononov.tm.dto.response.*;
 import ru.t1.dkononov.tm.enumerated.Role;
 
-public class DomainEndpoint extends AbstractEndpoint implements IDomainEndpoint {
+public final class DomainEndpoint extends AbstractEndpoint implements IDomainEndpoint {
 
-    public DomainEndpoint(@NotNull IServiceLocator serviceLocator) {
+    public DomainEndpoint(@NotNull final IServiceLocator serviceLocator) {
         super(serviceLocator);
     }
 
@@ -158,5 +158,20 @@ public class DomainEndpoint extends AbstractEndpoint implements IDomainEndpoint 
         getServiceLocator().getDomainService().loadDataXmlJaxB();
         return new DataXmlLoadJaxBResponse();
     }
+
+    @Override
+    public @NotNull DataYamlLoadFasterXmlResponse loadDataYaml(@NotNull DataYamlLoadFasterXmlRequest request) throws Exception {
+        check(request, Role.ADMIN);
+        getServiceLocator().getDomainService().loadDataYaml();
+        return new DataYamlLoadFasterXmlResponse();
+    }
+
+    @Override
+    public @NotNull DataYamlSaveFasterXmlResponse saveDataYaml(@NotNull DataYamlSaveFasterXmlRequest request) throws Exception {
+        check(request, Role.ADMIN);
+        getServiceLocator().getDomainService().saveDataYaml();
+        return new DataYamlSaveFasterXmlResponse();
+    }
+
 
 }

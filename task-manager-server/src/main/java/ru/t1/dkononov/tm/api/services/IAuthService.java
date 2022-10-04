@@ -15,10 +15,6 @@ public interface IAuthService {
     User registry(@NotNull String login, @NotNull String password, @NotNull String email)
             throws AbstractException;
 
-    void login(@Nullable String login, @Nullable String password)
-            throws AbstractFieldException;
-
-    void logout();
 
     boolean isAuth();
 
@@ -28,7 +24,6 @@ public interface IAuthService {
     @NotNull
     User getUser() throws AbstractFieldException;
 
-    void checkRoles(@Nullable Role[] roles) throws AbstractException;
 
     @NotNull
     User check(String login, String password) throws AbstractException;

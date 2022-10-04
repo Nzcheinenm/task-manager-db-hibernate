@@ -5,6 +5,7 @@ import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.dto.Domain;
+import ru.t1.dkononov.tm.dto.request.DataXmlLoadFasterXmlRequest;
 import ru.t1.dkononov.tm.enumerated.Role;
 
 import java.io.IOException;
@@ -35,13 +36,10 @@ public final class DataXmlLoadFasterXmlCommand extends AbstractDataCommand {
     }
 
     @Override
-    public void execute() throws IOException {
+    public void execute() throws Exception {
         System.out.println("[DATA LOAD XML]");
-        @NotNull final byte[] bytes = Files.readAllBytes(Paths.get(FILE_XML));
-        @NotNull final String xml = new String(bytes);
-        @NotNull final ObjectMapper objectMapper = new XmlMapper();
-        @NotNull final Domain domain = objectMapper.readValue(xml, Domain.class);
-        setDomain(domain);
+        @NotNull final DataXmlLoadFasterXmlRequest request = new DataXmlLoadFasterXmlRequest();
+        getDomainEndpoint().loadDataXmlFasterXml(request);
     }
 
     @Override

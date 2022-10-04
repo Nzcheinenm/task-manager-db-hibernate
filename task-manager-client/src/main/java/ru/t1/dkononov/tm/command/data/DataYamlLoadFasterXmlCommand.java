@@ -5,6 +5,7 @@ import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.dto.Domain;
+import ru.t1.dkononov.tm.dto.request.DataYamlLoadFasterXmlRequest;
 import ru.t1.dkononov.tm.enumerated.Role;
 
 import java.io.IOException;
@@ -35,13 +36,10 @@ public final class DataYamlLoadFasterXmlCommand extends AbstractDataCommand {
     }
 
     @Override
-    public void execute() throws IOException {
+    public void execute() throws Exception {
         System.out.println("[DATA LOAD YAML]");
-        @NotNull final byte[] bytes = Files.readAllBytes(Paths.get(FILE_YAML));
-        @NotNull final String json = new String(bytes);
-        @NotNull final ObjectMapper objectMapper = new YAMLMapper();
-        @NotNull final Domain domain = objectMapper.readValue(json, Domain.class);
-        setDomain(domain);
+        @NotNull final DataYamlLoadFasterXmlRequest request = new DataYamlLoadFasterXmlRequest();
+        getDomainEndpoint().loadDataYaml(request);
     }
 
     @Override

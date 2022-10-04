@@ -4,6 +4,7 @@ import lombok.Cleanup;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.dto.Domain;
+import ru.t1.dkononov.tm.dto.request.DataXmlSaveJaxBRequest;
 import ru.t1.dkononov.tm.enumerated.Role;
 
 import javax.xml.bind.JAXBContext;
@@ -38,18 +39,10 @@ public final class DataXmlSaveJaxBCommand extends AbstractDataCommand {
     }
 
     @Override
-    public void execute() throws IOException, JAXBException {
+    public void execute() throws Exception {
         System.out.println("[DATA SAVE XML]");
-        @NotNull final Domain domain = getDomain();
-        @NotNull final File file = new File(FILE_XML);
-        Files.deleteIfExists(file.toPath());
-        Files.createFile(file.toPath());
-        @NotNull JAXBContext jaxbContext = JAXBContext.newInstance(Domain.class);
-        @NotNull final Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
-        jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-        @Cleanup @NotNull final FileOutputStream fileOutputStream = new FileOutputStream(file);
-        jaxbMarshaller.marshal(domain, fileOutputStream);
-        fileOutputStream.flush();
+        @NotNull final DataXmlSaveJaxBRequest request = new DataXmlSaveJaxBRequest();
+        getDomainEndpoint().saveDataXmlJaxB(request);
     }
 
     @Override

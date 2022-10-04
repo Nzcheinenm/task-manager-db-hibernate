@@ -13,8 +13,8 @@ import ru.t1.dkononov.tm.exception.AbstractException;
 import ru.t1.dkononov.tm.exception.field.AbstractFieldException;
 import ru.t1.dkononov.tm.model.User;
 
-public class UserEndpoint extends AbstractEndpoint implements IUserEndpoint {
-    public UserEndpoint(@NotNull IServiceLocator serviceLocator) {
+public final class UserEndpoint extends AbstractEndpoint implements IUserEndpoint {
+    public UserEndpoint(@NotNull final IServiceLocator serviceLocator) {
         super(serviceLocator);
     }
 

@@ -3,8 +3,9 @@ package ru.t1.dkononov.tm.command.task;
 import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import ru.t1.dkononov.tm.dto.request.TaskGetByIdRequest;
+import ru.t1.dkononov.tm.dto.response.TaskGetByIdResponse;
 import ru.t1.dkononov.tm.exception.AbstractException;
-import ru.t1.dkononov.tm.exception.field.AbstractFieldException;
 import ru.t1.dkononov.tm.model.Task;
 import ru.t1.dkononov.tm.util.TerminalUtil;
 
@@ -20,11 +21,14 @@ public final class TaskShowByIdCommand extends AbstractTaskCommand {
 
     @Override
     public void execute() throws AbstractException {
-        @Nullable final String userId = getUserId();
         System.out.println("[SHOW TASK]");
         System.out.println("[ENTER ID]");
         @NotNull final String scanner = TerminalUtil.inLine();
-        @NotNull final Task task = getTaskService().findById(userId, scanner);
+        @NotNull final TaskGetByIdRequest request = new TaskGetByIdRequest();
+        request.setId(scanner);
+        @NotNull final TaskGetByIdResponse response = getTaskEndpointClient().getTaskById(request);
+        if (response.getTask() == null) response.setTask(new Task());
+        @NotNull final Task task = response.getTask();
         System.out.println(show(task));
     }
 

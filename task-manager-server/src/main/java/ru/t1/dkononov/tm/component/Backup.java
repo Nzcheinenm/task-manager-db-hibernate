@@ -1,15 +1,14 @@
 package ru.t1.dkononov.tm.component;
 
 import org.jetbrains.annotations.NotNull;
-import ru.t1.dkononov.tm.command.data.AbstractDataCommand;
-import ru.t1.dkononov.tm.command.data.DataBackupLoadCommand;
-import ru.t1.dkononov.tm.command.data.DataBackupSaveCommand;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+
+import static ru.t1.dkononov.tm.service.DomainService.FILE_BACKUP;
 
 public final class Backup {
 
@@ -34,15 +33,15 @@ public final class Backup {
 
     public void save() {
         try {
-            bootstrap.processCommand(DataBackupSaveCommand.NAME, false);
+            bootstrap.getDomainService().saveDataBackup();
         } catch (@NotNull final Exception e) {
             bootstrap.getLoggerService().error(e);
         }
     }
 
     public void load() throws Exception {
-        if (!Files.exists(Paths.get(AbstractDataCommand.FILE_BACKUP))) return;
-        bootstrap.processCommand(DataBackupLoadCommand.NAME, false);
+        if (!Files.exists(Paths.get(FILE_BACKUP))) return;
+        bootstrap.getDomainService().loadDataBackup();
     }
 
 }

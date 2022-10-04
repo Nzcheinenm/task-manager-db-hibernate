@@ -4,6 +4,7 @@ import lombok.Cleanup;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.dto.Domain;
+import ru.t1.dkononov.tm.dto.request.DataBinarySaveRequest;
 import ru.t1.dkononov.tm.enumerated.Role;
 import ru.t1.dkononov.tm.exception.AbstractException;
 
@@ -43,16 +44,8 @@ public final class DataBinarySaveCommand extends AbstractDataCommand {
     @Override
     public void execute() throws Exception {
         System.out.println("[DATA SAVE BINARY]");
-        @NotNull final Domain domain = getDomain();
-        @NotNull final File file = new File(FILE_BINARY);
-        @NotNull final Path path = file.toPath();
-
-        Files.deleteIfExists(path);
-        Files.createFile(path);
-
-        @Cleanup @NotNull final FileOutputStream fileOutputStream = new FileOutputStream(file);
-        @Cleanup @NotNull final ObjectOutputStream objectInputStream = new ObjectOutputStream(fileOutputStream);
-        objectInputStream.writeObject(domain);
+        @NotNull final DataBinarySaveRequest request = new DataBinarySaveRequest();
+        getDomainEndpoint().saveDataBinary(request);
     }
 
     @Override

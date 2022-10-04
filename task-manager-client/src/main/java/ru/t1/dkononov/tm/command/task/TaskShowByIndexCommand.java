@@ -3,8 +3,11 @@ package ru.t1.dkononov.tm.command.task;
 import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import ru.t1.dkononov.tm.dto.request.TaskGetByIdRequest;
+import ru.t1.dkononov.tm.dto.request.TaskGetByIndexRequest;
+import ru.t1.dkononov.tm.dto.response.TaskGetByIdResponse;
+import ru.t1.dkononov.tm.dto.response.TaskGetByIndexResponse;
 import ru.t1.dkononov.tm.exception.AbstractException;
-import ru.t1.dkononov.tm.exception.field.AbstractFieldException;
 import ru.t1.dkononov.tm.model.Task;
 import ru.t1.dkononov.tm.util.TerminalUtil;
 
@@ -20,11 +23,14 @@ public final class TaskShowByIndexCommand extends AbstractTaskCommand {
 
     @Override
     public void execute() throws AbstractException {
-        @Nullable final String userId = getUserId();
         System.out.println("[SHOW TASK]");
         System.out.println("[ENTER INDEX]");
         @NotNull final Integer value = TerminalUtil.nextNumber() - 1;
-        @NotNull final Task task = getTaskService().findByIndex(userId, value);
+        @NotNull final TaskGetByIndexRequest request = new TaskGetByIndexRequest();
+        request.setIndex(value);
+        @NotNull final TaskGetByIndexResponse response = getTaskEndpointClient().getTaskByIndex(request);
+        if (response.getTask() == null) response.setTask(new Task());
+        @NotNull final Task task = response.getTask();
         System.out.println(show(task));
     }
 

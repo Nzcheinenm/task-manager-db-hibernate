@@ -3,6 +3,7 @@ package ru.t1.dkononov.tm.command.data;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.dto.Domain;
+import ru.t1.dkononov.tm.dto.request.DataJsonLoadJaxBRequest;
 import ru.t1.dkononov.tm.enumerated.Role;
 
 import javax.xml.bind.JAXBContext;
@@ -34,15 +35,10 @@ public final class DataJsonLoadJaxBCommand extends AbstractDataCommand {
     }
 
     @Override
-    public void execute() throws JAXBException {
+    public void execute() throws Exception {
         System.out.println("[DATA LOAD JSON]");
-        System.setProperty(CONTEXT_FACTORY, CONTEXT_FACTORY_JAXB);
-        @NotNull JAXBContext jaxbContext = JAXBContext.newInstance(Domain.class);
-        @NotNull final Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-        unmarshaller.setProperty(MEDIA_TYPE, APPLICATION_TYPE_JSON);
-        @NotNull final File file = new File(FILE_JSON);
-        @NotNull final Domain domain = (Domain) unmarshaller.unmarshal(file);
-        setDomain(domain);
+        @NotNull final DataJsonLoadJaxBRequest request = new DataJsonLoadJaxBRequest();
+        getDomainEndpoint().loadDataJsonJaxB(request);
     }
 
     @Override

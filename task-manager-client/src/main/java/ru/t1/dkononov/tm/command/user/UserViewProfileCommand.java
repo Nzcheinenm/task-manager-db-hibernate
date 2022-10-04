@@ -3,6 +3,7 @@ package ru.t1.dkononov.tm.command.user;
 import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import ru.t1.dkononov.tm.dto.request.UserProfileRequest;
 import ru.t1.dkononov.tm.enumerated.Role;
 import ru.t1.dkononov.tm.exception.AbstractException;
 import ru.t1.dkononov.tm.model.User;
@@ -19,7 +20,8 @@ public final class UserViewProfileCommand extends AbstractUserCommand {
 
     @Override
     public void execute() throws AbstractException {
-        @NotNull final User user = serviceLocator.getAuthService().getUser();
+        @NotNull final UserProfileRequest request = new UserProfileRequest();
+        @NotNull final User user = getAuthEndpointClient().profile(request).getUser();
         System.out.println("[USER VIEW PROFILE]");
         System.out.println("ID: " + user.getId());
         System.out.println("LOGIN: " + user.getId());

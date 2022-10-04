@@ -5,6 +5,7 @@ import lombok.Cleanup;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.dto.Domain;
+import ru.t1.dkononov.tm.dto.request.DataBackupSaveRequest;
 import ru.t1.dkononov.tm.enumerated.Role;
 
 import java.io.File;
@@ -33,16 +34,9 @@ public final class DataBackupSaveCommand extends AbstractDataCommand {
     }
 
     @Override
-    public void execute() throws IOException {
-        @NotNull final Domain domain = getDomain();
-        @NotNull final File file = new File(FILE_BACKUP);
-        Files.deleteIfExists(file.toPath());
-        Files.createFile(file.toPath());
-        @Cleanup @NotNull final FileOutputStream fileOutputStream = new FileOutputStream(file);
-        @NotNull final ObjectMapper objectMapper = new ObjectMapper();
-        @NotNull final String json = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(domain);
-        fileOutputStream.write(json.getBytes());
-        fileOutputStream.flush();
+    public void execute() throws Exception {
+        @NotNull final DataBackupSaveRequest request = new DataBackupSaveRequest();
+        getDomainEndpoint().saveDataBackup(request);
     }
 
     @Override

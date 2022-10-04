@@ -3,12 +3,18 @@ package ru.t1.dkononov.tm.command.task;
 import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import ru.t1.dkononov.tm.dto.request.ProjectListRequest;
+import ru.t1.dkononov.tm.dto.request.TaskListRequest;
+import ru.t1.dkononov.tm.dto.response.ProjectListResponse;
+import ru.t1.dkononov.tm.dto.response.TaskListResponse;
 import ru.t1.dkononov.tm.enumerated.Sort;
 import ru.t1.dkononov.tm.exception.AbstractException;
+import ru.t1.dkononov.tm.model.Project;
 import ru.t1.dkononov.tm.model.Task;
 import ru.t1.dkononov.tm.util.TerminalUtil;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public final class TaskListCommand extends AbstractTaskCommand {
@@ -23,13 +29,16 @@ public final class TaskListCommand extends AbstractTaskCommand {
 
     @Override
     public void execute() throws AbstractException {
-        @Nullable final String userId = getUserId();
         System.out.println("[SHOW TASKS]");
         System.out.println("[ENTER SORT: ]");
         System.out.println(Arrays.toString(Sort.values()));
         @NotNull final String sortType = TerminalUtil.inLine();
         @Nullable final Sort sort = Sort.toSort(sortType);
-        @NotNull final List<Task> tasks = getTaskService().findAll(userId, sort);
+        @NotNull final TaskListRequest request = new TaskListRequest();
+        request.setSort(sort);
+        @NotNull final TaskListResponse response = getTaskEndpointClient().listTask(request);
+        if (response.getTasks() == null) response.setTasks(Collections.emptyList());
+        @NotNull final List<Task> tasks = response.getTasks();
         showTasks(tasks);
     }
 

@@ -2,8 +2,7 @@ package ru.t1.dkononov.tm.command.task;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import ru.t1.dkononov.tm.api.services.IProjectTaskService;
-import ru.t1.dkononov.tm.api.services.ITaskService;
+import ru.t1.dkononov.tm.api.client.ITaskEndpointClient;
 import ru.t1.dkononov.tm.command.AbstractCommand;
 import ru.t1.dkononov.tm.enumerated.Role;
 import ru.t1.dkononov.tm.enumerated.Status;
@@ -14,14 +13,14 @@ import java.util.List;
 public abstract class AbstractTaskCommand extends AbstractCommand {
 
     @NotNull
-    protected ITaskService getTaskService() {
-        return serviceLocator.getTaskService();
+    protected ITaskEndpointClient getTaskEndpointClient() {
+        return serviceLocator.getTaskEndpointClient();
     }
 
-    @NotNull
-    protected IProjectTaskService getProjectTaskService() {
-        return getServiceLocator().getProjectTaskService();
-    }
+//    @NotNull
+//    protected IProjectTaskService getProjectTaskService() {
+//        return getServiceLocator().getProjectTaskService();
+//    }
 
     @Nullable
     @Override
