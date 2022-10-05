@@ -129,22 +129,26 @@ public final class TaskEndpointClient extends AbstractEndpointClient implements 
     }
 
     @Override
-    public @NotNull TaskUnbindFromProjectResponse unbindTaskToProject(@NotNull TaskUnbindFromProjectRequest request) throws Exception {
+    @NotNull
+    public TaskUnbindFromProjectResponse unbindTaskToProject(@NotNull final TaskUnbindFromProjectRequest request) throws Exception {
         return call(request, TaskUnbindFromProjectResponse.class);
     }
 
     @Override
-    public @NotNull TaskUpdateByIdResponse updateTaskById(@NotNull TaskUpdateByIdRequest request) throws Exception {
+    @NotNull
+    public TaskUpdateByIdResponse updateTaskById(@NotNull final TaskUpdateByIdRequest request) throws Exception {
         return call(request, TaskUpdateByIdResponse.class);
     }
 
     @Override
-    public @NotNull TaskUpdateByIndexResponse updateTaskByIndex(@NotNull TaskUpdateByIndexRequest request) throws Exception {
+    @NotNull
+    public TaskUpdateByIndexResponse updateTaskByIndex(@NotNull final TaskUpdateByIndexRequest request) throws Exception {
         return call(request, TaskUpdateByIndexResponse.class);
     }
 
     @Override
-    public @NotNull TaskListByProjectIdResponse listTasksToProjectId(@NotNull TaskListByProjectIdRequest request) throws Exception {
+    @NotNull
+    public TaskListByProjectIdResponse listTasksToProjectId(@NotNull final TaskListByProjectIdRequest request) throws Exception {
         return call(request, TaskListByProjectIdResponse.class);
     }
 

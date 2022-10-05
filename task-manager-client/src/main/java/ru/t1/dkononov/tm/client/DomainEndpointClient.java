@@ -126,12 +126,14 @@ public final class DomainEndpointClient extends AbstractEndpointClient implement
     }
 
     @Override
-    public @NotNull DataYamlLoadFasterXmlResponse loadDataYaml(@NotNull DataYamlLoadFasterXmlRequest request) throws Exception {
+    @NotNull
+    public DataYamlLoadFasterXmlResponse loadDataYaml(@NotNull final DataYamlLoadFasterXmlRequest request) throws Exception {
         return call(request, DataYamlLoadFasterXmlResponse.class);
     }
 
     @Override
-    public @NotNull DataYamlSaveFasterXmlResponse saveDataYaml(@NotNull DataYamlSaveFasterXmlRequest request) throws Exception {
+    @NotNull
+    public DataYamlSaveFasterXmlResponse saveDataYaml(@NotNull final DataYamlSaveFasterXmlRequest request) throws Exception {
         return call(request, DataYamlSaveFasterXmlResponse.class);
     }
 

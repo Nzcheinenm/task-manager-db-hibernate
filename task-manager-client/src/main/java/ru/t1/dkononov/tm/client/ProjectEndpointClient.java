@@ -123,12 +123,14 @@ public final class ProjectEndpointClient extends AbstractEndpointClient implemen
     }
 
     @Override
-    public @NotNull ProjectUpdateByIdResponse updateProjectById(@NotNull ProjectUpdateByIdRequest request) throws Exception {
+    @NotNull
+    public ProjectUpdateByIdResponse updateProjectById(@NotNull final ProjectUpdateByIdRequest request) throws Exception {
         return call(request, ProjectUpdateByIdResponse.class);
     }
 
     @Override
-    public @NotNull ProjectUpdateByIndexResponse updateProjectByIndex(@NotNull ProjectUpdateByIndexRequest request) throws Exception {
+    @NotNull
+    public ProjectUpdateByIndexResponse updateProjectByIndex(@NotNull final ProjectUpdateByIndexRequest request) throws Exception {
         return call(request, ProjectUpdateByIndexResponse.class);
     }
 
