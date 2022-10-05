@@ -11,7 +11,7 @@ import ru.t1.dkononov.tm.model.Task;
 @NoArgsConstructor
 public final class TaskCreateResponse extends AbstractTaskResponse {
 
-    public TaskCreateResponse (@Nullable final Task task) {
+    public TaskCreateResponse(@Nullable final Task task) {
         super(task);
     }
 

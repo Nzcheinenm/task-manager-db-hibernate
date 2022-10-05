@@ -5,7 +5,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.dto.request.UserUnlockRequest;
 import ru.t1.dkononov.tm.enumerated.Role;
-import ru.t1.dkononov.tm.exception.AbstractException;
 import ru.t1.dkononov.tm.util.TerminalUtil;
 
 public final class UserUnlockCommand extends AbstractUserCommand {

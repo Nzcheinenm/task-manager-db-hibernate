@@ -10,7 +10,7 @@ public abstract class AbstractServerSocketTask extends AbstractServerTask {
 
     @NotNull
     protected final Socket socket;
-    
+
     @Nullable
     protected String userId = null;
 

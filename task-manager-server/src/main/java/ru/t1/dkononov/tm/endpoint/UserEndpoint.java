@@ -44,7 +44,7 @@ public final class UserEndpoint extends AbstractEndpoint implements IUserEndpoin
     @Override
     @NotNull
     public UserRemoveResponse removeUser(@NotNull final UserRemoveRequest request) throws Exception {
-        check(request,Role.ADMIN);
+        check(request, Role.ADMIN);
         @Nullable final String login = request.getLogin();
         @Nullable final User user = getUserService().removeByLogin(login);
         return new UserRemoveResponse(user);
@@ -59,7 +59,7 @@ public final class UserEndpoint extends AbstractEndpoint implements IUserEndpoin
         @Nullable final String middleName = request.getMiddleName();
         @Nullable final String lastName = request.getLastName();
         @Nullable final User user = getUserService().updateUser(
-                userId,firstName,lastName,middleName
+                userId, firstName, lastName, middleName
         );
         return new UserUpdateProfileResponse(user);
     }
@@ -70,7 +70,7 @@ public final class UserEndpoint extends AbstractEndpoint implements IUserEndpoin
         check(request);
         @Nullable final String userId = request.getUserId();
         @Nullable final String password = request.getPassword();
-        @Nullable final User user = getUserService().setPassword(userId,password);
+        @Nullable final User user = getUserService().setPassword(userId, password);
         return new UserChangePasswordResponse(user);
     }
 
@@ -81,7 +81,7 @@ public final class UserEndpoint extends AbstractEndpoint implements IUserEndpoin
         @Nullable final String password = request.getPassword();
         @Nullable final String email = request.getEmail();
         @NotNull final IAuthService authService = getServiceLocator().getAuthService();
-        @Nullable final User user = authService.registry(login,password,email);
+        @Nullable final User user = authService.registry(login, password, email);
         return new UserRegistryResponse(user);
     }
 

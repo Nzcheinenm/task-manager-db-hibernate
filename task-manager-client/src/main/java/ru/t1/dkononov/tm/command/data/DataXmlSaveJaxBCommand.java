@@ -1,19 +1,9 @@
 package ru.t1.dkononov.tm.command.data;
 
-import lombok.Cleanup;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import ru.t1.dkononov.tm.dto.Domain;
 import ru.t1.dkononov.tm.dto.request.DataXmlSaveJaxBRequest;
 import ru.t1.dkononov.tm.enumerated.Role;
-
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.nio.file.Files;
 
 public final class DataXmlSaveJaxBCommand extends AbstractDataCommand {
 

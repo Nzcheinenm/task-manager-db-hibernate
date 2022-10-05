@@ -2,7 +2,6 @@ package ru.t1.dkononov.tm.api.client;
 
 import lombok.SneakyThrows;
 import org.jetbrains.annotations.NotNull;
-import ru.t1.dkononov.tm.client.AbstractEndpointClient;
 import ru.t1.dkononov.tm.dto.request.*;
 import ru.t1.dkononov.tm.dto.response.*;
 import ru.t1.dkononov.tm.exception.AbstractException;

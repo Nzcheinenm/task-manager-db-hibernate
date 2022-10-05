@@ -10,7 +10,7 @@ import org.jetbrains.annotations.Nullable;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProjectCompleteByIndexRequest extends AbstractUserRequest  {
+public class ProjectCompleteByIndexRequest extends AbstractUserRequest {
 
     @Nullable
     private Integer index;

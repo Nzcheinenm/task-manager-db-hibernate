@@ -4,7 +4,6 @@ import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.api.Operation;
-import ru.t1.dkononov.tm.api.services.IAuthService;
 import ru.t1.dkononov.tm.api.services.IPropertyService;
 import ru.t1.dkononov.tm.dto.request.AbstractRequest;
 import ru.t1.dkononov.tm.dto.response.AbstractResponse;

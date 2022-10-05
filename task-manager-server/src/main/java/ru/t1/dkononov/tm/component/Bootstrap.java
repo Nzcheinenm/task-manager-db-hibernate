@@ -3,7 +3,6 @@ package ru.t1.dkononov.tm.component;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.api.endpoint.*;
 import ru.t1.dkononov.tm.api.repository.IProjectRepository;
 import ru.t1.dkononov.tm.api.repository.ITaskRepository;
@@ -14,7 +13,6 @@ import ru.t1.dkononov.tm.endpoint.*;
 import ru.t1.dkononov.tm.enumerated.Role;
 import ru.t1.dkononov.tm.enumerated.Status;
 import ru.t1.dkononov.tm.exception.AbstractException;
-import ru.t1.dkononov.tm.exception.system.CommandNotSupportedException;
 import ru.t1.dkononov.tm.model.Project;
 import ru.t1.dkononov.tm.model.Task;
 import ru.t1.dkononov.tm.model.User;
@@ -185,7 +183,7 @@ public final class Bootstrap implements IServiceLocator {
         } catch (IOException e) {
             loggerService.error(e);
         }
-        loggerService.info("** TASK-MANAGER IS SHUTTING DOWN **");
+        loggerService.info("** TASK-MANAGER SERVER IS SHUTTING DOWN **");
     }
 
     private void initPID() throws IOException {
@@ -212,7 +210,7 @@ public final class Bootstrap implements IServiceLocator {
 
 
     private void initLogger() {
-        loggerService.info("** WELCOME TO TASK-MANAGER **");
+        loggerService.info("** WELCOME TO TASK-MANAGER SERVER **");
     }
 
 }

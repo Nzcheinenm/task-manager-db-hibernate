@@ -7,7 +7,6 @@ import ru.t1.dkononov.tm.api.client.ITaskEndpointClient;
 import ru.t1.dkononov.tm.command.AbstractCommand;
 import ru.t1.dkononov.tm.enumerated.Role;
 import ru.t1.dkononov.tm.enumerated.Status;
-import ru.t1.dkononov.tm.exception.field.AccessDeniedException;
 import ru.t1.dkononov.tm.model.Project;
 
 public abstract class AbstractProjectCommand extends AbstractCommand {

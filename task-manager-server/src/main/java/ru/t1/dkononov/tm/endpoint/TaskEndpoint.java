@@ -3,8 +3,8 @@ package ru.t1.dkononov.tm.endpoint;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.api.endpoint.ITaskEndpoint;
-import ru.t1.dkononov.tm.api.services.ITaskService;
 import ru.t1.dkononov.tm.api.services.IServiceLocator;
+import ru.t1.dkononov.tm.api.services.ITaskService;
 import ru.t1.dkononov.tm.dto.request.*;
 import ru.t1.dkononov.tm.dto.response.*;
 import ru.t1.dkononov.tm.enumerated.Sort;
@@ -38,7 +38,7 @@ public final class TaskEndpoint extends AbstractEndpoint implements ITaskEndpoin
         @Nullable final String id = request.getId();
         @Nullable final String userId = request.getUserId();
         @Nullable final Status status = Status.valueOf(request.getStatusValue());
-        getTaskService().changeTaskStatusById(userId,id,status);
+        getTaskService().changeTaskStatusById(userId, id, status);
         return new TaskChangeStatusByIdResponse();
     }
 
@@ -51,7 +51,7 @@ public final class TaskEndpoint extends AbstractEndpoint implements ITaskEndpoin
         @Nullable final Integer index = request.getIndex();
         @Nullable final String userId = request.getUserId();
         @Nullable final Status status = Status.valueOf(request.getStatusValue());
-        getTaskService().changeTaskStatusByIndex(userId,index,status);
+        getTaskService().changeTaskStatusByIndex(userId, index, status);
         return new TaskChangeStatusByIndexResponse();
     }
 
@@ -72,7 +72,7 @@ public final class TaskEndpoint extends AbstractEndpoint implements ITaskEndpoin
         @Nullable final String userId = request.getUserId();
         @Nullable final String name = request.getName();
         @Nullable final String description = request.getDescription();
-        @Nullable final Task task = getTaskService().create(userId,name,description);
+        @Nullable final Task task = getTaskService().create(userId, name, description);
         return new TaskCreateResponse(task);
     }
 
@@ -82,7 +82,7 @@ public final class TaskEndpoint extends AbstractEndpoint implements ITaskEndpoin
         check(request);
         @Nullable final String userId = request.getUserId();
         @Nullable final String id = request.getId();
-        @Nullable final Task task = getTaskService().findById(userId,id);
+        @Nullable final Task task = getTaskService().findById(userId, id);
         return new TaskGetByIdResponse(task);
     }
 
@@ -92,7 +92,7 @@ public final class TaskEndpoint extends AbstractEndpoint implements ITaskEndpoin
         check(request);
         @Nullable final Integer index = request.getIndex();
         @Nullable final String userId = request.getUserId();
-        @Nullable final Task task = getTaskService().findByIndex(userId,index);
+        @Nullable final Task task = getTaskService().findByIndex(userId, index);
         return new TaskGetByIndexResponse(task);
     }
 
@@ -102,7 +102,7 @@ public final class TaskEndpoint extends AbstractEndpoint implements ITaskEndpoin
         check(request);
         @Nullable final String userId = request.getUserId();
         @Nullable final Sort sort = request.getSort();
-        @Nullable final List<Task> tasks = getTaskService().findAll(userId,sort);
+        @Nullable final List<Task> tasks = getTaskService().findAll(userId, sort);
         return new TaskListResponse(tasks);
     }
 
@@ -114,7 +114,7 @@ public final class TaskEndpoint extends AbstractEndpoint implements ITaskEndpoin
         check(request);
         @Nullable final String userId = request.getUserId();
         @Nullable final String id = request.getId();
-        getTaskService().removeById(userId,id);
+        getTaskService().removeById(userId, id);
         return new TaskRemoveByIdResponse();
     }
 
@@ -138,7 +138,7 @@ public final class TaskEndpoint extends AbstractEndpoint implements ITaskEndpoin
         check(request);
         @Nullable final String userId = request.getUserId();
         @Nullable final String id = request.getId();
-        getTaskService().changeTaskStatusById(userId,id,Status.IN_PROGRESS);
+        getTaskService().changeTaskStatusById(userId, id, Status.IN_PROGRESS);
         return new TaskStartByIdResponse();
     }
 
@@ -150,7 +150,7 @@ public final class TaskEndpoint extends AbstractEndpoint implements ITaskEndpoin
         check(request);
         @Nullable final String userId = request.getUserId();
         @Nullable final Integer index = request.getIndex();
-        getTaskService().changeTaskStatusByIndex(userId, index,Status.IN_PROGRESS);
+        getTaskService().changeTaskStatusByIndex(userId, index, Status.IN_PROGRESS);
         return new TaskStartByIndexResponse();
     }
 
@@ -187,7 +187,7 @@ public final class TaskEndpoint extends AbstractEndpoint implements ITaskEndpoin
         @Nullable final String userId = request.getUserId();
         @Nullable final String projectId = request.getProjectId();
         @Nullable final String taskId = request.getTaskId();
-        getServiceLocator().getProjectTaskService().bindTaskToProject(userId,projectId,taskId);
+        getServiceLocator().getProjectTaskService().bindTaskToProject(userId, projectId, taskId);
         return new TaskBindToProjectResponse();
     }
 
@@ -197,7 +197,7 @@ public final class TaskEndpoint extends AbstractEndpoint implements ITaskEndpoin
         @Nullable final String userId = request.getUserId();
         @Nullable final String projectId = request.getProjectId();
         @Nullable final String taskId = request.getTaskId();
-        getServiceLocator().getProjectTaskService().unbindTaskFromProject(userId,projectId,taskId);
+        getServiceLocator().getProjectTaskService().unbindTaskFromProject(userId, projectId, taskId);
         return new TaskUnbindFromProjectResponse();
     }
 
@@ -228,7 +228,7 @@ public final class TaskEndpoint extends AbstractEndpoint implements ITaskEndpoin
         check(request);
         @Nullable final String userId = request.getUserId();
         @Nullable final String projectId = request.getProjectId();
-        @Nullable final List<Task> tasks = getTaskService().findAllByProjectId(userId,projectId);
+        @Nullable final List<Task> tasks = getTaskService().findAllByProjectId(userId, projectId);
         return new TaskListByProjectIdResponse(tasks);
     }
 

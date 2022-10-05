@@ -9,7 +9,7 @@ import ru.t1.dkononov.tm.model.User;
 @Getter
 @Setter
 @NoArgsConstructor
-public final class UserRemoveResponse extends AbstractUserResponse{
+public final class UserRemoveResponse extends AbstractUserResponse {
     public UserRemoveResponse(@Nullable final User user) {
         super(user);
     }

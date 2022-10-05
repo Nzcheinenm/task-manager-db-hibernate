@@ -2,9 +2,7 @@ package ru.t1.dkononov.tm.command.project;
 
 import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.dto.request.ProjectGetByIdRequest;
-import ru.t1.dkononov.tm.dto.request.ProjectRemoveByIdRequest;
 import ru.t1.dkononov.tm.dto.response.ProjectGetByIdResponse;
 import ru.t1.dkononov.tm.exception.AbstractException;
 import ru.t1.dkononov.tm.exception.entity.ProjectNotFoundException;

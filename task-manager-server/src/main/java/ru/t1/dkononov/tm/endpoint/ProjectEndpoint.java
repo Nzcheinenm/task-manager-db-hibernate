@@ -37,7 +37,7 @@ public final class ProjectEndpoint extends AbstractEndpoint implements IProjectE
         @Nullable final String id = request.getId();
         @Nullable final String userId = request.getUserId();
         @Nullable final Status status = Status.valueOf(request.getStatusValue());
-        @Nullable final Project project = getProjectService().changeProjectStatusById(userId,id,status);
+        @Nullable final Project project = getProjectService().changeProjectStatusById(userId, id, status);
         return new ProjectChangeStatusByIdResponse(project);
     }
 
@@ -50,7 +50,7 @@ public final class ProjectEndpoint extends AbstractEndpoint implements IProjectE
         @Nullable final Integer index = request.getIndex();
         @Nullable final String userId = request.getUserId();
         @Nullable final Status status = Status.valueOf(request.getStatusValue());
-        @Nullable final Project project = getProjectService().changeProjectStatusByIndex(userId,index,status);
+        @Nullable final Project project = getProjectService().changeProjectStatusByIndex(userId, index, status);
         return new ProjectChangeStatusByIndexResponse(project);
     }
 
@@ -71,7 +71,7 @@ public final class ProjectEndpoint extends AbstractEndpoint implements IProjectE
         @Nullable final String userId = request.getUserId();
         @Nullable final String name = request.getName();
         @Nullable final String description = request.getDescription();
-        @Nullable final Project project = getProjectService().create(userId,name,description);
+        @Nullable final Project project = getProjectService().create(userId, name, description);
         return new ProjectCreateResponse(project);
     }
 
@@ -81,7 +81,7 @@ public final class ProjectEndpoint extends AbstractEndpoint implements IProjectE
         check(request);
         @Nullable final String userId = request.getUserId();
         @Nullable final String id = request.getId();
-        @Nullable final Project project = getProjectService().findById(userId,id);
+        @Nullable final Project project = getProjectService().findById(userId, id);
         return new ProjectGetByIdResponse(project);
     }
 
@@ -91,17 +91,18 @@ public final class ProjectEndpoint extends AbstractEndpoint implements IProjectE
         check(request);
         @Nullable final Integer index = request.getIndex();
         @Nullable final String userId = request.getUserId();
-        @Nullable final Project project = getProjectService().findByIndex(userId,index);
+        @Nullable final Project project = getProjectService().findByIndex(userId, index);
         return new ProjectGetByIndexResponse(project);
     }
 
     @Override
     @NotNull
-    public ProjectListResponse listProject(@NotNull ProjectListRequest request) throws AccessDeniedException, UserIdEmptyException {
+    public ProjectListResponse listProject(@NotNull ProjectListRequest request)
+            throws AccessDeniedException, UserIdEmptyException {
         check(request);
         @Nullable final String userId = request.getUserId();
         @Nullable final Sort sort = request.getSort();
-        @Nullable final List<Project> projects = getProjectService().findAll(userId,sort);
+        @Nullable final List<Project> projects = getProjectService().findAll(userId, sort);
         return new ProjectListResponse(projects);
     }
 
@@ -113,7 +114,7 @@ public final class ProjectEndpoint extends AbstractEndpoint implements IProjectE
         check(request);
         @Nullable final String userId = request.getUserId();
         @Nullable final String id = request.getId();
-        getProjectService().removeById(userId,id);
+        getProjectService().removeById(userId, id);
         return new ProjectRemoveByIdResponse();
     }
 
@@ -125,8 +126,8 @@ public final class ProjectEndpoint extends AbstractEndpoint implements IProjectE
         check(request);
         @Nullable final String userId = request.getUserId();
         @Nullable final Integer index = request.getIndex();
-        @Nullable final Project project = getProjectService().removeById(userId, String.valueOf(index));
-        return new ProjectRemoveByIndexResponse(project);
+        getProjectService().removeById(userId, String.valueOf(index));
+        return new ProjectRemoveByIndexResponse();
     }
 
     @Override
@@ -137,7 +138,7 @@ public final class ProjectEndpoint extends AbstractEndpoint implements IProjectE
         check(request);
         @Nullable final String userId = request.getUserId();
         @Nullable final String id = request.getId();
-        @Nullable final Project project = getProjectService().changeProjectStatusById(userId,id,Status.IN_PROGRESS);
+        @Nullable final Project project = getProjectService().changeProjectStatusById(userId, id, Status.IN_PROGRESS);
         return new ProjectStartByIdResponse(project);
     }
 
@@ -149,7 +150,7 @@ public final class ProjectEndpoint extends AbstractEndpoint implements IProjectE
         check(request);
         @Nullable final String userId = request.getUserId();
         @Nullable final Integer index = request.getIndex();
-        @Nullable final Project project = getProjectService().changeProjectStatusByIndex(userId, index,Status.IN_PROGRESS);
+        @Nullable final Project project = getProjectService().changeProjectStatusByIndex(userId, index, Status.IN_PROGRESS);
         return new ProjectStartByIndexResponse(project);
     }
 

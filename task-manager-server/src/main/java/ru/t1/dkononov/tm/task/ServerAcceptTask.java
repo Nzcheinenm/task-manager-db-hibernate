@@ -19,8 +19,7 @@ public final class ServerAcceptTask extends AbstractServerTask {
     public void run() {
         @Nullable final ServerSocket serverSocket = server.getSocketServer();
         if (serverSocket == null) return;
-        @NotNull final Socket socket;
-        socket = serverSocket.accept();
+        @NotNull final Socket socket = serverSocket.accept();
         server.submit(new ServerRequestTask(server, socket));
         server.submit(new ServerAcceptTask(server));
     }

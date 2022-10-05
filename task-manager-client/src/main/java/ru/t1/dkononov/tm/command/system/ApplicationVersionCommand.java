@@ -2,9 +2,7 @@ package ru.t1.dkononov.tm.command.system;
 
 import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
-import ru.t1.dkononov.tm.dto.request.ApplicationAboutRequest;
 import ru.t1.dkononov.tm.dto.request.ApplicationVersionRequest;
-import ru.t1.dkononov.tm.dto.response.ApplicationAboutResponse;
 import ru.t1.dkononov.tm.dto.response.ApplicationVersionResponse;
 
 public final class ApplicationVersionCommand extends AbstractSystemCommand {

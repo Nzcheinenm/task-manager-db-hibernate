@@ -8,14 +8,13 @@ import ru.t1.dkononov.tm.api.services.IUserService;
 import ru.t1.dkononov.tm.component.Server;
 import ru.t1.dkononov.tm.dto.request.*;
 import ru.t1.dkononov.tm.dto.response.*;
-import ru.t1.dkononov.tm.exception.AbstractException;
 import ru.t1.dkononov.tm.exception.field.IdEmptyException;
 import ru.t1.dkononov.tm.model.User;
 
 import java.io.*;
 import java.net.Socket;
 
-public final class  ServerRequestTask extends AbstractServerSocketTask {
+public final class ServerRequestTask extends AbstractServerSocketTask {
 
     @Nullable
     private AbstractRequest request;
@@ -56,7 +55,7 @@ public final class  ServerRequestTask extends AbstractServerSocketTask {
         @NotNull final OutputStream outputStream = socket.getOutputStream();
         @NotNull final ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
         objectOutputStream.writeObject(response);
-        server.submit(new ServerRequestTask(server, socket));
+        server.submit(new ServerRequestTask(server, socket, userId));
     }
 
     private void processOperation() {
@@ -88,7 +87,7 @@ public final class  ServerRequestTask extends AbstractServerSocketTask {
         response = new UserProfileResponse(user);
     }
 
-    private void processLogin() throws AbstractException {
+    private void processLogin() {
         if (response != null) return;
         if (!(request instanceof UserLoginRequest)) return;
         try {
@@ -96,7 +95,7 @@ public final class  ServerRequestTask extends AbstractServerSocketTask {
             @Nullable final String login = userLoginRequest.getLogin();
             @Nullable final String password = userLoginRequest.getPassword();
             @NotNull final IAuthService authService = server.getBootstrap().getAuthService();
-            @NotNull final User user = authService.check(login,password);
+            @NotNull final User user = authService.check(login, password);
             userId = user.getId();
             response = new UserLoginResponse();
         } catch (@NotNull final Exception e) {
@@ -111,8 +110,7 @@ public final class  ServerRequestTask extends AbstractServerSocketTask {
     }
 
     private void processInput() throws Exception {
-        @NotNull final InputStream inputStream;
-        inputStream = socket.getInputStream();
+        @NotNull final InputStream inputStream = socket.getInputStream();
         @NotNull final ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
         @NotNull final Object object = objectInputStream.readObject();
         request = (AbstractRequest) object;

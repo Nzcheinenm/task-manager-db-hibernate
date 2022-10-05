@@ -3,7 +3,6 @@ package ru.t1.dkononov.tm.command.project;
 import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import ru.t1.dkononov.tm.dto.request.ProjectCreateRequest;
 import ru.t1.dkononov.tm.dto.request.ProjectListRequest;
 import ru.t1.dkononov.tm.dto.response.ProjectListResponse;
 import ru.t1.dkononov.tm.enumerated.Sort;

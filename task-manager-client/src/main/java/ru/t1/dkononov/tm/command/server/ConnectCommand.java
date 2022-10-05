@@ -1,6 +1,5 @@
 package ru.t1.dkononov.tm.command.server;
 
-import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.api.client.IEndpointClient;
@@ -15,6 +14,9 @@ public final class ConnectCommand extends AbstractCommand {
     @NotNull
     public static final String NAME = "connect";
 
+    @NotNull
+    public static final String DESCRIPTION = "connect";
+
     @Override
     public @Nullable Role[] getRoles() {
         return new Role[0];
@@ -27,7 +29,7 @@ public final class ConnectCommand extends AbstractCommand {
 
     @Override
     public @NotNull String getDESCRIPTION() {
-        return null;
+        return DESCRIPTION;
     }
 
     @Override
@@ -38,7 +40,7 @@ public final class ConnectCommand extends AbstractCommand {
 
     @Override
     public void execute() throws Exception {
-        try{
+        try {
             @NotNull final IServiceLocator serviceLocator = getServiceLocator();
             @NotNull final IEndpointClient endpointClient = serviceLocator.getConnectionEndpointClient();
             @Nullable final Socket socket = endpointClient.connect();

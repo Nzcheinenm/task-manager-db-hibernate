@@ -1,19 +1,9 @@
 package ru.t1.dkononov.tm.command.data;
 
-import lombok.Cleanup;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import ru.t1.dkononov.tm.dto.Domain;
 import ru.t1.dkononov.tm.dto.request.DataBinarySaveRequest;
 import ru.t1.dkononov.tm.enumerated.Role;
-import ru.t1.dkononov.tm.exception.AbstractException;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
 
 public final class DataBinarySaveCommand extends AbstractDataCommand {
 

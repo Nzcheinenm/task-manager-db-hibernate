@@ -4,9 +4,7 @@ import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.dto.request.UserLoginRequest;
-import ru.t1.dkononov.tm.dto.request.UserLogoutRequest;
 import ru.t1.dkononov.tm.enumerated.Role;
-import ru.t1.dkononov.tm.exception.AbstractException;
 import ru.t1.dkononov.tm.util.TerminalUtil;
 
 public final class UserLoginCommand extends AbstractUserCommand {
@@ -21,7 +19,7 @@ public final class UserLoginCommand extends AbstractUserCommand {
 
 
     @Override
-    public void execute() throws AbstractException {
+    public void execute() throws Exception {
         System.out.println("[USER LOGIN]");
         System.out.println("ENTER LOGIN:");
         @NotNull final String login = TerminalUtil.inLine();

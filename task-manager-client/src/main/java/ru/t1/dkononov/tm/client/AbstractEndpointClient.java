@@ -7,6 +7,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.api.client.IEndpointClient;
 import ru.t1.dkononov.tm.dto.response.ApplicationErrorResponse;
+import ru.t1.dkononov.tm.dto.response.UserLoginResponse;
 
 import java.io.*;
 import java.net.Socket;
@@ -46,13 +47,18 @@ public abstract class AbstractEndpointClient implements IEndpointClient {
         return getObjectInputStream().readObject();
     }
 
-    protected <T> T call(@NotNull final Object data,@NotNull final Class<T> clazz) throws Exception {
+    protected <T> T call(@NotNull final Object data, @NotNull final Class<T> clazz) throws Exception {
         getObjectOutputStream().writeObject(data);
         @NotNull final Object result = getObjectInputStream().readObject();
         if (result instanceof ApplicationErrorResponse) {
             @NotNull final ApplicationErrorResponse response = (ApplicationErrorResponse) result;
             throw new RuntimeException(response.getMessage());
         }
+//        if (result instanceof UserLoginResponse) {
+//            @NotNull final UserLoginResponse response = (UserLoginResponse) result;
+//            if (!response.getSuccess())
+//                throw new RuntimeException(response.getMessage());
+//        }
         return (T) result;
     }
 
@@ -65,10 +71,12 @@ public abstract class AbstractEndpointClient implements IEndpointClient {
     }
 
     private OutputStream getOutputStream() throws IOException {
+        if (socket == null) return null;
         return socket.getOutputStream();
     }
 
     private InputStream getInputStream() throws IOException {
+        if (socket == null) return null;
         return socket.getInputStream();
     }
 
@@ -76,7 +84,7 @@ public abstract class AbstractEndpointClient implements IEndpointClient {
     @Nullable
     public Socket connect() throws IOException {
         socket = new Socket(host, port);
-        return null;
+        return socket;
     }
 
     @Override

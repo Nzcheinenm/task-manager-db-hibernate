@@ -2,14 +2,8 @@ package ru.t1.dkononov.tm.command.data;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import ru.t1.dkononov.tm.dto.Domain;
 import ru.t1.dkononov.tm.dto.request.DataXmlLoadJaxBRequest;
 import ru.t1.dkononov.tm.enumerated.Role;
-
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
-import java.io.File;
 
 public final class DataXmlLoadJaxBCommand extends AbstractDataCommand {
 

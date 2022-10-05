@@ -2,330 +2,95 @@
 <!DOCTYPE log SYSTEM "logger.dtd">
 <log>
 <record>
-  <date>2022-10-04T20:02:51</date>
-  <millis>1664902971932</millis>
-  <sequence>0</sequence>
-  <logger>ERRORS</logger>
-  <level>SEVERE</level>
-  <class>ru.t1.dkononov.tm.service.LoggerService</class>
-  <method>error</method>
-  <thread>1</thread>
-  <message>Argument for @NotNull parameter 'socket' of ru/t1/dkononov/tm/client/AbstractEndpointClient.setSocket must not be null</message>
-  <exception>
-    <message>java.lang.IllegalArgumentException: Argument for @NotNull parameter 'socket' of ru/t1/dkononov/tm/client/AbstractEndpointClient.setSocket must not be null</message>
-    <frame>
-      <class>ru.t1.dkononov.tm.client.AbstractEndpointClient</class>
-      <method>$$$reportNull$$$0</method>
-    </frame>
-    <frame>
-      <class>ru.t1.dkononov.tm.client.AbstractEndpointClient</class>
-      <method>setSocket</method>
-    </frame>
-    <frame>
-      <class>ru.t1.dkononov.tm.command.server.ConnectCommand</class>
-      <method>execute</method>
-      <line>46</line>
-    </frame>
-    <frame>
-      <class>ru.t1.dkononov.tm.component.Bootstrap</class>
-      <method>processCommand</method>
-      <line>193</line>
-    </frame>
-    <frame>
-      <class>ru.t1.dkononov.tm.component.Bootstrap</class>
-      <method>processCommand</method>
-      <line>198</line>
-    </frame>
-    <frame>
-      <class>ru.t1.dkononov.tm.component.Bootstrap</class>
-      <method>connect</method>
-      <line>133</line>
-    </frame>
-    <frame>
-      <class>ru.t1.dkononov.tm.component.Bootstrap</class>
-      <method>initBackup</method>
-      <line>143</line>
-    </frame>
-    <frame>
-      <class>ru.t1.dkononov.tm.component.Bootstrap</class>
-      <method>init</method>
-      <line>123</line>
-    </frame>
-    <frame>
-      <class>ru.t1.dkononov.tm.component.Bootstrap</class>
-      <method>run</method>
-      <line>106</line>
-    </frame>
-    <frame>
-      <class>ru.t1.dkononov.tm.Application</class>
-      <method>main</method>
-      <line>10</line>
-    </frame>
-  </exception>
-</record>
-<record>
-  <date>2022-10-04T20:03:01</date>
-  <millis>1664902981078</millis>
-  <sequence>2</sequence>
-  <logger>ERRORS</logger>
-  <level>SEVERE</level>
-  <class>ru.t1.dkononov.tm.service.LoggerService</class>
-  <method>error</method>
-  <thread>1</thread>
-  <message>@NotNull method ru/t1/dkononov/tm/command/server/ConnectCommand.getDESCRIPTION must not return null</message>
-  <exception>
-    <message>java.lang.IllegalStateException: @NotNull method ru/t1/dkononov/tm/command/server/ConnectCommand.getDESCRIPTION must not return null</message>
-    <frame>
-      <class>ru.t1.dkononov.tm.command.server.ConnectCommand</class>
-      <method>$$$reportNull$$$0</method>
-    </frame>
-    <frame>
-      <class>ru.t1.dkononov.tm.command.server.ConnectCommand</class>
-      <method>getDESCRIPTION</method>
-      <line>30</line>
-    </frame>
-    <frame>
-      <class>ru.t1.dkononov.tm.command.AbstractCommand</class>
-      <method>toString</method>
-      <line>34</line>
-    </frame>
-    <frame>
-      <class>java.lang.String</class>
-      <method>valueOf</method>
-      <line>2994</line>
-    </frame>
-    <frame>
-      <class>java.io.PrintStream</class>
-      <method>println</method>
-      <line>821</line>
-    </frame>
-    <frame>
-      <class>ru.t1.dkononov.tm.command.system.ApplicationHelpCommand</class>
-      <method>execute</method>
-      <line>28</line>
-    </frame>
-    <frame>
-      <class>ru.t1.dkononov.tm.component.Bootstrap</class>
-      <method>processCommand</method>
-      <line>193</line>
-    </frame>
-    <frame>
-      <class>ru.t1.dkononov.tm.component.Bootstrap</class>
-      <method>processCommand</method>
-      <line>198</line>
-    </frame>
-    <frame>
-      <class>ru.t1.dkononov.tm.component.Bootstrap</class>
-      <method>run</method>
-      <line>111</line>
-    </frame>
-    <frame>
-      <class>ru.t1.dkononov.tm.Application</class>
-      <method>main</method>
-      <line>10</line>
-    </frame>
-  </exception>
-</record>
-<record>
-  <date>2022-10-04T20:03:31</date>
-  <millis>1664903011563</millis>
-  <sequence>3</sequence>
-  <logger>ERRORS</logger>
-  <level>SEVERE</level>
-  <class>ru.t1.dkononov.tm.service.LoggerService</class>
-  <method>error</method>
-  <thread>1</thread>
-  <message>Error! This Command "lok" is not supported...</message>
-  <exception>
-    <message>ru.t1.dkononov.tm.exception.system.CommandNotSupportedException: Error! This Command "lok" is not supported...</message>
-    <frame>
-      <class>ru.t1.dkononov.tm.component.Bootstrap</class>
-      <method>processCommand</method>
-      <line>191</line>
-    </frame>
-    <frame>
-      <class>ru.t1.dkononov.tm.component.Bootstrap</class>
-      <method>processCommand</method>
-      <line>198</line>
-    </frame>
-    <frame>
-      <class>ru.t1.dkononov.tm.component.Bootstrap</class>
-      <method>run</method>
-      <line>111</line>
-    </frame>
-    <frame>
-      <class>ru.t1.dkononov.tm.Application</class>
-      <method>main</method>
-      <line>10</line>
-    </frame>
-  </exception>
-</record>
-<record>
-  <date>2022-10-04T20:03:36</date>
-  <millis>1664903016080</millis>
-  <sequence>4</sequence>
-  <logger>ERRORS</logger>
-  <level>SEVERE</level>
-  <class>ru.t1.dkononov.tm.service.LoggerService</class>
-  <method>error</method>
-  <thread>1</thread>
-  <exception>
-    <message>java.lang.NullPointerException</message>
-    <frame>
-      <class>ru.t1.dkononov.tm.client.AbstractEndpointClient</class>
-      <method>getOutputStream</method>
-      <line>68</line>
-    </frame>
-    <frame>
-      <class>ru.t1.dkononov.tm.client.AbstractEndpointClient</class>
-      <method>getObjectOutputStream</method>
-      <line>60</line>
-    </frame>
-    <frame>
-      <class>ru.t1.dkononov.tm.client.AbstractEndpointClient</class>
-      <method>call</method>
-      <line>50</line>
-    </frame>
-    <frame>
-      <class>ru.t1.dkononov.tm.client.AuthEndpointClient</class>
-      <method>login</method>
-      <line>25</line>
-    </frame>
-    <frame>
-      <class>ru.t1.dkononov.tm.command.user.UserLoginCommand</class>
-      <method>execute</method>
-      <line>33</line>
-    </frame>
-    <frame>
-      <class>ru.t1.dkononov.tm.component.Bootstrap</class>
-      <method>processCommand</method>
-      <line>193</line>
-    </frame>
-    <frame>
-      <class>ru.t1.dkononov.tm.component.Bootstrap</class>
-      <method>processCommand</method>
-      <line>198</line>
-    </frame>
-    <frame>
-      <class>ru.t1.dkononov.tm.component.Bootstrap</class>
-      <method>run</method>
-      <line>111</line>
-    </frame>
-    <frame>
-      <class>ru.t1.dkononov.tm.Application</class>
-      <method>main</method>
-      <line>10</line>
-    </frame>
-  </exception>
-</record>
-<record>
-  <date>2022-10-04T20:03:54</date>
-  <millis>1664903034201</millis>
+  <date>2022-10-05T22:23:54</date>
+  <millis>1664997834023</millis>
   <sequence>5</sequence>
   <logger>ERRORS</logger>
   <level>SEVERE</level>
   <class>ru.t1.dkononov.tm.service.LoggerService</class>
   <method>error</method>
   <thread>1</thread>
+  <message>Socket closed</message>
   <exception>
-    <message>java.lang.NullPointerException</message>
+    <message>java.net.SocketException: Socket closed</message>
     <frame>
-      <class>ru.t1.dkononov.tm.client.AbstractEndpointClient</class>
-      <method>getOutputStream</method>
-      <line>68</line>
+      <class>java.net.SocketInputStream</class>
+      <method>socketRead0</method>
+    </frame>
+    <frame>
+      <class>java.net.SocketInputStream</class>
+      <method>socketRead</method>
+      <line>116</line>
+    </frame>
+    <frame>
+      <class>java.net.SocketInputStream</class>
+      <method>read</method>
+      <line>171</line>
+    </frame>
+    <frame>
+      <class>java.net.SocketInputStream</class>
+      <method>read</method>
+      <line>141</line>
+    </frame>
+    <frame>
+      <class>java.io.ObjectInputStream$PeekInputStream</class>
+      <method>read</method>
+      <line>2779</line>
+    </frame>
+    <frame>
+      <class>java.io.ObjectInputStream$PeekInputStream</class>
+      <method>readFully</method>
+      <line>2795</line>
+    </frame>
+    <frame>
+      <class>java.io.ObjectInputStream$BlockDataInputStream</class>
+      <method>readShort</method>
+      <line>3272</line>
+    </frame>
+    <frame>
+      <class>java.io.ObjectInputStream</class>
+      <method>readStreamHeader</method>
+      <line>932</line>
+    </frame>
+    <frame>
+      <class>java.io.ObjectInputStream</class>
+      <method>&lt;init&gt;</method>
+      <line>394</line>
     </frame>
     <frame>
       <class>ru.t1.dkononov.tm.client.AbstractEndpointClient</class>
-      <method>getObjectOutputStream</method>
-      <line>60</line>
+      <method>getObjectInputStream</method>
+      <line>70</line>
     </frame>
     <frame>
       <class>ru.t1.dkononov.tm.client.AbstractEndpointClient</class>
       <method>call</method>
-      <line>50</line>
+      <line>52</line>
     </frame>
     <frame>
       <class>ru.t1.dkononov.tm.client.AuthEndpointClient</class>
       <method>login</method>
-      <line>25</line>
+      <line>24</line>
     </frame>
     <frame>
       <class>ru.t1.dkononov.tm.command.user.UserLoginCommand</class>
       <method>execute</method>
-      <line>33</line>
+      <line>31</line>
     </frame>
     <frame>
       <class>ru.t1.dkononov.tm.component.Bootstrap</class>
       <method>processCommand</method>
-      <line>193</line>
+      <line>192</line>
     </frame>
     <frame>
       <class>ru.t1.dkononov.tm.component.Bootstrap</class>
       <method>processCommand</method>
-      <line>198</line>
+      <line>197</line>
     </frame>
     <frame>
       <class>ru.t1.dkononov.tm.component.Bootstrap</class>
       <method>run</method>
-      <line>111</line>
-    </frame>
-    <frame>
-      <class>ru.t1.dkononov.tm.Application</class>
-      <method>main</method>
-      <line>10</line>
-    </frame>
-  </exception>
-</record>
-<record>
-  <date>2022-10-04T20:04:22</date>
-  <millis>1664903062235</millis>
-  <sequence>6</sequence>
-  <logger>ERRORS</logger>
-  <level>SEVERE</level>
-  <class>ru.t1.dkononov.tm.service.LoggerService</class>
-  <method>error</method>
-  <thread>1</thread>
-  <exception>
-    <message>java.lang.NullPointerException</message>
-    <frame>
-      <class>ru.t1.dkononov.tm.client.AbstractEndpointClient</class>
-      <method>getOutputStream</method>
-      <line>68</line>
-    </frame>
-    <frame>
-      <class>ru.t1.dkononov.tm.client.AbstractEndpointClient</class>
-      <method>getObjectOutputStream</method>
-      <line>60</line>
-    </frame>
-    <frame>
-      <class>ru.t1.dkononov.tm.client.AbstractEndpointClient</class>
-      <method>call</method>
-      <line>50</line>
-    </frame>
-    <frame>
-      <class>ru.t1.dkononov.tm.client.DomainEndpointClient</class>
-      <method>loadDataBackup</method>
-      <line>21</line>
-    </frame>
-    <frame>
-      <class>ru.t1.dkononov.tm.command.data.DataBackupLoadCommand</class>
-      <method>execute</method>
-      <line>37</line>
-    </frame>
-    <frame>
-      <class>ru.t1.dkononov.tm.component.Bootstrap</class>
-      <method>processCommand</method>
-      <line>193</line>
-    </frame>
-    <frame>
-      <class>ru.t1.dkononov.tm.component.Bootstrap</class>
-      <method>processCommand</method>
-      <line>198</line>
-    </frame>
-    <frame>
-      <class>ru.t1.dkononov.tm.component.Bootstrap</class>
-      <method>run</method>
-      <line>111</line>
+      <line>110</line>
     </frame>
     <frame>
       <class>ru.t1.dkononov.tm.Application</class>

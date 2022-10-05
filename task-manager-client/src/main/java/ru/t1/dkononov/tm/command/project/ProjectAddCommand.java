@@ -4,7 +4,6 @@ import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.dto.request.ProjectCreateRequest;
-import ru.t1.dkononov.tm.dto.request.UserLoginRequest;
 import ru.t1.dkononov.tm.exception.field.AbstractFieldException;
 import ru.t1.dkononov.tm.util.TerminalUtil;
 

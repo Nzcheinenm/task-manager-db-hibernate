@@ -3,13 +3,10 @@ package ru.t1.dkononov.tm.command.task;
 import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import ru.t1.dkononov.tm.dto.request.ProjectListRequest;
 import ru.t1.dkononov.tm.dto.request.TaskListRequest;
-import ru.t1.dkononov.tm.dto.response.ProjectListResponse;
 import ru.t1.dkononov.tm.dto.response.TaskListResponse;
 import ru.t1.dkononov.tm.enumerated.Sort;
 import ru.t1.dkononov.tm.exception.AbstractException;
-import ru.t1.dkononov.tm.model.Project;
 import ru.t1.dkononov.tm.model.Task;
 import ru.t1.dkononov.tm.util.TerminalUtil;
 

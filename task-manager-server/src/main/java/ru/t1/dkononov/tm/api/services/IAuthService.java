@@ -2,11 +2,9 @@ package ru.t1.dkononov.tm.api.services;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import ru.t1.dkononov.tm.enumerated.Role;
 import ru.t1.dkononov.tm.exception.AbstractException;
 import ru.t1.dkononov.tm.exception.field.AbstractFieldException;
 import ru.t1.dkononov.tm.exception.field.AccessDeniedException;
-import ru.t1.dkononov.tm.exception.field.PermissionException;
 import ru.t1.dkononov.tm.model.User;
 
 public interface IAuthService {

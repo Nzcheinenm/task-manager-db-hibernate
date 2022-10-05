@@ -11,7 +11,7 @@ import ru.t1.dkononov.tm.model.Project;
 @NoArgsConstructor
 public final class ProjectGetByIdResponse extends AbstractProjectResponse {
 
-    public ProjectGetByIdResponse (@Nullable final Project project) {
+    public ProjectGetByIdResponse(@Nullable final Project project) {
         super(project);
     }
 

@@ -9,7 +9,7 @@ import ru.t1.dkononov.tm.model.Project;
 @Getter
 @Setter
 @NoArgsConstructor
-public final class ProjectCreateResponse extends AbstractProjectResponse{
+public final class ProjectCreateResponse extends AbstractProjectResponse {
     public ProjectCreateResponse(@Nullable final Project project) {
         super(project);
     }

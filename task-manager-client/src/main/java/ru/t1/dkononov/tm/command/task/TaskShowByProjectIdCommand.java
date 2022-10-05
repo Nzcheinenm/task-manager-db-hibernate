@@ -5,7 +5,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.dto.request.TaskListByProjectIdRequest;
 import ru.t1.dkononov.tm.dto.response.TaskListByProjectIdResponse;
-import ru.t1.dkononov.tm.exception.AbstractException;
 import ru.t1.dkononov.tm.model.Task;
 import ru.t1.dkononov.tm.util.TerminalUtil;
 

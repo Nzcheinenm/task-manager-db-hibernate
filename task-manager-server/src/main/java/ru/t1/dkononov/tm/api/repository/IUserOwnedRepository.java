@@ -4,8 +4,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.exception.AbstractException;
 import ru.t1.dkononov.tm.exception.entity.ProjectNotFoundException;
-import ru.t1.dkononov.tm.exception.field.IdEmptyException;
-import ru.t1.dkononov.tm.exception.field.IndexIncorrectException;
 import ru.t1.dkononov.tm.exception.field.UserIdEmptyException;
 import ru.t1.dkononov.tm.model.AbstractUserOwnedModel;
 

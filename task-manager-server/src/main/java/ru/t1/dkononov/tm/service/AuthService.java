@@ -5,17 +5,13 @@ import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.api.services.IAuthService;
 import ru.t1.dkononov.tm.api.services.IPropertyService;
 import ru.t1.dkononov.tm.api.services.IUserService;
-import ru.t1.dkononov.tm.enumerated.Role;
 import ru.t1.dkononov.tm.exception.AbstractException;
 import ru.t1.dkononov.tm.exception.field.*;
 import ru.t1.dkononov.tm.model.User;
 import ru.t1.dkononov.tm.util.HashUtil;
 
-import javax.naming.AuthenticationException;
-import java.util.Arrays;
 
-
-public class AuthService implements IAuthService {
+public final class AuthService implements IAuthService {
 
 
     @Nullable
@@ -46,27 +42,6 @@ public class AuthService implements IAuthService {
         return userService.create(login, password, email);
     }
 
-//    @Override
-//    public void login(
-//            @Nullable final String login,
-//            @Nullable final String password
-//    )
-//            throws AbstractFieldException {
-//        if (login == null || login.isEmpty()) throw new LoginEmptyException();
-//        if (password == null || password.isEmpty()) throw new PasswordEmptyException();
-//        @Nullable final User user = userService.findByLogin(login);
-//        if (user == null) throw new AccessDeniedException();
-//        final boolean locked = user.isLocked() == null || user.isLocked();
-//        if (locked) throw new AccessDeniedException();
-//        @NotNull final String hash = HashUtil.salt(propertyService, password);
-//        if (!hash.equals(user.getPasswordHash())) throw new AccessDeniedException();
-//        userId = user.getId();
-//    }
-//
-//    @Override
-//    public void logout() {
-//        userId = null;
-//    }
 
     @Override
     public boolean isAuth() {
@@ -89,16 +64,6 @@ public class AuthService implements IAuthService {
         return user;
     }
 
-//    @Override
-//    public void checkRoles(@Nullable final Role[] roles) throws AbstractException {
-//        if (roles == null) return;
-//        @NotNull final User user = getUser();
-//        @Nullable final Role role = user.getRole();
-//        if (role == null) throw new PermissionException();
-//        final boolean hasRole = Arrays.asList(roles).contains(role);
-//        if (!hasRole) throw new PermissionException();
-//    }
-
     @Override
     public @NotNull User check(String login, String password) throws AbstractException {
         if (login == null || login.isEmpty()) throw new LoginEmptyException();
@@ -106,7 +71,7 @@ public class AuthService implements IAuthService {
         @Nullable final User user = userService.findByLogin(login);
         if (user == null) throw new PermissionException();
         if (user.getLocked()) throw new PermissionException();
-        @Nullable final String hash = HashUtil.salt(propertyService,password);
+        @Nullable final String hash = HashUtil.salt(propertyService, password);
         if (hash == null) throw new PermissionException();
         if (!hash.equals(user.getPasswordHash())) throw new PermissionException();
         return user;

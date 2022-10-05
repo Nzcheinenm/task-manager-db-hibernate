@@ -12,11 +12,11 @@ import ru.t1.dkononov.tm.dto.response.UserProfileResponse;
 public interface IAuthEndpointClient {
     @NotNull
     @SneakyThrows
-    UserLoginResponse login(@NotNull UserLoginRequest request);
+    UserLoginResponse login(@NotNull UserLoginRequest request) throws Exception;
 
     @NotNull
     @SneakyThrows
-    UserLogoutResponse logout(@NotNull UserLogoutRequest request);
+    UserLogoutResponse logout(@NotNull UserLogoutRequest request) throws Exception;
 
     @NotNull
     @SneakyThrows

@@ -9,12 +9,12 @@
 
     <name>task-manager-domain</name>
     <url>http://www.example.com</url>
-	
-	<parent>
-		<groupId>ru.t1.dkononov.tm</groupId>
-		<artifactId>task-manager</artifactId>
-		<version>1.24.0</version>
-	</parent>
+
+    <parent>
+        <groupId>ru.t1.dkononov.tm</groupId>
+        <artifactId>task-manager</artifactId>
+        <version>1.24.0</version>
+    </parent>
 
     <developers>
         <developer>

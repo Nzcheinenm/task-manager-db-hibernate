@@ -5,23 +5,22 @@ import lombok.NoArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.reflections.Reflections;
-import ru.t1.dkononov.tm.api.client.*;
+import ru.t1.dkononov.tm.api.client.IEndpointClient;
 import ru.t1.dkononov.tm.api.repository.ICommandRepository;
-import ru.t1.dkononov.tm.api.services.*;
+import ru.t1.dkononov.tm.api.services.ICommandService;
+import ru.t1.dkononov.tm.api.services.ILoggerService;
+import ru.t1.dkononov.tm.api.services.IPropertyService;
+import ru.t1.dkononov.tm.api.services.IServiceLocator;
 import ru.t1.dkononov.tm.client.*;
 import ru.t1.dkononov.tm.command.AbstractCommand;
 import ru.t1.dkononov.tm.command.server.ConnectCommand;
-import ru.t1.dkononov.tm.command.server.DisonnectCommand;
-import ru.t1.dkononov.tm.enumerated.Role;
-import ru.t1.dkononov.tm.enumerated.Status;
-import ru.t1.dkononov.tm.exception.AbstractException;
+import ru.t1.dkononov.tm.command.server.DisconnectCommand;
 import ru.t1.dkononov.tm.exception.system.ArgumentNotSupportedException;
 import ru.t1.dkononov.tm.exception.system.CommandNotSupportedException;
-import ru.t1.dkononov.tm.model.Project;
-import ru.t1.dkononov.tm.model.Task;
-import ru.t1.dkononov.tm.model.User;
 import ru.t1.dkononov.tm.repository.CommandRepository;
-import ru.t1.dkononov.tm.service.*;
+import ru.t1.dkononov.tm.service.CommandService;
+import ru.t1.dkononov.tm.service.LoggerService;
+import ru.t1.dkononov.tm.service.PropertyService;
 import ru.t1.dkononov.tm.util.SystemUtil;
 import ru.t1.dkononov.tm.util.TerminalUtil;
 
@@ -134,7 +133,7 @@ public final class Bootstrap implements IServiceLocator {
     }
 
     private void disconnect() throws Exception {
-        processCommand(DisonnectCommand.NAME);
+        processCommand(DisconnectCommand.NAME);
     }
 
     private void initBackup() throws Exception {

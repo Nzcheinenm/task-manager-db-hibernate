@@ -1,17 +1,9 @@
 package ru.t1.dkononov.tm.command.data;
 
-import lombok.Cleanup;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import ru.t1.dkononov.tm.dto.Domain;
 import ru.t1.dkononov.tm.dto.request.DataBase64SaveRequest;
 import ru.t1.dkononov.tm.enumerated.Role;
-import ru.t1.dkononov.tm.exception.AbstractException;
-import sun.misc.BASE64Encoder;
-
-import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
 
 public final class DataBase64SaveCommand extends AbstractDataCommand {
 

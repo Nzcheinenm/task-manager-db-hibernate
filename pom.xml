@@ -6,7 +6,7 @@
     <groupId>ru.t1.dkononov.tm</groupId>
     <artifactId>task-manager</artifactId>
     <version>1.24.0</version>
-	<packaging>pom</packaging>
+    <packaging>pom</packaging>
     <name>task-manager</name>
     <url>http://www.example.com</url>
 
@@ -17,16 +17,16 @@
             <email>dkononov@t1-consulting.ru</email>
         </developer>
     </developers>
-	
-	<modules>
-		<module>task-manager-client</module>
-		<module>task-manager-domain</module>
-		<module>task-manager-server</module>
-	</modules>
+
+    <modules>
+        <module>task-manager-client</module>
+        <module>task-manager-domain</module>
+        <module>task-manager-server</module>
+    </modules>
 
     <build>
         <finalName>task-manager</finalName>
-		
+
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -34,12 +34,12 @@
                 <version>3.5.1</version>
                 <configuration>
                     <source>1.8</source>
-					<target>1.8</target>
-					<encoding>UTF-8</encoding>
+                    <target>1.8</target>
+                    <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
         </plugins>
-		
+
     </build>
 
 </project>

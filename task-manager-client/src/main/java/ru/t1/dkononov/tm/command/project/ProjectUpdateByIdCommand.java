@@ -2,10 +2,7 @@ package ru.t1.dkononov.tm.command.project;
 
 import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import ru.t1.dkononov.tm.dto.request.ProjectStartByIdRequest;
 import ru.t1.dkononov.tm.dto.request.ProjectUpdateByIdRequest;
-import ru.t1.dkononov.tm.exception.AbstractException;
 import ru.t1.dkononov.tm.util.TerminalUtil;
 
 public final class ProjectUpdateByIdCommand extends AbstractProjectCommand {

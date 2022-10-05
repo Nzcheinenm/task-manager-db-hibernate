@@ -2,7 +2,6 @@ package ru.t1.dkononov.tm.command.system;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import ru.t1.dkononov.tm.api.client.IProjectEndpointClient;
 import ru.t1.dkononov.tm.api.client.ISystemEndpointClient;
 import ru.t1.dkononov.tm.api.services.ICommandService;
 import ru.t1.dkononov.tm.api.services.IPropertyService;

@@ -132,4 +132,15 @@ public final class ProjectEndpointClient extends AbstractEndpointClient implemen
         return call(request, ProjectUpdateByIndexResponse.class);
     }
 
+    public static void main(String[] args)
+            throws Exception {
+        @NotNull final ProjectEndpointClient client = new ProjectEndpointClient();
+        client.connect();
+
+        @NotNull final ProjectListResponse response = client.listProject(new ProjectListRequest());
+        System.out.println(response.getProjects());
+
+        client.disconnect();
+    }
+
 }

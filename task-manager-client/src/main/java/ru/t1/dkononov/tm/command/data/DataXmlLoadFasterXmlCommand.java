@@ -1,16 +1,9 @@
 package ru.t1.dkononov.tm.command.data;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import ru.t1.dkononov.tm.dto.Domain;
 import ru.t1.dkononov.tm.dto.request.DataXmlLoadFasterXmlRequest;
 import ru.t1.dkononov.tm.enumerated.Role;
-
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
 public final class DataXmlLoadFasterXmlCommand extends AbstractDataCommand {
 

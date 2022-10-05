@@ -1,20 +1,10 @@
 package ru.t1.dkononov.tm.command.data;
 
-import lombok.Cleanup;
 import lombok.SneakyThrows;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import ru.t1.dkononov.tm.dto.Domain;
 import ru.t1.dkononov.tm.dto.request.DataBase64LoadRequest;
 import ru.t1.dkononov.tm.enumerated.Role;
-import ru.t1.dkononov.tm.exception.AbstractException;
-import sun.misc.BASE64Decoder;
-
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
 public final class DataBase64LoadCommand extends AbstractDataCommand {
 

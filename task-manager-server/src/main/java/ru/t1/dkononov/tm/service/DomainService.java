@@ -100,7 +100,6 @@ public final class DomainService implements IDomainService {
     }
 
 
-
     @Override
     public void loadDataBase64() throws Exception {
         System.out.println("[DATA BASE64 LOAD]");

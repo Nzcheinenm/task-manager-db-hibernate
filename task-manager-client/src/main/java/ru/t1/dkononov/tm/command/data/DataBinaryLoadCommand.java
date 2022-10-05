@@ -1,16 +1,9 @@
 package ru.t1.dkononov.tm.command.data;
 
-import lombok.Cleanup;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import ru.t1.dkononov.tm.dto.Domain;
 import ru.t1.dkononov.tm.dto.request.DataBinaryLoadRequest;
 import ru.t1.dkononov.tm.enumerated.Role;
-import ru.t1.dkononov.tm.exception.AbstractException;
-
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
 
 public final class DataBinaryLoadCommand extends AbstractDataCommand {
 

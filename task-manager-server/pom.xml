@@ -9,12 +9,12 @@
 
     <name>task-manager-server</name>
     <url>http://www.example.com</url>
-	
-	<parent>
-		<groupId>ru.t1.dkononov.tm</groupId>
-		<artifactId>task-manager</artifactId>
-		<version>1.24.0</version>
-	</parent>
+
+    <parent>
+        <groupId>ru.t1.dkononov.tm</groupId>
+        <artifactId>task-manager</artifactId>
+        <version>1.24.0</version>
+    </parent>
 
     <developers>
         <developer>
@@ -100,11 +100,11 @@
             <artifactId>jaxb-api</artifactId>
             <version>2.3.1</version>
         </dependency>
-		<dependency>
-			<groupId>ru.t1.dkononov.tm</groupId>
-			<artifactId>task-manager-domain</artifactId>
-			<version>1.24.0</version>
-		</dependency>
+        <dependency>
+            <groupId>ru.t1.dkononov.tm</groupId>
+            <artifactId>task-manager-domain</artifactId>
+            <version>1.24.0</version>
+        </dependency>
     </dependencies>
 
     <build>

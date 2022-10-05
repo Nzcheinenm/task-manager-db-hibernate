@@ -13,6 +13,7 @@ public abstract class AbstractResultResponse extends AbstractResponse {
     @NotNull
     private Boolean success = true;
 
+    @NotNull
     private String message = "";
 
     public AbstractResultResponse(@NotNull final Throwable throwable) {

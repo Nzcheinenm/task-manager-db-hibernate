@@ -24,7 +24,6 @@ public abstract class AbstractEndpoint {
         if (role == null) throw new AccessDeniedException();
         @Nullable final String userId = request.getUserId();
         if (userId == null || userId.isEmpty()) throw new AccessDeniedException();
-        @NotNull final IServiceLocator serviceLocator = getServiceLocator();
         @NotNull final IUserService userService = serviceLocator.getUserService();
         @Nullable final User user = userService.findById(userId);
         if (user == null) throw new AccessDeniedException();
@@ -42,6 +41,6 @@ public abstract class AbstractEndpoint {
 
     @Getter
     @NotNull
-    private final IServiceLocator serviceLocator;
+    protected final IServiceLocator serviceLocator;
 
 }

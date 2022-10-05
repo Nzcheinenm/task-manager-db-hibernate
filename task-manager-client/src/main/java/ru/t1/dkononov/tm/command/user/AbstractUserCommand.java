@@ -2,7 +2,6 @@ package ru.t1.dkononov.tm.command.user;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import ru.t1.dkononov.tm.api.client.IProjectEndpointClient;
 import ru.t1.dkononov.tm.api.client.IUserEndpointClient;
 import ru.t1.dkononov.tm.command.AbstractCommand;
 import ru.t1.dkononov.tm.exception.field.UserNotFoundException;

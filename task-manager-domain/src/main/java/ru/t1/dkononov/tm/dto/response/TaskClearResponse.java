@@ -7,5 +7,5 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public final class TaskClearResponse extends AbstractTaskResponse{
+public final class TaskClearResponse extends AbstractTaskResponse {
 }

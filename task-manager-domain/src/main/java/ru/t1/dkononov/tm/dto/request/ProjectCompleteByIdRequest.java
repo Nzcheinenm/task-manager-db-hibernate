@@ -10,7 +10,7 @@ import org.jetbrains.annotations.Nullable;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProjectCompleteByIdRequest extends AbstractUserRequest  {
+public class ProjectCompleteByIdRequest extends AbstractUserRequest {
 
     @Nullable
     private String id;

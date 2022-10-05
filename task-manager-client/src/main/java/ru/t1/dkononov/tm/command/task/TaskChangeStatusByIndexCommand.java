@@ -3,7 +3,6 @@ package ru.t1.dkononov.tm.command.task;
 import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import ru.t1.dkononov.tm.dto.request.TaskChangeStatusByIdRequest;
 import ru.t1.dkononov.tm.dto.request.TaskChangeStatusByIndexRequest;
 import ru.t1.dkononov.tm.enumerated.Status;
 import ru.t1.dkononov.tm.exception.AbstractException;

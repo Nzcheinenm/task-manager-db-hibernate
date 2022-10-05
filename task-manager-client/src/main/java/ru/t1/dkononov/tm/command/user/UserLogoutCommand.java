@@ -3,10 +3,8 @@ package ru.t1.dkononov.tm.command.user;
 import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import ru.t1.dkononov.tm.dto.request.UserLoginRequest;
 import ru.t1.dkononov.tm.dto.request.UserLogoutRequest;
 import ru.t1.dkononov.tm.enumerated.Role;
-import ru.t1.dkononov.tm.exception.AbstractException;
 
 public final class UserLogoutCommand extends AbstractUserCommand {
 
@@ -19,7 +17,7 @@ public final class UserLogoutCommand extends AbstractUserCommand {
     private final String DESCRIPTION = "logout current user";
 
     @Override
-    public void execute() throws AbstractException {
+    public void execute() throws Exception {
         System.out.println("[USER LOGOUT]");
         @NotNull final UserLogoutRequest request = new UserLogoutRequest();
         getAuthEndpointClient().logout(request);

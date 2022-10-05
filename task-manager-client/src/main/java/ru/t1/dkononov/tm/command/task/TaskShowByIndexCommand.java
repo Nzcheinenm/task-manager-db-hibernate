@@ -2,10 +2,7 @@ package ru.t1.dkononov.tm.command.task;
 
 import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import ru.t1.dkononov.tm.dto.request.TaskGetByIdRequest;
 import ru.t1.dkononov.tm.dto.request.TaskGetByIndexRequest;
-import ru.t1.dkononov.tm.dto.response.TaskGetByIdResponse;
 import ru.t1.dkononov.tm.dto.response.TaskGetByIndexResponse;
 import ru.t1.dkononov.tm.exception.AbstractException;
 import ru.t1.dkononov.tm.model.Task;

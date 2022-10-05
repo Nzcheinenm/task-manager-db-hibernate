@@ -20,15 +20,13 @@ public final class AuthEndpointClient extends AbstractEndpointClient implements 
 
     @Override
     @NotNull
-    @SneakyThrows
-    public UserLoginResponse login(@NotNull UserLoginRequest request) {
+    public UserLoginResponse login(@NotNull UserLoginRequest request) throws Exception {
         return call(request, UserLoginResponse.class);
     }
 
     @Override
     @NotNull
-    @SneakyThrows
-    public UserLogoutResponse logout(@NotNull UserLogoutRequest request) {
+    public UserLogoutResponse logout(@NotNull UserLogoutRequest request) throws Exception {
         return call(request, UserLogoutResponse.class);
     }
 
@@ -43,8 +41,12 @@ public final class AuthEndpointClient extends AbstractEndpointClient implements 
     public static void main(String[] args) {
         @NotNull final AuthEndpointClient authEndpointClient = new AuthEndpointClient();
         authEndpointClient.connect();
+
+        System.out.println(authEndpointClient.login(new UserLoginRequest("test2", "test")).getSuccess());
         System.out.println(authEndpointClient.profile(new UserProfileRequest()).getUser());
-        System.out.println(authEndpointClient.login(new UserLoginRequest("test2","test2")).getSuccess());
+
+        System.out.println(authEndpointClient.profile(new UserProfileRequest()).getUser());
+
         authEndpointClient.disconnect();
     }
 

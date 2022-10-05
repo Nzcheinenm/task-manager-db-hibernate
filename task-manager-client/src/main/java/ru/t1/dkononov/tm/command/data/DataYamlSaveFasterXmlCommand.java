@@ -1,19 +1,9 @@
 package ru.t1.dkononov.tm.command.data;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
-import lombok.Cleanup;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import ru.t1.dkononov.tm.dto.Domain;
-import ru.t1.dkononov.tm.dto.request.DataYamlLoadFasterXmlRequest;
 import ru.t1.dkononov.tm.dto.request.DataYamlSaveFasterXmlRequest;
 import ru.t1.dkononov.tm.enumerated.Role;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.nio.file.Files;
 
 public final class DataYamlSaveFasterXmlCommand extends AbstractDataCommand {
 
