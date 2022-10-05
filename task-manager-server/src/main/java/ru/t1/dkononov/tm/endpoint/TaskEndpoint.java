@@ -98,7 +98,8 @@ public final class TaskEndpoint extends AbstractEndpoint implements ITaskEndpoin
 
     @Override
     @NotNull
-    public TaskListResponse listTask(@NotNull TaskListRequest request) throws AccessDeniedException, UserIdEmptyException {
+    public TaskListResponse listTask(@NotNull final TaskListRequest request)
+            throws AccessDeniedException, UserIdEmptyException {
         check(request);
         @Nullable final String userId = request.getUserId();
         @Nullable final Sort sort = request.getSort();
@@ -192,7 +193,11 @@ public final class TaskEndpoint extends AbstractEndpoint implements ITaskEndpoin
     }
 
     @Override
-    public @NotNull TaskUnbindFromProjectResponse unbindTaskToProject(@NotNull TaskUnbindFromProjectRequest request) throws Exception {
+    @NotNull
+    public TaskUnbindFromProjectResponse unbindTaskToProject(
+            @NotNull final TaskUnbindFromProjectRequest request
+    )
+            throws Exception {
         check(request);
         @Nullable final String userId = request.getUserId();
         @Nullable final String projectId = request.getProjectId();
@@ -202,7 +207,11 @@ public final class TaskEndpoint extends AbstractEndpoint implements ITaskEndpoin
     }
 
     @Override
-    public @NotNull TaskUpdateByIdResponse updateTaskById(@NotNull TaskUpdateByIdRequest request) throws Exception {
+    @NotNull
+    public TaskUpdateByIdResponse updateTaskById(
+            @NotNull final TaskUpdateByIdRequest request
+    )
+            throws Exception {
         check(request);
         @Nullable final String userId = request.getUserId();
         @Nullable final String id = request.getId();
@@ -213,7 +222,10 @@ public final class TaskEndpoint extends AbstractEndpoint implements ITaskEndpoin
     }
 
     @Override
-    public @NotNull TaskUpdateByIndexResponse updateTaskByIndex(@NotNull TaskUpdateByIndexRequest request) throws Exception {
+    @NotNull
+    public TaskUpdateByIndexResponse updateTaskByIndex(
+            @NotNull final TaskUpdateByIndexRequest request
+    ) throws Exception {
         check(request);
         @Nullable final String userId = request.getUserId();
         @Nullable final Integer index = request.getIndex();
@@ -224,7 +236,10 @@ public final class TaskEndpoint extends AbstractEndpoint implements ITaskEndpoin
     }
 
     @Override
-    public @NotNull TaskListByProjectIdResponse listTasksToProjectId(@NotNull TaskListByProjectIdRequest request) throws Exception {
+    @NotNull
+    public TaskListByProjectIdResponse listTasksToProjectId(
+            @NotNull final TaskListByProjectIdRequest request
+    ) throws Exception {
         check(request);
         @Nullable final String userId = request.getUserId();
         @Nullable final String projectId = request.getProjectId();

@@ -97,7 +97,7 @@ public final class ProjectEndpoint extends AbstractEndpoint implements IProjectE
 
     @Override
     @NotNull
-    public ProjectListResponse listProject(@NotNull ProjectListRequest request)
+    public ProjectListResponse listProject(@NotNull final ProjectListRequest request)
             throws AccessDeniedException, UserIdEmptyException {
         check(request);
         @Nullable final String userId = request.getUserId();
@@ -179,7 +179,9 @@ public final class ProjectEndpoint extends AbstractEndpoint implements IProjectE
     }
 
     @Override
-    public @NotNull ProjectUpdateByIdResponse updateProjectById(@NotNull ProjectUpdateByIdRequest request) throws Exception {
+    public @NotNull ProjectUpdateByIdResponse updateProjectById(
+            @NotNull final ProjectUpdateByIdRequest request
+    ) throws Exception {
         check(request);
         @Nullable final String userId = request.getUserId();
         @Nullable final String id = request.getId();
@@ -190,7 +192,9 @@ public final class ProjectEndpoint extends AbstractEndpoint implements IProjectE
     }
 
     @Override
-    public @NotNull ProjectUpdateByIndexResponse updateProjectByIndex(@NotNull ProjectUpdateByIndexRequest request) throws Exception {
+    public @NotNull ProjectUpdateByIndexResponse updateProjectByIndex(
+            @NotNull final ProjectUpdateByIndexRequest request
+    ) throws Exception {
         check(request);
         @Nullable final String userId = request.getUserId();
         @Nullable final Integer index = request.getIndex();

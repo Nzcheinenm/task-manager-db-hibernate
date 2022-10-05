@@ -50,15 +50,18 @@ public abstract class AbstractEndpointClient implements IEndpointClient {
     protected <T> T call(@NotNull final Object data, @NotNull final Class<T> clazz) throws Exception {
         getObjectOutputStream().writeObject(data);
         @NotNull final Object result = getObjectInputStream().readObject();
+
         if (result instanceof ApplicationErrorResponse) {
             @NotNull final ApplicationErrorResponse response = (ApplicationErrorResponse) result;
             throw new RuntimeException(response.getMessage());
         }
-//        if (result instanceof UserLoginResponse) {
-//            @NotNull final UserLoginResponse response = (UserLoginResponse) result;
-//            if (!response.getSuccess())
-//                throw new RuntimeException(response.getMessage());
-//        }
+
+        if (result instanceof UserLoginResponse) {
+            @NotNull final UserLoginResponse response = (UserLoginResponse) result;
+            if (!response.getSuccess())
+                throw new RuntimeException(response.getMessage());
+        }
+
         return (T) result;
     }
 

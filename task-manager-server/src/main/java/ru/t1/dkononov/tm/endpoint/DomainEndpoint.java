@@ -160,14 +160,20 @@ public final class DomainEndpoint extends AbstractEndpoint implements IDomainEnd
     }
 
     @Override
-    public @NotNull DataYamlLoadFasterXmlResponse loadDataYaml(@NotNull DataYamlLoadFasterXmlRequest request) throws Exception {
+    @NotNull
+    public DataYamlLoadFasterXmlResponse loadDataYaml(
+            @NotNull final DataYamlLoadFasterXmlRequest request
+    ) throws Exception {
         check(request, Role.ADMIN);
         getServiceLocator().getDomainService().loadDataYaml();
         return new DataYamlLoadFasterXmlResponse();
     }
 
     @Override
-    public @NotNull DataYamlSaveFasterXmlResponse saveDataYaml(@NotNull DataYamlSaveFasterXmlRequest request) throws Exception {
+    @NotNull
+    public DataYamlSaveFasterXmlResponse saveDataYaml(
+            @NotNull final DataYamlSaveFasterXmlRequest request
+    ) throws Exception {
         check(request, Role.ADMIN);
         getServiceLocator().getDomainService().saveDataYaml();
         return new DataYamlSaveFasterXmlResponse();

@@ -101,9 +101,9 @@ data.json
 data.xml
 data.yaml
 backup.json
-commands.xml.1
+commands.xml.*
 data.bkp
-errors.xml.1
-messages.xml.1
+errors.xml.*
+messages.xml.*
 
 
