@@ -74,32 +74,6 @@
             <artifactId>slf4j-log4j12</artifactId>
             <version>1.7.5</version>
         </dependency>
-
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-            <version>2.12.1</version>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.dataformat</groupId>
-            <artifactId>jackson-dataformat-yaml</artifactId>
-            <version>2.12.1</version>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.dataformat</groupId>
-            <artifactId>jackson-dataformat-xml</artifactId>
-            <version>2.12.1</version>
-        </dependency>
-        <dependency>
-            <groupId>org.eclipse.persistence</groupId>
-            <artifactId>org.eclipse.persistence.moxy</artifactId>
-            <version>2.7.2</version>
-        </dependency>
-        <dependency>
-            <groupId>javax.xml.bind</groupId>
-            <artifactId>jaxb-api</artifactId>
-            <version>2.3.1</version>
-        </dependency>
         <dependency>
             <groupId>ru.t1.dkononov.tm</groupId>
             <artifactId>task-manager-domain</artifactId>
@@ -108,7 +82,7 @@
     </dependencies>
 
     <build>
-        <finalName>task-manager</finalName>
+        <finalName>task-manager-client</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -131,13 +105,6 @@
 
                             <developer>Dmitry Kononov</developer>
                             <email>dkononov@mail.ru</email>
-
-                            <gitBranch>${git.branch}</gitBranch>
-                            <gitCommitId>${git.commit.id}</gitCommitId>
-                            <gitCommitTime>${git.commit.time}</gitCommitTime>
-                            <gitCommitMessage>${git.commit.message.full}</gitCommitMessage>
-                            <gitCommiterName>${git.commit.user.name}</gitCommiterName>
-                            <gitCommiterEmail>${git.commit.user.email}</gitCommiterEmail>
 
                         </manifestEntries>
                     </archive>
@@ -222,28 +189,6 @@
                         <item>buildNumber</item>
                         <item>timestamp</item>
                     </items>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>pl.project13.maven</groupId>
-                <artifactId>git-commit-id-plugin</artifactId>
-                <version>4.9.10</version>
-                <executions>
-                    <execution>
-                        <id>get-the-git-infos</id>
-                        <goals>
-                            <goal>revision</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>validate-the-git-infos</id>
-                        <goals>
-                            <goal>validateRevision</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <generateGitPropertiesFile>true</generateGitPropertiesFile>
                 </configuration>
             </plugin>
         </plugins>
