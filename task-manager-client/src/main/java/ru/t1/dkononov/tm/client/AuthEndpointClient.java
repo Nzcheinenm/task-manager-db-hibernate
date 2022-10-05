@@ -20,20 +20,20 @@ public final class AuthEndpointClient extends AbstractEndpointClient implements 
 
     @Override
     @NotNull
-    public UserLoginResponse login(@NotNull UserLoginRequest request) throws Exception {
+    public UserLoginResponse login(@NotNull final UserLoginRequest request) throws Exception {
         return call(request, UserLoginResponse.class);
     }
 
     @Override
     @NotNull
-    public UserLogoutResponse logout(@NotNull UserLogoutRequest request) throws Exception {
+    public UserLogoutResponse logout(@NotNull final UserLogoutRequest request) throws Exception {
         return call(request, UserLogoutResponse.class);
     }
 
     @Override
     @NotNull
     @SneakyThrows
-    public UserProfileResponse profile(@NotNull UserProfileRequest request) {
+    public UserProfileResponse profile(@NotNull final UserProfileRequest request) {
         return call(request, UserProfileResponse.class);
     }
 
