@@ -9,6 +9,13 @@ import ru.t1.dkononov.tm.dto.request.ApplicationVersionRequest;
 import ru.t1.dkononov.tm.dto.response.ApplicationAboutResponse;
 import ru.t1.dkononov.tm.dto.response.ApplicationVersionResponse;
 
+import javax.jws.WebMethod;
+import javax.jws.WebParam;
+import javax.jws.WebService;
+
+import static ru.t1.dkononov.tm.api.endpoint.IEndpoint.REQUEST;
+
+@WebService
 public final class SystemEndpoint implements ISystemEndpoint {
 
     @NotNull
@@ -18,9 +25,13 @@ public final class SystemEndpoint implements ISystemEndpoint {
         this.serviceLocator = serviceLocator;
     }
 
-    @Override
     @NotNull
-    public ApplicationAboutResponse getAbout(@NotNull final ApplicationAboutRequest request) {
+    @Override
+    @WebMethod
+    public ApplicationAboutResponse getAbout(
+            @WebParam(name = REQUEST, partName = REQUEST)
+            @NotNull final ApplicationAboutRequest request
+    ) {
         @NotNull final IPropertyService propertyService = serviceLocator.getPropertyService();
         @NotNull final ApplicationAboutResponse response = new ApplicationAboutResponse();
         response.setEmail(propertyService.getAuthorEmail());
@@ -28,9 +39,13 @@ public final class SystemEndpoint implements ISystemEndpoint {
         return response;
     }
 
-    @Override
     @NotNull
-    public ApplicationVersionResponse getVersion(@NotNull final ApplicationVersionRequest request) {
+    @Override
+    @WebMethod
+    public ApplicationVersionResponse getVersion(
+            @WebParam(name = REQUEST, partName = REQUEST)
+            @NotNull final ApplicationVersionRequest request
+    ) {
         @NotNull final IPropertyService propertyService = serviceLocator.getPropertyService();
         @NotNull final ApplicationVersionResponse response = new ApplicationVersionResponse();
         response.setVersion(propertyService.getApplicationVersion());

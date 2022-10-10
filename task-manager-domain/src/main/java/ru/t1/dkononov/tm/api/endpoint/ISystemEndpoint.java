@@ -6,8 +6,16 @@ import ru.t1.dkononov.tm.dto.request.ApplicationVersionRequest;
 import ru.t1.dkononov.tm.dto.response.ApplicationAboutResponse;
 import ru.t1.dkononov.tm.dto.response.ApplicationVersionResponse;
 
-public interface ISystemEndpoint {
-    @NotNull ApplicationAboutResponse getAbout(@NotNull ApplicationAboutRequest request);
+import javax.jws.WebMethod;
+import javax.jws.WebService;
 
-    @NotNull ApplicationVersionResponse getVersion(@NotNull ApplicationVersionRequest request);
+@WebService
+public interface ISystemEndpoint {
+    @NotNull
+    @WebMethod
+    ApplicationAboutResponse getAbout(@NotNull ApplicationAboutRequest request);
+
+    @NotNull
+    @WebMethod
+    ApplicationVersionResponse getVersion(@NotNull ApplicationVersionRequest request);
 }

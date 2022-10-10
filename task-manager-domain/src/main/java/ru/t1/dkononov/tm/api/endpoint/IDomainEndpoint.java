@@ -4,68 +4,104 @@ import org.jetbrains.annotations.NotNull;
 import ru.t1.dkononov.tm.dto.request.*;
 import ru.t1.dkononov.tm.dto.response.*;
 
+import javax.jws.WebMethod;
+import javax.jws.WebService;
+
+@WebService
 public interface IDomainEndpoint {
-    @NotNull DataBackupLoadResponse loadDataBackup(
+    @NotNull
+    @WebMethod
+    DataBackupLoadResponse loadDataBackup(
             @NotNull DataBackupLoadRequest request
     ) throws Exception;
 
-    @NotNull DataBackupSaveResponse saveDataBackup(
+    @NotNull
+    @WebMethod
+    DataBackupSaveResponse saveDataBackup(
             @NotNull DataBackupSaveRequest request
     ) throws Exception;
 
-    @NotNull DataBase64LoadResponse loadDataBase64(
+    @NotNull
+    @WebMethod
+    DataBase64LoadResponse loadDataBase64(
             @NotNull DataBase64LoadRequest request
     ) throws Exception;
 
-    @NotNull DataBase64SaveResponse saveDataBase64(
+    @NotNull
+    @WebMethod
+    DataBase64SaveResponse saveDataBase64(
             @NotNull DataBase64SaveRequest request
     ) throws Exception;
 
-    @NotNull DataBinarySaveResponse saveDataBinary(
+    @NotNull
+    @WebMethod
+    DataBinarySaveResponse saveDataBinary(
             @NotNull DataBinarySaveRequest request
     ) throws Exception;
 
-    @NotNull DataBinaryLoadResponse loadDataBinary(
+    @NotNull
+    @WebMethod
+    DataBinaryLoadResponse loadDataBinary(
             @NotNull DataBinaryLoadRequest request
     ) throws Exception;
 
-    @NotNull DataJsonSaveFasterXmlResponse saveDataJsonFasterXml(
+    @NotNull
+    @WebMethod
+    DataJsonSaveFasterXmlResponse saveDataJsonFasterXml(
             @NotNull DataJsonSaveFasterXmlRequest request
     ) throws Exception;
 
-    @NotNull DataJsonLoadFasterXmlResponse loadDataJsonFasterXml(
+    @NotNull
+    @WebMethod
+    DataJsonLoadFasterXmlResponse loadDataJsonFasterXml(
             @NotNull DataJsonLoadFasterXmlRequest request
     ) throws Exception;
 
-    @NotNull DataJsonSaveJaxBResponse saveDataJsonJaxB(
+    @NotNull
+    @WebMethod
+    DataJsonSaveJaxBResponse saveDataJsonJaxB(
             @NotNull DataJsonSaveJaxBRequest request
     ) throws Exception;
 
-    @NotNull DataJsonLoadJaxBResponse loadDataJsonJaxB(
+    @NotNull
+    @WebMethod
+    DataJsonLoadJaxBResponse loadDataJsonJaxB(
             @NotNull DataJsonLoadJaxBRequest request
     ) throws Exception;
 
-    @NotNull DataXmlSaveFasterXmlResponse saveDataXmlFasterXml(
+    @NotNull
+    @WebMethod
+    DataXmlSaveFasterXmlResponse saveDataXmlFasterXml(
             @NotNull DataXmlSaveFasterXmlRequest request
     ) throws Exception;
 
-    @NotNull DataXmlLoadFasterXmlResponse loadDataXmlFasterXml(
+    @NotNull
+    @WebMethod
+    DataXmlLoadFasterXmlResponse loadDataXmlFasterXml(
             @NotNull DataXmlLoadFasterXmlRequest request
     ) throws Exception;
 
-    @NotNull DataXmlSaveJaxBResponse saveDataXmlJaxB(
+    @NotNull
+    @WebMethod
+    DataXmlSaveJaxBResponse saveDataXmlJaxB(
             @NotNull DataXmlSaveJaxBRequest request
     ) throws Exception;
 
-    @NotNull DataXmlLoadJaxBResponse loadDataXmlJaxB(
+    @NotNull
+    @WebMethod
+    DataXmlLoadJaxBResponse loadDataXmlJaxB(
             @NotNull DataXmlLoadJaxBRequest request
     ) throws Exception;
 
-    @NotNull DataYamlLoadFasterXmlResponse loadDataYaml(
+    @NotNull
+    @WebMethod
+    DataYamlLoadFasterXmlResponse loadDataYaml(
             @NotNull DataYamlLoadFasterXmlRequest request
     ) throws Exception;
 
-    @NotNull DataYamlSaveFasterXmlResponse saveDataYaml(
+    @NotNull
+    @WebMethod
+    DataYamlSaveFasterXmlResponse saveDataYaml(
             @NotNull DataYamlSaveFasterXmlRequest request
     ) throws Exception;
 

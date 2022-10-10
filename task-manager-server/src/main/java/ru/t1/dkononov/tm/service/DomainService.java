@@ -74,7 +74,6 @@ public final class DomainService implements IDomainService {
         bootstrap.getProjectService().set(domain.getProjects());
         bootstrap.getTaskService().set(domain.getTasks());
         bootstrap.getUserService().set(domain.getUsers());
-//        bootstrap.getAuthService().logout();
     }
 
     @Override

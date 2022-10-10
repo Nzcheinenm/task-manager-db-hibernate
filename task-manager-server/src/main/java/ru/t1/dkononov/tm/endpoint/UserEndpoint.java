@@ -13,6 +13,13 @@ import ru.t1.dkononov.tm.exception.AbstractException;
 import ru.t1.dkononov.tm.exception.field.AbstractFieldException;
 import ru.t1.dkononov.tm.model.User;
 
+import javax.jws.WebMethod;
+import javax.jws.WebParam;
+import javax.jws.WebService;
+
+import static ru.t1.dkononov.tm.api.endpoint.IEndpoint.REQUEST;
+
+@WebService(endpointInterface = "ru.t1.dkononov.tm.api.endpoint.IUserEndpoint")
 public final class UserEndpoint extends AbstractEndpoint implements IUserEndpoint {
     public UserEndpoint(@NotNull final IServiceLocator serviceLocator) {
         super(serviceLocator);
@@ -23,36 +30,52 @@ public final class UserEndpoint extends AbstractEndpoint implements IUserEndpoin
         return this.getServiceLocator().getUserService();
     }
 
-    @Override
     @NotNull
-    public UserLockResponse lockUser(@NotNull final UserLockRequest request) throws Exception {
+    @Override
+    @WebMethod
+    public UserLockResponse lockUser(
+            @WebParam(name = REQUEST, partName = REQUEST)
+            @NotNull final UserLockRequest request
+    ) throws Exception {
         check(request, Role.ADMIN);
         @Nullable final String login = request.getLogin();
         @Nullable final User user = getUserService().lockUserByLogin(login);
         return new UserLockResponse(user);
     }
 
-    @Override
     @NotNull
-    public UserUnlockResponse unlockUser(@NotNull final UserUnlockRequest request) throws Exception {
+    @Override
+    @WebMethod
+    public UserUnlockResponse unlockUser(
+            @WebParam(name = REQUEST, partName = REQUEST)
+            @NotNull final UserUnlockRequest request
+    ) throws Exception {
         check(request, Role.ADMIN);
         @Nullable final String login = request.getLogin();
         @Nullable final User user = getUserService().unlockUserByLogin(login);
         return new UserUnlockResponse(user);
     }
 
-    @Override
     @NotNull
-    public UserRemoveResponse removeUser(@NotNull final UserRemoveRequest request) throws Exception {
+    @Override
+    @WebMethod
+    public UserRemoveResponse removeUser(
+            @WebParam(name = REQUEST, partName = REQUEST)
+            @NotNull final UserRemoveRequest request
+    ) throws Exception {
         check(request, Role.ADMIN);
         @Nullable final String login = request.getLogin();
         @Nullable final User user = getUserService().removeByLogin(login);
         return new UserRemoveResponse(user);
     }
 
-    @Override
     @NotNull
-    public UserUpdateProfileResponse updateUserProfile(@NotNull final UserUpdateProfileRequest request) throws AbstractFieldException {
+    @Override
+    @WebMethod
+    public UserUpdateProfileResponse updateUserProfile(
+            @WebParam(name = REQUEST, partName = REQUEST)
+            @NotNull final UserUpdateProfileRequest request
+    ) throws AbstractFieldException {
         check(request);
         @Nullable final String userId = request.getUserId();
         @Nullable final String firstName = request.getFirstName();
@@ -64,9 +87,13 @@ public final class UserEndpoint extends AbstractEndpoint implements IUserEndpoin
         return new UserUpdateProfileResponse(user);
     }
 
-    @Override
     @NotNull
-    public UserChangePasswordResponse changeUserPassword(@NotNull final UserChangePasswordRequest request) throws AbstractFieldException {
+    @Override
+    @WebMethod
+    public UserChangePasswordResponse changeUserPassword(
+            @WebParam(name = REQUEST, partName = REQUEST)
+            @NotNull final UserChangePasswordRequest request
+    ) throws AbstractFieldException {
         check(request);
         @Nullable final String userId = request.getUserId();
         @Nullable final String password = request.getPassword();
@@ -74,9 +101,13 @@ public final class UserEndpoint extends AbstractEndpoint implements IUserEndpoin
         return new UserChangePasswordResponse(user);
     }
 
-    @Override
     @NotNull
-    public UserRegistryResponse registryUser(@NotNull final UserRegistryRequest request) throws AbstractException {
+    @Override
+    @WebMethod
+    public UserRegistryResponse registryUser(
+            @WebParam(name = REQUEST, partName = REQUEST)
+            @NotNull final UserRegistryRequest request
+    ) throws AbstractException {
         @Nullable final String login = request.getLogin();
         @Nullable final String password = request.getPassword();
         @Nullable final String email = request.getEmail();

@@ -1,5 +1,6 @@
 package ru.t1.dkononov.tm.endpoint;
 
+import lombok.NoArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.api.endpoint.IProjectEndpoint;
@@ -15,22 +16,32 @@ import ru.t1.dkononov.tm.exception.field.AccessDeniedException;
 import ru.t1.dkononov.tm.exception.field.UserIdEmptyException;
 import ru.t1.dkononov.tm.model.Project;
 
+import javax.jws.WebMethod;
+import javax.jws.WebParam;
+import javax.jws.WebService;
 import java.util.List;
 
+import static ru.t1.dkononov.tm.api.endpoint.IEndpoint.REQUEST;
+
+@WebService(endpointInterface = "ru.t1.dkononov.tm.api.endpoint.IProjectEndpoint")
 public final class ProjectEndpoint extends AbstractEndpoint implements IProjectEndpoint {
+
+    @NotNull
+    private IServiceLocator serviceLocator;
 
     public ProjectEndpoint(@NotNull IServiceLocator serviceLocator) {
         super(serviceLocator);
     }
 
-    @Override
     public IProjectService getProjectService() {
         return getServiceLocator().getProjectService();
     }
 
-    @Override
     @NotNull
-    public ProjectChangeStatusByIdResponse changeStatusById(
+    @Override
+    @WebMethod
+    public ProjectChangeStatusByIdResponse changeStatusById (
+            @WebParam(name = REQUEST, partName = REQUEST)
             @NotNull final ProjectChangeStatusByIdRequest request
     ) throws AbstractException {
         check(request);
@@ -41,9 +52,11 @@ public final class ProjectEndpoint extends AbstractEndpoint implements IProjectE
         return new ProjectChangeStatusByIdResponse(project);
     }
 
-    @Override
     @NotNull
+    @Override
+    @WebMethod
     public ProjectChangeStatusByIndexResponse changeStatusByIndex(
+            @WebParam(name = REQUEST, partName = REQUEST)
             @NotNull final ProjectChangeStatusByIndexRequest request
     ) throws AbstractException {
         check(request);
@@ -54,19 +67,26 @@ public final class ProjectEndpoint extends AbstractEndpoint implements IProjectE
         return new ProjectChangeStatusByIndexResponse(project);
     }
 
-    @Override
     @NotNull
-    public ProjectClearResponse clearProject(@NotNull final ProjectClearRequest request)
-            throws UserIdEmptyException, AccessDeniedException {
+    @Override
+    @WebMethod
+    public ProjectClearResponse clearProject(
+            @WebParam(name = REQUEST, partName = REQUEST)
+            @NotNull final ProjectClearRequest request
+    ) throws UserIdEmptyException, AccessDeniedException {
         check(request);
         @Nullable final String userId = request.getUserId();
         getProjectService().clear(userId);
         return new ProjectClearResponse();
     }
 
-    @Override
     @NotNull
-    public ProjectCreateResponse createProject(@NotNull final ProjectCreateRequest request) throws AbstractFieldException {
+    @Override
+    @WebMethod
+    public ProjectCreateResponse createProject(
+            @WebParam(name = REQUEST, partName = REQUEST)
+            @NotNull final ProjectCreateRequest request
+    ) throws AbstractFieldException {
         check(request);
         @Nullable final String userId = request.getUserId();
         @Nullable final String name = request.getName();
@@ -75,9 +95,13 @@ public final class ProjectEndpoint extends AbstractEndpoint implements IProjectE
         return new ProjectCreateResponse(project);
     }
 
-    @Override
     @NotNull
-    public ProjectGetByIdResponse getProjectById(@NotNull ProjectGetByIdRequest request) throws AbstractException {
+    @Override
+    @WebMethod
+    public ProjectGetByIdResponse getProjectById(
+            @WebParam(name = REQUEST, partName = REQUEST)
+            @NotNull ProjectGetByIdRequest request
+    ) throws AbstractException {
         check(request);
         @Nullable final String userId = request.getUserId();
         @Nullable final String id = request.getId();
@@ -85,9 +109,13 @@ public final class ProjectEndpoint extends AbstractEndpoint implements IProjectE
         return new ProjectGetByIdResponse(project);
     }
 
-    @Override
     @NotNull
-    public ProjectGetByIndexResponse getProjectByIndex(@NotNull final ProjectGetByIndexRequest request) throws AbstractException {
+    @Override
+    @WebMethod
+    public ProjectGetByIndexResponse getProjectByIndex(
+            @WebParam(name = REQUEST, partName = REQUEST)
+            @NotNull final ProjectGetByIndexRequest request
+    ) throws AbstractException {
         check(request);
         @Nullable final Integer index = request.getIndex();
         @Nullable final String userId = request.getUserId();
@@ -95,10 +123,13 @@ public final class ProjectEndpoint extends AbstractEndpoint implements IProjectE
         return new ProjectGetByIndexResponse(project);
     }
 
-    @Override
     @NotNull
-    public ProjectListResponse listProject(@NotNull final ProjectListRequest request)
-            throws AccessDeniedException, UserIdEmptyException {
+    @Override
+    @WebMethod
+    public ProjectListResponse listProject(
+            @WebParam(name = REQUEST, partName = REQUEST)
+            @NotNull final ProjectListRequest request
+    ) throws AccessDeniedException, UserIdEmptyException {
         check(request);
         @Nullable final String userId = request.getUserId();
         @Nullable final Sort sort = request.getSort();
@@ -106,9 +137,11 @@ public final class ProjectEndpoint extends AbstractEndpoint implements IProjectE
         return new ProjectListResponse(projects);
     }
 
-    @Override
     @NotNull
+    @Override
+    @WebMethod
     public ProjectRemoveByIdResponse removeProjectById(
+            @WebParam(name = REQUEST, partName = REQUEST)
             @NotNull final ProjectRemoveByIdRequest request
     ) throws Exception {
         check(request);
@@ -118,9 +151,11 @@ public final class ProjectEndpoint extends AbstractEndpoint implements IProjectE
         return new ProjectRemoveByIdResponse();
     }
 
-    @Override
     @NotNull
-    public ProjectRemoveByIndexResponse removeProjectById(
+    @Override
+    @WebMethod
+    public ProjectRemoveByIndexResponse removeProjectByIndex(
+            @WebParam(name = REQUEST, partName = REQUEST)
             @NotNull final ProjectRemoveByIndexRequest request
     ) throws Exception {
         check(request);
@@ -130,9 +165,11 @@ public final class ProjectEndpoint extends AbstractEndpoint implements IProjectE
         return new ProjectRemoveByIndexResponse();
     }
 
-    @Override
     @NotNull
+    @Override
+    @WebMethod
     public ProjectStartByIdResponse startProjectById(
+            @WebParam(name = REQUEST, partName = REQUEST)
             @NotNull final ProjectStartByIdRequest request
     ) throws Exception {
         check(request);
@@ -142,9 +179,11 @@ public final class ProjectEndpoint extends AbstractEndpoint implements IProjectE
         return new ProjectStartByIdResponse(project);
     }
 
-    @Override
     @NotNull
+    @Override
+    @WebMethod
     public ProjectStartByIndexResponse startProjectByIndex(
+            @WebParam(name = REQUEST, partName = REQUEST)
             @NotNull final ProjectStartByIndexRequest request
     ) throws Exception {
         check(request);
@@ -154,9 +193,11 @@ public final class ProjectEndpoint extends AbstractEndpoint implements IProjectE
         return new ProjectStartByIndexResponse(project);
     }
 
-    @Override
     @NotNull
+    @Override
+    @WebMethod
     public ProjectCompleteByIdResponse completeProjectById(
+            @WebParam(name = REQUEST, partName = REQUEST)
             @NotNull final ProjectCompleteByIdRequest request
     ) throws Exception {
         check(request);
@@ -166,9 +207,11 @@ public final class ProjectEndpoint extends AbstractEndpoint implements IProjectE
         return new ProjectCompleteByIdResponse(project);
     }
 
-    @Override
     @NotNull
+    @Override
+    @WebMethod
     public ProjectCompleteByIndexResponse completeProjectByIndex(
+            @WebParam(name = REQUEST, partName = REQUEST)
             @NotNull final ProjectCompleteByIndexRequest request
     ) throws Exception {
         check(request);
@@ -179,7 +222,10 @@ public final class ProjectEndpoint extends AbstractEndpoint implements IProjectE
     }
 
     @Override
-    public @NotNull ProjectUpdateByIdResponse updateProjectById(
+    @NotNull
+    @WebMethod
+    public ProjectUpdateByIdResponse updateProjectById(
+            @WebParam(name = REQUEST, partName = REQUEST)
             @NotNull final ProjectUpdateByIdRequest request
     ) throws Exception {
         check(request);
@@ -192,7 +238,10 @@ public final class ProjectEndpoint extends AbstractEndpoint implements IProjectE
     }
 
     @Override
-    public @NotNull ProjectUpdateByIndexResponse updateProjectByIndex(
+    @NotNull
+    @WebMethod
+    public ProjectUpdateByIndexResponse updateProjectByIndex(
+            @WebParam(name = REQUEST, partName = REQUEST)
             @NotNull final ProjectUpdateByIndexRequest request
     ) throws Exception {
         check(request);

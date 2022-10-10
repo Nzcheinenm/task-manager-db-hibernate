@@ -15,23 +15,30 @@ import ru.t1.dkononov.tm.exception.field.AccessDeniedException;
 import ru.t1.dkononov.tm.exception.field.UserIdEmptyException;
 import ru.t1.dkononov.tm.model.Task;
 
+import javax.jws.WebMethod;
+import javax.jws.WebParam;
+import javax.jws.WebService;
 import java.util.List;
 
+import static ru.t1.dkononov.tm.api.endpoint.IEndpoint.REQUEST;
+
+@WebService(endpointInterface = "ru.t1.dkononov.tm.api.endpoint.ITaskEndpoint")
 public final class TaskEndpoint extends AbstractEndpoint implements ITaskEndpoint {
 
     public TaskEndpoint(@NotNull final IServiceLocator serviceLocator) {
         super(serviceLocator);
     }
 
-    @Override
     @NotNull
     public ITaskService getTaskService() {
         return getServiceLocator().getTaskService();
     }
 
-    @Override
     @NotNull
+    @Override
+    @WebMethod
     public TaskChangeStatusByIdResponse changeStatusById(
+            @WebParam(name = REQUEST, partName = REQUEST)
             @NotNull final TaskChangeStatusByIdRequest request
     ) throws AbstractException {
         check(request);
@@ -42,9 +49,11 @@ public final class TaskEndpoint extends AbstractEndpoint implements ITaskEndpoin
         return new TaskChangeStatusByIdResponse();
     }
 
-    @Override
     @NotNull
+    @Override
+    @WebMethod
     public TaskChangeStatusByIndexResponse changeStatusByIndex(
+            @WebParam(name = REQUEST, partName = REQUEST)
             @NotNull final TaskChangeStatusByIndexRequest request
     ) throws AbstractException {
         check(request);
@@ -55,9 +64,13 @@ public final class TaskEndpoint extends AbstractEndpoint implements ITaskEndpoin
         return new TaskChangeStatusByIndexResponse();
     }
 
-    @Override
     @NotNull
-    public TaskClearResponse clearTask(@NotNull final TaskClearRequest request)
+    @Override
+    @WebMethod
+    public TaskClearResponse clearTask(
+            @WebParam(name = REQUEST, partName = REQUEST)
+            @NotNull final TaskClearRequest request
+    )
             throws UserIdEmptyException, AccessDeniedException {
         check(request);
         @Nullable final String userId = request.getUserId();
@@ -65,9 +78,13 @@ public final class TaskEndpoint extends AbstractEndpoint implements ITaskEndpoin
         return new TaskClearResponse();
     }
 
-    @Override
     @NotNull
-    public TaskCreateResponse createTask(@NotNull final TaskCreateRequest request) throws AbstractFieldException {
+    @Override
+    @WebMethod
+    public TaskCreateResponse createTask(
+            @WebParam(name = REQUEST, partName = REQUEST)
+            @NotNull final TaskCreateRequest request
+    ) throws AbstractFieldException {
         check(request);
         @Nullable final String userId = request.getUserId();
         @Nullable final String name = request.getName();
@@ -76,9 +93,13 @@ public final class TaskEndpoint extends AbstractEndpoint implements ITaskEndpoin
         return new TaskCreateResponse(task);
     }
 
-    @Override
     @NotNull
-    public TaskGetByIdResponse getTaskById(@NotNull TaskGetByIdRequest request) throws AbstractException {
+    @Override
+    @WebMethod
+    public TaskGetByIdResponse getTaskById(
+            @WebParam(name = REQUEST, partName = REQUEST)
+            @NotNull final TaskGetByIdRequest request
+    ) throws AbstractException {
         check(request);
         @Nullable final String userId = request.getUserId();
         @Nullable final String id = request.getId();
@@ -86,9 +107,13 @@ public final class TaskEndpoint extends AbstractEndpoint implements ITaskEndpoin
         return new TaskGetByIdResponse(task);
     }
 
-    @Override
     @NotNull
-    public TaskGetByIndexResponse getTaskByIndex(@NotNull final TaskGetByIndexRequest request) throws AbstractException {
+    @Override
+    @WebMethod
+    public TaskGetByIndexResponse getTaskByIndex(
+            @WebParam(name = REQUEST, partName = REQUEST)
+            @NotNull final TaskGetByIndexRequest request
+    ) throws AbstractException {
         check(request);
         @Nullable final Integer index = request.getIndex();
         @Nullable final String userId = request.getUserId();
@@ -96,9 +121,13 @@ public final class TaskEndpoint extends AbstractEndpoint implements ITaskEndpoin
         return new TaskGetByIndexResponse(task);
     }
 
-    @Override
     @NotNull
-    public TaskListResponse listTask(@NotNull final TaskListRequest request)
+    @Override
+    @WebMethod
+    public TaskListResponse listTask(
+            @WebParam(name = REQUEST, partName = REQUEST)
+            @NotNull final TaskListRequest request
+    )
             throws AccessDeniedException, UserIdEmptyException {
         check(request);
         @Nullable final String userId = request.getUserId();
@@ -107,9 +136,10 @@ public final class TaskEndpoint extends AbstractEndpoint implements ITaskEndpoin
         return new TaskListResponse(tasks);
     }
 
-    @Override
     @NotNull
+    @WebMethod
     public TaskRemoveByIdResponse removeTaskById(
+            @WebParam(name = REQUEST, partName = REQUEST)
             @NotNull final TaskRemoveByIdRequest request
     ) throws Exception {
         check(request);
@@ -119,9 +149,11 @@ public final class TaskEndpoint extends AbstractEndpoint implements ITaskEndpoin
         return new TaskRemoveByIdResponse();
     }
 
-    @Override
     @NotNull
-    public TaskRemoveByIndexResponse removeTaskById(
+    @Override
+    @WebMethod
+    public TaskRemoveByIndexResponse removeTaskByIndex(
+            @WebParam(name = REQUEST, partName = REQUEST)
             @NotNull final TaskRemoveByIndexRequest request
     ) throws Exception {
         check(request);
@@ -131,9 +163,11 @@ public final class TaskEndpoint extends AbstractEndpoint implements ITaskEndpoin
         return new TaskRemoveByIndexResponse(Task);
     }
 
-    @Override
     @NotNull
+    @Override
+    @WebMethod
     public TaskStartByIdResponse startTaskById(
+            @WebParam(name = REQUEST, partName = REQUEST)
             @NotNull final TaskStartByIdRequest request
     ) throws Exception {
         check(request);
@@ -143,9 +177,11 @@ public final class TaskEndpoint extends AbstractEndpoint implements ITaskEndpoin
         return new TaskStartByIdResponse();
     }
 
-    @Override
     @NotNull
+    @Override
+    @WebMethod
     public TaskStartByIndexResponse startTaskByIndex(
+            @WebParam(name = REQUEST, partName = REQUEST)
             @NotNull final TaskStartByIndexRequest request
     ) throws Exception {
         check(request);
@@ -155,9 +191,11 @@ public final class TaskEndpoint extends AbstractEndpoint implements ITaskEndpoin
         return new TaskStartByIndexResponse();
     }
 
-    @Override
     @NotNull
+    @Override
+    @WebMethod
     public TaskCompleteByIdResponse completeTaskById(
+            @WebParam(name = REQUEST, partName = REQUEST)
             @NotNull final TaskCompleteByIdRequest request
     ) throws Exception {
         check(request);
@@ -167,9 +205,11 @@ public final class TaskEndpoint extends AbstractEndpoint implements ITaskEndpoin
         return new TaskCompleteByIdResponse();
     }
 
-    @Override
     @NotNull
+    @Override
+    @WebMethod
     public TaskCompleteByIndexResponse completeTaskByIndex(
+            @WebParam(name = REQUEST, partName = REQUEST)
             @NotNull final TaskCompleteByIndexRequest request
     ) throws Exception {
         check(request);
@@ -179,9 +219,11 @@ public final class TaskEndpoint extends AbstractEndpoint implements ITaskEndpoin
         return new TaskCompleteByIndexResponse();
     }
 
-    @Override
     @NotNull
+    @Override
+    @WebMethod
     public TaskBindToProjectResponse bindTaskToProject(
+            @WebParam(name = REQUEST, partName = REQUEST)
             @NotNull final TaskBindToProjectRequest request
     ) throws Exception {
         check(request);
@@ -192,12 +234,13 @@ public final class TaskEndpoint extends AbstractEndpoint implements ITaskEndpoin
         return new TaskBindToProjectResponse();
     }
 
-    @Override
     @NotNull
+    @Override
+    @WebMethod
     public TaskUnbindFromProjectResponse unbindTaskToProject(
+            @WebParam(name = REQUEST, partName = REQUEST)
             @NotNull final TaskUnbindFromProjectRequest request
-    )
-            throws Exception {
+    ) throws Exception {
         check(request);
         @Nullable final String userId = request.getUserId();
         @Nullable final String projectId = request.getProjectId();
@@ -206,12 +249,13 @@ public final class TaskEndpoint extends AbstractEndpoint implements ITaskEndpoin
         return new TaskUnbindFromProjectResponse();
     }
 
-    @Override
     @NotNull
+    @Override
+    @WebMethod
     public TaskUpdateByIdResponse updateTaskById(
+            @WebParam(name = REQUEST, partName = REQUEST)
             @NotNull final TaskUpdateByIdRequest request
-    )
-            throws Exception {
+    ) throws Exception {
         check(request);
         @Nullable final String userId = request.getUserId();
         @Nullable final String id = request.getId();
@@ -221,9 +265,11 @@ public final class TaskEndpoint extends AbstractEndpoint implements ITaskEndpoin
         return new TaskUpdateByIdResponse();
     }
 
-    @Override
     @NotNull
+    @Override
+    @WebMethod
     public TaskUpdateByIndexResponse updateTaskByIndex(
+            @WebParam(name = REQUEST, partName = REQUEST)
             @NotNull final TaskUpdateByIndexRequest request
     ) throws Exception {
         check(request);
@@ -235,9 +281,11 @@ public final class TaskEndpoint extends AbstractEndpoint implements ITaskEndpoin
         return new TaskUpdateByIndexResponse();
     }
 
-    @Override
     @NotNull
+    @Override
+    @WebMethod
     public TaskListByProjectIdResponse listTasksToProjectId(
+            @WebParam(name = REQUEST, partName = REQUEST)
             @NotNull final TaskListByProjectIdRequest request
     ) throws Exception {
         check(request);

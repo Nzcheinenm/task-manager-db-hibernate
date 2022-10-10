@@ -22,6 +22,7 @@ import ru.t1.dkononov.tm.repository.UserRepository;
 import ru.t1.dkononov.tm.service.*;
 import ru.t1.dkononov.tm.util.SystemUtil;
 
+import javax.xml.ws.Endpoint;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -66,6 +67,9 @@ public final class Bootstrap implements IServiceLocator {
     @NotNull
     private final IPropertyService propertyService = new PropertyService();
 
+//    @NotNull
+//    private final IAuthEndpoint authEndpoint = new AuthEndpoint(this);
+
     @NotNull
     private final ISystemEndpoint systemEndpoint = new SystemEndpoint(this);
 
@@ -102,61 +106,22 @@ public final class Bootstrap implements IServiceLocator {
     private final IAuthService authService = new AuthService(userService, propertyService);
 
     {
-        server.registry(ApplicationAboutRequest.class, systemEndpoint::getAbout);
-        server.registry(ApplicationVersionRequest.class, systemEndpoint::getVersion);
-
-        server.registry(DataBackupLoadRequest.class, domainEndpoint::loadDataBackup);
-        server.registry(DataBackupSaveRequest.class, domainEndpoint::saveDataBackup);
-        server.registry(DataBase64LoadRequest.class, domainEndpoint::loadDataBase64);
-        server.registry(DataBase64SaveRequest.class, domainEndpoint::saveDataBase64);
-        server.registry(DataBinarySaveRequest.class, domainEndpoint::saveDataBinary);
-        server.registry(DataBinaryLoadRequest.class, domainEndpoint::loadDataBinary);
-        server.registry(DataJsonSaveFasterXmlRequest.class, domainEndpoint::saveDataJsonFasterXml);
-        server.registry(DataJsonLoadFasterXmlRequest.class, domainEndpoint::loadDataJsonFasterXml);
-        server.registry(DataJsonSaveJaxBRequest.class, domainEndpoint::saveDataJsonJaxB);
-        server.registry(DataJsonLoadJaxBRequest.class, domainEndpoint::loadDataJsonJaxB);
-        server.registry(DataXmlSaveFasterXmlRequest.class, domainEndpoint::saveDataXmlFasterXml);
-        server.registry(DataXmlLoadFasterXmlRequest.class, domainEndpoint::loadDataXmlFasterXml);
-        server.registry(DataXmlSaveJaxBRequest.class, domainEndpoint::saveDataXmlJaxB);
-        server.registry(DataXmlLoadJaxBRequest.class, domainEndpoint::loadDataXmlJaxB);
-
-        server.registry(TaskChangeStatusByIdRequest.class, taskEndpoint::changeStatusById);
-        server.registry(TaskChangeStatusByIndexRequest.class, taskEndpoint::changeStatusByIndex);
-        server.registry(TaskClearRequest.class, taskEndpoint::clearTask);
-        server.registry(TaskCreateRequest.class, taskEndpoint::createTask);
-        server.registry(TaskGetByIdRequest.class, taskEndpoint::getTaskById);
-        server.registry(TaskGetByIndexRequest.class, taskEndpoint::getTaskByIndex);
-        server.registry(TaskListRequest.class, taskEndpoint::listTask);
-        server.registry(TaskRemoveByIdRequest.class, taskEndpoint::removeTaskById);
-        server.registry(TaskRemoveByIndexRequest.class, taskEndpoint::removeTaskById);
-        server.registry(TaskStartByIdRequest.class, taskEndpoint::startTaskById);
-        server.registry(TaskStartByIndexRequest.class, taskEndpoint::startTaskByIndex);
-        server.registry(TaskCompleteByIdRequest.class, taskEndpoint::completeTaskById);
-        server.registry(TaskCompleteByIndexRequest.class, taskEndpoint::completeTaskByIndex);
-        server.registry(TaskBindToProjectRequest.class, taskEndpoint::bindTaskToProject);
-
-        server.registry(ProjectChangeStatusByIdRequest.class, projectEndpoint::changeStatusById);
-        server.registry(ProjectChangeStatusByIndexRequest.class, projectEndpoint::changeStatusByIndex);
-        server.registry(ProjectClearRequest.class, projectEndpoint::clearProject);
-        server.registry(ProjectCreateRequest.class, projectEndpoint::createProject);
-        server.registry(ProjectGetByIdRequest.class, projectEndpoint::getProjectById);
-        server.registry(ProjectGetByIndexRequest.class, projectEndpoint::getProjectByIndex);
-        server.registry(ProjectListRequest.class, projectEndpoint::listProject);
-        server.registry(ProjectRemoveByIdRequest.class, projectEndpoint::removeProjectById);
-        server.registry(ProjectRemoveByIndexRequest.class, projectEndpoint::removeProjectById);
-        server.registry(ProjectStartByIdRequest.class, projectEndpoint::startProjectById);
-        server.registry(ProjectStartByIndexRequest.class, projectEndpoint::startProjectByIndex);
-        server.registry(ProjectCompleteByIdRequest.class, projectEndpoint::completeProjectById);
-        server.registry(ProjectCompleteByIndexRequest.class, projectEndpoint::completeProjectByIndex);
-
-        server.registry(UserLockRequest.class, userEndpoint::lockUser);
-        server.registry(UserUnlockRequest.class, userEndpoint::unlockUser);
-        server.registry(UserRemoveRequest.class, userEndpoint::removeUser);
-        server.registry(UserUpdateProfileRequest.class, userEndpoint::updateUserProfile);
-        server.registry(UserChangePasswordRequest.class, userEndpoint::changeUserPassword);
-        server.registry(UserRegistryRequest.class, userEndpoint::registryUser);
+        registry(domainEndpoint);
+        registry(systemEndpoint);
+        registry(userEndpoint);
+        registry(projectEndpoint);
+        registry(taskEndpoint);
+//        registry(authEndpoint);
     }
 
+    private void registry(@NotNull final Object endpoint) {
+        @NotNull final String host = "0.0.0.0";
+        @NotNull final String port = "8080";
+        @NotNull final String name = endpoint.getClass().getSimpleName();
+        @NotNull final String url = "http://" + host + ":" + port + "/" + name + "?wsdl";
+        Endpoint.publish(url, endpoint);
+        System.out.println(url);
+    }
 
     public void start() {
         try {

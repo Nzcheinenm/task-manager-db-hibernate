@@ -188,7 +188,6 @@ public final class Bootstrap implements IServiceLocator {
             throws Exception {
         @Nullable final AbstractCommand abstractCommand = commandService.getCommandByName(command);
         if (abstractCommand == null) throw new CommandNotSupportedException(command);
-//        if (checkRoles) authService.checkRoles(abstractCommand.getRoles());
         abstractCommand.execute();
     }
 

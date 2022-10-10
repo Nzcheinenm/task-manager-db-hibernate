@@ -8,6 +8,13 @@ import ru.t1.dkononov.tm.dto.request.*;
 import ru.t1.dkononov.tm.dto.response.*;
 import ru.t1.dkononov.tm.enumerated.Role;
 
+import javax.jws.WebMethod;
+import javax.jws.WebParam;
+import javax.jws.WebService;
+
+import static ru.t1.dkononov.tm.api.endpoint.IEndpoint.REQUEST;
+
+@WebService
 public final class DomainEndpoint extends AbstractEndpoint implements IDomainEndpoint {
 
     public DomainEndpoint(@NotNull final IServiceLocator serviceLocator) {
@@ -19,9 +26,11 @@ public final class DomainEndpoint extends AbstractEndpoint implements IDomainEnd
         return getServiceLocator().getProjectService();
     }
 
-    @Override
     @NotNull
+    @Override
+    @WebMethod
     public DataBackupLoadResponse loadDataBackup(
+            @WebParam(name = REQUEST, partName = REQUEST)
             @NotNull final DataBackupLoadRequest request
     ) throws Exception {
         check(request, Role.ADMIN);
@@ -29,9 +38,11 @@ public final class DomainEndpoint extends AbstractEndpoint implements IDomainEnd
         return new DataBackupLoadResponse();
     }
 
-    @Override
     @NotNull
+    @Override
+    @WebMethod
     public DataBackupSaveResponse saveDataBackup(
+            @WebParam(name = REQUEST, partName = REQUEST)
             @NotNull final DataBackupSaveRequest request
     ) throws Exception {
         check(request, Role.ADMIN);
@@ -39,9 +50,11 @@ public final class DomainEndpoint extends AbstractEndpoint implements IDomainEnd
         return new DataBackupSaveResponse();
     }
 
-    @Override
     @NotNull
+    @Override
+    @WebMethod
     public DataBase64LoadResponse loadDataBase64(
+            @WebParam(name = REQUEST, partName = REQUEST)
             @NotNull final DataBase64LoadRequest request
     ) throws Exception {
         check(request, Role.ADMIN);
@@ -49,9 +62,11 @@ public final class DomainEndpoint extends AbstractEndpoint implements IDomainEnd
         return new DataBase64LoadResponse();
     }
 
-    @Override
     @NotNull
+    @Override
+    @WebMethod
     public DataBase64SaveResponse saveDataBase64(
+            @WebParam(name = REQUEST, partName = REQUEST)
             @NotNull final DataBase64SaveRequest request
     ) throws Exception {
         check(request, Role.ADMIN);
@@ -59,9 +74,11 @@ public final class DomainEndpoint extends AbstractEndpoint implements IDomainEnd
         return new DataBase64SaveResponse();
     }
 
-    @Override
     @NotNull
+    @Override
+    @WebMethod
     public DataBinarySaveResponse saveDataBinary(
+            @WebParam(name = REQUEST, partName = REQUEST)
             @NotNull final DataBinarySaveRequest request
     ) throws Exception {
         check(request, Role.ADMIN);
@@ -69,9 +86,11 @@ public final class DomainEndpoint extends AbstractEndpoint implements IDomainEnd
         return new DataBinarySaveResponse();
     }
 
-    @Override
     @NotNull
+    @Override
+    @WebMethod
     public DataBinaryLoadResponse loadDataBinary(
+            @WebParam(name = REQUEST, partName = REQUEST)
             @NotNull final DataBinaryLoadRequest request
     ) throws Exception {
         check(request, Role.ADMIN);
@@ -79,9 +98,11 @@ public final class DomainEndpoint extends AbstractEndpoint implements IDomainEnd
         return new DataBinaryLoadResponse();
     }
 
-    @Override
     @NotNull
+    @Override
+    @WebMethod
     public DataJsonSaveFasterXmlResponse saveDataJsonFasterXml(
+            @WebParam(name = REQUEST, partName = REQUEST)
             @NotNull final DataJsonSaveFasterXmlRequest request
     ) throws Exception {
         check(request, Role.ADMIN);
@@ -89,9 +110,11 @@ public final class DomainEndpoint extends AbstractEndpoint implements IDomainEnd
         return new DataJsonSaveFasterXmlResponse();
     }
 
-    @Override
     @NotNull
+    @Override
+    @WebMethod
     public DataJsonLoadFasterXmlResponse loadDataJsonFasterXml(
+            @WebParam(name = REQUEST, partName = REQUEST)
             @NotNull final DataJsonLoadFasterXmlRequest request
     ) throws Exception {
         check(request, Role.ADMIN);
@@ -99,9 +122,11 @@ public final class DomainEndpoint extends AbstractEndpoint implements IDomainEnd
         return new DataJsonLoadFasterXmlResponse();
     }
 
-    @Override
     @NotNull
+    @Override
+    @WebMethod
     public DataJsonSaveJaxBResponse saveDataJsonJaxB(
+            @WebParam(name = REQUEST, partName = REQUEST)
             @NotNull final DataJsonSaveJaxBRequest request
     ) throws Exception {
         check(request, Role.ADMIN);
@@ -109,9 +134,11 @@ public final class DomainEndpoint extends AbstractEndpoint implements IDomainEnd
         return new DataJsonSaveJaxBResponse();
     }
 
-    @Override
     @NotNull
+    @Override
+    @WebMethod
     public DataJsonLoadJaxBResponse loadDataJsonJaxB(
+            @WebParam(name = REQUEST, partName = REQUEST)
             @NotNull final DataJsonLoadJaxBRequest request
     ) throws Exception {
         check(request, Role.ADMIN);
@@ -119,9 +146,11 @@ public final class DomainEndpoint extends AbstractEndpoint implements IDomainEnd
         return new DataJsonLoadJaxBResponse();
     }
 
-    @Override
     @NotNull
+    @Override
+    @WebMethod
     public DataXmlSaveFasterXmlResponse saveDataXmlFasterXml(
+            @WebParam(name = REQUEST, partName = REQUEST)
             @NotNull final DataXmlSaveFasterXmlRequest request
     ) throws Exception {
         check(request, Role.ADMIN);
@@ -129,9 +158,11 @@ public final class DomainEndpoint extends AbstractEndpoint implements IDomainEnd
         return new DataXmlSaveFasterXmlResponse();
     }
 
-    @Override
     @NotNull
+    @Override
+    @WebMethod
     public DataXmlLoadFasterXmlResponse loadDataXmlFasterXml(
+            @WebParam(name = REQUEST, partName = REQUEST)
             @NotNull final DataXmlLoadFasterXmlRequest request
     ) throws Exception {
         check(request, Role.ADMIN);
@@ -139,9 +170,11 @@ public final class DomainEndpoint extends AbstractEndpoint implements IDomainEnd
         return new DataXmlLoadFasterXmlResponse();
     }
 
-    @Override
     @NotNull
+    @Override
+    @WebMethod
     public DataXmlSaveJaxBResponse saveDataXmlJaxB(
+            @WebParam(name = REQUEST, partName = REQUEST)
             @NotNull final DataXmlSaveJaxBRequest request
     ) throws Exception {
         check(request, Role.ADMIN);
@@ -149,9 +182,11 @@ public final class DomainEndpoint extends AbstractEndpoint implements IDomainEnd
         return new DataXmlSaveJaxBResponse();
     }
 
-    @Override
     @NotNull
+    @Override
+    @WebMethod
     public DataXmlLoadJaxBResponse loadDataXmlJaxB(
+            @WebParam(name = REQUEST, partName = REQUEST)
             @NotNull final DataXmlLoadJaxBRequest request
     ) throws Exception {
         check(request, Role.ADMIN);
@@ -159,9 +194,11 @@ public final class DomainEndpoint extends AbstractEndpoint implements IDomainEnd
         return new DataXmlLoadJaxBResponse();
     }
 
-    @Override
     @NotNull
+    @Override
+    @WebMethod
     public DataYamlLoadFasterXmlResponse loadDataYaml(
+            @WebParam(name = REQUEST, partName = REQUEST)
             @NotNull final DataYamlLoadFasterXmlRequest request
     ) throws Exception {
         check(request, Role.ADMIN);
@@ -169,9 +206,11 @@ public final class DomainEndpoint extends AbstractEndpoint implements IDomainEnd
         return new DataYamlLoadFasterXmlResponse();
     }
 
-    @Override
     @NotNull
+    @Override
+    @WebMethod
     public DataYamlSaveFasterXmlResponse saveDataYaml(
+            @WebParam(name = REQUEST, partName = REQUEST)
             @NotNull final DataYamlSaveFasterXmlRequest request
     ) throws Exception {
         check(request, Role.ADMIN);
