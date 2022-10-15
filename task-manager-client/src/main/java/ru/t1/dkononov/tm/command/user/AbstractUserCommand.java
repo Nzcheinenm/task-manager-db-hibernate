@@ -3,6 +3,7 @@ package ru.t1.dkononov.tm.command.user;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.api.client.IUserEndpointClient;
+import ru.t1.dkononov.tm.api.endpoint.IUserEndpoint;
 import ru.t1.dkononov.tm.command.AbstractCommand;
 import ru.t1.dkononov.tm.exception.field.UserNotFoundException;
 import ru.t1.dkononov.tm.model.User;
@@ -10,7 +11,7 @@ import ru.t1.dkononov.tm.model.User;
 public abstract class AbstractUserCommand extends AbstractCommand {
 
     @NotNull
-    protected IUserEndpointClient getUserEndpoint() {
+    protected IUserEndpoint getUserEndpoint() {
         return serviceLocator.getUserEndpointClient();
     }
 

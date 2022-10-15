@@ -2,8 +2,9 @@ package ru.t1.dkononov.tm.api.services;
 
 import org.jetbrains.annotations.NotNull;
 import ru.t1.dkononov.tm.api.component.ISaltProvider;
+import ru.t1.dkononov.tm.api.endpoint.IConnectionProvider;
 
-public interface IPropertyService extends ISaltProvider {
+public interface IPropertyService extends ISaltProvider, IConnectionProvider {
     @NotNull
     String getApplicationVersion();
 

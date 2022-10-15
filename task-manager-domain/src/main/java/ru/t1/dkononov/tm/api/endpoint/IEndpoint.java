@@ -14,13 +14,13 @@ public interface IEndpoint {
     String HOST = "localhost";
 
     @NotNull
-    String PORT = "8080";
+    String PORT = "6080";
 
     @NotNull
     String REQUEST = "request";
 
     @NotNull
-    String SPACE = "http://endpoint.tm.dkononov.t1.ru";
+    String SPACE = "http://endpoint.tm.dkononov.t1.ru/";
 
     @SneakyThrows
     @WebMethod(exclude = true)

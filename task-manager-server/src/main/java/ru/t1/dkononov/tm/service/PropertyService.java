@@ -44,6 +44,12 @@ public final class PropertyService implements IPropertyService {
     public static final String SERVER_PORT_KEY = "server.port";
 
     @NotNull
+    public static final String SERVER_HOST_KEY_DEFAULT = "6050";
+
+    @NotNull
+    public static final String SERVER_HOST_KEY = "server.host";
+
+    @NotNull
     public static final String PASSWORD_SECRET_DEFAULT = "5437612";
 
     @NotNull
@@ -138,6 +144,13 @@ public final class PropertyService implements IPropertyService {
     public Integer getServerPort() {
         @NotNull final String value = getStringValue(SERVER_PORT_KEY, SERVER_PORT_KEY_DEFAULT);
         return Integer.parseInt(value);
+    }
+
+    @Override
+    @NotNull
+    public String getServerHost() {
+        @NotNull final String value = getStringValue(SERVER_HOST_KEY, SERVER_HOST_KEY_DEFAULT);
+        return value;
     }
 
     @Override

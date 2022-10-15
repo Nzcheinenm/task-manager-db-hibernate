@@ -21,7 +21,7 @@ public final class ProjectRemoveByIndexCommand extends AbstractProjectCommand {
         @NotNull final Integer value = TerminalUtil.nextNumber() - 1;
         @NotNull final ProjectRemoveByIndexRequest request = new ProjectRemoveByIndexRequest();
         request.setIndex(value);
-        getProjectEndpoint().removeProjectById(request);
+        getProjectEndpoint().removeProjectByIndex(request);
     }
 
 }

@@ -86,9 +86,6 @@ public final class Bootstrap implements IServiceLocator {
     private final IUserEndpoint userEndpoint = new UserEndpoint(this);
 
     @NotNull
-    private final Server server = new Server(this);
-
-    @NotNull
     private final Backup backup = new Backup(this);
 
 
@@ -115,8 +112,8 @@ public final class Bootstrap implements IServiceLocator {
     }
 
     private void registry(@NotNull final Object endpoint) {
-        @NotNull final String host = "0.0.0.0";
-        @NotNull final String port = "8080";
+        @NotNull final String host = propertyService.getServerHost();
+        @NotNull final String port = String.valueOf(propertyService.getServerPort());
         @NotNull final String name = endpoint.getClass().getSimpleName();
         @NotNull final String url = "http://" + host + ":" + port + "/" + name + "?wsdl";
         Endpoint.publish(url, endpoint);
@@ -138,16 +135,10 @@ public final class Bootstrap implements IServiceLocator {
     private void initBackup() throws Exception {
         Runtime.getRuntime().addShutdownHook(new Thread(this::stop));
         backup.init();
-        server.start();
     }
 
     private void stop() {
-        try {
-            backup.stop();
-            server.stop();
-        } catch (IOException e) {
-            loggerService.error(e);
-        }
+        backup.stop();
         loggerService.info("** TASK-MANAGER SERVER IS SHUTTING DOWN **");
     }
 

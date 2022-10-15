@@ -14,7 +14,7 @@ import javax.jws.WebService;
 
 import static ru.t1.dkononov.tm.api.endpoint.IEndpoint.REQUEST;
 
-@WebService
+@WebService(endpointInterface = "ru.t1.dkononov.tm.api.endpoint.IDomainEndpoint")
 public final class DomainEndpoint extends AbstractEndpoint implements IDomainEndpoint {
 
     public DomainEndpoint(@NotNull final IServiceLocator serviceLocator) {

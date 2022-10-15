@@ -4,6 +4,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.api.client.IProjectEndpointClient;
 import ru.t1.dkononov.tm.api.client.ITaskEndpointClient;
+import ru.t1.dkononov.tm.api.endpoint.IProjectEndpoint;
+import ru.t1.dkononov.tm.api.endpoint.ITaskEndpoint;
 import ru.t1.dkononov.tm.command.AbstractCommand;
 import ru.t1.dkononov.tm.enumerated.Role;
 import ru.t1.dkononov.tm.enumerated.Status;
@@ -12,12 +14,12 @@ import ru.t1.dkononov.tm.model.Project;
 public abstract class AbstractProjectCommand extends AbstractCommand {
 
     @NotNull
-    protected IProjectEndpointClient getProjectEndpoint() {
+    protected IProjectEndpoint getProjectEndpoint() {
         return serviceLocator.getProjectEndpointClient();
     }
 
     @NotNull
-    protected ITaskEndpointClient getProjectTaskEndpoint() {
+    protected ITaskEndpoint getProjectTaskEndpoint() {
         return getServiceLocator().getTaskEndpointClient();
     }
 

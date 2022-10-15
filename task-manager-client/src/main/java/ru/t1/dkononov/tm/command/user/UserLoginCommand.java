@@ -28,7 +28,7 @@ public final class UserLoginCommand extends AbstractUserCommand {
         @NotNull final UserLoginRequest request = new UserLoginRequest();
         request.setLogin(login);
         request.setPassword(password);
-        getAuthEndpointClient().login(request);
+//        getAuthEndpointClient().login(request);
     }
 
     @Nullable

@@ -5,13 +5,12 @@ import lombok.NoArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.reflections.Reflections;
-import ru.t1.dkononov.tm.api.client.IEndpointClient;
+import ru.t1.dkononov.tm.api.endpoint.*;
 import ru.t1.dkononov.tm.api.repository.ICommandRepository;
 import ru.t1.dkononov.tm.api.services.ICommandService;
 import ru.t1.dkononov.tm.api.services.ILoggerService;
 import ru.t1.dkononov.tm.api.services.IPropertyService;
 import ru.t1.dkononov.tm.api.services.IServiceLocator;
-import ru.t1.dkononov.tm.client.*;
 import ru.t1.dkononov.tm.command.AbstractCommand;
 import ru.t1.dkononov.tm.command.server.ConnectCommand;
 import ru.t1.dkononov.tm.command.server.DisconnectCommand;
@@ -56,31 +55,27 @@ public final class Bootstrap implements IServiceLocator {
 
     @Getter
     @NotNull
-    private final IEndpointClient connectionEndpointClient = new ConnectionEndpointClient();
+    private final ISystemEndpoint systemEndpointClient = ISystemEndpoint.newInstance(propertyService);
 
     @Getter
     @NotNull
-    private final SystemEndpointClient systemEndpointClient = new SystemEndpointClient();
+    private final IDomainEndpoint domainEndpointClient = IDomainEndpoint.newInstance(propertyService);
 
     @Getter
     @NotNull
-    private final DomainEndpointClient domainEndpointClient = new DomainEndpointClient();
+    private final IProjectEndpoint projectEndpointClient = IProjectEndpoint.newInstance(propertyService);
 
     @Getter
     @NotNull
-    private final ProjectEndpointClient projectEndpointClient = new ProjectEndpointClient();
+    private final ITaskEndpoint taskEndpointClient = ITaskEndpoint.newInstance(propertyService);
 
     @Getter
     @NotNull
-    private final TaskEndpointClient taskEndpointClient = new TaskEndpointClient();
+    private final IUserEndpoint userEndpointClient = IUserEndpoint.newInstance(propertyService);
 
     @Getter
     @NotNull
-    private final UserEndpointClient userEndpointClient = new UserEndpointClient();
-
-    @Getter
-    @NotNull
-    private final AuthEndpointClient authEndpointClient = new AuthEndpointClient();
+    private final IAuthEndpoint authEndpointClient = IAuthEndpoint.newInstance(propertyService);
 
 
     @NotNull
@@ -119,36 +114,22 @@ public final class Bootstrap implements IServiceLocator {
 
     private void init() {
         try {
-            initBackup();
-            initLogger();
-            initPID();
+            prepareStart();
         } catch (final Exception e) {
             loggerService.error(e);
             System.err.println("[INIT FAIL]");
         }
     }
 
-    private void connect() throws Exception {
-        processCommand(ConnectCommand.NAME);
-    }
-
-    private void disconnect() throws Exception {
-        processCommand(DisconnectCommand.NAME);
-    }
-
-    private void initBackup() throws Exception {
+    private void prepareStart() throws Exception {
+        initPID();
+        initLogger();
         Runtime.getRuntime().addShutdownHook(new Thread(this::prepareShutdown));
         fileScanner.init();
-        connect();
     }
 
     private void prepareShutdown() {
         fileScanner.stop();
-        try {
-            disconnect();
-        } catch (Exception e) {
-            loggerService.error(e);
-        }
         loggerService.info("** TASK-MANAGER IS SHUTTING DOWN **");
     }
 

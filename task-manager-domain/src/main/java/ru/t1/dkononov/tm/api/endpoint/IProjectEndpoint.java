@@ -1,5 +1,6 @@
 package ru.t1.dkononov.tm.api.endpoint;
 
+import lombok.SneakyThrows;
 import org.jetbrains.annotations.NotNull;
 import ru.t1.dkononov.tm.dto.request.*;
 import ru.t1.dkononov.tm.dto.response.*;
@@ -12,13 +13,31 @@ import javax.jws.WebMethod;
 import javax.jws.WebService;
 
 @WebService
-public interface IProjectEndpoint {
+public interface IProjectEndpoint extends IEndpoint {
 
     @NotNull
     String NAME = "ProjectEndpoint";
 
     @NotNull
     String PART = NAME + "Service";
+
+    @SneakyThrows
+    @WebMethod(exclude = true)
+    static IProjectEndpoint newInstance() {
+        return newInstance(HOST,PORT);
+    }
+
+    @SneakyThrows
+    @WebMethod(exclude = true)
+    static IProjectEndpoint newInstance(@NotNull final IConnectionProvider connectionProvider) {
+        return IEndpoint.newInstance(connectionProvider,NAME,SPACE,PART,IProjectEndpoint.class);
+    }
+
+    @SneakyThrows
+    @WebMethod(exclude = true)
+    static IProjectEndpoint newInstance(@NotNull final String host, @NotNull final String port) {
+        return IEndpoint.newInstance(host,port,NAME,SPACE,PART,IProjectEndpoint.class);
+    }
 
     @NotNull
     @WebMethod

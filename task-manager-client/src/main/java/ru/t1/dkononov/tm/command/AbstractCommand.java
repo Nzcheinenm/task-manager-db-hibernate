@@ -19,10 +19,10 @@ public abstract class AbstractCommand implements ICommand {
     @Nullable
     public abstract Role[] getRoles();
 
-    @Nullable
-    public IAuthEndpointClient getAuthEndpointClient() {
-        return serviceLocator.getAuthEndpointClient();
-    }
+//    @Nullable
+//    public IAuthEndpointClient getAuthEndpointClient() {
+//        return serviceLocator.getAuthEndpointClient();
+//    }
 
 
     @NotNull

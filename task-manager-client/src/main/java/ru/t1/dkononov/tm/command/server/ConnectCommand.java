@@ -42,15 +42,15 @@ public final class ConnectCommand extends AbstractCommand {
     public void execute() throws Exception {
         try {
             @NotNull final IServiceLocator serviceLocator = getServiceLocator();
-            @NotNull final IEndpointClient endpointClient = serviceLocator.getConnectionEndpointClient();
-            @Nullable final Socket socket = endpointClient.connect();
+//            @NotNull final IEndpointClient endpointClient = serviceLocator.getConnectionEndpointClient();
+//            @Nullable final Socket socket = endpointClient.connect();
 
-            serviceLocator.getAuthEndpointClient().setSocket(socket);
-            serviceLocator.getSystemEndpointClient().setSocket(socket);
-            serviceLocator.getDomainEndpointClient().setSocket(socket);
-            serviceLocator.getProjectEndpointClient().setSocket(socket);
-            serviceLocator.getTaskEndpointClient().setSocket(socket);
-            serviceLocator.getUserEndpointClient().setSocket(socket);
+//            serviceLocator.getAuthEndpointClient().setSocket(socket);
+//            serviceLocator.getSystemEndpointClient().setSocket(socket);
+//            serviceLocator.getDomainEndpointClient().setSocket(socket);
+//            serviceLocator.getProjectEndpointClient().setSocket(socket);
+//            serviceLocator.getTaskEndpointClient().setSocket(socket);
+//            serviceLocator.getUserEndpointClient().setSocket(socket);
         } catch (@NotNull final Exception e) {
             getServiceLocator().getLoggerService().error(e);
         }

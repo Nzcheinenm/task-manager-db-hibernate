@@ -20,7 +20,7 @@ public final class UserLogoutCommand extends AbstractUserCommand {
     public void execute() throws Exception {
         System.out.println("[USER LOGOUT]");
         @NotNull final UserLogoutRequest request = new UserLogoutRequest();
-        getAuthEndpointClient().logout(request);
+//        getAuthEndpointClient().logout(request);
     }
 
     @Nullable

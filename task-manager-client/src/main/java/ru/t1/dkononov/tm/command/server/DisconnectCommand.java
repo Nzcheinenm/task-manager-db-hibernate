@@ -39,8 +39,8 @@ public class DisconnectCommand extends AbstractCommand {
     public void execute() throws Exception {
         try {
             @NotNull final IServiceLocator serviceLocator = getServiceLocator();
-            @NotNull final IEndpointClient endpointClient = serviceLocator.getConnectionEndpointClient();
-            endpointClient.disconnect();
+//            @NotNull final IEndpointClient endpointClient = serviceLocator.getConnectionEndpointClient();
+//            endpointClient.disconnect();
         } catch (@NotNull final Exception e) {
             getServiceLocator().getLoggerService().error(e);
         }

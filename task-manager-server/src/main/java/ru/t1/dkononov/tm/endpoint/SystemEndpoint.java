@@ -15,7 +15,7 @@ import javax.jws.WebService;
 
 import static ru.t1.dkononov.tm.api.endpoint.IEndpoint.REQUEST;
 
-@WebService
+@WebService(endpointInterface = "ru.t1.dkononov.tm.api.endpoint.ISystemEndpoint")
 public final class SystemEndpoint implements ISystemEndpoint {
 
     @NotNull

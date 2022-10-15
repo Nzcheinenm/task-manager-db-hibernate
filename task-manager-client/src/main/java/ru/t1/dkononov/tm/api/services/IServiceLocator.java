@@ -2,7 +2,8 @@ package ru.t1.dkononov.tm.api.services;
 
 import org.jetbrains.annotations.NotNull;
 import ru.t1.dkononov.tm.api.client.IEndpointClient;
-import ru.t1.dkononov.tm.client.*;
+import ru.t1.dkononov.tm.api.endpoint.*;
+
 
 public interface IServiceLocator {
 
@@ -16,24 +17,21 @@ public interface IServiceLocator {
     IPropertyService getPropertyService();
 
     @NotNull
-    IEndpointClient getConnectionEndpointClient();
+    IAuthEndpoint getAuthEndpointClient();
 
     @NotNull
-    AuthEndpointClient getAuthEndpointClient();
+    ISystemEndpoint getSystemEndpointClient();
 
     @NotNull
-    SystemEndpointClient getSystemEndpointClient();
+    IDomainEndpoint getDomainEndpointClient();
 
     @NotNull
-    DomainEndpointClient getDomainEndpointClient();
+    IProjectEndpoint getProjectEndpointClient();
 
     @NotNull
-    ProjectEndpointClient getProjectEndpointClient();
+    ITaskEndpoint getTaskEndpointClient();
 
     @NotNull
-    TaskEndpointClient getTaskEndpointClient();
-
-    @NotNull
-    UserEndpointClient getUserEndpointClient();
+    IUserEndpoint getUserEndpointClient();
 
 }
