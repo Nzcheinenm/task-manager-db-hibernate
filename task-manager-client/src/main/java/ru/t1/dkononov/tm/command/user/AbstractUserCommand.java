@@ -2,7 +2,9 @@ package ru.t1.dkononov.tm.command.user;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import ru.t1.dkononov.tm.api.client.IAuthEndpointClient;
 import ru.t1.dkononov.tm.api.client.IUserEndpointClient;
+import ru.t1.dkononov.tm.api.endpoint.IAuthEndpoint;
 import ru.t1.dkononov.tm.api.endpoint.IUserEndpoint;
 import ru.t1.dkononov.tm.command.AbstractCommand;
 import ru.t1.dkononov.tm.exception.field.UserNotFoundException;
@@ -13,6 +15,11 @@ public abstract class AbstractUserCommand extends AbstractCommand {
     @NotNull
     protected IUserEndpoint getUserEndpoint() {
         return serviceLocator.getUserEndpointClient();
+    }
+
+    @NotNull
+    protected IAuthEndpoint getAuthEndpoint() {
+        return serviceLocator.getAuthEndpoint();
     }
 
     protected void showUser(@Nullable final User user) throws UserNotFoundException {

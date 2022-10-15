@@ -23,7 +23,7 @@ public final class TaskUpdateByIdCommand extends AbstractTaskCommand {
         @NotNull final String name = TerminalUtil.inLine();
         System.out.println("[ENTER DESCRIPTION]");
         @NotNull final String description = TerminalUtil.inLine();
-        @NotNull final TaskUpdateByIdRequest request = new TaskUpdateByIdRequest();
+        @NotNull final TaskUpdateByIdRequest request = new TaskUpdateByIdRequest(getToken());
         request.setId(id);
         request.setDescription(description);
         request.setName(name);

@@ -9,10 +9,13 @@ import org.jetbrains.annotations.Nullable;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 public class TaskStartByIndexRequest extends AbstractUserRequest {
 
     @Nullable
     private Integer index;
+
+    public TaskStartByIndexRequest(@Nullable final String token) {
+        super(token);
+    }
 
 }

@@ -24,7 +24,7 @@ public final class ProjectShowByIndexCommand extends AbstractProjectCommand {
         System.out.println("[ENTER INDEX]");
         @NotNull final Integer value = TerminalUtil.nextNumber() - 1;
 
-        @NotNull final ProjectGetByIndexRequest request = new ProjectGetByIndexRequest();
+        @NotNull final ProjectGetByIndexRequest request = new ProjectGetByIndexRequest(getToken());
         request.setIndex(value);
         @NotNull final ProjectGetByIndexResponse projectResponse = getProjectEndpoint().getProjectByIndex(request);
         if (projectResponse == null) throw new ProjectNotFoundException();

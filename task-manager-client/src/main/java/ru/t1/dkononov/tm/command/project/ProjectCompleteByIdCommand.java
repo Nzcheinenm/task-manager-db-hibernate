@@ -21,7 +21,7 @@ public final class ProjectCompleteByIdCommand extends AbstractProjectCommand {
         System.out.println("[COMPLETE PROJECT BY ID]");
         System.out.println("ENTER ID:");
         @NotNull final String id = TerminalUtil.inLine();
-        @NotNull final ProjectCompleteByIdRequest request = new ProjectCompleteByIdRequest();
+        @NotNull final ProjectCompleteByIdRequest request = new ProjectCompleteByIdRequest(getToken());
         request.setId(id);
         getProjectEndpoint().completeProjectById(request);
     }

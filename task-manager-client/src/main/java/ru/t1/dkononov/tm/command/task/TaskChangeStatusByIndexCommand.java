@@ -29,7 +29,7 @@ public final class TaskChangeStatusByIndexCommand extends AbstractTaskCommand {
         System.out.println(Arrays.toString(Status.values()));
         @NotNull final String statusValue = TerminalUtil.inLine();
         @Nullable final Status status = Status.toStatus(statusValue);
-        @NotNull final TaskChangeStatusByIndexRequest request = new TaskChangeStatusByIndexRequest();
+        @NotNull final TaskChangeStatusByIndexRequest request = new TaskChangeStatusByIndexRequest(getToken());
         request.setIndex(index);
         request.setStatusValue(status.getDisplayName());
         getTaskEndpointClient().changeStatusByIndex(request);

@@ -17,7 +17,10 @@ public interface IServiceLocator {
     IPropertyService getPropertyService();
 
     @NotNull
-    IAuthEndpoint getAuthEndpointClient();
+    IAuthEndpoint getAuthEndpoint();
+
+    @NotNull
+    ITokenService getTokenService();
 
     @NotNull
     ISystemEndpoint getSystemEndpointClient();

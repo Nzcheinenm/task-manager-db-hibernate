@@ -20,7 +20,7 @@ public final class ProjectStartByIndexCommand extends AbstractProjectCommand {
         System.out.println("[IN PROGRESS PROJECT BY INDEX]");
         System.out.println("ENTER INDEX:");
         @NotNull final Integer index = TerminalUtil.nextNumber() - 1;
-        @NotNull final ProjectStartByIndexRequest request = new ProjectStartByIndexRequest();
+        @NotNull final ProjectStartByIndexRequest request = new ProjectStartByIndexRequest(getToken());
         request.setIndex(index);
         getProjectEndpoint().startProjectByIndex(request);
     }

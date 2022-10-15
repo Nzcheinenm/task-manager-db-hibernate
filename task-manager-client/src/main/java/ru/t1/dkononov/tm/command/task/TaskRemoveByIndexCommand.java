@@ -19,7 +19,7 @@ public final class TaskRemoveByIndexCommand extends AbstractTaskCommand {
     public void execute() throws Exception {
         System.out.println("[ENTER INDEX]");
         @NotNull final Integer value = TerminalUtil.nextNumber() - 1;
-        @NotNull final TaskRemoveByIndexRequest request = new TaskRemoveByIndexRequest();
+        @NotNull final TaskRemoveByIndexRequest request = new TaskRemoveByIndexRequest(getToken());
         request.setIndex(value);
         getTaskEndpointClient().removeTaskByIndex(request);
     }

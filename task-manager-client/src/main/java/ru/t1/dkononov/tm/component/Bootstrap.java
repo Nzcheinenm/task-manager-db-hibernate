@@ -7,19 +7,15 @@ import org.jetbrains.annotations.Nullable;
 import org.reflections.Reflections;
 import ru.t1.dkononov.tm.api.endpoint.*;
 import ru.t1.dkononov.tm.api.repository.ICommandRepository;
-import ru.t1.dkononov.tm.api.services.ICommandService;
-import ru.t1.dkononov.tm.api.services.ILoggerService;
-import ru.t1.dkononov.tm.api.services.IPropertyService;
-import ru.t1.dkononov.tm.api.services.IServiceLocator;
+import ru.t1.dkononov.tm.api.services.*;
 import ru.t1.dkononov.tm.command.AbstractCommand;
-import ru.t1.dkononov.tm.command.server.ConnectCommand;
-import ru.t1.dkononov.tm.command.server.DisconnectCommand;
 import ru.t1.dkononov.tm.exception.system.ArgumentNotSupportedException;
 import ru.t1.dkononov.tm.exception.system.CommandNotSupportedException;
 import ru.t1.dkononov.tm.repository.CommandRepository;
 import ru.t1.dkononov.tm.service.CommandService;
 import ru.t1.dkononov.tm.service.LoggerService;
 import ru.t1.dkononov.tm.service.PropertyService;
+import ru.t1.dkononov.tm.service.TokenService;
 import ru.t1.dkononov.tm.util.SystemUtil;
 import ru.t1.dkononov.tm.util.TerminalUtil;
 
@@ -75,8 +71,11 @@ public final class Bootstrap implements IServiceLocator {
 
     @Getter
     @NotNull
-    private final IAuthEndpoint authEndpointClient = IAuthEndpoint.newInstance(propertyService);
+    private final IAuthEndpoint authEndpoint = IAuthEndpoint.newInstance(propertyService);
 
+    @Getter
+    @NotNull
+    private final ITokenService tokenService = new TokenService();
 
     @NotNull
     private final FileScanner fileScanner = new FileScanner(this);

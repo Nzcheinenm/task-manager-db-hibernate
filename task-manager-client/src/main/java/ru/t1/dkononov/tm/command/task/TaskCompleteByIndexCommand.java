@@ -20,7 +20,7 @@ public final class TaskCompleteByIndexCommand extends AbstractTaskCommand {
         System.out.println("[COMPLETE PROJECT BY INDEX]");
         System.out.println("ENTER INDEX:");
         @NotNull final Integer index = TerminalUtil.nextNumber() - 1;
-        @NotNull final TaskCompleteByIndexRequest request = new TaskCompleteByIndexRequest();
+        @NotNull final TaskCompleteByIndexRequest request = new TaskCompleteByIndexRequest(getToken());
         request.setIndex(index);
         getTaskEndpointClient().completeTaskByIndex(request);
     }

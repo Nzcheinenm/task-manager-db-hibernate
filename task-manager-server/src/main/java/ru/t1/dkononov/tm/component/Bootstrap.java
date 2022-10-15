@@ -8,7 +8,6 @@ import ru.t1.dkononov.tm.api.repository.IProjectRepository;
 import ru.t1.dkononov.tm.api.repository.ITaskRepository;
 import ru.t1.dkononov.tm.api.repository.IUserRepository;
 import ru.t1.dkononov.tm.api.services.*;
-import ru.t1.dkononov.tm.dto.request.*;
 import ru.t1.dkononov.tm.endpoint.*;
 import ru.t1.dkononov.tm.enumerated.Role;
 import ru.t1.dkononov.tm.enumerated.Status;
@@ -100,7 +99,7 @@ public final class Bootstrap implements IServiceLocator {
 
     @Getter
     @NotNull
-    private final IAuthService authService = new AuthService(userService, propertyService);
+    private final IAuthService authService = new AuthService(userService, propertyService, sessionService);
 
     {
         registry(domainEndpoint);

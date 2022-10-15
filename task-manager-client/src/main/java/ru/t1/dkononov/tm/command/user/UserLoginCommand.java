@@ -26,9 +26,10 @@ public final class UserLoginCommand extends AbstractUserCommand {
         System.out.println("ENTER PASSWORD");
         @NotNull final String password = TerminalUtil.inLine();
         @NotNull final UserLoginRequest request = new UserLoginRequest();
-        request.setLogin(login);
+        request.setToken(login);
         request.setPassword(password);
-//        getAuthEndpointClient().login(request);
+        @Nullable final String token = getAuthEndpoint().login(request).getToken();
+        setToken(token);
     }
 
     @Nullable

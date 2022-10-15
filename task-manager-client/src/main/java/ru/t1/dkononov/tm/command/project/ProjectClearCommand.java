@@ -18,7 +18,7 @@ public final class ProjectClearCommand extends AbstractProjectCommand {
     @Override
     public void execute() throws AbstractException {
         System.out.println("[PROJECT_CLEAR]");
-        @NotNull final ProjectClearRequest request = new ProjectClearRequest();
+        @NotNull final ProjectClearRequest request = new ProjectClearRequest(getToken());
         getProjectEndpoint().clearProject(request);
     }
 

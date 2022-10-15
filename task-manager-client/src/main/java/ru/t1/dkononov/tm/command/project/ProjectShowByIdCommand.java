@@ -26,7 +26,7 @@ public final class ProjectShowByIdCommand extends AbstractProjectCommand {
         System.out.println("[ENTER ID]");
         @NotNull final String scanner = TerminalUtil.inLine();
 
-        @NotNull final ProjectGetByIdRequest request = new ProjectGetByIdRequest();
+        @NotNull final ProjectGetByIdRequest request = new ProjectGetByIdRequest(getToken());
         request.setId(scanner);
         @NotNull final ProjectGetByIdResponse projectResponse = getProjectEndpoint().getProjectById(request);
         if (projectResponse == null) throw new ProjectNotFoundException();

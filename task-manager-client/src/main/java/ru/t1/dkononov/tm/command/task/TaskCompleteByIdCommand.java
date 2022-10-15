@@ -20,7 +20,7 @@ public final class TaskCompleteByIdCommand extends AbstractTaskCommand {
         System.out.println("[COMPLETE PROJECT BY ID]");
         System.out.println("ENTER ID:");
         @NotNull final String id = TerminalUtil.inLine();
-        @NotNull final TaskCompleteByIdRequest request = new TaskCompleteByIdRequest();
+        @NotNull final TaskCompleteByIdRequest request = new TaskCompleteByIdRequest(getToken());
         request.setId(id);
         getTaskEndpointClient().completeTaskById(request);
     }

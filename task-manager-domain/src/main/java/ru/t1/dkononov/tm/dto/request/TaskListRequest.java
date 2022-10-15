@@ -10,11 +10,13 @@ import ru.t1.dkononov.tm.enumerated.Sort;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 public class TaskListRequest extends AbstractUserRequest {
 
     @Nullable
     private Sort sort;
 
+    public TaskListRequest(@Nullable final String token) {
+        super(token);
+    }
 
 }

@@ -20,7 +20,7 @@ public final class TaskStartByIdCommand extends AbstractTaskCommand {
         System.out.println("[IN PROGRESS PROJECT BY ID]");
         System.out.println("ENTER ID:");
         @NotNull final String id = TerminalUtil.inLine();
-        @NotNull final TaskStartByIdRequest request = new TaskStartByIdRequest();
+        @NotNull final TaskStartByIdRequest request = new TaskStartByIdRequest(getToken());
         request.setId(id);
         getTaskEndpointClient().startTaskById(request);
     }

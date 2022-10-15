@@ -4,12 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 public final class UserLoginRequest extends AbstractUserRequest {
 
     @Nullable
@@ -17,5 +17,9 @@ public final class UserLoginRequest extends AbstractUserRequest {
 
     @Nullable
     private String password;
+
+    public UserLoginRequest(@NotNull final String token) {
+        super(token);
+    }
 
 }

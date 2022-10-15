@@ -15,6 +15,7 @@ import ru.t1.dkononov.tm.exception.field.AbstractFieldException;
 import ru.t1.dkononov.tm.exception.field.AccessDeniedException;
 import ru.t1.dkononov.tm.exception.field.UserIdEmptyException;
 import ru.t1.dkononov.tm.model.Project;
+import ru.t1.dkononov.tm.model.Session;
 
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
@@ -44,9 +45,9 @@ public final class ProjectEndpoint extends AbstractEndpoint implements IProjectE
             @WebParam(name = REQUEST, partName = REQUEST)
             @NotNull final ProjectChangeStatusByIdRequest request
     ) throws AbstractException {
-        check(request);
+        @NotNull final Session session = check(request);
         @Nullable final String id = request.getId();
-        @Nullable final String userId = request.getUserId();
+        @Nullable final String userId = session.getUserId();
         @Nullable final Status status = Status.valueOf(request.getStatusValue());
         @Nullable final Project project = getProjectService().changeProjectStatusById(userId, id, status);
         return new ProjectChangeStatusByIdResponse(project);
@@ -59,9 +60,9 @@ public final class ProjectEndpoint extends AbstractEndpoint implements IProjectE
             @WebParam(name = REQUEST, partName = REQUEST)
             @NotNull final ProjectChangeStatusByIndexRequest request
     ) throws AbstractException {
-        check(request);
+        @NotNull final Session session = check(request);
         @Nullable final Integer index = request.getIndex();
-        @Nullable final String userId = request.getUserId();
+        @Nullable final String userId = session.getUserId();
         @Nullable final Status status = Status.valueOf(request.getStatusValue());
         @Nullable final Project project = getProjectService().changeProjectStatusByIndex(userId, index, status);
         return new ProjectChangeStatusByIndexResponse(project);
@@ -74,8 +75,8 @@ public final class ProjectEndpoint extends AbstractEndpoint implements IProjectE
             @WebParam(name = REQUEST, partName = REQUEST)
             @NotNull final ProjectClearRequest request
     ) throws UserIdEmptyException, AccessDeniedException {
-        check(request);
-        @Nullable final String userId = request.getUserId();
+        @NotNull final Session session = check(request);
+        @Nullable final String userId = session.getUserId();
         getProjectService().clear(userId);
         return new ProjectClearResponse();
     }
@@ -87,8 +88,8 @@ public final class ProjectEndpoint extends AbstractEndpoint implements IProjectE
             @WebParam(name = REQUEST, partName = REQUEST)
             @NotNull final ProjectCreateRequest request
     ) throws AbstractFieldException {
-        check(request);
-        @Nullable final String userId = request.getUserId();
+        @NotNull final Session session = check(request);
+        @Nullable final String userId = session.getUserId();
         @Nullable final String name = request.getName();
         @Nullable final String description = request.getDescription();
         @Nullable final Project project = getProjectService().create(userId, name, description);
@@ -102,8 +103,8 @@ public final class ProjectEndpoint extends AbstractEndpoint implements IProjectE
             @WebParam(name = REQUEST, partName = REQUEST)
             @NotNull ProjectGetByIdRequest request
     ) throws AbstractException {
-        check(request);
-        @Nullable final String userId = request.getUserId();
+        @NotNull final Session session = check(request);
+        @Nullable final String userId = session.getUserId();
         @Nullable final String id = request.getId();
         @Nullable final Project project = getProjectService().findById(userId, id);
         return new ProjectGetByIdResponse(project);
@@ -116,9 +117,9 @@ public final class ProjectEndpoint extends AbstractEndpoint implements IProjectE
             @WebParam(name = REQUEST, partName = REQUEST)
             @NotNull final ProjectGetByIndexRequest request
     ) throws AbstractException {
-        check(request);
+        @NotNull final Session session = check(request);
         @Nullable final Integer index = request.getIndex();
-        @Nullable final String userId = request.getUserId();
+        @Nullable final String userId = session.getUserId();
         @Nullable final Project project = getProjectService().findByIndex(userId, index);
         return new ProjectGetByIndexResponse(project);
     }
@@ -130,8 +131,8 @@ public final class ProjectEndpoint extends AbstractEndpoint implements IProjectE
             @WebParam(name = REQUEST, partName = REQUEST)
             @NotNull final ProjectListRequest request
     ) throws AccessDeniedException, UserIdEmptyException {
-        check(request);
-        @Nullable final String userId = request.getUserId();
+        @NotNull final Session session = check(request);
+        @Nullable final String userId = session.getUserId();
         @Nullable final Sort sort = request.getSort();
         @Nullable final List<Project> projects = getProjectService().findAll(userId, sort);
         return new ProjectListResponse(projects);
@@ -144,8 +145,8 @@ public final class ProjectEndpoint extends AbstractEndpoint implements IProjectE
             @WebParam(name = REQUEST, partName = REQUEST)
             @NotNull final ProjectRemoveByIdRequest request
     ) throws Exception {
-        check(request);
-        @Nullable final String userId = request.getUserId();
+        @NotNull final Session session = check(request);
+        @Nullable final String userId = session.getUserId();
         @Nullable final String id = request.getId();
         getProjectService().removeById(userId, id);
         return new ProjectRemoveByIdResponse();
@@ -158,8 +159,8 @@ public final class ProjectEndpoint extends AbstractEndpoint implements IProjectE
             @WebParam(name = REQUEST, partName = REQUEST)
             @NotNull final ProjectRemoveByIndexRequest request
     ) throws Exception {
-        check(request);
-        @Nullable final String userId = request.getUserId();
+        @NotNull final Session session = check(request);
+        @Nullable final String userId = session.getUserId();
         @Nullable final Integer index = request.getIndex();
         getProjectService().removeById(userId, String.valueOf(index));
         return new ProjectRemoveByIndexResponse();
@@ -172,8 +173,8 @@ public final class ProjectEndpoint extends AbstractEndpoint implements IProjectE
             @WebParam(name = REQUEST, partName = REQUEST)
             @NotNull final ProjectStartByIdRequest request
     ) throws Exception {
-        check(request);
-        @Nullable final String userId = request.getUserId();
+        @NotNull final Session session = check(request);
+        @Nullable final String userId = session.getUserId();
         @Nullable final String id = request.getId();
         @Nullable final Project project = getProjectService().changeProjectStatusById(userId, id, Status.IN_PROGRESS);
         return new ProjectStartByIdResponse(project);
@@ -186,8 +187,8 @@ public final class ProjectEndpoint extends AbstractEndpoint implements IProjectE
             @WebParam(name = REQUEST, partName = REQUEST)
             @NotNull final ProjectStartByIndexRequest request
     ) throws Exception {
-        check(request);
-        @Nullable final String userId = request.getUserId();
+        @NotNull final Session session = check(request);
+        @Nullable final String userId = session.getUserId();
         @Nullable final Integer index = request.getIndex();
         @Nullable final Project project = getProjectService().changeProjectStatusByIndex(userId, index, Status.IN_PROGRESS);
         return new ProjectStartByIndexResponse(project);
@@ -200,8 +201,8 @@ public final class ProjectEndpoint extends AbstractEndpoint implements IProjectE
             @WebParam(name = REQUEST, partName = REQUEST)
             @NotNull final ProjectCompleteByIdRequest request
     ) throws Exception {
-        check(request);
-        @Nullable final String userId = request.getUserId();
+        @NotNull final Session session = check(request);
+        @Nullable final String userId = session.getUserId();
         @Nullable final String id = request.getId();
         @Nullable final Project project = getProjectService().changeProjectStatusById(userId, id, Status.COMPLETED);
         return new ProjectCompleteByIdResponse(project);
@@ -214,8 +215,8 @@ public final class ProjectEndpoint extends AbstractEndpoint implements IProjectE
             @WebParam(name = REQUEST, partName = REQUEST)
             @NotNull final ProjectCompleteByIndexRequest request
     ) throws Exception {
-        check(request);
-        @Nullable final String userId = request.getUserId();
+        @NotNull final Session session = check(request);
+        @Nullable final String userId = session.getUserId();
         @Nullable final Integer index = request.getIndex();
         @Nullable final Project project = getProjectService().changeProjectStatusByIndex(userId, index, Status.COMPLETED);
         return new ProjectCompleteByIndexResponse(project);
@@ -228,8 +229,8 @@ public final class ProjectEndpoint extends AbstractEndpoint implements IProjectE
             @WebParam(name = REQUEST, partName = REQUEST)
             @NotNull final ProjectUpdateByIdRequest request
     ) throws Exception {
-        check(request);
-        @Nullable final String userId = request.getUserId();
+        @NotNull final Session session = check(request);
+        @Nullable final String userId = session.getUserId();
         @Nullable final String id = request.getId();
         @Nullable final String name = request.getName();
         @Nullable final String description = request.getDescription();
@@ -244,8 +245,8 @@ public final class ProjectEndpoint extends AbstractEndpoint implements IProjectE
             @WebParam(name = REQUEST, partName = REQUEST)
             @NotNull final ProjectUpdateByIndexRequest request
     ) throws Exception {
-        check(request);
-        @Nullable final String userId = request.getUserId();
+        @NotNull final Session session = check(request);
+        @Nullable final String userId = session.getUserId();
         @Nullable final Integer index = request.getIndex();
         @Nullable final String name = request.getName();
         @Nullable final String description = request.getDescription();

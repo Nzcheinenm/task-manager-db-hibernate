@@ -9,11 +9,14 @@ import org.jetbrains.annotations.Nullable;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 public final class TaskRemoveByIndexRequest extends AbstractUserRequest {
 
     @Nullable
     private Integer index;
+
+    public TaskRemoveByIndexRequest(@Nullable final String token) {
+        super(token);
+    }
 
 
 }

@@ -23,7 +23,7 @@ public final class ProjectUpdateByIdCommand extends AbstractProjectCommand {
         @NotNull final String name = TerminalUtil.inLine();
         System.out.println("[ENTER DESCRIPTION]");
         @NotNull final String description = TerminalUtil.inLine();
-        @NotNull final ProjectUpdateByIdRequest request = new ProjectUpdateByIdRequest();
+        @NotNull final ProjectUpdateByIdRequest request = new ProjectUpdateByIdRequest(getToken());
         request.setId(id);
         request.setDescription(description);
         request.setName(name);

@@ -9,10 +9,13 @@ import org.jetbrains.annotations.Nullable;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 public class ProjectStartByIdRequest extends AbstractUserRequest {
 
     @Nullable
     private String id;
+
+    public ProjectStartByIdRequest(@Nullable final String token) {
+        super(token);
+    }
 
 }

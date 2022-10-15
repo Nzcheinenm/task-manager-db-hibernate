@@ -9,7 +9,6 @@ import org.jetbrains.annotations.Nullable;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 public final class ProjectUpdateByIdRequest extends AbstractUserRequest {
 
     @Nullable
@@ -20,5 +19,9 @@ public final class ProjectUpdateByIdRequest extends AbstractUserRequest {
 
     @Nullable
     private String description;
+
+    public ProjectUpdateByIdRequest(@Nullable final String token) {
+        super(token);
+    }
 
 }

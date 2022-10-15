@@ -9,11 +9,13 @@ import org.jetbrains.annotations.Nullable;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 public final class TaskListByProjectIdRequest extends AbstractUserRequest {
 
     @Nullable
     private String projectId;
 
+    public TaskListByProjectIdRequest(@Nullable final String token) {
+        super(token);
+    }
 
 }

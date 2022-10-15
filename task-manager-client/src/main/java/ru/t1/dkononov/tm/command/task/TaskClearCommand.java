@@ -18,7 +18,7 @@ public final class TaskClearCommand extends AbstractTaskCommand {
     @Override
     public void execute() throws AbstractException {
         System.out.println("[CLEAR LIST TASKS]");
-        @NotNull final TaskClearRequest request = new TaskClearRequest();
+        @NotNull final TaskClearRequest request = new TaskClearRequest(getToken());
         getTaskEndpointClient().clearTask(request);
     }
 

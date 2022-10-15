@@ -22,8 +22,8 @@ public final class UserLockCommand extends AbstractUserCommand {
         System.out.println("[USER LOCK]");
         System.out.println("ENTER LOGIN:");
         @NotNull final String login = TerminalUtil.inLine();
-        @NotNull final UserLockRequest request = new UserLockRequest();
-        request.setLogin(login);
+        @NotNull final UserLockRequest request = new UserLockRequest(getToken());
+        request.setToken(login);
         getUserEndpoint().lockUser(request);
     }
 

@@ -20,7 +20,7 @@ public final class TaskStartByIndexCommand extends AbstractTaskCommand {
         System.out.println("[IN PROGRESS PROJECT BY INDEX]");
         System.out.println("ENTER INDEX:");
         @NotNull final Integer index = TerminalUtil.nextNumber() - 1;
-        @NotNull final TaskStartByIndexRequest request = new TaskStartByIndexRequest();
+        @NotNull final TaskStartByIndexRequest request = new TaskStartByIndexRequest(getToken());
         request.setIndex(index);
         getTaskEndpointClient().startTaskByIndex(request);
     }

@@ -75,6 +75,14 @@ public final class PropertyService implements IPropertyService {
 
     @NotNull
     public static final String GIT_COMMITER_EMAIL = "gitCommiterEmail";
+    @NotNull
+    private static final String SESSION_KEY_DEFAULT = "111222";
+    @NotNull
+    private static final String SESSION_KEY = "session.key";
+    @NotNull
+    private static final String SESSION_TIMEOUT_KEY_DEFAULT = "8000";
+    @NotNull
+    private static final String SESSION_TIMEOUT_KEY = "session.timeout";
 
     @NotNull
     public final Properties properties = new Properties();
@@ -150,6 +158,20 @@ public final class PropertyService implements IPropertyService {
     @NotNull
     public String getServerHost() {
         @NotNull final String value = getStringValue(SERVER_HOST_KEY, SERVER_HOST_KEY_DEFAULT);
+        return value;
+    }
+
+    @Override
+    @NotNull
+    public String getSessionKey() {
+        @NotNull final String value = getStringValue(SESSION_KEY, SESSION_KEY_DEFAULT);
+        return value;
+    }
+
+    @Override
+    @NotNull
+    public String getSessionTimeout() {
+        @NotNull final String value = getStringValue(SESSION_TIMEOUT_KEY, SESSION_TIMEOUT_KEY_DEFAULT);
         return value;
     }
 

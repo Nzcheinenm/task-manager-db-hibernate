@@ -31,7 +31,7 @@ public final class TaskListCommand extends AbstractTaskCommand {
         System.out.println(Arrays.toString(Sort.values()));
         @NotNull final String sortType = TerminalUtil.inLine();
         @Nullable final Sort sort = Sort.toSort(sortType);
-        @NotNull final TaskListRequest request = new TaskListRequest();
+        @NotNull final TaskListRequest request = new TaskListRequest(getToken());
         request.setSort(sort);
         @NotNull final TaskListResponse response = getTaskEndpointClient().listTask(request);
         if (response.getTasks() == null) response.setTasks(Collections.emptyList());

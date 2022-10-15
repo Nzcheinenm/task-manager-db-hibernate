@@ -4,12 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 public final class ProjectChangeStatusByIdRequest extends AbstractUserRequest {
 
     @Nullable
@@ -18,4 +18,7 @@ public final class ProjectChangeStatusByIdRequest extends AbstractUserRequest {
     @Nullable
     private String statusValue;
 
+    public ProjectChangeStatusByIdRequest(@Nullable final String token) {
+        super(token);
+    }
 }

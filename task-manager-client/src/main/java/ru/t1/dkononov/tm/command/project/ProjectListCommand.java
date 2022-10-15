@@ -32,7 +32,7 @@ public final class ProjectListCommand extends AbstractProjectCommand {
         System.out.println(Arrays.toString(Sort.values()));
         @NotNull final String sortType = TerminalUtil.inLine();
         @Nullable final Sort sort = Sort.toSort(sortType);
-        @NotNull final ProjectListRequest request = new ProjectListRequest();
+        @NotNull final ProjectListRequest request = new ProjectListRequest(getToken());
         request.setSort(sort);
         int index = 0;
         @NotNull final ProjectListResponse response = getProjectEndpoint().listProject(request);

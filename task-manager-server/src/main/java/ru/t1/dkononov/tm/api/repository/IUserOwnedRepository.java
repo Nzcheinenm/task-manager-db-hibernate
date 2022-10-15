@@ -22,6 +22,9 @@ public interface IUserOwnedRepository<M extends AbstractUserOwnedModel> {
     @Nullable
     M add(@Nullable String userId, @NotNull M m) throws ProjectNotFoundException, UserIdEmptyException;
 
+    @Nullable
+    M add(@NotNull M m) throws ProjectNotFoundException, UserIdEmptyException;
+
     @NotNull
     Collection<M> add(@NotNull Collection<M> models);
 
@@ -32,6 +35,8 @@ public interface IUserOwnedRepository<M extends AbstractUserOwnedModel> {
 
     boolean existsById(@Nullable String userId, @Nullable String id) throws UserIdEmptyException;
 
+    boolean existsById(@Nullable String id) throws UserIdEmptyException;
+
     @Nullable
     M findById(@Nullable String userId, @Nullable String id) throws AbstractException;
 
@@ -40,6 +45,9 @@ public interface IUserOwnedRepository<M extends AbstractUserOwnedModel> {
 
     @Nullable
     M remove(@Nullable String userId, @Nullable M m) throws UserIdEmptyException;
+
+    @Nullable
+    M remove(@Nullable M m) throws UserIdEmptyException;
 
     @Nullable
     M removeById(@Nullable String userId, @Nullable String id) throws AbstractException;

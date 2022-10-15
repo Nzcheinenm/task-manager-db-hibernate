@@ -20,6 +20,10 @@ public interface IPropertyService extends ISaltProvider {
 
     @NotNull String getServerHost();
 
+    @NotNull String getSessionKey();
+
+    @NotNull String getSessionTimeout();
+
     @NotNull
     String getGitBranch();
 

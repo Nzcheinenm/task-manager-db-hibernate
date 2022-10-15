@@ -22,7 +22,7 @@ public final class TaskUnbindFromProjectCommand extends AbstractTaskCommand {
         @NotNull final String projectId = TerminalUtil.inLine();
         System.out.println("[ENTER TASK ID:]");
         @NotNull final String taskId = TerminalUtil.inLine();
-        @NotNull final TaskUnbindFromProjectRequest request = new TaskUnbindFromProjectRequest();
+        @NotNull final TaskUnbindFromProjectRequest request = new TaskUnbindFromProjectRequest(getToken());
         request.setTaskId(taskId);
         request.setProjectId(projectId);
         getTaskEndpointClient().unbindTaskToProject(request);

@@ -11,13 +11,12 @@ import ru.t1.dkononov.tm.dto.response.*;
 import ru.t1.dkononov.tm.enumerated.Role;
 import ru.t1.dkononov.tm.exception.AbstractException;
 import ru.t1.dkononov.tm.exception.field.AbstractFieldException;
+import ru.t1.dkononov.tm.model.Session;
 import ru.t1.dkononov.tm.model.User;
 
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
-
-import static ru.t1.dkononov.tm.api.endpoint.IEndpoint.REQUEST;
 
 @WebService(endpointInterface = "ru.t1.dkononov.tm.api.endpoint.IUserEndpoint")
 public final class UserEndpoint extends AbstractEndpoint implements IUserEndpoint {
@@ -38,7 +37,7 @@ public final class UserEndpoint extends AbstractEndpoint implements IUserEndpoin
             @NotNull final UserLockRequest request
     ) throws Exception {
         check(request, Role.ADMIN);
-        @Nullable final String login = request.getLogin();
+        @Nullable final String login = request.getToken();
         @Nullable final User user = getUserService().lockUserByLogin(login);
         return new UserLockResponse(user);
     }
@@ -51,7 +50,7 @@ public final class UserEndpoint extends AbstractEndpoint implements IUserEndpoin
             @NotNull final UserUnlockRequest request
     ) throws Exception {
         check(request, Role.ADMIN);
-        @Nullable final String login = request.getLogin();
+        @Nullable final String login = request.getToken();
         @Nullable final User user = getUserService().unlockUserByLogin(login);
         return new UserUnlockResponse(user);
     }
@@ -64,7 +63,7 @@ public final class UserEndpoint extends AbstractEndpoint implements IUserEndpoin
             @NotNull final UserRemoveRequest request
     ) throws Exception {
         check(request, Role.ADMIN);
-        @Nullable final String login = request.getLogin();
+        @Nullable final String login = request.getToken();
         @Nullable final User user = getUserService().removeByLogin(login);
         return new UserRemoveResponse(user);
     }
@@ -76,8 +75,8 @@ public final class UserEndpoint extends AbstractEndpoint implements IUserEndpoin
             @WebParam(name = REQUEST, partName = REQUEST)
             @NotNull final UserUpdateProfileRequest request
     ) throws AbstractFieldException {
-        check(request);
-        @Nullable final String userId = request.getUserId();
+        @NotNull final Session session = check(request);
+        @Nullable final String userId = session.getUserId();
         @Nullable final String firstName = request.getFirstName();
         @Nullable final String middleName = request.getMiddleName();
         @Nullable final String lastName = request.getLastName();
@@ -94,8 +93,8 @@ public final class UserEndpoint extends AbstractEndpoint implements IUserEndpoin
             @WebParam(name = REQUEST, partName = REQUEST)
             @NotNull final UserChangePasswordRequest request
     ) throws AbstractFieldException {
-        check(request);
-        @Nullable final String userId = request.getUserId();
+        @NotNull final Session session = check(request);
+        @Nullable final String userId = session.getUserId();
         @Nullable final String password = request.getPassword();
         @Nullable final User user = getUserService().setPassword(userId, password);
         return new UserChangePasswordResponse(user);
@@ -108,7 +107,7 @@ public final class UserEndpoint extends AbstractEndpoint implements IUserEndpoin
             @WebParam(name = REQUEST, partName = REQUEST)
             @NotNull final UserRegistryRequest request
     ) throws AbstractException {
-        @Nullable final String login = request.getLogin();
+        @Nullable final String login = request.getToken();
         @Nullable final String password = request.getPassword();
         @Nullable final String email = request.getEmail();
         @NotNull final IAuthService authService = getServiceLocator().getAuthService();

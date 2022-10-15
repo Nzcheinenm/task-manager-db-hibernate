@@ -13,6 +13,7 @@ import ru.t1.dkononov.tm.exception.AbstractException;
 import ru.t1.dkononov.tm.exception.field.AbstractFieldException;
 import ru.t1.dkononov.tm.exception.field.AccessDeniedException;
 import ru.t1.dkononov.tm.exception.field.UserIdEmptyException;
+import ru.t1.dkononov.tm.model.Session;
 import ru.t1.dkononov.tm.model.Task;
 
 import javax.jws.WebMethod;
@@ -41,9 +42,9 @@ public final class TaskEndpoint extends AbstractEndpoint implements ITaskEndpoin
             @WebParam(name = REQUEST, partName = REQUEST)
             @NotNull final TaskChangeStatusByIdRequest request
     ) throws AbstractException {
-        check(request);
+        @NotNull final Session session = check(request);
         @Nullable final String id = request.getId();
-        @Nullable final String userId = request.getUserId();
+        @Nullable final String userId = session.getUserId();
         @Nullable final Status status = Status.valueOf(request.getStatusValue());
         getTaskService().changeTaskStatusById(userId, id, status);
         return new TaskChangeStatusByIdResponse();
@@ -56,9 +57,9 @@ public final class TaskEndpoint extends AbstractEndpoint implements ITaskEndpoin
             @WebParam(name = REQUEST, partName = REQUEST)
             @NotNull final TaskChangeStatusByIndexRequest request
     ) throws AbstractException {
-        check(request);
+        @NotNull final Session session = check(request);
         @Nullable final Integer index = request.getIndex();
-        @Nullable final String userId = request.getUserId();
+        @Nullable final String userId = session.getUserId();
         @Nullable final Status status = Status.valueOf(request.getStatusValue());
         getTaskService().changeTaskStatusByIndex(userId, index, status);
         return new TaskChangeStatusByIndexResponse();
@@ -72,8 +73,8 @@ public final class TaskEndpoint extends AbstractEndpoint implements ITaskEndpoin
             @NotNull final TaskClearRequest request
     )
             throws UserIdEmptyException, AccessDeniedException {
-        check(request);
-        @Nullable final String userId = request.getUserId();
+        @NotNull final Session session = check(request);
+        @Nullable final String userId = session.getUserId();
         getTaskService().clear(userId);
         return new TaskClearResponse();
     }
@@ -85,8 +86,8 @@ public final class TaskEndpoint extends AbstractEndpoint implements ITaskEndpoin
             @WebParam(name = REQUEST, partName = REQUEST)
             @NotNull final TaskCreateRequest request
     ) throws AbstractFieldException {
-        check(request);
-        @Nullable final String userId = request.getUserId();
+        @NotNull final Session session = check(request);
+        @Nullable final String userId = session.getUserId();
         @Nullable final String name = request.getName();
         @Nullable final String description = request.getDescription();
         @Nullable final Task task = getTaskService().create(userId, name, description);
@@ -100,8 +101,8 @@ public final class TaskEndpoint extends AbstractEndpoint implements ITaskEndpoin
             @WebParam(name = REQUEST, partName = REQUEST)
             @NotNull final TaskGetByIdRequest request
     ) throws AbstractException {
-        check(request);
-        @Nullable final String userId = request.getUserId();
+        @NotNull final Session session = check(request);
+        @Nullable final String userId = session.getUserId();
         @Nullable final String id = request.getId();
         @Nullable final Task task = getTaskService().findById(userId, id);
         return new TaskGetByIdResponse(task);
@@ -114,9 +115,9 @@ public final class TaskEndpoint extends AbstractEndpoint implements ITaskEndpoin
             @WebParam(name = REQUEST, partName = REQUEST)
             @NotNull final TaskGetByIndexRequest request
     ) throws AbstractException {
-        check(request);
+        @NotNull final Session session = check(request);
         @Nullable final Integer index = request.getIndex();
-        @Nullable final String userId = request.getUserId();
+        @Nullable final String userId = session.getUserId();
         @Nullable final Task task = getTaskService().findByIndex(userId, index);
         return new TaskGetByIndexResponse(task);
     }
@@ -129,8 +130,8 @@ public final class TaskEndpoint extends AbstractEndpoint implements ITaskEndpoin
             @NotNull final TaskListRequest request
     )
             throws AccessDeniedException, UserIdEmptyException {
-        check(request);
-        @Nullable final String userId = request.getUserId();
+        @NotNull final Session session = check(request);
+        @Nullable final String userId = session.getUserId();
         @Nullable final Sort sort = request.getSort();
         @Nullable final List<Task> tasks = getTaskService().findAll(userId, sort);
         return new TaskListResponse(tasks);
@@ -142,8 +143,8 @@ public final class TaskEndpoint extends AbstractEndpoint implements ITaskEndpoin
             @WebParam(name = REQUEST, partName = REQUEST)
             @NotNull final TaskRemoveByIdRequest request
     ) throws Exception {
-        check(request);
-        @Nullable final String userId = request.getUserId();
+        @NotNull final Session session = check(request);
+        @Nullable final String userId = session.getUserId();
         @Nullable final String id = request.getId();
         getTaskService().removeById(userId, id);
         return new TaskRemoveByIdResponse();
@@ -156,8 +157,8 @@ public final class TaskEndpoint extends AbstractEndpoint implements ITaskEndpoin
             @WebParam(name = REQUEST, partName = REQUEST)
             @NotNull final TaskRemoveByIndexRequest request
     ) throws Exception {
-        check(request);
-        @Nullable final String userId = request.getUserId();
+        @NotNull final Session session = check(request);
+        @Nullable final String userId = session.getUserId();
         @Nullable final Integer index = request.getIndex();
         @Nullable final Task Task = getTaskService().removeById(userId, String.valueOf(index));
         return new TaskRemoveByIndexResponse(Task);
@@ -170,8 +171,8 @@ public final class TaskEndpoint extends AbstractEndpoint implements ITaskEndpoin
             @WebParam(name = REQUEST, partName = REQUEST)
             @NotNull final TaskStartByIdRequest request
     ) throws Exception {
-        check(request);
-        @Nullable final String userId = request.getUserId();
+        @NotNull final Session session = check(request);
+        @Nullable final String userId = session.getUserId();
         @Nullable final String id = request.getId();
         getTaskService().changeTaskStatusById(userId, id, Status.IN_PROGRESS);
         return new TaskStartByIdResponse();
@@ -184,8 +185,8 @@ public final class TaskEndpoint extends AbstractEndpoint implements ITaskEndpoin
             @WebParam(name = REQUEST, partName = REQUEST)
             @NotNull final TaskStartByIndexRequest request
     ) throws Exception {
-        check(request);
-        @Nullable final String userId = request.getUserId();
+        @NotNull final Session session = check(request);
+        @Nullable final String userId = session.getUserId();
         @Nullable final Integer index = request.getIndex();
         getTaskService().changeTaskStatusByIndex(userId, index, Status.IN_PROGRESS);
         return new TaskStartByIndexResponse();
@@ -198,8 +199,8 @@ public final class TaskEndpoint extends AbstractEndpoint implements ITaskEndpoin
             @WebParam(name = REQUEST, partName = REQUEST)
             @NotNull final TaskCompleteByIdRequest request
     ) throws Exception {
-        check(request);
-        @Nullable final String userId = request.getUserId();
+        @NotNull final Session session = check(request);
+        @Nullable final String userId = session.getUserId();
         @Nullable final String id = request.getId();
         getTaskService().changeTaskStatusById(userId, id, Status.COMPLETED);
         return new TaskCompleteByIdResponse();
@@ -212,8 +213,8 @@ public final class TaskEndpoint extends AbstractEndpoint implements ITaskEndpoin
             @WebParam(name = REQUEST, partName = REQUEST)
             @NotNull final TaskCompleteByIndexRequest request
     ) throws Exception {
-        check(request);
-        @Nullable final String userId = request.getUserId();
+        @NotNull final Session session = check(request);
+        @Nullable final String userId = session.getUserId();
         @Nullable final Integer index = request.getIndex();
         getTaskService().changeTaskStatusByIndex(userId, index, Status.COMPLETED);
         return new TaskCompleteByIndexResponse();
@@ -226,8 +227,8 @@ public final class TaskEndpoint extends AbstractEndpoint implements ITaskEndpoin
             @WebParam(name = REQUEST, partName = REQUEST)
             @NotNull final TaskBindToProjectRequest request
     ) throws Exception {
-        check(request);
-        @Nullable final String userId = request.getUserId();
+        @NotNull final Session session = check(request);
+        @Nullable final String userId = session.getUserId();
         @Nullable final String projectId = request.getProjectId();
         @Nullable final String taskId = request.getTaskId();
         getServiceLocator().getProjectTaskService().bindTaskToProject(userId, projectId, taskId);
@@ -241,8 +242,8 @@ public final class TaskEndpoint extends AbstractEndpoint implements ITaskEndpoin
             @WebParam(name = REQUEST, partName = REQUEST)
             @NotNull final TaskUnbindFromProjectRequest request
     ) throws Exception {
-        check(request);
-        @Nullable final String userId = request.getUserId();
+        @NotNull final Session session = check(request);
+        @Nullable final String userId = session.getUserId();
         @Nullable final String projectId = request.getProjectId();
         @Nullable final String taskId = request.getTaskId();
         getServiceLocator().getProjectTaskService().unbindTaskFromProject(userId, projectId, taskId);
@@ -256,8 +257,8 @@ public final class TaskEndpoint extends AbstractEndpoint implements ITaskEndpoin
             @WebParam(name = REQUEST, partName = REQUEST)
             @NotNull final TaskUpdateByIdRequest request
     ) throws Exception {
-        check(request);
-        @Nullable final String userId = request.getUserId();
+        @NotNull final Session session = check(request);
+        @Nullable final String userId = session.getUserId();
         @Nullable final String id = request.getId();
         @Nullable final String name = request.getName();
         @Nullable final String description = request.getDescription();
@@ -272,8 +273,8 @@ public final class TaskEndpoint extends AbstractEndpoint implements ITaskEndpoin
             @WebParam(name = REQUEST, partName = REQUEST)
             @NotNull final TaskUpdateByIndexRequest request
     ) throws Exception {
-        check(request);
-        @Nullable final String userId = request.getUserId();
+        @NotNull final Session session = check(request);
+        @Nullable final String userId = session.getUserId();
         @Nullable final Integer index = request.getIndex();
         @Nullable final String name = request.getName();
         @Nullable final String description = request.getDescription();
@@ -288,8 +289,8 @@ public final class TaskEndpoint extends AbstractEndpoint implements ITaskEndpoin
             @WebParam(name = REQUEST, partName = REQUEST)
             @NotNull final TaskListByProjectIdRequest request
     ) throws Exception {
-        check(request);
-        @Nullable final String userId = request.getUserId();
+        @NotNull final Session session = check(request);
+        @Nullable final String userId = session.getUserId();
         @Nullable final String projectId = request.getProjectId();
         @Nullable final List<Task> tasks = getTaskService().findAllByProjectId(userId, projectId);
         return new TaskListByProjectIdResponse(tasks);

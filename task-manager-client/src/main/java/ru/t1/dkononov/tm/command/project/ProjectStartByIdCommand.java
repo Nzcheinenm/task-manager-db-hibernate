@@ -20,7 +20,7 @@ public final class ProjectStartByIdCommand extends AbstractProjectCommand {
         System.out.println("[IN PROGRESS PROJECT BY ID]");
         System.out.println("ENTER ID:");
         @NotNull final String id = TerminalUtil.inLine();
-        @NotNull final ProjectStartByIdRequest request = new ProjectStartByIdRequest();
+        @NotNull final ProjectStartByIdRequest request = new ProjectStartByIdRequest(getToken());
         request.setId(id);
         getProjectEndpoint().startProjectById(request);
     }

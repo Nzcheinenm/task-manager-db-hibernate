@@ -26,7 +26,7 @@ public final class ProjectAddCommand extends AbstractProjectCommand {
         @NotNull final String name = TerminalUtil.inLine();
         System.out.println("ENTER DESCRIPTION:");
         @NotNull final String description = TerminalUtil.inLine();
-        @NotNull final ProjectCreateRequest request = new ProjectCreateRequest();
+        @NotNull final ProjectCreateRequest request = new ProjectCreateRequest(getToken());
         request.setName(name);
         request.setDescription(description);
         getProjectEndpoint().createProject(request);

@@ -28,9 +28,9 @@ public final class UserRegistryCommand extends AbstractUserCommand {
         @NotNull final String password = TerminalUtil.inLine();
         System.out.println("ENTER EMAIL:");
         @NotNull final String email = TerminalUtil.inLine();
-        @NotNull final UserRegistryRequest request = new UserRegistryRequest();
+        @NotNull final UserRegistryRequest request = new UserRegistryRequest(getToken());
         request.setPassword(password);
-        request.setLogin(login);
+        request.setToken(login);
         request.setEmail(email);
         @NotNull final User user = getUserEndpoint().registryUser(request).getUser();
         showUser(user);

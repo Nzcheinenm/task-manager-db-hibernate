@@ -20,7 +20,7 @@ public final class ProjectCompleteByIndexCommand extends AbstractProjectCommand 
         System.out.println("[COMPLETE PROJECT BY INDEX]");
         System.out.println("ENTER INDEX:");
         @NotNull final Integer index = TerminalUtil.nextNumber() - 1;
-        @NotNull final ProjectCompleteByIndexRequest request = new ProjectCompleteByIndexRequest();
+        @NotNull final ProjectCompleteByIndexRequest request = new ProjectCompleteByIndexRequest(getToken());
         request.setIndex(index);
         getProjectEndpoint().completeProjectByIndex(request);
     }

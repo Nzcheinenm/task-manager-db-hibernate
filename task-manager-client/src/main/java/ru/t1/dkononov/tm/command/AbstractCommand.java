@@ -17,13 +17,16 @@ public abstract class AbstractCommand implements ICommand {
     protected IServiceLocator serviceLocator;
 
     @Nullable
+    protected String getToken() {
+        return getServiceLocator().getTokenService().getToken();
+    }
+
+    protected void setToken(@Nullable final String token) {
+        getServiceLocator().getTokenService().setToken(token);
+    }
+
+    @Nullable
     public abstract Role[] getRoles();
-
-//    @Nullable
-//    public IAuthEndpointClient getAuthEndpointClient() {
-//        return serviceLocator.getAuthEndpointClient();
-//    }
-
 
     @NotNull
     @Override

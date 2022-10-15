@@ -9,7 +9,6 @@ import org.jetbrains.annotations.Nullable;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 public final class TaskChangeStatusByIdRequest extends AbstractUserRequest {
 
     @Nullable
@@ -17,5 +16,9 @@ public final class TaskChangeStatusByIdRequest extends AbstractUserRequest {
 
     @Nullable
     private String id;
+
+    public TaskChangeStatusByIdRequest(@Nullable final String token) {
+        super(token);
+    }
 
 }

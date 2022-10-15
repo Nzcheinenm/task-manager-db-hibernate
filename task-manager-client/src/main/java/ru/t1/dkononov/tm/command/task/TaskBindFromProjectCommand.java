@@ -22,7 +22,7 @@ public final class TaskBindFromProjectCommand extends AbstractTaskCommand {
         @NotNull final String projectId = TerminalUtil.inLine();
         System.out.println("[ENTER TASK ID:]");
         @NotNull final String taskId = TerminalUtil.inLine();
-        @NotNull final TaskBindToProjectRequest request = new TaskBindToProjectRequest();
+        @NotNull final TaskBindToProjectRequest request = new TaskBindToProjectRequest(getToken());
         request.setTaskId(taskId);
         request.setProjectId(projectId);
         getTaskEndpointClient().bindTaskToProject(request);

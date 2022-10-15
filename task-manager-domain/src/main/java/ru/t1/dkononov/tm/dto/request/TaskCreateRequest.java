@@ -9,7 +9,6 @@ import org.jetbrains.annotations.Nullable;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 public final class TaskCreateRequest extends AbstractUserRequest {
 
     @Nullable
@@ -17,5 +16,9 @@ public final class TaskCreateRequest extends AbstractUserRequest {
 
     @Nullable
     private String description;
+
+    public TaskCreateRequest(@Nullable final String token) {
+        super(token);
+    }
 
 }

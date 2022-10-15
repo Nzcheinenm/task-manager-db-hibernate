@@ -15,4 +15,8 @@ public final class TaskGetByIndexRequest extends AbstractUserRequest {
     @Nullable
     private Integer index;
 
+    public TaskGetByIndexRequest(@Nullable final String token) {
+        super(token);
+    }
+
 }

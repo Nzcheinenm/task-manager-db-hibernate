@@ -8,6 +8,7 @@ import ru.t1.dkononov.tm.api.services.IUserService;
 import ru.t1.dkononov.tm.dto.request.AbstractUserRequest;
 import ru.t1.dkononov.tm.enumerated.Role;
 import ru.t1.dkononov.tm.exception.field.AccessDeniedException;
+import ru.t1.dkononov.tm.model.Session;
 import ru.t1.dkononov.tm.model.User;
 
 public abstract class AbstractEndpoint {
@@ -16,27 +17,25 @@ public abstract class AbstractEndpoint {
         this.serviceLocator = serviceLocator;
     }
 
-    protected void check(
+    protected Session check(
             @Nullable final AbstractUserRequest request,
             @Nullable final Role role
     ) throws Exception {
         if (request == null) throw new AccessDeniedException();
         if (role == null) throw new AccessDeniedException();
-        @Nullable final String userId = request.getUserId();
-        if (userId == null || userId.isEmpty()) throw new AccessDeniedException();
-        @NotNull final IUserService userService = serviceLocator.getUserService();
-        @Nullable final User user = userService.findById(userId);
-        if (user == null) throw new AccessDeniedException();
-        @Nullable final Role roleUser = user.getRole();
-        final boolean check = roleUser == role;
-        if (!check) throw new AccessDeniedException();
+        @Nullable final String token = request.getToken();
+        @Nullable final Session session = serviceLocator.getAuthService().validateToken(token);
+       if (session.getRole() == null) throw new AccessDeniedException();
+       if (!session.getRole().equals(role)) throw new AccessDeniedException();
+       return session;
     }
 
-    protected void check(@Nullable final AbstractUserRequest request)
+    protected Session check(@Nullable final AbstractUserRequest request)
             throws AccessDeniedException {
         if (request == null) throw new AccessDeniedException();
-        @Nullable final String userId = request.getUserId();
-        if (userId == null || userId.isEmpty()) throw new AccessDeniedException();
+        @Nullable final String token = request.getToken();
+        if (token == null || token.isEmpty()) throw new AccessDeniedException();
+        return serviceLocator.getAuthService().validateToken(token);
     }
 
     @Getter

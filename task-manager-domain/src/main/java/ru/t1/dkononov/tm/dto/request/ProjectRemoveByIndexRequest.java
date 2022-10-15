@@ -9,11 +9,13 @@ import org.jetbrains.annotations.Nullable;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 public final class ProjectRemoveByIndexRequest extends AbstractUserRequest {
 
     @Nullable
     private Integer index;
 
+    public ProjectRemoveByIndexRequest(@Nullable final String token) {
+        super(token);
+    }
 
 }
