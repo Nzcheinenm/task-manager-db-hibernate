@@ -2,8 +2,6 @@ package ru.t1.dkononov.tm.command.project;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import ru.t1.dkononov.tm.api.client.IProjectEndpointClient;
-import ru.t1.dkononov.tm.api.client.ITaskEndpointClient;
 import ru.t1.dkononov.tm.api.endpoint.IProjectEndpoint;
 import ru.t1.dkononov.tm.api.endpoint.ITaskEndpoint;
 import ru.t1.dkononov.tm.command.AbstractCommand;

@@ -44,7 +44,6 @@ public final class Bootstrap implements IServiceLocator {
     @NotNull
     private final ILoggerService loggerService = new LoggerService();
 
-
     @Getter
     @NotNull
     private final IPropertyService propertyService = new PropertyService();

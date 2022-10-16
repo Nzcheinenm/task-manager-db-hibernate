@@ -20,16 +20,16 @@ public final class UserViewProfileCommand extends AbstractUserCommand {
 
     @Override
     public void execute() throws AbstractException {
-        @NotNull final UserProfileRequest request = new UserProfileRequest();
-//        @NotNull final User user = getAuthEndpointClient().profile(request).getUser();
-//        System.out.println("[USER VIEW PROFILE]");
-//        System.out.println("ID: " + user.getId());
-//        System.out.println("LOGIN: " + user.getId());
-//        System.out.println("FIRST NAME: " + user.getFirstName());
-//        System.out.println("MIDDLE NAME: " + user.getMiddleName());
-//        System.out.println("LAST NAME: " + user.getLastName());
-//        System.out.println("E-MAIL: " + user.getEmail());
-//        System.out.println("ROLE: " + user.getRole().getDisplayName());
+        @NotNull final UserProfileRequest request = new UserProfileRequest(getToken());
+        @NotNull final User user = getAuthEndpoint().profile(request).getUser();
+        System.out.println("[USER VIEW PROFILE]");
+        System.out.println("ID: " + user.getId());
+        System.out.println("LOGIN: " + user.getId());
+        System.out.println("FIRST NAME: " + user.getFirstName());
+        System.out.println("MIDDLE NAME: " + user.getMiddleName());
+        System.out.println("LAST NAME: " + user.getLastName());
+        System.out.println("E-MAIL: " + user.getEmail());
+        System.out.println("ROLE: " + user.getRole().getDisplayName());
     }
 
     @Nullable

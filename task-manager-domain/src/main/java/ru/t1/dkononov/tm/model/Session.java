@@ -1,6 +1,5 @@
 package ru.t1.dkononov.tm.model;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

@@ -1,6 +1,5 @@
 package ru.t1.dkononov.tm.endpoint;
 
-import lombok.NoArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.api.endpoint.IProjectEndpoint;
@@ -22,8 +21,6 @@ import javax.jws.WebParam;
 import javax.jws.WebService;
 import java.util.List;
 
-import static ru.t1.dkononov.tm.api.endpoint.IEndpoint.REQUEST;
-
 @WebService(endpointInterface = "ru.t1.dkononov.tm.api.endpoint.IProjectEndpoint")
 public final class ProjectEndpoint extends AbstractEndpoint implements IProjectEndpoint {
 
@@ -41,7 +38,7 @@ public final class ProjectEndpoint extends AbstractEndpoint implements IProjectE
     @NotNull
     @Override
     @WebMethod
-    public ProjectChangeStatusByIdResponse changeStatusById (
+    public ProjectChangeStatusByIdResponse changeStatusById(
             @WebParam(name = REQUEST, partName = REQUEST)
             @NotNull final ProjectChangeStatusByIdRequest request
     ) throws AbstractException {

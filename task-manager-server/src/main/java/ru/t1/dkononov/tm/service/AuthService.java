@@ -17,7 +17,6 @@ import ru.t1.dkononov.tm.model.User;
 import ru.t1.dkononov.tm.util.CryptUtil;
 import ru.t1.dkononov.tm.util.HashUtil;
 
-import javax.naming.AuthenticationException;
 import java.util.Date;
 
 
@@ -39,7 +38,7 @@ public final class AuthService implements IAuthService {
     public AuthService(
             @Nullable final IUserService userService,
             @Nullable final IPropertyService propertyService,
-            @NotNull  final ISessionService sessionService) {
+            @NotNull final ISessionService sessionService) {
         this.userService = userService;
         this.propertyService = propertyService;
         this.sessionService = sessionService;
@@ -53,7 +52,7 @@ public final class AuthService implements IAuthService {
         @NotNull final String sessionKey = propertyService.getSessionKey();
         @NotNull String json;
         try {
-            json = CryptUtil.decrypt(sessionKey,token);
+            json = CryptUtil.decrypt(sessionKey, token);
         } catch (@NotNull final Exception e) {
             throw new AccessDeniedException();
         }
@@ -72,7 +71,7 @@ public final class AuthService implements IAuthService {
     }
 
     @Override
-    public void  invalidate(@Nullable final Session session) throws UserIdEmptyException {
+    public void invalidate(@Nullable final Session session) throws UserIdEmptyException {
         if (session == null) return;
         sessionService.remove(session);
     }
@@ -86,11 +85,11 @@ public final class AuthService implements IAuthService {
         if (login == null || login.isEmpty()) throw new LoginEmptyException();
         if (password == null || password.isEmpty()) throw new PasswordEmptyException();
         @Nullable final User user = userService.findByLogin(login);
-        if (user == null) throw new AuthenticationException();
-        if (user.getLocked()) throw new AuthenticationException();
-        @Nullable final String hash = HashUtil.salt(propertyService,password);
-        if (hash == null) throw new AuthenticationException();
-        if (!hash.equals(user.getPasswordHash())) throw new AuthenticationException();
+        if (user == null) throw new AccessDeniedException();
+        if (user.getLocked()) throw new AccessDeniedException();
+        @Nullable final String hash = HashUtil.salt(propertyService, password);
+        if (hash == null) throw new AccessDeniedException();
+        if (!hash.equals(user.getPasswordHash())) throw new AccessDeniedException();
         return getToken(user);
     }
 

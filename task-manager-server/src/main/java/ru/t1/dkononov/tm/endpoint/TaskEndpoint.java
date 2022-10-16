@@ -21,8 +21,6 @@ import javax.jws.WebParam;
 import javax.jws.WebService;
 import java.util.List;
 
-import static ru.t1.dkononov.tm.api.endpoint.IEndpoint.REQUEST;
-
 @WebService(endpointInterface = "ru.t1.dkononov.tm.api.endpoint.ITaskEndpoint")
 public final class TaskEndpoint extends AbstractEndpoint implements ITaskEndpoint {
 

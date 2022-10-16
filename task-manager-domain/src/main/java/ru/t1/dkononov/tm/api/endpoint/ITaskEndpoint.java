@@ -24,19 +24,19 @@ public interface ITaskEndpoint extends IEndpoint {
     @SneakyThrows
     @WebMethod(exclude = true)
     static ITaskEndpoint newInstance() {
-        return newInstance(HOST,PORT);
+        return newInstance(HOST, PORT);
     }
 
     @SneakyThrows
     @WebMethod(exclude = true)
     static ITaskEndpoint newInstance(@NotNull final IConnectionProvider connectionProvider) {
-        return IEndpoint.newInstance(connectionProvider,NAME,SPACE,PART,ITaskEndpoint.class);
+        return IEndpoint.newInstance(connectionProvider, NAME, SPACE, PART, ITaskEndpoint.class);
     }
 
     @SneakyThrows
     @WebMethod(exclude = true)
     static ITaskEndpoint newInstance(@NotNull final String host, @NotNull final String port) {
-        return IEndpoint.newInstance(host,port,NAME,SPACE,PART,ITaskEndpoint.class);
+        return IEndpoint.newInstance(host, port, NAME, SPACE, PART, ITaskEndpoint.class);
     }
 
     @NotNull

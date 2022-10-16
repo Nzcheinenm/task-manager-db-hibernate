@@ -27,7 +27,7 @@ public final class UserUpdateProfileCommand extends AbstractUserCommand {
         @NotNull final String lastName = TerminalUtil.inLine();
         System.out.println("MIDDLE NAME");
         @NotNull final String middleName = TerminalUtil.inLine();
-        @NotNull final UserUpdateProfileRequest request = new UserUpdateProfileRequest();
+        @NotNull final UserUpdateProfileRequest request = new UserUpdateProfileRequest(getToken());
         request.setFirstName(firstName);
         request.setMiddleName(middleName);
         request.setLastName(lastName);

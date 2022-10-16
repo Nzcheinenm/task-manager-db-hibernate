@@ -19,7 +19,7 @@ public final class UserLogoutCommand extends AbstractUserCommand {
     @Override
     public void execute() throws Exception {
         System.out.println("[USER LOGOUT]");
-        @NotNull final UserLogoutRequest request = new UserLogoutRequest();
+        @NotNull final UserLogoutRequest request = new UserLogoutRequest(getToken());
         request.setToken(getToken());
         getAuthEndpoint().logout(request);
         setToken(null);
@@ -30,4 +30,5 @@ public final class UserLogoutCommand extends AbstractUserCommand {
     public Role[] getRoles() {
         return Role.values();
     }
+
 }

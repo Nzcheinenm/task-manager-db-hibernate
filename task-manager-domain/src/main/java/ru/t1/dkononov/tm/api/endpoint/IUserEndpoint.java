@@ -22,19 +22,19 @@ public interface IUserEndpoint extends IEndpoint {
     @SneakyThrows
     @WebMethod(exclude = true)
     static IUserEndpoint newInstance() {
-        return newInstance(HOST,PORT);
+        return newInstance(HOST, PORT);
     }
 
     @SneakyThrows
     @WebMethod(exclude = true)
     static IUserEndpoint newInstance(@NotNull final IConnectionProvider connectionProvider) {
-        return IEndpoint.newInstance(connectionProvider,NAME,SPACE,PART,IUserEndpoint.class);
+        return IEndpoint.newInstance(connectionProvider, NAME, SPACE, PART, IUserEndpoint.class);
     }
 
     @SneakyThrows
     @WebMethod(exclude = true)
     static IUserEndpoint newInstance(@NotNull final String host, @NotNull final String port) {
-        return IEndpoint.newInstance(host,port,NAME,SPACE,PART,IUserEndpoint.class);
+        return IEndpoint.newInstance(host, port, NAME, SPACE, PART, IUserEndpoint.class);
     }
 
     @NotNull

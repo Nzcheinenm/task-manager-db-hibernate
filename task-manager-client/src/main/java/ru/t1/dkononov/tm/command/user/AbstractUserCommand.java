@@ -2,8 +2,6 @@ package ru.t1.dkononov.tm.command.user;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import ru.t1.dkononov.tm.api.client.IAuthEndpointClient;
-import ru.t1.dkononov.tm.api.client.IUserEndpointClient;
 import ru.t1.dkononov.tm.api.endpoint.IAuthEndpoint;
 import ru.t1.dkononov.tm.api.endpoint.IUserEndpoint;
 import ru.t1.dkononov.tm.command.AbstractCommand;

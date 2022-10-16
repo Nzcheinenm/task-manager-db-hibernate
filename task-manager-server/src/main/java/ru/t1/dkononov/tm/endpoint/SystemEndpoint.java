@@ -13,8 +13,6 @@ import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
 
-import static ru.t1.dkononov.tm.api.endpoint.IEndpoint.REQUEST;
-
 @WebService(endpointInterface = "ru.t1.dkononov.tm.api.endpoint.ISystemEndpoint")
 public final class SystemEndpoint implements ISystemEndpoint {
 

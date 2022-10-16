@@ -96,6 +96,25 @@ public abstract class AbstractUserOwnedService<M extends AbstractUserOwnedModel,
         return repository.existsById(userId, id);
     }
 
+    @Override
+    public boolean existsById(@Nullable final String id) throws UserIdEmptyException {
+        if (id == null || id.isEmpty()) return false;
+        return repository.existsById(id);
+    }
+
+    @Nullable
+    @Override
+    public M add(@Nullable final M model) throws ProjectNotFoundException, UserIdEmptyException {
+        if (model == null) throw new ProjectNotFoundException();
+        return repository.add(model);
+    }
+
+    @Nullable
+    @Override
+    public M remove(@Nullable final M model) throws UserIdEmptyException {
+        return repository.remove(model);
+    }
+
     @Nullable
     @Override
     public M findById(@Nullable final String userId, @Nullable final String id)

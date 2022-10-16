@@ -24,19 +24,19 @@ public interface IProjectEndpoint extends IEndpoint {
     @SneakyThrows
     @WebMethod(exclude = true)
     static IProjectEndpoint newInstance() {
-        return newInstance(HOST,PORT);
+        return newInstance(HOST, PORT);
     }
 
     @SneakyThrows
     @WebMethod(exclude = true)
     static IProjectEndpoint newInstance(@NotNull final IConnectionProvider connectionProvider) {
-        return IEndpoint.newInstance(connectionProvider,NAME,SPACE,PART,IProjectEndpoint.class);
+        return IEndpoint.newInstance(connectionProvider, NAME, SPACE, PART, IProjectEndpoint.class);
     }
 
     @SneakyThrows
     @WebMethod(exclude = true)
     static IProjectEndpoint newInstance(@NotNull final String host, @NotNull final String port) {
-        return IEndpoint.newInstance(host,port,NAME,SPACE,PART,IProjectEndpoint.class);
+        return IEndpoint.newInstance(host, port, NAME, SPACE, PART, IProjectEndpoint.class);
     }
 
     @NotNull

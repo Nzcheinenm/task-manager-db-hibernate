@@ -1,10 +1,8 @@
 package ru.t1.dkononov.tm.dto.request;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 @Getter
@@ -15,7 +13,7 @@ public final class UserProfileRequest extends AbstractUserRequest {
     @Nullable
     private String login;
 
-    public UserProfileRequest(@NotNull final String token) {
+    public UserProfileRequest(@Nullable final String token) {
         super(token);
     }
 

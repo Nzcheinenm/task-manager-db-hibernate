@@ -218,7 +218,7 @@ public final class PropertyService implements IPropertyService {
 
     @Override
     @NotNull
-    public  String getPort() {
+    public String getPort() {
         @NotNull final String value = getStringValue(SERVER_PORT_KEY, SERVER_PORT_KEY_DEFAULT);
         return value;
     }

@@ -1,7 +1,6 @@
 package ru.t1.dkononov.tm.command.data;
 
 import org.jetbrains.annotations.NotNull;
-import ru.t1.dkononov.tm.api.client.IDomainEndpointClient;
 import ru.t1.dkononov.tm.api.endpoint.IDomainEndpoint;
 import ru.t1.dkononov.tm.command.AbstractCommand;
 

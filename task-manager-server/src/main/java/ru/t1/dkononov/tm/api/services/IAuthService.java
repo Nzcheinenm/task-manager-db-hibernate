@@ -17,9 +17,10 @@ public interface IAuthService {
     @SneakyThrows
     Session validateToken(@Nullable String token);
 
-    void  invalidate(@Nullable Session session) throws UserIdEmptyException;
+    void invalidate(@Nullable Session session) throws UserIdEmptyException;
 
-    @NotNull String login(
+    @NotNull
+    String login(
             @Nullable String login,
             @Nullable String password
     ) throws LoginEmptyException, Exception;

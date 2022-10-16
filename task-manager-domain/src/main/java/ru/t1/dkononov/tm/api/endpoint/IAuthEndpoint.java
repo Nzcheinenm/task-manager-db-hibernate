@@ -4,14 +4,16 @@ import lombok.SneakyThrows;
 import org.jetbrains.annotations.NotNull;
 import ru.t1.dkononov.tm.dto.request.UserLoginRequest;
 import ru.t1.dkononov.tm.dto.request.UserLogoutRequest;
+import ru.t1.dkononov.tm.dto.request.UserProfileRequest;
 import ru.t1.dkononov.tm.dto.response.UserLoginResponse;
 import ru.t1.dkononov.tm.dto.response.UserLogoutResponse;
+import ru.t1.dkononov.tm.dto.response.UserProfileResponse;
+import ru.t1.dkononov.tm.exception.field.AccessDeniedException;
+import ru.t1.dkononov.tm.exception.field.IdEmptyException;
 
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
-
-import static ru.t1.dkononov.tm.api.endpoint.IEndpoint.REQUEST;
 
 @WebService
 public interface IAuthEndpoint extends IEndpoint {
@@ -25,19 +27,19 @@ public interface IAuthEndpoint extends IEndpoint {
     @SneakyThrows
     @WebMethod(exclude = true)
     static IAuthEndpoint newInstance() {
-        return newInstance(HOST,PORT);
+        return newInstance(HOST, PORT);
     }
 
     @SneakyThrows
     @WebMethod(exclude = true)
     static IAuthEndpoint newInstance(@NotNull final IConnectionProvider connectionProvider) {
-        return IEndpoint.newInstance(connectionProvider,NAME,SPACE,PART,IAuthEndpoint.class);
+        return IEndpoint.newInstance(connectionProvider, NAME, SPACE, PART, IAuthEndpoint.class);
     }
 
     @SneakyThrows
     @WebMethod(exclude = true)
     static IAuthEndpoint newInstance(@NotNull final String host, @NotNull final String port) {
-        return IEndpoint.newInstance(host,port,NAME,SPACE,PART,IAuthEndpoint.class);
+        return IEndpoint.newInstance(host, port, NAME, SPACE, PART, IAuthEndpoint.class);
     }
 
     @NotNull
@@ -53,4 +55,11 @@ public interface IAuthEndpoint extends IEndpoint {
             @WebParam(name = REQUEST, partName = REQUEST)
             @NotNull UserLogoutRequest request
     ) throws Exception;
+
+    @NotNull
+    @WebMethod
+    UserProfileResponse profile(
+            @WebParam(name = REQUEST, partName = REQUEST)
+            @NotNull UserProfileRequest request
+    ) throws AccessDeniedException, IdEmptyException;
 }

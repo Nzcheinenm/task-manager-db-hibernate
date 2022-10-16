@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import ru.t1.dkononov.tm.api.endpoint.*;
 import ru.t1.dkononov.tm.api.repository.IProjectRepository;
+import ru.t1.dkononov.tm.api.repository.ISessionRepository;
 import ru.t1.dkononov.tm.api.repository.ITaskRepository;
 import ru.t1.dkononov.tm.api.repository.IUserRepository;
 import ru.t1.dkononov.tm.api.services.*;
@@ -16,6 +17,7 @@ import ru.t1.dkononov.tm.model.Project;
 import ru.t1.dkononov.tm.model.Task;
 import ru.t1.dkononov.tm.model.User;
 import ru.t1.dkononov.tm.repository.ProjectRepository;
+import ru.t1.dkononov.tm.repository.SessionRepository;
 import ru.t1.dkononov.tm.repository.TaskRepository;
 import ru.t1.dkononov.tm.repository.UserRepository;
 import ru.t1.dkononov.tm.service.*;
@@ -46,6 +48,9 @@ public final class Bootstrap implements IServiceLocator {
     @NotNull
     private final ITaskRepository taskRepository = new TaskRepository();
 
+    @NotNull
+    private final ISessionRepository sessionRepository = new SessionRepository();
+
     @Getter
     @NotNull
     private final ITaskService taskService = new TaskService(taskRepository);
@@ -66,8 +71,12 @@ public final class Bootstrap implements IServiceLocator {
     @NotNull
     private final IPropertyService propertyService = new PropertyService();
 
-//    @NotNull
-//    private final IAuthEndpoint authEndpoint = new AuthEndpoint(this);
+    @Getter
+    @NotNull
+    private final ISessionService sessionService = new SessionService(sessionRepository);
+
+    @NotNull
+    private final IAuthEndpoint authEndpoint = new AuthEndpoint(this);
 
     @NotNull
     private final ISystemEndpoint systemEndpoint = new SystemEndpoint(this);
@@ -107,7 +116,7 @@ public final class Bootstrap implements IServiceLocator {
         registry(userEndpoint);
         registry(projectEndpoint);
         registry(taskEndpoint);
-//        registry(authEndpoint);
+        registry(authEndpoint);
     }
 
     private void registry(@NotNull final Object endpoint) {
