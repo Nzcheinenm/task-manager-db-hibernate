@@ -98,7 +98,7 @@ public abstract class AbstractUserOwnedRepository<M extends AbstractUserOwnedMod
             @Nullable final M model
     ) {
         if (userId == null || model == null) return null;
-        return removeById(userId, model.getId());
+        return remove(model);
     }
 
     @Nullable
@@ -127,7 +127,7 @@ public abstract class AbstractUserOwnedRepository<M extends AbstractUserOwnedMod
     @Override
     public void removeAll(@Nullable final String userId) throws UserIdEmptyException {
         if (userId == null) throw new UserIdEmptyException();
-        removeAll(userId);
+        clear(userId);
     }
 
 }

@@ -107,7 +107,7 @@ public final class UserEndpoint extends AbstractEndpoint implements IUserEndpoin
             @WebParam(name = REQUEST, partName = REQUEST)
             @NotNull final UserRegistryRequest request
     ) throws AbstractException {
-        @Nullable final String login = request.getToken();
+        @Nullable final String login = request.getLogin();
         @Nullable final String password = request.getPassword();
         @Nullable final String email = request.getEmail();
         @NotNull final IAuthService authService = getServiceLocator().getAuthService();

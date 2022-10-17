@@ -133,7 +133,7 @@ public abstract class AbstractUserOwnedService<M extends AbstractUserOwnedModel,
         return repository.findByIndex(userId, index);
     }
 
-    @NotNull
+    @Nullable
     @Override
     public M remove(@Nullable final String userId, @Nullable final M model) throws UserIdEmptyException {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();

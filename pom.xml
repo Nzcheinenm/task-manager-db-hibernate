@@ -18,6 +18,31 @@
         </developer>
     </developers>
 
+    <properties>
+        <test.category>UNIT</test.category>
+    </properties>
+
+    <profiles>
+        <profile>
+            <id>INTEGRATION</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <properties>
+                <test.category>ru.t1.dkononov.tm.marker.IntegrationCategory</test.category>
+            </properties>
+        </profile>
+        <profile>
+            <id>UNIT</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <test.category>ru.t1.dkononov.tm.marker.UnitCategory</test.category>
+            </properties>
+        </profile>
+    </profiles>
+
     <modules>
         <module>task-manager-client</module>
         <module>task-manager-domain</module>
@@ -38,6 +63,40 @@
                     <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.22.2</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.apache.maven.surefire</groupId>
+                        <artifactId>surefire-junit47</artifactId>
+                        <version>2.22.2</version>
+                    </dependency>
+                </dependencies>
+                <configuration>
+                    <groups>${test.category}</groups>
+                </configuration>
+            </plugin>
+<!--            <plugin>-->
+<!--                <groupId>org.jacoco</groupId>-->
+<!--                <artifactId>jacoco-maven-plugin</artifactId>-->
+<!--                <version>0.8.3</version>-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <goals>-->
+<!--                            <goal>prepare-agent</goal>-->
+<!--                        </goals>-->
+<!--                    </execution>-->
+<!--                    <execution>-->
+<!--                        <id>report</id>-->
+<!--                        <phase>test</phase>-->
+<!--                        <goals>-->
+<!--                            <goal>report</goal>-->
+<!--                        </goals>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--            </plugin>-->
         </plugins>
 
     </build>

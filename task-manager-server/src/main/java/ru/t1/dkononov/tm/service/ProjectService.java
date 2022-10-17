@@ -42,7 +42,8 @@ public final class ProjectService extends AbstractUserOwnedService<Project, IPro
     }
 
     @Override
-    public @Nullable Project updateById(
+    @Nullable
+    public Project updateById(
             @Nullable final String userId,
             @Nullable final String id,
             @Nullable final String name,
@@ -62,7 +63,8 @@ public final class ProjectService extends AbstractUserOwnedService<Project, IPro
     }
 
     @Override
-    public @Nullable Project updateByIndex(
+    @Nullable
+    public Project updateByIndex(
             @Nullable final String userId,
             @Nullable final Integer index,
             @Nullable final String name,

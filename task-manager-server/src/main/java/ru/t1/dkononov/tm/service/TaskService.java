@@ -47,7 +47,7 @@ public final class TaskService extends AbstractUserOwnedService<Task, ITaskRepos
     }
 
     @Override
-    public void updateById(
+    public Object updateById(
             @Nullable final String userId,
             @Nullable final String id,
             @Nullable final String name,
@@ -63,10 +63,11 @@ public final class TaskService extends AbstractUserOwnedService<Task, ITaskRepos
         task.setName(name);
         task.setDescription(description);
         task.setUserId(userId);
+        return task;
     }
 
     @Override
-    public void updateByIndex(
+    public Object updateByIndex(
             @Nullable final String userId,
             @Nullable final Integer index,
             @Nullable final String name,
@@ -82,10 +83,11 @@ public final class TaskService extends AbstractUserOwnedService<Task, ITaskRepos
         task.setName(name);
         task.setDescription(description);
         task.setUserId(userId);
+        return task;
     }
 
     @Override
-    public void changeTaskStatusById(
+    public Object changeTaskStatusById(
             @Nullable final String userId,
             @Nullable final String id,
             @Nullable final Status status
@@ -97,10 +99,11 @@ public final class TaskService extends AbstractUserOwnedService<Task, ITaskRepos
         if (task == null) throw new TaskIdEmptyException();
         task.setStatus(status);
         task.setUserId(userId);
+        return task;
     }
 
     @Override
-    public void changeTaskStatusByIndex(
+    public Object changeTaskStatusByIndex(
             @Nullable final String userId,
             @Nullable final Integer index,
             @NotNull final Status status
@@ -112,6 +115,7 @@ public final class TaskService extends AbstractUserOwnedService<Task, ITaskRepos
         if (task == null) throw new TaskIdEmptyException();
         task.setStatus(status);
         task.setUserId(userId);
+        return task;
     }
 
 }
