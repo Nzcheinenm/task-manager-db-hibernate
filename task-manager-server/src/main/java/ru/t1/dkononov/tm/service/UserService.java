@@ -28,7 +28,7 @@ public final class UserService extends AbstractService<User, IUserRepository> im
             @NotNull final IUserRepository repository,
             @Nullable final IProjectRepository projectRepository,
             @Nullable final ITaskRepository taskRepository,
-            @Nullable IPropertyService propertyService) {
+            @Nullable final IPropertyService propertyService) {
         super(repository);
         this.projectRepository = projectRepository;
         this.taskRepository = taskRepository;
@@ -173,7 +173,8 @@ public final class UserService extends AbstractService<User, IUserRepository> im
     }
 
     @Override
-    public @Nullable User lockUserByLogin(@Nullable final String login) throws LoginEmptyException {
+    @Nullable
+    public User lockUserByLogin(@Nullable final String login) throws LoginEmptyException {
         if (login == null || login.isEmpty()) throw new LoginEmptyException();
         @Nullable final User user = findByLogin(login);
         user.setLocked(true);
@@ -181,7 +182,8 @@ public final class UserService extends AbstractService<User, IUserRepository> im
     }
 
     @Override
-    public @Nullable User unlockUserByLogin(@Nullable String login) throws LoginEmptyException {
+    @Nullable
+    public User unlockUserByLogin(@Nullable String login) throws LoginEmptyException {
         if (login == null || login.isEmpty()) throw new LoginEmptyException();
         @Nullable final User user = findByLogin(login);
         user.setLocked(false);

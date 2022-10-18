@@ -32,7 +32,7 @@ public class ProjectRepositoryTest {
     @Test
     public void add() {
         Assert.assertNotNull(repository.add(USER_PROJECT2));
-        Assert.assertThrows(Exception.class,() -> repository.add(NULL_PROJECT));
+        Assert.assertNull(repository.add(NULL_PROJECT));
     }
 
     @Test

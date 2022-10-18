@@ -40,6 +40,15 @@
                 <test.category>ru.t1.dkononov.tm.marker.UnitCategory</test.category>
             </properties>
         </profile>
+        <profile>
+            <id>DATA</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <test.category>ru.t1.dkononov.tm.marker.DataCategory</test.category>
+            </properties>
+        </profile>
     </profiles>
 
     <scm>
@@ -264,8 +273,6 @@
                 <version>2.22.2</version>
                 <configuration>
                     <groups>${test.category}</groups>
-                    <forkedProcessExitTimeoutInSeconds>60</forkedProcessExitTimeoutInSeconds>
-                    <forkCount>1</forkCount>
                 </configuration>
             </plugin>
             <plugin>

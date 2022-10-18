@@ -52,6 +52,15 @@ public class TestData {
     @NotNull
     public final static Session SESSION = new Session();
 
+    @NotNull
+    public final static Session SESSION_NULL = null;
+
+    @NotNull
+    public static final String LOGIN = "login";
+
+    @NotNull
+    public static final String PASSWORD = "pass";
+
     static {
         @Nullable final ISaltProvider propertyService = new PropertyService();
 

@@ -32,7 +32,7 @@ public class TaskRepositoryTest {
     @Test
     public void add() {
         Assert.assertNotNull(repository.add(USER_TASK2));
-        Assert.assertThrows(Exception.class,() -> repository.add(NULL_TASK));
+        Assert.assertNull(repository.add(NULL_TASK));
     }
 
     @Test
