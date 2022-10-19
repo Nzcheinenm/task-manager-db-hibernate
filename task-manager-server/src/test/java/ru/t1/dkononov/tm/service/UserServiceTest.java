@@ -12,6 +12,7 @@ import ru.t1.dkononov.tm.enumerated.Role;
 import ru.t1.dkononov.tm.exception.AbstractException;
 import ru.t1.dkononov.tm.exception.field.AbstractFieldException;
 import ru.t1.dkononov.tm.exception.field.LoginEmptyException;
+import ru.t1.dkononov.tm.exception.field.UserNotFoundException;
 import ru.t1.dkononov.tm.marker.UnitCategory;
 import ru.t1.dkononov.tm.model.User;
 import ru.t1.dkononov.tm.repository.ProjectRepository;
@@ -76,7 +77,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void findByLogin() throws LoginEmptyException {
+    public void findByLogin() throws LoginEmptyException, UserNotFoundException {
         Assert.assertNotNull(service.findByLogin(LOGIN_TEST));
     }
 

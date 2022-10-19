@@ -5,6 +5,7 @@ import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.api.component.ISaltProvider;
 
 import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 public interface HashUtil {
 
@@ -44,7 +45,7 @@ public interface HashUtil {
                 sb.append(Integer.toHexString((array[i] & 0xFF) | 0x100).substring(1, 3));
             }
             return sb.toString();
-        } catch (@NotNull java.security.NoSuchAlgorithmException e) {
+        } catch (@NotNull final NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
         return null;

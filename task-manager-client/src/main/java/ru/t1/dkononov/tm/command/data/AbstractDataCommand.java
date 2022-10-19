@@ -11,7 +11,5 @@ public abstract class AbstractDataCommand extends AbstractCommand {
         return serviceLocator.getDomainEndpointClient();
     }
 
-    public AbstractDataCommand() {
-    }
 
 }

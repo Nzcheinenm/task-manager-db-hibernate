@@ -9,4 +9,5 @@ public final class DataBase64SaveRequest extends AbstractUserRequest {
     public DataBase64SaveRequest(@NotNull final String token) {
         super(token);
     }
+
 }

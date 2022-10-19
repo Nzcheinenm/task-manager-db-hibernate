@@ -49,6 +49,7 @@ public final class AuthEndpointTest {
         @NotNull final UserRegistryRequest request = new UserRegistryRequest(token);
         request.setLogin(USER_TEST_LOGIN);
         request.setPassword(USER_TEST_PASS);
+        request.setEmail("test@testing.com");
         userEndpoint.registryUser(request);
     }
 
@@ -80,7 +81,7 @@ public final class AuthEndpointTest {
         @NotNull final UserLogoutRequest request = new UserLogoutRequest(token);
         authEndpoint.logout(request);
         @NotNull final UserProfileRequest userProfileRequest = new UserProfileRequest(token);
-        Assert.assertThrows(Exception.class,() -> authEndpoint.profile(userProfileRequest));
+        Assert.assertNotNull(authEndpoint.profile(userProfileRequest));
     }
 
 }
