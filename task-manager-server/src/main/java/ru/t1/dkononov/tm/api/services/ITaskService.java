@@ -21,12 +21,12 @@ public interface ITaskService extends IUserOwnedService<Task> {
     @NotNull
     Task create(@Nullable String userId, @Nullable String name) throws AbstractFieldException;
 
-    Object updateById(@Nullable String userId, @Nullable String id, @Nullable String name, @Nullable String description) throws AbstractException;
+    Task updateById(@Nullable String userId, @Nullable String id, @Nullable String name, @Nullable String description) throws AbstractException;
 
-    Object updateByIndex(@Nullable String userId, @Nullable Integer index, @Nullable String name, @Nullable String description) throws AbstractException;
+    Task updateByIndex(@Nullable String userId, @Nullable Integer index, @Nullable String name, @Nullable String description) throws AbstractException;
 
-    Object changeTaskStatusById(@Nullable String userId, @Nullable String id, @Nullable Status status) throws AbstractException;
+    Task changeTaskStatusById(@Nullable String userId, @Nullable String id, @Nullable Status status) throws AbstractException;
 
-    Object changeTaskStatusByIndex(@Nullable String userId, @Nullable Integer index, @Nullable Status status) throws AbstractException;
+    Task changeTaskStatusByIndex(@Nullable String userId, @Nullable Integer index, @Nullable Status status) throws AbstractException;
 
 }

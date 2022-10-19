@@ -31,7 +31,7 @@ public final class DataYamlLoadFasterXmlCommand extends AbstractDataCommand {
     @Override
     public void execute() throws Exception {
         System.out.println("[DATA LOAD YAML]");
-        @NotNull final DataYamlLoadFasterXmlRequest request = new DataYamlLoadFasterXmlRequest();
+        @NotNull final DataYamlLoadFasterXmlRequest request = new DataYamlLoadFasterXmlRequest(getToken());
         getDomainEndpoint().loadDataYaml(request);
     }
 

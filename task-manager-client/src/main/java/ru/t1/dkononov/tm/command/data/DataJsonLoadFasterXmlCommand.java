@@ -31,7 +31,7 @@ public final class DataJsonLoadFasterXmlCommand extends AbstractDataCommand {
     @Override
     public void execute() throws Exception {
         System.out.println("[DATA LOAD JSON]");
-        @NotNull final DataJsonLoadFasterXmlRequest request = new DataJsonLoadFasterXmlRequest();
+        @NotNull final DataJsonLoadFasterXmlRequest request = new DataJsonLoadFasterXmlRequest(getToken());
         getDomainEndpoint().loadDataJsonFasterXml(request);
     }
 

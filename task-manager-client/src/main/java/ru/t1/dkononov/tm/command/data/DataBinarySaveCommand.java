@@ -34,7 +34,7 @@ public final class DataBinarySaveCommand extends AbstractDataCommand {
     @Override
     public void execute() throws Exception {
         System.out.println("[DATA SAVE BINARY]");
-        @NotNull final DataBinarySaveRequest request = new DataBinarySaveRequest();
+        @NotNull final DataBinarySaveRequest request = new DataBinarySaveRequest(getToken());
         getDomainEndpoint().saveDataBinary(request);
     }
 

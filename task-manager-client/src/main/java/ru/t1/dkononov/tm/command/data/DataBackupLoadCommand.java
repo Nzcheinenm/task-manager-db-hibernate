@@ -27,7 +27,7 @@ public final class DataBackupLoadCommand extends AbstractDataCommand {
 
     @Override
     public void execute() throws Exception {
-        @NotNull final DataBackupLoadRequest request = new DataBackupLoadRequest();
+        @NotNull final DataBackupLoadRequest request = new DataBackupLoadRequest(getToken());
         getDomainEndpoint().loadDataBackup(request);
     }
 

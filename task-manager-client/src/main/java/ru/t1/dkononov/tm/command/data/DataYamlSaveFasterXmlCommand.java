@@ -31,7 +31,7 @@ public final class DataYamlSaveFasterXmlCommand extends AbstractDataCommand {
     @Override
     public void execute() throws Exception {
         System.out.println("[DATA SAVE YAML]");
-        @NotNull final DataYamlSaveFasterXmlRequest request = new DataYamlSaveFasterXmlRequest();
+        @NotNull final DataYamlSaveFasterXmlRequest request = new DataYamlSaveFasterXmlRequest(getToken());
         getDomainEndpoint().saveDataYaml(request);
     }
 

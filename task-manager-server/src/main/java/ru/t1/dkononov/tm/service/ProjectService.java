@@ -28,7 +28,7 @@ public final class ProjectService extends AbstractUserOwnedService<Project, IPro
             throws AbstractFieldException {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (name == null || name.isEmpty()) throw new NameEmptyException();
-        if (description == null && description.isEmpty()) throw new DescriptionEmptyException();
+        if (description == null || description.isEmpty()) throw new DescriptionEmptyException();
         return repository.create(userId, name, description);
     }
 

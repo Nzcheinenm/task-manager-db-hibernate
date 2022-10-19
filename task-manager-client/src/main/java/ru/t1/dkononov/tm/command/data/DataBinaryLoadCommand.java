@@ -34,7 +34,7 @@ public final class DataBinaryLoadCommand extends AbstractDataCommand {
     @Override
     public void execute() throws Exception {
         System.out.println("[DATA BINARY LOAD]");
-        @NotNull final DataBinaryLoadRequest request = new DataBinaryLoadRequest();
+        @NotNull final DataBinaryLoadRequest request = new DataBinaryLoadRequest(getToken());
         getDomainEndpoint().loadDataBinary(request);
     }
 

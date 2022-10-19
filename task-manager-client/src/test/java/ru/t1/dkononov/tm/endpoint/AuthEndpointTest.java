@@ -35,10 +35,10 @@ public final class AuthEndpointTest {
     private static String token;
 
     @NotNull
-    private static String login = "admin";
+    private final static String login = "admin";
 
     @NotNull
-    private static String pass = "admin";
+    private final static String pass = "admin";
 
     @BeforeClass
     public static void setUp() throws Exception {

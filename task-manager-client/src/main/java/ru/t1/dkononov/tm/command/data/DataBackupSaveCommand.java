@@ -27,7 +27,7 @@ public final class DataBackupSaveCommand extends AbstractDataCommand {
 
     @Override
     public void execute() throws Exception {
-        @NotNull final DataBackupSaveRequest request = new DataBackupSaveRequest();
+        @NotNull final DataBackupSaveRequest request = new DataBackupSaveRequest(getToken());
         getDomainEndpoint().saveDataBackup(request);
     }
 

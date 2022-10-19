@@ -4,10 +4,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.enumerated.Role;
 import ru.t1.dkononov.tm.exception.AbstractException;
-import ru.t1.dkononov.tm.exception.field.AbstractFieldException;
-import ru.t1.dkononov.tm.exception.field.EmailEmptyException;
-import ru.t1.dkononov.tm.exception.field.LoginEmptyException;
-import ru.t1.dkononov.tm.exception.field.UserIdEmptyException;
+import ru.t1.dkononov.tm.exception.field.*;
 import ru.t1.dkononov.tm.model.User;
 
 public interface IUserService extends IService<User> {
@@ -22,7 +19,7 @@ public interface IUserService extends IService<User> {
     User create(@Nullable String login, @Nullable String password, @Nullable Role role) throws AbstractException;
 
     @Nullable
-    User findByLogin(@Nullable String login) throws LoginEmptyException;
+    User findByLogin(@Nullable String login) throws LoginEmptyException, UserNotFoundException;
 
     @Nullable
     User findByEmail(@Nullable String email) throws EmailEmptyException;
@@ -51,8 +48,8 @@ public interface IUserService extends IService<User> {
 
     Boolean isEmailExist(@Nullable String email);
 
-    @Nullable User lockUserByLogin(@Nullable String login) throws LoginEmptyException;
+    @Nullable User lockUserByLogin(@Nullable String login) throws LoginEmptyException, UserNotFoundException;
 
-    @Nullable User unlockUserByLogin(@Nullable String login) throws LoginEmptyException;
+    @Nullable User unlockUserByLogin(@Nullable String login) throws LoginEmptyException, UserNotFoundException;
 
 }

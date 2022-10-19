@@ -172,8 +172,8 @@ public final class TaskEndpoint extends AbstractEndpoint implements ITaskEndpoin
         @NotNull final Session session = check(request);
         @Nullable final String userId = session.getUserId();
         @Nullable final String id = request.getId();
-        getTaskService().changeTaskStatusById(userId, id, Status.IN_PROGRESS);
-        return new TaskStartByIdResponse();
+        @Nullable final Task Task = getTaskService().changeTaskStatusById(userId, id, Status.IN_PROGRESS);
+        return new TaskStartByIdResponse(Task);
     }
 
     @NotNull
@@ -186,8 +186,8 @@ public final class TaskEndpoint extends AbstractEndpoint implements ITaskEndpoin
         @NotNull final Session session = check(request);
         @Nullable final String userId = session.getUserId();
         @Nullable final Integer index = request.getIndex();
-        getTaskService().changeTaskStatusByIndex(userId, index, Status.IN_PROGRESS);
-        return new TaskStartByIndexResponse();
+        @Nullable final Task Task = getTaskService().changeTaskStatusByIndex(userId, index, Status.IN_PROGRESS);
+        return new TaskStartByIndexResponse(Task);
     }
 
     @NotNull
@@ -200,8 +200,8 @@ public final class TaskEndpoint extends AbstractEndpoint implements ITaskEndpoin
         @NotNull final Session session = check(request);
         @Nullable final String userId = session.getUserId();
         @Nullable final String id = request.getId();
-        getTaskService().changeTaskStatusById(userId, id, Status.COMPLETED);
-        return new TaskCompleteByIdResponse();
+        @Nullable final Task task = getTaskService().changeTaskStatusById(userId, id, Status.COMPLETED);
+        return new TaskCompleteByIdResponse(task);
     }
 
     @NotNull
@@ -214,8 +214,8 @@ public final class TaskEndpoint extends AbstractEndpoint implements ITaskEndpoin
         @NotNull final Session session = check(request);
         @Nullable final String userId = session.getUserId();
         @Nullable final Integer index = request.getIndex();
-        getTaskService().changeTaskStatusByIndex(userId, index, Status.COMPLETED);
-        return new TaskCompleteByIndexResponse();
+        @Nullable final Task task = getTaskService().changeTaskStatusByIndex(userId, index, Status.COMPLETED);
+        return new TaskCompleteByIndexResponse(task);
     }
 
     @NotNull
@@ -260,8 +260,8 @@ public final class TaskEndpoint extends AbstractEndpoint implements ITaskEndpoin
         @Nullable final String id = request.getId();
         @Nullable final String name = request.getName();
         @Nullable final String description = request.getDescription();
-        getTaskService().updateById(userId, id, name, description);
-        return new TaskUpdateByIdResponse();
+        @Nullable final Task task = getTaskService().updateById(userId, id, name, description);
+        return new TaskUpdateByIdResponse(task);
     }
 
     @NotNull

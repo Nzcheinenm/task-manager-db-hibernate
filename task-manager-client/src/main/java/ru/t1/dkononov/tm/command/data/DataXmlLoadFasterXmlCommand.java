@@ -31,7 +31,7 @@ public final class DataXmlLoadFasterXmlCommand extends AbstractDataCommand {
     @Override
     public void execute() throws Exception {
         System.out.println("[DATA LOAD XML]");
-        @NotNull final DataXmlLoadFasterXmlRequest request = new DataXmlLoadFasterXmlRequest();
+        @NotNull final DataXmlLoadFasterXmlRequest request = new DataXmlLoadFasterXmlRequest(getToken());
         getDomainEndpoint().loadDataXmlFasterXml(request);
     }
 

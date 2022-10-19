@@ -34,7 +34,7 @@ public abstract class AbstractUserOwnedService<M extends AbstractUserOwnedModel,
         return repository.findAll(userId);
     }
 
-    @NotNull
+    @Nullable
     @Override
     public List<M> findAll(
             @Nullable final String userId,

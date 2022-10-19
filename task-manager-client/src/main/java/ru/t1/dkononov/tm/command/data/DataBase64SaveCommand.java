@@ -34,7 +34,7 @@ public final class DataBase64SaveCommand extends AbstractDataCommand {
     @Override
     public void execute() throws Exception {
         System.out.println("[DATA BASE64 SAVE]");
-        @NotNull final DataBase64SaveRequest request = new DataBase64SaveRequest();
+        @NotNull final DataBase64SaveRequest request = new DataBase64SaveRequest(getToken());
         getDomainEndpoint().saveDataBase64(request);
     }
 

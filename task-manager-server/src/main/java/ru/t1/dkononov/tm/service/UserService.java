@@ -85,10 +85,10 @@ public final class UserService extends AbstractService<User, IUserRepository> im
 
     @Nullable
     @Override
-    public User findByLogin(@Nullable final String login) throws LoginEmptyException {
+    public User findByLogin(@Nullable final String login) throws LoginEmptyException, UserNotFoundException {
         if (login == null || login.isEmpty()) throw new LoginEmptyException();
         @Nullable final User user = repository.findByLogin(login);
-        if (user == null) return null;
+        if (user == null) throw new  UserNotFoundException();
         return user;
     }
 
@@ -174,16 +174,17 @@ public final class UserService extends AbstractService<User, IUserRepository> im
 
     @Override
     @Nullable
-    public User lockUserByLogin(@Nullable final String login) throws LoginEmptyException {
+    public User lockUserByLogin(@Nullable final String login) throws LoginEmptyException, UserNotFoundException {
         if (login == null || login.isEmpty()) throw new LoginEmptyException();
         @Nullable final User user = findByLogin(login);
+        if (user == null) throw new UserNotFoundException();
         user.setLocked(true);
         return user;
     }
 
     @Override
     @Nullable
-    public User unlockUserByLogin(@Nullable String login) throws LoginEmptyException {
+    public User unlockUserByLogin(@Nullable String login) throws LoginEmptyException, UserNotFoundException {
         if (login == null || login.isEmpty()) throw new LoginEmptyException();
         @Nullable final User user = findByLogin(login);
         user.setLocked(false);

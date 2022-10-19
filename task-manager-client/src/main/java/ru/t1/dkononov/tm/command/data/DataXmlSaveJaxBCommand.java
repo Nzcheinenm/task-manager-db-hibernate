@@ -31,7 +31,7 @@ public final class DataXmlSaveJaxBCommand extends AbstractDataCommand {
     @Override
     public void execute() throws Exception {
         System.out.println("[DATA SAVE XML]");
-        @NotNull final DataXmlSaveJaxBRequest request = new DataXmlSaveJaxBRequest();
+        @NotNull final DataXmlSaveJaxBRequest request = new DataXmlSaveJaxBRequest(getToken());
         getDomainEndpoint().saveDataXmlJaxB(request);
     }
 

@@ -7,7 +7,8 @@ import ru.t1.dkononov.tm.model.Task;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public final class TaskRepository extends AbstractUserOwnedRepository<Task> implements ITaskRepository {
+public final class TaskRepository extends AbstractUserOwnedRepository<Task>
+        implements ITaskRepository {
 
     @NotNull
     @Override

@@ -37,7 +37,7 @@ public final class UserEndpoint extends AbstractEndpoint implements IUserEndpoin
             @NotNull final UserLockRequest request
     ) throws Exception {
         check(request, Role.ADMIN);
-        @Nullable final String login = request.getToken();
+        @Nullable final String login = request.getLogin();
         @Nullable final User user = getUserService().lockUserByLogin(login);
         return new UserLockResponse(user);
     }
@@ -50,7 +50,7 @@ public final class UserEndpoint extends AbstractEndpoint implements IUserEndpoin
             @NotNull final UserUnlockRequest request
     ) throws Exception {
         check(request, Role.ADMIN);
-        @Nullable final String login = request.getToken();
+        @Nullable final String login = request.getLogin();
         @Nullable final User user = getUserService().unlockUserByLogin(login);
         return new UserUnlockResponse(user);
     }
@@ -63,7 +63,7 @@ public final class UserEndpoint extends AbstractEndpoint implements IUserEndpoin
             @NotNull final UserRemoveRequest request
     ) throws Exception {
         check(request, Role.ADMIN);
-        @Nullable final String login = request.getToken();
+        @Nullable final String login = request.getLogin();
         @Nullable final User user = getUserService().removeByLogin(login);
         return new UserRemoveResponse(user);
     }

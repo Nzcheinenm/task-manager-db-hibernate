@@ -31,7 +31,7 @@ public final class DataJsonLoadJaxBCommand extends AbstractDataCommand {
     @Override
     public void execute() throws Exception {
         System.out.println("[DATA LOAD JSON]");
-        @NotNull final DataJsonLoadJaxBRequest request = new DataJsonLoadJaxBRequest();
+        @NotNull final DataJsonLoadJaxBRequest request = new DataJsonLoadJaxBRequest(getToken());
         getDomainEndpoint().loadDataJsonJaxB(request);
     }
 

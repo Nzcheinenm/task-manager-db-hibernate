@@ -15,7 +15,7 @@ import java.util.List;
 
 public final class TaskService extends AbstractUserOwnedService<Task, ITaskRepository> implements ITaskService {
 
-    public TaskService(@Nullable final ITaskRepository repository) {
+    public TaskService(@NotNull final ITaskRepository repository) {
         super(repository);
     }
 
@@ -34,8 +34,8 @@ public final class TaskService extends AbstractUserOwnedService<Task, ITaskRepos
             throws AbstractFieldException {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (name == null || name.isEmpty()) throw new NameEmptyException();
-        if (description == null && description.isEmpty()) throw new DescriptionEmptyException();
-        return repository.create(name, description);
+        if (description == null || description.isEmpty()) throw new DescriptionEmptyException();
+        return repository.create(userId,name, description);
     }
 
     @NotNull
@@ -47,7 +47,7 @@ public final class TaskService extends AbstractUserOwnedService<Task, ITaskRepos
     }
 
     @Override
-    public Object updateById(
+    public Task updateById(
             @Nullable final String userId,
             @Nullable final String id,
             @Nullable final String name,
@@ -67,7 +67,7 @@ public final class TaskService extends AbstractUserOwnedService<Task, ITaskRepos
     }
 
     @Override
-    public Object updateByIndex(
+    public Task updateByIndex(
             @Nullable final String userId,
             @Nullable final Integer index,
             @Nullable final String name,
@@ -87,7 +87,7 @@ public final class TaskService extends AbstractUserOwnedService<Task, ITaskRepos
     }
 
     @Override
-    public Object changeTaskStatusById(
+    public Task changeTaskStatusById(
             @Nullable final String userId,
             @Nullable final String id,
             @Nullable final Status status
@@ -103,7 +103,7 @@ public final class TaskService extends AbstractUserOwnedService<Task, ITaskRepos
     }
 
     @Override
-    public Object changeTaskStatusByIndex(
+    public Task changeTaskStatusByIndex(
             @Nullable final String userId,
             @Nullable final Integer index,
             @NotNull final Status status

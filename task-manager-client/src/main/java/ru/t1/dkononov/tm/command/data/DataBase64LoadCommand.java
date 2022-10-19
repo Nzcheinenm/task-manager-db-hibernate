@@ -38,7 +38,7 @@ public final class DataBase64LoadCommand extends AbstractDataCommand {
     @Override
     public void execute() throws Exception {
         System.out.println("[DATA BASE64 LOAD]");
-        @NotNull final DataBase64LoadRequest request = new DataBase64LoadRequest();
+        @NotNull final DataBase64LoadRequest request = new DataBase64LoadRequest(getToken());
         getDomainEndpoint().loadDataBase64(request);
     }
 

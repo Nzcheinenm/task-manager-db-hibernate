@@ -31,7 +31,7 @@ public final class DataXmlSaveFasterXmlCommand extends AbstractDataCommand {
     @Override
     public void execute() throws Exception {
         System.out.println("[DATA SAVE XML]");
-        @NotNull final DataXmlSaveFasterXmlRequest request = new DataXmlSaveFasterXmlRequest();
+        @NotNull final DataXmlSaveFasterXmlRequest request = new DataXmlSaveFasterXmlRequest(getToken());
         getDomainEndpoint().saveDataXmlFasterXml(request);
     }
 
