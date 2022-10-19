@@ -85,7 +85,7 @@ public class UserServiceTest {
     @Test
     public void removeByLogin() throws AbstractFieldException {
         service.removeByLogin(LOGIN_TEST);
-        Assert.assertNull(service.findByLogin(LOGIN_TEST));
+        Assert.assertThrows(Exception.class, () -> service.findByLogin(LOGIN_TEST));
     }
 
     @Test
