@@ -1,10 +1,17 @@
 package ru.t1.dkononov.tm.repository;
 
+import lombok.SneakyThrows;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.api.repository.IRepository;
+import ru.t1.dkononov.tm.comparator.CreatedComparator;
+import ru.t1.dkononov.tm.comparator.StatusComparator;
 import ru.t1.dkononov.tm.model.AbstractModel;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
@@ -13,12 +20,36 @@ import java.util.List;
 public abstract class AbstractRepository<M extends AbstractModel> implements IRepository<M> {
 
     @NotNull
-    protected final List<M> models = new ArrayList<>();
+    protected final Connection connection;
+
+    public AbstractRepository(@NotNull final Connection connection) {
+        this.connection = connection;
+    }
+
+    protected abstract String getTableName();
+
+    @NotNull
+    protected String getSortType(@NotNull final Comparator comparator) {
+        if (comparator == CreatedComparator.INSTANCE) return "created";
+        else if (comparator == StatusComparator.INSTANCE) return "status";
+        else  return "name";
+    }
+
+    @NotNull
+    protected abstract  M fetch(@NotNull final ResultSet row);
+
 
     @NotNull
     @Override
+    @SneakyThrows
     public List<M> findAll() {
-        return models;
+        @NotNull final List<M> result = new ArrayList<>();
+        @NotNull final String sql = String.format("SELECT * FROM %s", getTableName());
+        try (@NotNull final Statement statement = connection.createStatement();
+            @NotNull final ResultSet resultSet = statement.executeQuery(sql)) {
+            while (resultSet.next()) result.add(fetch(resultSet));
+        }
+        return result;
     }
 
     @NotNull
@@ -31,10 +62,7 @@ public abstract class AbstractRepository<M extends AbstractModel> implements IRe
 
     @NotNull
     @Override
-    public M add(@NotNull final M model) {
-        models.add(model);
-        return model;
-    }
+    public abstract M add(@NotNull final M model);
 
     @Override
     public @NotNull Collection<M> add(@NotNull Collection<M> models) {
@@ -60,12 +88,15 @@ public abstract class AbstractRepository<M extends AbstractModel> implements IRe
 
     @Nullable
     @Override
+    @SneakyThrows
     public M findById(@NotNull final String id) {
-        return models
-                .stream()
-                .filter(m -> id.equals(m.getId()))
-                .findFirst()
-                .orElse(null);
+        @NotNull final String sql = String.format("SELECT * FROM %s WHERE id = ? LIMIT 1", getTableName());
+        try (@NotNull final PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1,id);
+            @NotNull final ResultSet rowSet = statement.executeQuery();
+            if (!rowSet.next()) return null;
+            return fetch(rowSet);
+        }
     }
 
     @Nullable

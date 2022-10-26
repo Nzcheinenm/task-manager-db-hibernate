@@ -3,9 +3,11 @@ package ru.t1.dkononov.tm.repository;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.api.repository.IUserOwnedRepository;
+import ru.t1.dkononov.tm.api.services.IConnectionService;
 import ru.t1.dkononov.tm.exception.field.UserIdEmptyException;
 import ru.t1.dkononov.tm.model.AbstractUserOwnedModel;
 
+import java.sql.Connection;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
@@ -14,6 +16,10 @@ import java.util.stream.Collectors;
 
 public abstract class AbstractUserOwnedRepository<M extends AbstractUserOwnedModel>
         extends AbstractRepository<M> implements IUserOwnedRepository<M> {
+
+    public AbstractUserOwnedRepository(@NotNull final Connection connection) {
+        super(connection);
+    }
 
     @NotNull
     @Override
@@ -35,11 +41,7 @@ public abstract class AbstractUserOwnedRepository<M extends AbstractUserOwnedMod
 
     @Nullable
     @Override
-    public M add(@Nullable final String userId, @NotNull final M model) {
-        if (userId == null) return null;
-        model.setUserId(userId);
-        return add(model);
-    }
+    public abstract M add(@Nullable final String userId, @NotNull final M model);
 
     @Override
     public @NotNull Collection<M> add(@NotNull Collection<M> models) {

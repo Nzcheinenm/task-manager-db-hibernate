@@ -4,6 +4,7 @@ import com.jcabi.manifests.Manifests;
 import lombok.Cleanup;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import ru.t1.dkononov.tm.api.services.IDatabaseProperty;
 import ru.t1.dkononov.tm.api.services.IPropertyService;
 
 import java.io.File;
@@ -83,6 +84,24 @@ public final class PropertyService implements IPropertyService {
     private static final String SESSION_TIMEOUT_KEY_DEFAULT = "8000";
     @NotNull
     private static final String SESSION_TIMEOUT_KEY = "session.timeout";
+
+    @NotNull
+    private static final String DB_USER_KEY_DEFAULT = "postgres";
+
+    @NotNull
+    private static final String DB_USER_KEY = "database.username";
+
+    @NotNull
+    private static final String DB_PASSWORD_KEY_DEFAULT = "ADMIN";
+
+    @NotNull
+    private static final String DB_PASSWORD_KEY = "database.password";
+
+    @NotNull
+    private static final String DB_URL_KEY_DEFAULT = "jdbc:postgresql://localhost:5432/tm";
+
+    @NotNull
+    private static final String DB_URL_KEY = "database.url";
 
     @NotNull
     public final Properties properties = new Properties();
@@ -245,4 +264,18 @@ public final class PropertyService implements IPropertyService {
         return properties.getProperty(key, defaultKey);
     }
 
+    @Override
+    public @NotNull String getDatabaseUser() {
+        return getStringValue(DB_USER_KEY, DB_USER_KEY_DEFAULT);
+    }
+
+    @Override
+    public @NotNull String getDatabasePassword() {
+        return getStringValue(DB_PASSWORD_KEY, DB_PASSWORD_KEY_DEFAULT);
+    }
+
+    @Override
+    public @NotNull String getDatabaseUrl() {
+        return getStringValue(DB_URL_KEY, DB_URL_KEY_DEFAULT);
+    }
 }

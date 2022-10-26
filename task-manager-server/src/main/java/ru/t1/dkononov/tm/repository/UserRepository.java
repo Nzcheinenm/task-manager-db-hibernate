@@ -5,7 +5,29 @@ import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.api.repository.IUserRepository;
 import ru.t1.dkononov.tm.model.User;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+
 public class UserRepository extends AbstractRepository<User> implements IUserRepository {
+
+    public UserRepository(@NotNull Connection connection) {
+        super(connection);
+    }
+
+    @Override
+    protected String getTableName() {
+        return null;
+    }
+
+    @Override
+    protected @NotNull User fetch(@NotNull ResultSet row) {
+        return null;
+    }
+
+    @Override
+    public @NotNull User add(@NotNull User model) {
+        return null;
+    }
 
     @Nullable
     @Override

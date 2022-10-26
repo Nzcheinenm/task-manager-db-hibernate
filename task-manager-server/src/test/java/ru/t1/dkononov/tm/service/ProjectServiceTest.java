@@ -6,6 +6,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import ru.t1.dkononov.tm.api.services.IConnectionService;
 import ru.t1.dkononov.tm.enumerated.Status;
 import ru.t1.dkononov.tm.exception.AbstractException;
 import ru.t1.dkononov.tm.exception.entity.ProjectNotFoundException;
@@ -20,10 +21,10 @@ import static ru.t1.dkononov.tm.constant.TestData.USER_PROJECT;
 public class ProjectServiceTest {
 
     @NotNull
-    private final ProjectRepository repository = new ProjectRepository();
+    private final IConnectionService connectionService = new ConnectionService(new PropertyService());
 
     @NotNull
-    private final ProjectService service = new ProjectService(repository);
+    private final ProjectService service = new ProjectService(connectionService);
 
     @Before
     public void before() throws UserIdEmptyException, ProjectNotFoundException {
@@ -55,8 +56,8 @@ public class ProjectServiceTest {
 
     @Test
     public void findAllNull() {
-        @NotNull final ProjectRepository projectRepository = new ProjectRepository();
-        @NotNull final ProjectService projectService = new ProjectService(projectRepository);
+        @NotNull final ConnectionService connectionService = new ConnectionService(new PropertyService());
+        @NotNull final ProjectService projectService = new ProjectService(connectionService);
         Assert.assertTrue(projectService.findAll().isEmpty());
     }
 

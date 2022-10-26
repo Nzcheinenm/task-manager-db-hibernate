@@ -36,28 +36,24 @@ public final class Bootstrap implements IServiceLocator {
     @NotNull
     private static final String PACKAGE_COMMAND = "ru.t1.dkononov.tm.command";
 
+    @Getter
+    @NotNull
+    private final IPropertyService propertyService = new PropertyService();
 
     @NotNull
-    private final IProjectRepository projectRepository = new ProjectRepository();
+    private final IConnectionService connectionService = new ConnectionService(propertyService);
 
     @Getter
     @NotNull
-    private final IProjectService projectService = new ProjectService(projectRepository);
-
-
-    @NotNull
-    private final ITaskRepository taskRepository = new TaskRepository();
-
-    @NotNull
-    private final ISessionRepository sessionRepository = new SessionRepository();
+    private final IProjectService projectService = new ProjectService(connectionService);
 
     @Getter
     @NotNull
-    private final ITaskService taskService = new TaskService(taskRepository);
+    private final ITaskService taskService = new TaskService(connectionService);
 
     @Getter
     @NotNull
-    private final IProjectTaskService projectTaskService = new ProjectTaskService(projectRepository, taskRepository);
+    private final IProjectTaskService projectTaskService = new ProjectTaskService(connectionService);
 
     @Getter
     @NotNull
@@ -69,11 +65,7 @@ public final class Bootstrap implements IServiceLocator {
 
     @Getter
     @NotNull
-    private final IPropertyService propertyService = new PropertyService();
-
-    @Getter
-    @NotNull
-    private final ISessionService sessionService = new SessionService(sessionRepository);
+    private final ISessionService sessionService = new SessionService(connectionService);
 
     @NotNull
     private final IAuthEndpoint authEndpoint = new AuthEndpoint(this);
@@ -96,15 +88,9 @@ public final class Bootstrap implements IServiceLocator {
     @NotNull
     private final Backup backup = new Backup(this);
 
-
-    @NotNull
-    private final IUserRepository userRepository = new UserRepository();
-
     @Getter
     @NotNull
-    private final IUserService userService = new UserService(
-            userRepository, projectRepository, taskRepository,
-            propertyService);
+    private final IUserService userService = new UserService(connectionService, propertyService);
 
     @Getter
     @NotNull

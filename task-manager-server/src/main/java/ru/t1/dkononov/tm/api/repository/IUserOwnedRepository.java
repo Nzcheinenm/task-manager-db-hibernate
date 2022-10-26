@@ -46,8 +46,6 @@ public interface IUserOwnedRepository<M extends AbstractUserOwnedModel> {
     @Nullable
     M remove(@Nullable String userId, @Nullable M m) throws UserIdEmptyException;
 
-    @Nullable
-    M remove(@Nullable M m) throws UserIdEmptyException;
 
     @Nullable
     M removeById(@Nullable String userId, @Nullable String id) throws AbstractException;
