@@ -53,7 +53,7 @@ public final class Bootstrap implements IServiceLocator {
 
     @Getter
     @NotNull
-    private final IProjectTaskService projectTaskService = new ProjectTaskService(connectionService);
+    private final IProjectTaskService projectTaskService = new ProjectTaskService(projectService,taskService);
 
     @Getter
     @NotNull
@@ -117,7 +117,7 @@ public final class Bootstrap implements IServiceLocator {
     public void start() {
         try {
             initDemoData();
-            initBackup();
+            //initBackup();
             initLogger();
             initPID();
         } catch (final Exception e) {
@@ -144,18 +144,18 @@ public final class Bootstrap implements IServiceLocator {
         file.deleteOnExit();
     }
 
-    private void initDemoData() throws AbstractException {
+    private void initDemoData() throws Exception {
         @NotNull final User test = userService.create("test", "test", "test@test.ru");
         @NotNull final User user = userService.create("user", "user", "user@test.ru");
         @NotNull final User admin = userService.create("admin", "admin", Role.ADMIN);
 
-        projectService.add(test.getId(), new Project("Jira", Status.NOT_STARTED));
-        projectService.add(test.getId(), new Project("Confluence", Status.IN_PROGRESS));
-        projectService.add(admin.getId(), new Project("SoapUI", Status.IN_PROGRESS));
-        projectService.add(user.getId(), new Project("Postman", Status.IN_PROGRESS));
+        projectService.create(test.getId(),"Jira", "Desc");
+        projectService.create(test.getId(), "Confluence","Conf");
+        projectService.create(admin.getId(), "SoapUI", "Pelp");
+        projectService.create(user.getId(), "Postman", "Ferst");
 
-        taskService.add(test.getId(), new Task("Work", Status.IN_PROGRESS));
-        taskService.add(admin.getId(), new Task("Homework", Status.NOT_STARTED));
+        taskService.create(test.getId(),"Work", "Working");
+        taskService.create(admin.getId(), "Homework", "Speed");
     }
 
 

@@ -39,7 +39,7 @@ public final class TaskEndpoint extends AbstractEndpoint implements ITaskEndpoin
     public TaskChangeStatusByIdResponse changeStatusById(
             @WebParam(name = REQUEST, partName = REQUEST)
             @NotNull final TaskChangeStatusByIdRequest request
-    ) throws AbstractException {
+    ) throws Exception {
         @NotNull final Session session = check(request);
         @Nullable final String id = request.getId();
         @Nullable final String userId = session.getUserId();
@@ -54,7 +54,7 @@ public final class TaskEndpoint extends AbstractEndpoint implements ITaskEndpoin
     public TaskChangeStatusByIndexResponse changeStatusByIndex(
             @WebParam(name = REQUEST, partName = REQUEST)
             @NotNull final TaskChangeStatusByIndexRequest request
-    ) throws AbstractException {
+    ) throws Exception {
         @NotNull final Session session = check(request);
         @Nullable final Integer index = request.getIndex();
         @Nullable final String userId = session.getUserId();
@@ -83,7 +83,7 @@ public final class TaskEndpoint extends AbstractEndpoint implements ITaskEndpoin
     public TaskCreateResponse createTask(
             @WebParam(name = REQUEST, partName = REQUEST)
             @NotNull final TaskCreateRequest request
-    ) throws AbstractFieldException {
+    ) throws Exception {
         @NotNull final Session session = check(request);
         @Nullable final String userId = session.getUserId();
         @Nullable final String name = request.getName();

@@ -6,7 +6,10 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import ru.t1.dkononov.tm.api.services.IConnectionService;
 import ru.t1.dkononov.tm.marker.DataCategory;
+import ru.t1.dkononov.tm.service.ConnectionService;
+import ru.t1.dkononov.tm.service.PropertyService;
 
 import static ru.t1.dkononov.tm.constant.TestData.*;
 import static ru.t1.dkononov.tm.constant.TestData.ADMIN_TASK;
@@ -15,7 +18,10 @@ import static ru.t1.dkononov.tm.constant.TestData.ADMIN_TASK;
 public class TaskRepositoryTest {
 
     @NotNull
-    private final TaskRepository repository = new TaskRepository();
+    private final IConnectionService connectionService = new ConnectionService(new PropertyService());
+
+    @NotNull
+    private final TaskRepository repository = new TaskRepository(connectionService.getConnection());
 
     @Before
     public void before() {
@@ -47,7 +53,7 @@ public class TaskRepositoryTest {
 
     @Test
     public void findAllIfOne() {
-        @NotNull final TaskRepository emptyRepository = new TaskRepository();
+        @NotNull final TaskRepository emptyRepository = new TaskRepository(connectionService.getConnection());
         Assert.assertTrue(emptyRepository.findAll().isEmpty());
         emptyRepository.add(USER_TASK);
         Assert.assertEquals(USER_TASK,emptyRepository.findById(USER_TASK.getId()));

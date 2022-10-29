@@ -90,7 +90,7 @@ public abstract class AbstractUserOwnedService<M extends AbstractUserOwnedModel,
         }
     }
 
-    @NotNull
+    @Nullable
     @Override
     @SneakyThrows
     public M add(@Nullable final String userId, @Nullable final M model)
@@ -112,7 +112,7 @@ public abstract class AbstractUserOwnedService<M extends AbstractUserOwnedModel,
         return result;
     }
 
-    @NotNull
+    @Nullable
     @Override
     @SneakyThrows
     public Collection<M> add(@NotNull Collection<M> models) {

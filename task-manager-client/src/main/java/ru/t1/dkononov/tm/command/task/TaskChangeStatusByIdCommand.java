@@ -21,7 +21,7 @@ public final class TaskChangeStatusByIdCommand extends AbstractTaskCommand {
     public final String DESCRIPTION = "Поменять статус задачи по Id.";
 
     @Override
-    public void execute() throws AbstractException {
+    public void execute() throws Exception {
         System.out.println("[CHANGE PROJECT STATUS BY ID]");
         System.out.println("ENTER ID:");
         @NotNull final String id = TerminalUtil.inLine();

@@ -33,9 +33,8 @@ public final class TaskService extends AbstractUserOwnedService<Task, ITaskRepos
 
     @NotNull
     @Override
-    @SneakyThrows
     public List<Task> findAllByProjectId(@Nullable final String userId, @Nullable final String projectId)
-            throws UserIdEmptyException {
+            throws Exception {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (projectId == null || projectId.isEmpty()) return Collections.emptyList();
         try (@NotNull final Connection connection = getConnection()) {
@@ -46,9 +45,8 @@ public final class TaskService extends AbstractUserOwnedService<Task, ITaskRepos
 
     @NotNull
     @Override
-    @SneakyThrows
     public Task create(@Nullable final String userId, @Nullable final String name, @Nullable final String description)
-            throws AbstractFieldException {
+            throws Exception {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (name == null || name.isEmpty()) throw new NameEmptyException();
         if (description == null || description.isEmpty()) throw new DescriptionEmptyException();
@@ -69,8 +67,7 @@ public final class TaskService extends AbstractUserOwnedService<Task, ITaskRepos
 
     @NotNull
     @Override
-    @SneakyThrows
-    public Task create(@Nullable final String userId, @Nullable final String name) throws AbstractFieldException {
+    public Task create(@Nullable final String userId, @Nullable final String name) throws Exception {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (name == null || name.isEmpty()) throw new NameEmptyException();
         @NotNull final Connection connection = getConnection();
@@ -90,14 +87,13 @@ public final class TaskService extends AbstractUserOwnedService<Task, ITaskRepos
 
     @Override
     @Nullable
-    @SneakyThrows
     public Task updateById(
             @Nullable final String userId,
             @Nullable final String id,
             @Nullable final String name,
             @Nullable final String description
     )
-            throws AbstractException {
+            throws Exception {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (id == null || id.isEmpty()) throw new IdEmptyException();
         if (name == null || name.isEmpty()) throw new NameEmptyException();
@@ -123,14 +119,13 @@ public final class TaskService extends AbstractUserOwnedService<Task, ITaskRepos
 
     @Override
     @Nullable
-    @SneakyThrows
     public Task updateByIndex(
             @Nullable final String userId,
             @Nullable final Integer index,
             @Nullable final String name,
             @Nullable final String description
     )
-            throws AbstractException {
+            throws Exception {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (index == null || index < 0) throw new IndexIncorrectException();
         if (name == null || name.isEmpty()) throw new NameEmptyException();
@@ -156,13 +151,12 @@ public final class TaskService extends AbstractUserOwnedService<Task, ITaskRepos
 
     @Override
     @Nullable
-    @SneakyThrows
     public Task changeTaskStatusById(
             @Nullable final String userId,
             @Nullable final String id,
             @Nullable final Status status
     )
-            throws AbstractException {
+            throws Exception {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (id == null || id.isEmpty()) throw new IdEmptyException();
         @NotNull final Connection connection = getConnection();
@@ -185,13 +179,11 @@ public final class TaskService extends AbstractUserOwnedService<Task, ITaskRepos
 
     @Override
     @Nullable
-    @SneakyThrows
     public Task changeTaskStatusByIndex(
             @Nullable final String userId,
             @Nullable final Integer index,
             @NotNull final Status status
-    )
-            throws AbstractException {
+    ) throws Exception {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (index == null || index < 0) throw new IndexIncorrectException();
         @NotNull final Connection connection = getConnection();
@@ -210,6 +202,28 @@ public final class TaskService extends AbstractUserOwnedService<Task, ITaskRepos
             connection.close();
         }
         return task;
+    }
+
+    @Override
+    public void updateProjectIdById(@NotNull String userId, @Nullable String taskId, @Nullable String projectId) throws Exception {
+        if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
+        if (taskId == null || taskId.isEmpty()) throw new TaskIdEmptyException();
+        if (projectId == null || projectId.isEmpty()) throw new ProjectIdEmptyException();
+
+        @NotNull final Connection connection = getConnection();
+        @Nullable final Task task;
+        try {
+            @NotNull final ITaskRepository repository = getRepository(connection);
+            task = repository.findTaskIdByProjectId(userId, taskId,projectId);
+            if (task == null) throw new TaskIdEmptyException();
+            task.setProjectId(projectId);
+            connection.commit();
+        } catch (@NotNull final Exception e) {
+            connection.rollback();
+            throw e;
+        } finally {
+            connection.close();
+        }
     }
 
 }

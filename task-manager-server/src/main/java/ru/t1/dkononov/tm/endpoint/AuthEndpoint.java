@@ -28,9 +28,6 @@ public final class AuthEndpoint extends AbstractEndpoint implements IAuthEndpoin
         super(serviceLocator);
     }
 
-    @NotNull
-    private IUserService userService;
-
     public IUserService getUserService() {
         return getServiceLocator().getUserService();
     }

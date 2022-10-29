@@ -9,6 +9,9 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import ru.t1.dkononov.tm.api.repository.IProjectRepository;
 import ru.t1.dkononov.tm.api.repository.ITaskRepository;
+import ru.t1.dkononov.tm.api.services.IConnectionService;
+import ru.t1.dkononov.tm.api.services.IProjectService;
+import ru.t1.dkononov.tm.api.services.ITaskService;
 import ru.t1.dkononov.tm.exception.AbstractException;
 import ru.t1.dkononov.tm.exception.entity.ProjectNotFoundException;
 import ru.t1.dkononov.tm.exception.field.UserIdEmptyException;
@@ -24,14 +27,23 @@ import static ru.t1.dkononov.tm.constant.TestData.*;
 @Category(UnitCategory.class)
 public class ProjectTaskServiceTest {
 
-    @Nullable
-    private final IProjectRepository projectRepository = new ProjectRepository();
+    @NotNull
+    private final IConnectionService connectionService = new ConnectionService(new PropertyService());
 
     @Nullable
-    private final ITaskRepository taskRepository = new TaskRepository();
+    private final IProjectRepository projectRepository = new ProjectRepository(connectionService.getConnection());
+
+    @Nullable
+    private final ITaskRepository taskRepository = new TaskRepository(connectionService.getConnection());
 
     @NotNull
-    private final ProjectTaskService projectTaskService = new ProjectTaskService(projectRepository,taskRepository);
+    private final ITaskService taskService = new TaskService(connectionService);
+
+    @NotNull
+    private final IProjectService projectService = new ProjectService(connectionService);
+
+    @NotNull
+    private final ProjectTaskService projectTaskService = new ProjectTaskService(projectService,taskService);
 
     @Before
     public void before() throws UserIdEmptyException, ProjectNotFoundException {
@@ -49,19 +61,19 @@ public class ProjectTaskServiceTest {
     }
 
     @Test
-    public void bindTaskToProject() throws AbstractException {
+    public void bindTaskToProject() throws Exception {
         projectTaskService.bindTaskToProject(USER1.getId(),USER_PROJECT.getId(),USER_TASK.getId());
         Assert.assertTrue(Objects.equals(USER_TASK.getProjectId(), USER_PROJECT.getId()));
     }
 
     @Test
-    public void removeProjectById() throws AbstractException {
+    public void removeProjectById() throws Exception {
         projectTaskService.removeProjectById(USER1.getId(),USER_PROJECT.getId());
         Assert.assertFalse(projectRepository.existsById(USER_PROJECT.getId()));
     }
 
     @Test
-    public void unbindTaskFromProject() throws AbstractException {
+    public void unbindTaskFromProject() throws Exception {
         projectTaskService.unbindTaskFromProject(USER1.getId(),USER_PROJECT.getId(),USER_TASK.getId());
         Assert.assertNull(USER_TASK.getProjectId());
     }

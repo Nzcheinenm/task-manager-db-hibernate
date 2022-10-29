@@ -6,7 +6,10 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import ru.t1.dkononov.tm.api.services.IConnectionService;
 import ru.t1.dkononov.tm.marker.DataCategory;
+import ru.t1.dkononov.tm.service.ConnectionService;
+import ru.t1.dkononov.tm.service.PropertyService;
 
 import static ru.t1.dkononov.tm.constant.TestData.*;
 import static ru.t1.dkononov.tm.constant.TestData.USER_PROJECT;
@@ -15,7 +18,10 @@ import static ru.t1.dkononov.tm.constant.TestData.USER_PROJECT;
 public class ProjectRepositoryTest {
 
     @NotNull
-    private final ProjectRepository repository = new ProjectRepository();
+    private final IConnectionService connectionService = new ConnectionService(new PropertyService());
+
+    @NotNull
+    private final ProjectRepository repository = new ProjectRepository(connectionService.getConnection());
 
     @Before
     public void before() {
@@ -47,7 +53,7 @@ public class ProjectRepositoryTest {
 
     @Test
     public void findAll() {
-        @NotNull final ProjectRepository emptyRepository = new ProjectRepository();
+        @NotNull final ProjectRepository emptyRepository = new ProjectRepository(connectionService.getConnection());
         Assert.assertTrue(emptyRepository.findAll().isEmpty());
         emptyRepository.add(USER_PROJECT);
         Assert.assertEquals(USER_PROJECT,emptyRepository.findById(USER_PROJECT.getId()));

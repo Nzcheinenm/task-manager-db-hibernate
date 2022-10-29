@@ -6,6 +6,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import ru.t1.dkononov.tm.api.services.IConnectionService;
 import ru.t1.dkononov.tm.exception.entity.ProjectNotFoundException;
 import ru.t1.dkononov.tm.exception.field.UserIdEmptyException;
 import ru.t1.dkononov.tm.marker.UnitCategory;
@@ -19,10 +20,10 @@ import static ru.t1.dkononov.tm.constant.TestData.USER1;
 public class SessionServiceTest {
 
     @NotNull
-    private final SessionRepository repository = new SessionRepository();
+    private final IConnectionService connectionService = new ConnectionService(new PropertyService());
 
     @NotNull
-    private final SessionService service = new SessionService(repository);
+    private final SessionService service = new SessionService(connectionService);
 
     @Before
     public void before() throws UserIdEmptyException, ProjectNotFoundException {
@@ -52,8 +53,7 @@ public class SessionServiceTest {
 
     @Test
     public void findAllNull() {
-        @NotNull final SessionRepository SessionRepository = new SessionRepository();
-        @NotNull final SessionService SessionService = new SessionService(SessionRepository);
+        @NotNull final SessionService SessionService = new SessionService(connectionService);
         Assert.assertTrue(SessionService.findAll().isEmpty());
     }
 

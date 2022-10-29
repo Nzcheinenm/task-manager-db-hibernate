@@ -7,12 +7,14 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import ru.t1.dkononov.tm.api.services.IConnectionService;
 import ru.t1.dkononov.tm.enumerated.Role;
 import ru.t1.dkononov.tm.exception.AbstractException;
 import ru.t1.dkononov.tm.exception.field.AbstractFieldException;
 import ru.t1.dkononov.tm.exception.field.LoginEmptyException;
 import ru.t1.dkononov.tm.marker.DataCategory;
 import ru.t1.dkononov.tm.model.User;
+import ru.t1.dkononov.tm.service.ConnectionService;
 import ru.t1.dkononov.tm.service.PropertyService;
 import ru.t1.dkononov.tm.util.HashUtil;
 
@@ -26,14 +28,17 @@ import static ru.t1.dkononov.tm.constant.TestData.USER_PROJECT;
 public class UserRepositoryTest {
 
     @NotNull
+    private final IConnectionService connectionService = new ConnectionService(new PropertyService());
+
+    @NotNull
     private  final PropertyService propertyService = new PropertyService();
 
     @NotNull
-    private final ProjectRepository projectRepository = new ProjectRepository();
+    private final ProjectRepository projectRepository = new ProjectRepository(connectionService.getConnection());
 
 
     @NotNull
-    private final UserRepository repository = new UserRepository();
+    private final UserRepository repository = new UserRepository(connectionService.getConnection());
 
     @NotNull
     private static final String LOGIN_TEST = "logintest";

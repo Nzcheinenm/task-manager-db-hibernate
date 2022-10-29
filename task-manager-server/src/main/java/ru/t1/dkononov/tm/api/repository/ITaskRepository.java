@@ -15,4 +15,15 @@ public interface ITaskRepository extends IUserOwnedRepository<Task> {
 
     @NotNull
     List<Task> findAllByProjectId(@NotNull String userId, @NotNull String projectId);
+
+    @NotNull
+    Task update(@NotNull Task task);
+
+    @NotNull
+    Task findTaskIdByProjectId(
+            @NotNull String userId,
+            @NotNull String projectId,
+            @NotNull String taskId
+    );
+
 }

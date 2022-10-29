@@ -17,7 +17,7 @@ public final class TaskAddCommand extends AbstractTaskCommand {
     public final String DESCRIPTION = "Создать новую задачу.";
 
     @Override
-    public void execute() throws AbstractFieldException {
+    public void execute() throws Exception {
         System.out.println("[CREATE NEW TASK]");
         System.out.println("ENTER NAME:");
         @NotNull final String name = TerminalUtil.inLine();

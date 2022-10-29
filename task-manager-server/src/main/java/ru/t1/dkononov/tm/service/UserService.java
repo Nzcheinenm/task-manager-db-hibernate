@@ -95,8 +95,11 @@ public final class UserService extends AbstractService<User, IUserRepository> im
         @Nullable final User user;
         try {
             @NotNull final IUserRepository repository = getRepository(connection);
-            user = create(login, password);
+            user = new User();
+            user.setLogin(login);
+            user.setPasswordHash(HashUtil.salt(propertyService, password));
             user.setEmail(email);
+            repository.add(user);
             connection.commit();
         } catch (@NotNull final Exception e) {
             connection.rollback();
@@ -123,8 +126,11 @@ public final class UserService extends AbstractService<User, IUserRepository> im
         @Nullable final User user;
         try {
             @NotNull final IUserRepository repository = getRepository(connection);
-            user = create(login, password);
+            user = new User();
+            user.setLogin(login);
+            user.setPasswordHash(HashUtil.salt(propertyService, password));
             if (role != null) user.setRole(role);
+            repository.add(user);
             connection.commit();
         } catch (@NotNull final Exception e) {
             connection.rollback();

@@ -43,13 +43,13 @@ public interface ITaskEndpoint extends IEndpoint {
     @WebMethod
     TaskChangeStatusByIdResponse changeStatusById(
             @NotNull TaskChangeStatusByIdRequest request
-    ) throws AbstractException;
+    ) throws Exception;
 
     @NotNull
     @WebMethod
     TaskChangeStatusByIndexResponse changeStatusByIndex(
             @NotNull TaskChangeStatusByIndexRequest request
-    ) throws AbstractException;
+    ) throws Exception;
 
     @NotNull
     @WebMethod
@@ -58,7 +58,7 @@ public interface ITaskEndpoint extends IEndpoint {
 
     @NotNull
     @WebMethod
-    TaskCreateResponse createTask(@NotNull TaskCreateRequest request) throws AbstractFieldException;
+    TaskCreateResponse createTask(@NotNull TaskCreateRequest request) throws Exception;
 
     @NotNull
     @WebMethod

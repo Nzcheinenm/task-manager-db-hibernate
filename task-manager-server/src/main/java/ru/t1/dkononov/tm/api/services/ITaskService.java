@@ -13,20 +13,22 @@ import java.util.List;
 public interface ITaskService extends IUserOwnedService<Task> {
 
     @NotNull
-    List<Task> findAllByProjectId(@Nullable String userId, @Nullable String projectId) throws UserIdEmptyException;
+    List<Task> findAllByProjectId(@Nullable String userId, @Nullable String projectId) throws UserIdEmptyException, Exception;
 
     @NotNull
-    Task create(@Nullable String userId, @Nullable String name, @Nullable String description) throws AbstractFieldException;
+    Task create(@Nullable String userId, @Nullable String name, @Nullable String description) throws AbstractFieldException, Exception;
 
     @NotNull
-    Task create(@Nullable String userId, @Nullable String name) throws AbstractFieldException;
+    Task create(@Nullable String userId, @Nullable String name) throws AbstractFieldException, Exception;
 
-    Task updateById(@Nullable String userId, @Nullable String id, @Nullable String name, @Nullable String description) throws AbstractException;
+    Task updateById(@Nullable String userId, @Nullable String id, @Nullable String name, @Nullable String description) throws AbstractException, Exception;
 
-    Task updateByIndex(@Nullable String userId, @Nullable Integer index, @Nullable String name, @Nullable String description) throws AbstractException;
+    Task updateByIndex(@Nullable String userId, @Nullable Integer index, @Nullable String name, @Nullable String description) throws AbstractException, Exception;
 
-    Task changeTaskStatusById(@Nullable String userId, @Nullable String id, @Nullable Status status) throws AbstractException;
+    Task changeTaskStatusById(@Nullable String userId, @Nullable String id, @Nullable Status status) throws AbstractException, Exception;
 
-    Task changeTaskStatusByIndex(@Nullable String userId, @Nullable Integer index, @Nullable Status status) throws AbstractException;
+    Task changeTaskStatusByIndex(@Nullable String userId, @Nullable Integer index, @Nullable Status status) throws AbstractException, Exception;
+
+    void updateProjectIdById(@NotNull String userId,@Nullable String taskId, @Nullable String projectId) throws Exception;
 
 }

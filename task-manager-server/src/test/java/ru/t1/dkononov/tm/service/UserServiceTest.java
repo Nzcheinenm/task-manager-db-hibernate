@@ -8,6 +8,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import ru.t1.dkononov.tm.api.services.IConnectionService;
 import ru.t1.dkononov.tm.enumerated.Role;
 import ru.t1.dkononov.tm.exception.AbstractException;
 import ru.t1.dkononov.tm.exception.field.AbstractFieldException;
@@ -27,20 +28,15 @@ import static ru.t1.dkononov.tm.constant.TestData.*;
 @Category(UnitCategory.class)
 public class UserServiceTest {
 
-    @NotNull
-    private final UserRepository repository = new UserRepository();
 
     @NotNull
-    private final ProjectRepository projectRepository = new ProjectRepository();
-
-    @NotNull
-    private final TaskRepository taskRepository = new TaskRepository();
+    private final IConnectionService connectionService = new ConnectionService(new PropertyService());
 
     @NotNull
     private final PropertyService propertyService = new PropertyService();
 
     @NotNull
-    private final UserService service = new UserService(repository,projectRepository,taskRepository,propertyService);
+    private final UserService service = new UserService(connectionService,propertyService);
 
     @NotNull
     private static final String LOGIN_TEST = "logintest";
@@ -72,8 +68,6 @@ public class UserServiceTest {
         service.create(LOGIN,PASSWORD, Role.USUAL);
         @Nullable final User user = service.findByLogin(LOGIN);
         Assert.assertNotNull(user);
-        projectRepository.add(user.getId(),USER_PROJECT);
-        Assert.assertNotNull(projectRepository.findById(USER_PROJECT.getId()));
     }
 
     @Test

@@ -11,5 +11,7 @@ public interface IProjectRepository extends IUserOwnedRepository<Project>, IRepo
     @NotNull
     Project create(@NotNull String userId, @NotNull String name, @NotNull String description);
 
+    @NotNull
+    Project update(@NotNull final Project project);
 
 }

@@ -6,6 +6,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import ru.t1.dkononov.tm.api.services.IConnectionService;
 import ru.t1.dkononov.tm.enumerated.Status;
 import ru.t1.dkononov.tm.exception.AbstractException;
 import ru.t1.dkononov.tm.exception.entity.ProjectNotFoundException;
@@ -19,10 +20,10 @@ import static ru.t1.dkononov.tm.constant.TestData.*;
 public class TaskServiceTest {
 
     @NotNull
-    private final TaskRepository repository = new TaskRepository();
+    private final IConnectionService connectionService = new ConnectionService(new PropertyService());
 
     @NotNull
-    private final TaskService service = new TaskService(repository);
+    private final TaskService service = new TaskService(connectionService);
 
     @Before
     public void before() throws UserIdEmptyException, ProjectNotFoundException {
@@ -54,8 +55,7 @@ public class TaskServiceTest {
 
     @Test
     public void findAllNull() {
-        @NotNull final TaskRepository TaskRepository = new TaskRepository();
-        @NotNull final TaskService TaskService = new TaskService(TaskRepository);
+        @NotNull final TaskService TaskService = new TaskService(connectionService);
         Assert.assertTrue(TaskService.findAll().isEmpty());
     }
 
@@ -65,22 +65,22 @@ public class TaskServiceTest {
     }
 
     @Test
-    public void updateById() throws AbstractException {
+    public void updateById() throws Exception {
         Assert.assertNotNull(service.updateById(USER1.getId(),USER_TASK.getId(),"1","2"));
     }
 
     @Test
-    public void updateByIndex() throws AbstractException {
+    public void updateByIndex() throws Exception {
         Assert.assertNotNull(service.updateByIndex(USER1.getId(),0,"3","4"));
     }
 
     @Test
-    public void changeStatusById() throws AbstractException {
+    public void changeStatusById() throws Exception {
         Assert.assertNotNull(service.changeTaskStatusById(USER1.getId(),USER_TASK.getId(), Status.IN_PROGRESS));
     }
 
     @Test
-    public void changeStatusByIndex() throws AbstractException {
+    public void changeStatusByIndex() throws Exception {
         Assert.assertNotNull(service.changeTaskStatusByIndex(USER1.getId(),0,Status.IN_PROGRESS));
     }
 

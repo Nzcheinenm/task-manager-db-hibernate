@@ -1,5 +1,6 @@
 package ru.t1.dkononov.tm.repository;
 
+import lombok.SneakyThrows;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.api.repository.IUserOwnedRepository;
@@ -8,10 +9,9 @@ import ru.t1.dkononov.tm.exception.field.UserIdEmptyException;
 import ru.t1.dkononov.tm.model.AbstractUserOwnedModel;
 
 import java.sql.Connection;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public abstract class AbstractUserOwnedRepository<M extends AbstractUserOwnedModel>
@@ -23,30 +23,41 @@ public abstract class AbstractUserOwnedRepository<M extends AbstractUserOwnedMod
 
     @NotNull
     @Override
-    public List<M> findAll(@Nullable final String userId) {
-        if (userId == null) return Collections.emptyList();
-        return models
-                .stream()
-                .filter(m -> userId.equals(m.getUserId()))
-                .collect(Collectors.toList());
-    }
+    public abstract M add(@NotNull final String userId, @NotNull final M model);
 
-    @Nullable
+    @NotNull
     @Override
-    public List<M> findAll(@Nullable final String userId, @Nullable final Comparator<M> comparator) {
-        @NotNull final List<M> result = findAll(userId);
-        result.sort(comparator);
+    @SneakyThrows
+    public List<M> findAll(@Nullable final String userId) {
+        @NotNull final List<M> result = new ArrayList<>();
+        @NotNull final String sql = String.format("SELECT * FROM %s WHERE user_id = ?",getTableName());
+        try (@NotNull final PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1,userId);
+            @NotNull final ResultSet rowSet = statement.executeQuery();
+            while (rowSet.next())
+                result.add(fetch(rowSet));
+        }
         return result;
     }
 
     @Nullable
     @Override
-    public abstract M add(@Nullable final String userId, @NotNull final M model);
+    @SneakyThrows
+    public List<M> findAll(@Nullable final String userId, @Nullable final Comparator<M> comparator) {
+        @NotNull final List<M> result = new ArrayList<>();
+        @NotNull final String sql = String.format("SELECT * FROM %s WHERE user_id = ? ORDER BY %s",getTableName(),getSortType(comparator));
+        try (@NotNull final PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1,userId);
+            @NotNull final ResultSet rowSet = statement.executeQuery();
+            while (rowSet.next()) result.add(fetch(rowSet));
+        }
+        return result;
+    }
 
     @Override
-    public @NotNull Collection<M> add(@NotNull Collection<M> models) {
-        this.models.addAll(models);
-        return models;
+    @NotNull
+    public Collection<M> add(@NotNull Collection<M> models) {
+        return add(models);
     }
 
     @Override
@@ -71,17 +82,19 @@ public abstract class AbstractUserOwnedRepository<M extends AbstractUserOwnedMod
 
     @Nullable
     @Override
+    @SneakyThrows
     public M findById(
             @Nullable final String userId,
             @Nullable final String id
     ) {
-        if (userId == null || id == null) return null;
-        return models
-                .stream()
-                .filter(m -> userId.equals(m.getUserId()))
-                .filter(m -> id.equals(m.getId()))
-                .findFirst()
-                .orElse(null);
+        @NotNull final String sql = String.format("SELECT * FROM %s WHERE id = ? AND user_id LIMIT 1", getTableName());
+        try (@NotNull final PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1,id);
+            statement.setString(2,userId);
+            @NotNull final ResultSet rowSet = statement.executeQuery();
+            if (!rowSet.next()) return null;
+            return fetch(rowSet);
+        }
     }
 
     @Nullable
@@ -100,6 +113,7 @@ public abstract class AbstractUserOwnedRepository<M extends AbstractUserOwnedMod
             @Nullable final M model
     ) {
         if (userId == null || model == null) return null;
+        model.setUserId(userId);
         return remove(model);
     }
 

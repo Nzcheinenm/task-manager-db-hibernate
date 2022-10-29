@@ -21,7 +21,7 @@ public final class TaskChangeStatusByIndexCommand extends AbstractTaskCommand {
     public final String DESCRIPTION = "Поменять статус задачи по индексу.";
 
     @Override
-    public void execute() throws AbstractException {
+    public void execute() throws Exception {
         System.out.println("[CHANGE PROJECT STATUS BY INDEX]");
         System.out.println("ENTER INDEX:");
         @NotNull final Integer index = TerminalUtil.nextNumber() - 1;

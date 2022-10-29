@@ -38,6 +38,9 @@ public abstract class AbstractRepository<M extends AbstractModel> implements IRe
     @NotNull
     protected abstract  M fetch(@NotNull final ResultSet row);
 
+    @NotNull
+    @Override
+    public abstract M add(@NotNull final M model);
 
     @NotNull
     @Override
@@ -54,20 +57,25 @@ public abstract class AbstractRepository<M extends AbstractModel> implements IRe
 
     @NotNull
     @Override
+    @SneakyThrows
     public List<M> findAll(@Nullable final Comparator<M> comparator) {
-        @NotNull final List<M> result = new ArrayList<>(models);
-        result.sort(comparator);
+        @NotNull final List<M> result = new ArrayList<>();
+        @NotNull final String sql = String.format("SELECT * FROM %s ORDER BY %s", getTableName(),getSortType(comparator));
+        try (@NotNull final Statement statement = connection.createStatement();
+             @NotNull final ResultSet resultSet = statement.executeQuery(sql)) {
+            while (resultSet.next()) result.add(fetch(resultSet));
+        }
         return result;
     }
 
+    @Override
     @NotNull
-    @Override
-    public abstract M add(@NotNull final M model);
-
-    @Override
-    public @NotNull Collection<M> add(@NotNull Collection<M> models) {
-        this.models.addAll(models);
-        return models;
+    public Collection<M> add(@NotNull final Collection<M> models) {
+       @NotNull final List<M> result = new ArrayList<>();
+       for (M model : models) {
+           result.add(add(model));
+       }
+       return result;
     }
 
     @Override
@@ -77,8 +85,12 @@ public abstract class AbstractRepository<M extends AbstractModel> implements IRe
     }
 
     @Override
+    @SneakyThrows
     public void clear() {
-        models.clear();
+        @NotNull final String sql = String.format("DELETE FROM %s", getTableName());
+        try (@NotNull final Statement statement = connection.createStatement()) {
+            statement.execute(sql);
+        }
     }
 
     @Override
@@ -101,24 +113,33 @@ public abstract class AbstractRepository<M extends AbstractModel> implements IRe
 
     @Nullable
     @Override
+    @SneakyThrows
     public M findByIndex(@NotNull final Integer index) {
-        return models.get(index);
+        return findAll().get(index);
     }
 
     @Nullable
     @Override
+    @SneakyThrows
     public M remove(@Nullable final M model) {
-        if (model == null) return null;
-        models.remove(model);
+        @NotNull final String sql = String.format("DELETE FROM %s WHERE id = ?",getTableName());
+        try (@NotNull final PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1,model.getId());
+            statement.executeUpdate();
+        }
         return model;
     }
 
     @Nullable
     @Override
+    @SneakyThrows
     public M removeById(@NotNull final String id) {
-        @Nullable final M model = findById(id);
-        if (model == null) return null;
-        remove(model);
+        @NotNull final M model = findById(id);
+        @NotNull final String sql = String.format("DELETE FROM %s WHERE id = ?",getTableName());
+        try (@NotNull final PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1,id);
+            statement.executeUpdate();
+        }
         return model;
     }
 
@@ -134,7 +155,17 @@ public abstract class AbstractRepository<M extends AbstractModel> implements IRe
     @Override
     public void removeAll(@Nullable final List<M> modelsRemove) {
         if (modelsRemove == null) return;
-        modelsRemove.forEach(models::remove);
+        modelsRemove.forEach(modelsRemove::remove);
+    }
+
+    @SneakyThrows
+    public long getCount() {
+        @NotNull final String query = String.format("SELECT COUNT(*) FROM %s",getTableName());
+        try (@NotNull final Statement statement = connection.createStatement();
+            @NotNull final ResultSet resultSet = statement.executeQuery(query)) {
+            resultSet.next();
+            return  resultSet.getLong("count");
+        }
     }
 
 }
