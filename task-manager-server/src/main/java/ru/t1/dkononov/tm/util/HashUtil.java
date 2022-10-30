@@ -18,7 +18,7 @@ public interface HashUtil {
         if (value == null || iteration == null || secret == null) return null;
         @Nullable String result = null;
         for (int i = 0; i < iteration; i++) {
-            result = md5(secret + result + secret);
+            result = md5(value + result + secret);
         }
         return result;
     }

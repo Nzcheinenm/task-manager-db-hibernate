@@ -2,33 +2,277 @@ package ru.t1.dkononov.tm.service;
 
 
 import lombok.SneakyThrows;
+import org.apache.ibatis.session.SqlSession;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import ru.t1.dkononov.tm.api.repository.IProjectRepository;
 import ru.t1.dkononov.tm.api.repository.ITaskRepository;
-import ru.t1.dkononov.tm.api.repository.IUserOwnedRepository;
 import ru.t1.dkononov.tm.api.services.IConnectionService;
 import ru.t1.dkononov.tm.api.services.ITaskService;
+import ru.t1.dkononov.tm.enumerated.Sort;
 import ru.t1.dkononov.tm.enumerated.Status;
 import ru.t1.dkononov.tm.exception.AbstractException;
+import ru.t1.dkononov.tm.exception.entity.ProjectNotFoundException;
 import ru.t1.dkononov.tm.exception.field.*;
 import ru.t1.dkononov.tm.model.Task;
-import ru.t1.dkononov.tm.repository.ProjectRepository;
-import ru.t1.dkononov.tm.repository.TaskRepository;
 
-import java.sql.Connection;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
-public final class TaskService extends AbstractUserOwnedService<Task, ITaskRepository> implements ITaskService {
+public final class TaskService implements ITaskService {
 
     @NotNull
-    public ITaskRepository getRepository(@NotNull Connection connection) {
-        return new TaskRepository(connection);
-    }
+    private final IConnectionService connectionService;
 
     public TaskService(@NotNull final IConnectionService connectionService) {
-        super(connectionService);
+        this.connectionService = connectionService;
+    }
+
+    @NotNull
+    @Override
+    @SneakyThrows
+    public List<Task> findAll(@Nullable final String userId) throws UserIdEmptyException {
+        if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
+        try (@NotNull final SqlSession sqlSession = connectionService.getSqlSession()) {
+            @NotNull final ITaskRepository repository = sqlSession.getMapper(ITaskRepository.class);
+            return repository.findAllWithUserId(userId);
+        }
+
+    }
+
+    @Nullable
+    @Override
+    @SneakyThrows
+    public List<Task> findAll(
+            @Nullable final String userId,
+            @Nullable final Comparator comparator
+    ) throws UserIdEmptyException {
+        if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
+        try (@NotNull final SqlSession sqlSession = connectionService.getSqlSession()) {
+            @NotNull final ITaskRepository repository = sqlSession.getMapper(ITaskRepository.class);
+            if (comparator == null) return findAll(userId);
+            return repository.findAllWithUserId(userId);
+        }
+    }
+
+    @NotNull
+    @Override
+    @SneakyThrows
+    public List<Task> findAll(
+            @Nullable final String userId,
+            @Nullable final Sort sort
+    ) throws UserIdEmptyException {
+        if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
+        if (sort == null) return findAll(userId);
+        return findAll(userId, sort.getComparator());
+    }
+
+    @NotNull
+    @Override
+    @SneakyThrows
+    public List<Task> findAll() {
+        try (@NotNull final SqlSession sqlSession = connectionService.getSqlSession()) {
+            @NotNull final ITaskRepository repository = sqlSession.getMapper(ITaskRepository.class);
+            return repository.findAll();
+        }
+    }
+
+    @Nullable
+    @Override
+    @SneakyThrows
+    public Task add(@Nullable final String userId, @Nullable final Task model)
+            throws ProjectNotFoundException, UserIdEmptyException {
+        if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
+        if (model == null) throw new ProjectNotFoundException();
+        @NotNull final SqlSession sqlSession = connectionService.getSqlSession();
+        try {
+            @NotNull final ITaskRepository repository = sqlSession.getMapper(ITaskRepository.class);
+            model.setUserId(userId);
+            repository.add(model);
+            sqlSession.commit();
+        } catch (@NotNull final Exception e) {
+            sqlSession.rollback();
+            throw e;
+        } finally {
+            sqlSession.close();
+        }
+        return model;
+    }
+
+    @Nullable
+    @Override
+    @SneakyThrows
+    public Collection<Task> add(@NotNull Collection<Task> models) {
+        if (models.isEmpty()) return Collections.emptyList();
+        @NotNull final SqlSession sqlSession = connectionService.getSqlSession();
+        try {
+            @NotNull final ITaskRepository repository = sqlSession.getMapper(ITaskRepository.class);
+            models.forEach(repository::add);
+            sqlSession.commit();
+        } catch (@NotNull final Exception e) {
+            sqlSession.rollback();
+            throw e;
+        } finally {
+            sqlSession.close();
+        }
+        return models;
+    }
+
+    @Override
+    @NotNull
+    @SneakyThrows
+    public Collection<Task> set(@NotNull Collection<Task> models) {
+        if (models.isEmpty()) return Collections.emptyList();
+        @NotNull final SqlSession sqlSession = connectionService.getSqlSession();
+        try {
+            @NotNull final ITaskRepository repository = sqlSession.getMapper(ITaskRepository.class);
+            models.forEach(repository::update);
+            sqlSession.commit();
+        } catch (@NotNull final Exception e) {
+            sqlSession.rollback();
+            throw e;
+        } finally {
+            sqlSession.close();
+        }
+        return models;
+    }
+
+    @Override
+    @SneakyThrows
+    public void clear(@Nullable final String userId) throws UserIdEmptyException {
+        if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
+        @NotNull final SqlSession sqlSession = connectionService.getSqlSession();
+        @Nullable final Task result;
+        try {
+            @NotNull final ITaskRepository repository = sqlSession.getMapper(ITaskRepository.class);
+            repository.clear(userId);
+            sqlSession.commit();
+        } catch (@NotNull final Exception e) {
+            sqlSession.rollback();
+            throw e;
+        } finally {
+            sqlSession.close();
+        }
+    }
+
+    @Override
+    @SneakyThrows
+    public boolean existsById(@Nullable final String userId, @Nullable final String id) throws UserIdEmptyException {
+        if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
+        if (id == null || id.isEmpty()) return false;
+        try (@NotNull final SqlSession sqlSession = connectionService.getSqlSession()) {
+            @NotNull final ITaskRepository repository = sqlSession.getMapper(ITaskRepository.class);
+            return repository.findById(userId, id) != null;
+        }
+    }
+
+    @Nullable
+    @Override
+    @SneakyThrows
+    public Task remove(@NotNull final String userId, @Nullable final Task model) throws UserIdEmptyException {
+        if (userId.isEmpty()) throw new UserIdEmptyException();
+        @NotNull final SqlSession sqlSession = connectionService.getSqlSession();
+        try {
+            @NotNull final ITaskRepository repository = sqlSession.getMapper(ITaskRepository.class);
+            model.setUserId(userId);
+            repository.remove(model);
+            sqlSession.commit();
+        } catch (@NotNull final Exception e) {
+            sqlSession.rollback();
+            throw e;
+        } finally {
+            sqlSession.close();
+        }
+        return model;
+    }
+
+    @Nullable
+    @Override
+    @SneakyThrows
+    public Task findById(@Nullable final String userId, @Nullable final String id)
+            throws AbstractException {
+        if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
+        if (id == null || id.isEmpty()) throw new IdEmptyException();
+        try (@NotNull final SqlSession sqlSession = connectionService.getSqlSession()) {
+            @NotNull final ITaskRepository repository = sqlSession.getMapper(ITaskRepository.class);
+            return repository.findById(userId, id);
+        }
+    }
+
+    @Nullable
+    @Override
+    @SneakyThrows
+    public Task findByIndex(@Nullable final String userId, @Nullable final Integer index)
+            throws AbstractException {
+        if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
+        if (index == null || index < 0) throw new IndexIncorrectException();
+        try (@NotNull final SqlSession sqlSession = connectionService.getSqlSession()) {
+            @NotNull final ITaskRepository repository = sqlSession.getMapper(ITaskRepository.class);
+            return repository.findByIndex(userId, index);
+        }
+    }
+
+    @NotNull
+    @Override
+    @SneakyThrows
+    public Task removeById(@Nullable final String userId, @Nullable final String id) throws AbstractException {
+        if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
+        if (id == null || id.isEmpty()) throw new IdEmptyException();
+        @NotNull final SqlSession sqlSession = connectionService.getSqlSession();
+        @Nullable final Task result;
+        try {
+            @NotNull final ITaskRepository repository = sqlSession.getMapper(ITaskRepository.class);
+            result = repository.findById(userId, id);
+            remove(userId, result);
+            sqlSession.commit();
+        } catch (@NotNull final Exception e) {
+            sqlSession.rollback();
+            throw e;
+        } finally {
+            sqlSession.close();
+        }
+        return result;
+    }
+
+    @NotNull
+    @Override
+    @SneakyThrows
+    public Task removeByIndex(@Nullable final String userId, @Nullable final Integer index) throws AbstractException {
+        if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
+        if (index == null || index < 0) throw new IndexIncorrectException();
+        @NotNull final SqlSession sqlSession = connectionService.getSqlSession();
+        @Nullable final Task result;
+        try {
+            @NotNull final ITaskRepository repository = sqlSession.getMapper(ITaskRepository.class);
+            result = repository.findByIndex(userId, index);
+            result.setUserId(userId);
+            repository.remove(result);
+            sqlSession.commit();
+        } catch (@NotNull final Exception e) {
+            sqlSession.rollback();
+            throw e;
+        } finally {
+            sqlSession.close();
+        }
+        return result;
+    }
+
+    @Override
+    @SneakyThrows
+    public void removeAll(@Nullable final String userId) throws UserIdEmptyException {
+        if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
+        @NotNull final SqlSession sqlSession = connectionService.getSqlSession();
+        try {
+            @NotNull final ITaskRepository repository = sqlSession.getMapper(ITaskRepository.class);
+            repository.clear(userId);
+            sqlSession.commit();
+        } catch (@NotNull final Exception e) {
+            sqlSession.rollback();
+            throw e;
+        } finally {
+            sqlSession.close();
+        }
     }
 
     @NotNull
@@ -37,8 +281,8 @@ public final class TaskService extends AbstractUserOwnedService<Task, ITaskRepos
             throws Exception {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (projectId == null || projectId.isEmpty()) return Collections.emptyList();
-        try (@NotNull final Connection connection = getConnection()) {
-            @NotNull final ITaskRepository repository = getRepository(connection);
+        try (@NotNull final SqlSession sqlSession = connectionService.getSqlSession()) {
+            @NotNull final ITaskRepository repository = sqlSession.getMapper(ITaskRepository.class);
             return repository.findAllByProjectId(userId, projectId);
         }
     }
@@ -50,17 +294,21 @@ public final class TaskService extends AbstractUserOwnedService<Task, ITaskRepos
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (name == null || name.isEmpty()) throw new NameEmptyException();
         if (description == null || description.isEmpty()) throw new DescriptionEmptyException();
-        @NotNull final Connection connection = getConnection();
+        @NotNull final SqlSession sqlSession = connectionService.getSqlSession();
         @Nullable final Task task;
         try {
-            @NotNull final ITaskRepository repository = getRepository(connection);
-            task = repository.create(userId,name, description);
-            connection.commit();
+            @NotNull final ITaskRepository repository = sqlSession.getMapper(ITaskRepository.class);
+            task = new Task();
+            task.setUserId(userId);
+            task.setName(name);
+            task.setDescription(description);
+            repository.add(task);
+            sqlSession.commit();
         } catch (@NotNull final Exception e) {
-            connection.rollback();
+            sqlSession.rollback();
             throw e;
         } finally {
-            connection.close();
+            sqlSession.close();
         }
         return task;
     }
@@ -70,17 +318,20 @@ public final class TaskService extends AbstractUserOwnedService<Task, ITaskRepos
     public Task create(@Nullable final String userId, @Nullable final String name) throws Exception {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (name == null || name.isEmpty()) throw new NameEmptyException();
-        @NotNull final Connection connection = getConnection();
+        @NotNull final SqlSession sqlSession = connectionService.getSqlSession();
         @Nullable final Task task;
         try {
-            @NotNull final ITaskRepository repository = getRepository(connection);
-            task = repository.create(userId, name);
-            connection.commit();
+            @NotNull final ITaskRepository repository = sqlSession.getMapper(ITaskRepository.class);
+            task = new Task();
+            task.setUserId(userId);
+            task.setName(name);
+            repository.add(task);
+            sqlSession.commit();
         } catch (@NotNull final Exception e) {
-            connection.rollback();
+            sqlSession.rollback();
             throw e;
         } finally {
-            connection.close();
+            sqlSession.close();
         }
         return task;
     }
@@ -98,21 +349,21 @@ public final class TaskService extends AbstractUserOwnedService<Task, ITaskRepos
         if (id == null || id.isEmpty()) throw new IdEmptyException();
         if (name == null || name.isEmpty()) throw new NameEmptyException();
         if (description == null || description.isEmpty()) throw new DescriptionEmptyException();
-        @NotNull final Connection connection = getConnection();
+        @NotNull final SqlSession sqlSession = connectionService.getSqlSession();
         @Nullable final Task task;
         try {
-            @NotNull final ITaskRepository repository = getRepository(connection);
+            @NotNull final ITaskRepository repository = sqlSession.getMapper(ITaskRepository.class);
             task = repository.findById(userId, id);
             if (task == null) throw new TaskIdEmptyException();
             task.setName(name);
             task.setDescription(description);
             task.setUserId(userId);
-            connection.commit();
+            sqlSession.commit();
         } catch (@NotNull final Exception e) {
-            connection.rollback();
+            sqlSession.rollback();
             throw e;
         } finally {
-            connection.close();
+            sqlSession.close();
         }
         return task;
     }
@@ -130,21 +381,21 @@ public final class TaskService extends AbstractUserOwnedService<Task, ITaskRepos
         if (index == null || index < 0) throw new IndexIncorrectException();
         if (name == null || name.isEmpty()) throw new NameEmptyException();
         if (description == null || description.isEmpty()) throw new DescriptionEmptyException();
-        @NotNull final Connection connection = getConnection();
+        @NotNull final SqlSession sqlSession = connectionService.getSqlSession();
         @Nullable final Task task;
         try {
-            @NotNull final ITaskRepository repository = getRepository(connection);
+            @NotNull final ITaskRepository repository = sqlSession.getMapper(ITaskRepository.class);
             task = repository.findByIndex(userId, index);
             if (task == null) throw new TaskIdEmptyException();
             task.setName(name);
             task.setDescription(description);
             task.setUserId(userId);
-            connection.commit();
+            sqlSession.commit();
         } catch (@NotNull final Exception e) {
-            connection.rollback();
+            sqlSession.rollback();
             throw e;
         } finally {
-            connection.close();
+            sqlSession.close();
         }
         return task;
     }
@@ -159,20 +410,20 @@ public final class TaskService extends AbstractUserOwnedService<Task, ITaskRepos
             throws Exception {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (id == null || id.isEmpty()) throw new IdEmptyException();
-        @NotNull final Connection connection = getConnection();
+        @NotNull final SqlSession sqlSession = connectionService.getSqlSession();
         @Nullable final Task task;
         try {
-            @NotNull final ITaskRepository repository = getRepository(connection);
+            @NotNull final ITaskRepository repository = sqlSession.getMapper(ITaskRepository.class);
             task = findById(userId, id);
             if (task == null) throw new TaskIdEmptyException();
             task.setStatus(status);
             task.setUserId(userId);
-            connection.commit();
+            sqlSession.commit();
         } catch (@NotNull final Exception e) {
-            connection.rollback();
+            sqlSession.rollback();
             throw e;
         } finally {
-            connection.close();
+            sqlSession.close();
         }
         return task;
     }
@@ -186,20 +437,20 @@ public final class TaskService extends AbstractUserOwnedService<Task, ITaskRepos
     ) throws Exception {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (index == null || index < 0) throw new IndexIncorrectException();
-        @NotNull final Connection connection = getConnection();
+        @NotNull final SqlSession sqlSession = connectionService.getSqlSession();
         @Nullable final Task task;
         try {
-            @NotNull final ITaskRepository repository = getRepository(connection);
+            @NotNull final ITaskRepository repository = sqlSession.getMapper(ITaskRepository.class);
             task = findByIndex(userId, index);
             if (task == null) throw new TaskIdEmptyException();
             task.setStatus(status);
             task.setUserId(userId);
-            connection.commit();
+            sqlSession.commit();
         } catch (@NotNull final Exception e) {
-            connection.rollback();
+            sqlSession.rollback();
             throw e;
         } finally {
-            connection.close();
+            sqlSession.close();
         }
         return task;
     }
@@ -210,19 +461,19 @@ public final class TaskService extends AbstractUserOwnedService<Task, ITaskRepos
         if (taskId == null || taskId.isEmpty()) throw new TaskIdEmptyException();
         if (projectId == null || projectId.isEmpty()) throw new ProjectIdEmptyException();
 
-        @NotNull final Connection connection = getConnection();
+        @NotNull final SqlSession sqlSession = connectionService.getSqlSession();
         @Nullable final Task task;
         try {
-            @NotNull final ITaskRepository repository = getRepository(connection);
+            @NotNull final ITaskRepository repository = sqlSession.getMapper(ITaskRepository.class);
             task = repository.findTaskIdByProjectId(userId, taskId,projectId);
             if (task == null) throw new TaskIdEmptyException();
             task.setProjectId(projectId);
-            connection.commit();
+            sqlSession.commit();
         } catch (@NotNull final Exception e) {
-            connection.rollback();
+            sqlSession.rollback();
             throw e;
         } finally {
-            connection.close();
+            sqlSession.close();
         }
     }
 

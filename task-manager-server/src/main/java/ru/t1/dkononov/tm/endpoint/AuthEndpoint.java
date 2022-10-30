@@ -12,6 +12,7 @@ import ru.t1.dkononov.tm.dto.request.UserProfileRequest;
 import ru.t1.dkononov.tm.dto.response.UserLoginResponse;
 import ru.t1.dkononov.tm.dto.response.UserLogoutResponse;
 import ru.t1.dkononov.tm.dto.response.UserProfileResponse;
+import ru.t1.dkononov.tm.exception.AbstractException;
 import ru.t1.dkononov.tm.exception.field.AccessDeniedException;
 import ru.t1.dkononov.tm.exception.field.IdEmptyException;
 import ru.t1.dkononov.tm.model.Session;
@@ -62,7 +63,7 @@ public final class AuthEndpoint extends AbstractEndpoint implements IAuthEndpoin
     public UserProfileResponse profile(
             @WebParam(name = REQUEST, partName = REQUEST)
             @NotNull final UserProfileRequest request
-    ) throws AccessDeniedException, IdEmptyException {
+    ) throws AbstractException {
         @NotNull final Session session = check(request);
         @Nullable final String userId = session.getUserId();
         @Nullable final User user = getUserService().findById(userId);

@@ -22,10 +22,10 @@ public final class Project extends AbstractUserOwnedModel implements IWBS {
     private String name = "";
 
     @NotNull
-    private Status status = Status.NOT_STARTED;
+    private String description = "";
 
     @NotNull
-    private String description = "";
+    private Status status = Status.NOT_STARTED;
 
     @NotNull
     private Date created = new Date();

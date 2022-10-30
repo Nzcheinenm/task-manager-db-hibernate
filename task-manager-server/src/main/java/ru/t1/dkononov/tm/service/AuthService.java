@@ -144,7 +144,7 @@ public final class AuthService implements IAuthService {
 
     @NotNull
     @Override
-    public User getUser() throws AbstractFieldException {
+    public User getUser() throws AbstractException {
         if (!isAuth()) throw new AccessDeniedException();
         @Nullable final User user = userService.findById(userId);
         if (user == null) throw new AccessDeniedException();

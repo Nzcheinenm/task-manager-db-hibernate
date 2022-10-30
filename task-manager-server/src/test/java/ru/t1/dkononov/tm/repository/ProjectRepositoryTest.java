@@ -21,7 +21,7 @@ public class ProjectRepositoryTest {
     private final IConnectionService connectionService = new ConnectionService(new PropertyService());
 
     @NotNull
-    private final ProjectRepository repository = new ProjectRepository(connectionService.getConnection());
+    private final ProjectRepository repository = new ProjectRepository(connectionService.getSqlSession());
 
     @Before
     public void before() {
@@ -53,7 +53,7 @@ public class ProjectRepositoryTest {
 
     @Test
     public void findAll() {
-        @NotNull final ProjectRepository emptyRepository = new ProjectRepository(connectionService.getConnection());
+        @NotNull final ProjectRepository emptyRepository = new ProjectRepository(connectionService.getSqlSession());
         Assert.assertTrue(emptyRepository.findAll().isEmpty());
         emptyRepository.add(USER_PROJECT);
         Assert.assertEquals(USER_PROJECT,emptyRepository.findById(USER_PROJECT.getId()));

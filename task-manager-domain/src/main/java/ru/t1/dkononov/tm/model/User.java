@@ -11,7 +11,6 @@ import ru.t1.dkononov.tm.enumerated.Role;
 @Getter
 @Setter
 @NoArgsConstructor
-@JsonIgnoreProperties(ignoreUnknown = true)
 public final class User extends AbstractModel {
 
     private final static long serialVersionUID = 1;
@@ -40,8 +39,8 @@ public final class User extends AbstractModel {
     @NotNull
     private Boolean locked = false;
 
-    public Boolean isLocked() {
-        return locked;
+    public void setLocked(@NotNull Boolean locked) {
+        this.locked = locked;
     }
 
 }

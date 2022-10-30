@@ -36,7 +36,7 @@ public interface IAuthService {
     String getUserId() throws AccessDeniedException;
 
     @NotNull
-    User getUser() throws AbstractFieldException;
+    User getUser() throws AbstractException;
 
 
     @NotNull

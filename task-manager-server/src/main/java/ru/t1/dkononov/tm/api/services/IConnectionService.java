@@ -1,11 +1,16 @@
 package ru.t1.dkononov.tm.api.services;
 
+import lombok.SneakyThrows;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
 import org.jetbrains.annotations.NotNull;
-
-import java.sql.Connection;
 
 public interface IConnectionService {
 
-    @NotNull Connection getConnection();
+    @NotNull
+    @SneakyThrows
+    SqlSessionFactory getSqlSessionFactory();
+
+    @NotNull SqlSession getSqlSession();
 
 }

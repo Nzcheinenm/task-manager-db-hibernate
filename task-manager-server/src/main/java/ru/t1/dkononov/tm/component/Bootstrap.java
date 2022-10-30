@@ -11,15 +11,7 @@ import ru.t1.dkononov.tm.api.repository.IUserRepository;
 import ru.t1.dkononov.tm.api.services.*;
 import ru.t1.dkononov.tm.endpoint.*;
 import ru.t1.dkononov.tm.enumerated.Role;
-import ru.t1.dkononov.tm.enumerated.Status;
-import ru.t1.dkononov.tm.exception.AbstractException;
-import ru.t1.dkononov.tm.model.Project;
-import ru.t1.dkononov.tm.model.Task;
 import ru.t1.dkononov.tm.model.User;
-import ru.t1.dkononov.tm.repository.ProjectRepository;
-import ru.t1.dkononov.tm.repository.SessionRepository;
-import ru.t1.dkononov.tm.repository.TaskRepository;
-import ru.t1.dkononov.tm.repository.UserRepository;
 import ru.t1.dkononov.tm.service.*;
 import ru.t1.dkononov.tm.util.SystemUtil;
 
@@ -90,7 +82,7 @@ public final class Bootstrap implements IServiceLocator {
 
     @Getter
     @NotNull
-    private final IUserService userService = new UserService(connectionService, propertyService);
+    private final IUserService userService = new UserService(propertyService, connectionService);
 
     @Getter
     @NotNull

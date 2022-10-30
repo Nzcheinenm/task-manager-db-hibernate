@@ -42,4 +42,5 @@ public interface IPropertyService extends ISaltProvider,IDatabaseProperty {
     @NotNull
     String getGitCommiterEmail();
 
+    @NotNull String getDatabaseDriver();
 }

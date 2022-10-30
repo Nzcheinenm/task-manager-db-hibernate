@@ -21,7 +21,7 @@ public class TaskRepositoryTest {
     private final IConnectionService connectionService = new ConnectionService(new PropertyService());
 
     @NotNull
-    private final TaskRepository repository = new TaskRepository(connectionService.getConnection());
+    private final TaskRepository repository = new TaskRepository(connectionService.getSqlSession());
 
     @Before
     public void before() {
@@ -53,7 +53,7 @@ public class TaskRepositoryTest {
 
     @Test
     public void findAllIfOne() {
-        @NotNull final TaskRepository emptyRepository = new TaskRepository(connectionService.getConnection());
+        @NotNull final TaskRepository emptyRepository = new TaskRepository(connectionService.getSqlSession());
         Assert.assertTrue(emptyRepository.findAll().isEmpty());
         emptyRepository.add(USER_TASK);
         Assert.assertEquals(USER_TASK,emptyRepository.findById(USER_TASK.getId()));

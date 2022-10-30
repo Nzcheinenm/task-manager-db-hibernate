@@ -18,8 +18,6 @@ import ru.t1.dkononov.tm.service.ConnectionService;
 import ru.t1.dkononov.tm.service.PropertyService;
 import ru.t1.dkononov.tm.util.HashUtil;
 
-import java.util.Objects;
-
 import static ru.t1.dkononov.tm.constant.TestData.*;
 import static ru.t1.dkononov.tm.constant.TestData.USER_PROJECT;
 
@@ -34,11 +32,11 @@ public class UserRepositoryTest {
     private  final PropertyService propertyService = new PropertyService();
 
     @NotNull
-    private final ProjectRepository projectRepository = new ProjectRepository(connectionService.getConnection());
+    private final ProjectRepository projectRepository = new ProjectRepository(connectionService.getSqlSession());
 
 
     @NotNull
-    private final UserRepository repository = new UserRepository(connectionService.getConnection());
+    private final UserRepository repository = new UserRepository(connectionService.getSqlSession());
 
     @NotNull
     private static final String LOGIN_TEST = "logintest";

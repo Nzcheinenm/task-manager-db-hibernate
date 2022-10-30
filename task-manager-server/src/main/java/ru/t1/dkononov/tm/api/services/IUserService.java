@@ -1,5 +1,6 @@
 package ru.t1.dkononov.tm.api.services;
 
+import lombok.SneakyThrows;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.enumerated.Role;
@@ -7,7 +8,10 @@ import ru.t1.dkononov.tm.exception.AbstractException;
 import ru.t1.dkononov.tm.exception.field.*;
 import ru.t1.dkononov.tm.model.User;
 
-public interface IUserService extends IService<User> {
+import java.util.Collection;
+import java.util.List;
+
+public interface IUserService {
 
     @Nullable
     User create(@Nullable String login, @Nullable String password) throws AbstractException;
@@ -52,4 +56,16 @@ public interface IUserService extends IService<User> {
 
     @Nullable User unlockUserByLogin(@Nullable String login) throws LoginEmptyException, UserNotFoundException;
 
+    @Nullable
+    @SneakyThrows
+    User findById(@Nullable String id)
+            throws AbstractException;
+
+    @NotNull
+    @SneakyThrows
+    List<User> findAll();
+
+    @NotNull
+    @SneakyThrows
+    Collection<User> set(@NotNull Collection<User> models);
 }

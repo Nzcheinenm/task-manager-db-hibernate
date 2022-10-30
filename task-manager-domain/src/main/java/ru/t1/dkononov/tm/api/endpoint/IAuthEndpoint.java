@@ -8,6 +8,7 @@ import ru.t1.dkononov.tm.dto.request.UserProfileRequest;
 import ru.t1.dkononov.tm.dto.response.UserLoginResponse;
 import ru.t1.dkononov.tm.dto.response.UserLogoutResponse;
 import ru.t1.dkononov.tm.dto.response.UserProfileResponse;
+import ru.t1.dkononov.tm.exception.AbstractException;
 import ru.t1.dkononov.tm.exception.field.AccessDeniedException;
 import ru.t1.dkononov.tm.exception.field.IdEmptyException;
 
@@ -61,5 +62,5 @@ public interface IAuthEndpoint extends IEndpoint {
     UserProfileResponse profile(
             @WebParam(name = REQUEST, partName = REQUEST)
             @NotNull UserProfileRequest request
-    ) throws AccessDeniedException, IdEmptyException;
+    ) throws AbstractException;
 }

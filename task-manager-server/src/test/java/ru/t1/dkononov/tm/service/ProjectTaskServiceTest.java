@@ -12,12 +12,9 @@ import ru.t1.dkononov.tm.api.repository.ITaskRepository;
 import ru.t1.dkononov.tm.api.services.IConnectionService;
 import ru.t1.dkononov.tm.api.services.IProjectService;
 import ru.t1.dkononov.tm.api.services.ITaskService;
-import ru.t1.dkononov.tm.exception.AbstractException;
 import ru.t1.dkononov.tm.exception.entity.ProjectNotFoundException;
 import ru.t1.dkononov.tm.exception.field.UserIdEmptyException;
 import ru.t1.dkononov.tm.marker.UnitCategory;
-import ru.t1.dkononov.tm.repository.ProjectRepository;
-import ru.t1.dkononov.tm.repository.TaskRepository;
 
 
 import java.util.Objects;
@@ -31,10 +28,10 @@ public class ProjectTaskServiceTest {
     private final IConnectionService connectionService = new ConnectionService(new PropertyService());
 
     @Nullable
-    private final IProjectRepository projectRepository = new ProjectRepository(connectionService.getConnection());
+    private final IProjectRepository projectRepository = connectionService.getSqlSession().getMapper(IProjectRepository.class);
 
     @Nullable
-    private final ITaskRepository taskRepository = new TaskRepository(connectionService.getConnection());
+    private final ITaskRepository taskRepository = connectionService.getSqlSession().getMapper(ITaskRepository.class);
 
     @NotNull
     private final ITaskService taskService = new TaskService(connectionService);
@@ -69,7 +66,7 @@ public class ProjectTaskServiceTest {
     @Test
     public void removeProjectById() throws Exception {
         projectTaskService.removeProjectById(USER1.getId(),USER_PROJECT.getId());
-        Assert.assertFalse(projectRepository.existsById(USER_PROJECT.getId()));
+        Assert.assertFalse(projectRepository.findById(USER_PROJECT.getId()) != null);
     }
 
     @Test

@@ -10,10 +10,8 @@ import ru.t1.dkononov.tm.api.services.IConnectionService;
 import ru.t1.dkononov.tm.exception.entity.ProjectNotFoundException;
 import ru.t1.dkononov.tm.exception.field.UserIdEmptyException;
 import ru.t1.dkononov.tm.marker.DataCategory;
-import ru.t1.dkononov.tm.model.Session;
 import ru.t1.dkononov.tm.service.ConnectionService;
 import ru.t1.dkononov.tm.service.PropertyService;
-import ru.t1.dkononov.tm.service.SessionService;
 
 import static ru.t1.dkononov.tm.constant.TestData.*;
 
@@ -24,7 +22,7 @@ public class SessionRepositoryTest {
     private final IConnectionService connectionService = new ConnectionService(new PropertyService());
 
     @NotNull
-    private final SessionRepository repository = new SessionRepository(connectionService.getConnection());
+    private final SessionRepository repository = new SessionRepository(connectionService.getSqlSession());
 
     @Before
     public void before() throws UserIdEmptyException, ProjectNotFoundException {
@@ -53,7 +51,7 @@ public class SessionRepositoryTest {
 
     @Test
     public void findAllNull() {
-        @NotNull final SessionRepository sessionRepository = new SessionRepository(connectionService.getConnection());
+        @NotNull final SessionRepository sessionRepository = new SessionRepository(connectionService.getSqlSession());
         Assert.assertTrue(sessionRepository.findAll().isEmpty());
     }
 
