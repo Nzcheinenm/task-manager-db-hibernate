@@ -4,14 +4,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.jetbrains.annotations.Nullable;
-import ru.t1.dkononov.tm.model.Task;
+import ru.t1.dkononov.tm.dto.model.TaskDTO;
 
 @Getter
 @Setter
 @NoArgsConstructor
 public class TaskStartByIndexResponse extends AbstractTaskResponse {
 
-    public TaskStartByIndexResponse(@Nullable final Task task) {
+    public TaskStartByIndexResponse(@Nullable final TaskDTO task) {
         super(task);
     }
 

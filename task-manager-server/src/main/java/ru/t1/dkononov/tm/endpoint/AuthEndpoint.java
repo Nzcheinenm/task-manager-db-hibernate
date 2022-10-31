@@ -13,8 +13,8 @@ import ru.t1.dkononov.tm.dto.response.UserLoginResponse;
 import ru.t1.dkononov.tm.dto.response.UserLogoutResponse;
 import ru.t1.dkononov.tm.dto.response.UserProfileResponse;
 import ru.t1.dkononov.tm.exception.AbstractException;
-import ru.t1.dkononov.tm.model.Session;
-import ru.t1.dkononov.tm.model.User;
+import ru.t1.dkononov.tm.dto.model.SessionDTO;
+import ru.t1.dkononov.tm.dto.model.UserDTO;
 
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
@@ -50,7 +50,7 @@ public final class AuthEndpoint extends AbstractEndpoint implements IAuthEndpoin
             @WebParam(name = REQUEST, partName = REQUEST)
             @NotNull final UserLogoutRequest request
     ) throws Exception {
-        @NotNull final Session session = check(request);
+        @NotNull final SessionDTO session = check(request);
         getServiceLocator().getAuthService().invalidate(session);
         return new UserLogoutResponse();
     }
@@ -62,9 +62,9 @@ public final class AuthEndpoint extends AbstractEndpoint implements IAuthEndpoin
             @WebParam(name = REQUEST, partName = REQUEST)
             @NotNull final UserProfileRequest request
     ) throws AbstractException {
-        @NotNull final Session session = check(request);
+        @NotNull final SessionDTO session = check(request);
         @Nullable final String userId = session.getUserId();
-        @Nullable final User user = getUserService().findById(userId);
+        @Nullable final UserDTO user = getUserService().findById(userId);
         return new UserProfileResponse(user);
     }
 

@@ -6,7 +6,7 @@ import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.enumerated.Role;
 import ru.t1.dkononov.tm.exception.AbstractException;
 import ru.t1.dkononov.tm.exception.field.*;
-import ru.t1.dkononov.tm.model.User;
+import ru.t1.dkononov.tm.dto.model.UserDTO;
 
 import java.util.Collection;
 import java.util.List;
@@ -14,34 +14,34 @@ import java.util.List;
 public interface IUserService {
 
     @Nullable
-    User create(@Nullable String login, @Nullable String password) throws AbstractException;
+    UserDTO create(@Nullable String login, @Nullable String password) throws AbstractException;
 
     @NotNull
-    User create(@Nullable String login, @Nullable String password, @Nullable String email) throws AbstractException;
+    UserDTO create(@Nullable String login, @Nullable String password, @Nullable String email) throws AbstractException;
 
     @NotNull
-    User create(@Nullable String login, @Nullable String password, @Nullable Role role) throws AbstractException;
+    UserDTO create(@Nullable String login, @Nullable String password, @Nullable Role role) throws AbstractException;
 
     @Nullable
-    User findByLogin(@Nullable String login) throws LoginEmptyException, UserNotFoundException;
+    UserDTO findByLogin(@Nullable String login) throws LoginEmptyException, UserNotFoundException;
 
     @Nullable
-    User findByEmail(@Nullable String email) throws EmailEmptyException;
+    UserDTO findByEmail(@Nullable String email) throws EmailEmptyException;
 
     @Nullable
-    User removeOne(@Nullable User model) throws UserIdEmptyException;
+    UserDTO removeOne(@Nullable UserDTO model) throws UserIdEmptyException;
 
     @NotNull
-    User removeByLogin(@Nullable String login) throws AbstractFieldException;
+    UserDTO removeByLogin(@Nullable String login) throws AbstractFieldException;
 
     @Nullable
-    User removeByEmail(@Nullable String email) throws AbstractFieldException;
+    UserDTO removeByEmail(@Nullable String email) throws AbstractFieldException;
 
     @NotNull
-    User setPassword(@Nullable String id, @Nullable String password) throws AbstractFieldException;
+    UserDTO setPassword(@Nullable String id, @Nullable String password) throws AbstractFieldException;
 
     @NotNull
-    User updateUser(
+    UserDTO updateUser(
             @Nullable String id,
             @Nullable String firstName,
             @Nullable String lastName,
@@ -52,20 +52,20 @@ public interface IUserService {
 
     Boolean isEmailExist(@Nullable String email);
 
-    @Nullable User lockUserByLogin(@Nullable String login) throws LoginEmptyException, UserNotFoundException;
+    @Nullable UserDTO lockUserByLogin(@Nullable String login) throws LoginEmptyException, UserNotFoundException;
 
-    @Nullable User unlockUserByLogin(@Nullable String login) throws LoginEmptyException, UserNotFoundException;
+    @Nullable UserDTO unlockUserByLogin(@Nullable String login) throws LoginEmptyException, UserNotFoundException;
 
     @Nullable
     @SneakyThrows
-    User findById(@Nullable String id)
+    UserDTO findById(@Nullable String id)
             throws AbstractException;
 
     @NotNull
     @SneakyThrows
-    List<User> findAll();
+    List<UserDTO> findAll();
 
     @NotNull
     @SneakyThrows
-    Collection<User> set(@NotNull Collection<User> models);
+    Collection<UserDTO> set(@NotNull Collection<UserDTO> models);
 }

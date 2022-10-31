@@ -12,8 +12,8 @@ import ru.t1.dkononov.tm.enumerated.Role;
 import ru.t1.dkononov.tm.exception.AbstractException;
 import ru.t1.dkononov.tm.exception.entity.ProjectNotFoundException;
 import ru.t1.dkononov.tm.exception.field.*;
-import ru.t1.dkononov.tm.model.Session;
-import ru.t1.dkononov.tm.model.User;
+import ru.t1.dkononov.tm.dto.model.SessionDTO;
+import ru.t1.dkononov.tm.dto.model.UserDTO;
 import ru.t1.dkononov.tm.util.CryptUtil;
 import ru.t1.dkononov.tm.util.HashUtil;
 
@@ -47,7 +47,7 @@ public final class AuthService implements IAuthService {
     @NotNull
     @Override
     @SneakyThrows
-    public Session validateToken(@Nullable final String token) {
+    public SessionDTO validateToken(@Nullable final String token) {
         if (token == null) throw new AccessDeniedException();
         @NotNull final String sessionKey = propertyService.getSessionKey();
         @NotNull String json;
@@ -57,7 +57,7 @@ public final class AuthService implements IAuthService {
             throw new AccessDeniedException();
         }
         @NotNull final ObjectMapper objectMapper = new ObjectMapper();
-        @NotNull Session session = objectMapper.readValue(json, Session.class);
+        @NotNull SessionDTO session = objectMapper.readValue(json, SessionDTO.class);
 
         @NotNull final Date currentDate = new Date();
         @NotNull final Date sessionDate = session.getDate();
@@ -71,7 +71,7 @@ public final class AuthService implements IAuthService {
     }
 
     @Override
-    public void invalidate(@Nullable final Session session) throws UserIdEmptyException {
+    public void invalidate(@Nullable final SessionDTO session) throws UserIdEmptyException {
         if (session == null) return;
         sessionService.remove(session.getUserId(), session);
     }
@@ -84,7 +84,7 @@ public final class AuthService implements IAuthService {
     ) throws Exception {
         if (login == null || login.isEmpty()) throw new LoginEmptyException();
         if (password == null || password.isEmpty()) throw new PasswordEmptyException();
-        @Nullable final User user = userService.findByLogin(login);
+        @Nullable final UserDTO user = userService.findByLogin(login);
         if (user == null) throw new AccessDeniedException();
         if (user.getLocked()) throw new AccessDeniedException();
         @Nullable final String hash = HashUtil.salt(propertyService, password);
@@ -95,13 +95,13 @@ public final class AuthService implements IAuthService {
 
     @NotNull
     @SneakyThrows
-    private String getToken(@NotNull final User user) {
+    private String getToken(@NotNull final UserDTO user) {
         return getToken(createSession(user));
     }
 
     @NotNull
     @SneakyThrows
-    private String getToken(@NotNull final Session session) {
+    private String getToken(@NotNull final SessionDTO session) {
         @NotNull final ObjectMapper objectMapper = new ObjectMapper();
         @NotNull final String token = objectMapper.writeValueAsString(session);
         @NotNull final String sessionKey = propertyService.getSessionKey();
@@ -109,8 +109,8 @@ public final class AuthService implements IAuthService {
     }
 
     @NotNull
-    private Session createSession(@NotNull final User user) throws UserIdEmptyException, ProjectNotFoundException {
-        @NotNull final Session session = new Session();
+    private SessionDTO createSession(@NotNull final UserDTO user) throws UserIdEmptyException, ProjectNotFoundException {
+        @NotNull final SessionDTO session = new SessionDTO();
         session.setUserId(user.getId());
         @NotNull final Role role = user.getRole();
         session.setRole(role);
@@ -120,7 +120,7 @@ public final class AuthService implements IAuthService {
 
     @Nullable
     @Override
-    public User registry(
+    public UserDTO registry(
             @NotNull final String login,
             @NotNull final String password,
             @NotNull final String email
@@ -144,18 +144,18 @@ public final class AuthService implements IAuthService {
 
     @NotNull
     @Override
-    public User getUser() throws AbstractException {
+    public UserDTO getUser() throws AbstractException {
         if (!isAuth()) throw new AccessDeniedException();
-        @Nullable final User user = userService.findById(userId);
+        @Nullable final UserDTO user = userService.findById(userId);
         if (user == null) throw new AccessDeniedException();
         return user;
     }
 
     @Override
-    public @NotNull User check(String login, String password) throws AbstractException {
+    public @NotNull UserDTO check(String login, String password) throws AbstractException {
         if (login == null || login.isEmpty()) throw new LoginEmptyException();
         if (password == null || password.isEmpty()) throw new PasswordEmptyException();
-        @Nullable final User user = userService.findByLogin(login);
+        @Nullable final UserDTO user = userService.findByLogin(login);
         if (user == null) throw new PermissionException();
         if (user.getLocked()) throw new PermissionException();
         @Nullable final String hash = HashUtil.salt(propertyService, password);

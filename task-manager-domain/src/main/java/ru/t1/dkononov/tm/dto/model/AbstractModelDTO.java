@@ -1,4 +1,4 @@
-package ru.t1.dkononov.tm.model;
+package ru.t1.dkononov.tm.dto.model;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,7 +11,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @NoArgsConstructor
-public abstract class AbstractModel implements Serializable {
+public abstract class AbstractModelDTO implements Serializable {
 
     @NotNull
     private String id = UUID.randomUUID().toString();

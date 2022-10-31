@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.jetbrains.annotations.Nullable;
-import ru.t1.dkononov.tm.model.Project;
+import ru.t1.dkononov.tm.dto.model.ProjectDTO;
 
 import java.util.List;
 
@@ -15,9 +15,9 @@ import java.util.List;
 public final class ProjectListResponse extends AbstractProjectResponse {
 
     @Nullable
-    private List<Project> projects;
+    private List<ProjectDTO> projects;
 
-    public ProjectListResponse(List<Project> projects) {
+    public ProjectListResponse(List<ProjectDTO> projects) {
         this.projects = projects;
     }
 }

@@ -4,13 +4,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.jetbrains.annotations.Nullable;
-import ru.t1.dkononov.tm.model.Project;
+import ru.t1.dkononov.tm.dto.model.ProjectDTO;
 
 @Getter
 @Setter
 @NoArgsConstructor
 public final class ProjectChangeStatusByIdResponse extends AbstractProjectResponse {
-    public ProjectChangeStatusByIdResponse(@Nullable final Project project) {
+    public ProjectChangeStatusByIdResponse(@Nullable final ProjectDTO project) {
         super(project);
     }
 

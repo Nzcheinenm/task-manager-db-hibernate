@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.jetbrains.annotations.Nullable;
-import ru.t1.dkononov.tm.model.Task;
+import ru.t1.dkononov.tm.dto.model.TaskDTO;
 
 import java.util.List;
 
@@ -14,9 +14,9 @@ import java.util.List;
 public final class TaskListByProjectIdResponse extends AbstractTaskResponse {
 
     @Nullable
-    private List<Task> tasks;
+    private List<TaskDTO> tasks;
 
-    public TaskListByProjectIdResponse(@Nullable final List<Task> tasks) {
+    public TaskListByProjectIdResponse(@Nullable final List<TaskDTO> tasks) {
         this.tasks = tasks;
     }
 

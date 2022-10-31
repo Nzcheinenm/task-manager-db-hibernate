@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
-import ru.t1.dkononov.tm.model.User;
+import ru.t1.dkononov.tm.dto.model.UserDTO;
 
 @Getter
 @Setter
@@ -12,9 +12,9 @@ import ru.t1.dkononov.tm.model.User;
 public abstract class AbstractUserResponse extends AbstractResponse {
 
     @NotNull
-    private User user;
+    private UserDTO user;
 
-    public AbstractUserResponse(@NotNull User user) {
+    public AbstractUserResponse(@NotNull UserDTO user) {
         this.user = user;
     }
 

@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.jetbrains.annotations.Nullable;
-import ru.t1.dkononov.tm.model.Task;
+import ru.t1.dkononov.tm.dto.model.TaskDTO;
 
 @Getter
 @Setter
@@ -12,9 +12,9 @@ import ru.t1.dkononov.tm.model.Task;
 public abstract class AbstractTaskResponse extends AbstractResponse {
 
     @Nullable
-    private Task task;
+    private TaskDTO task;
 
-    public AbstractTaskResponse(@Nullable Task task) {
+    public AbstractTaskResponse(@Nullable TaskDTO task) {
         this.task = task;
     }
 

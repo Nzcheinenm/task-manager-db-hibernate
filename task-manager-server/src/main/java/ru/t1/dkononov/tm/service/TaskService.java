@@ -13,7 +13,7 @@ import ru.t1.dkononov.tm.enumerated.Status;
 import ru.t1.dkononov.tm.exception.AbstractException;
 import ru.t1.dkononov.tm.exception.entity.ProjectNotFoundException;
 import ru.t1.dkononov.tm.exception.field.*;
-import ru.t1.dkononov.tm.model.Task;
+import ru.t1.dkononov.tm.dto.model.TaskDTO;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -32,7 +32,7 @@ public final class TaskService implements ITaskService {
     @NotNull
     @Override
     @SneakyThrows
-    public List<Task> findAll(@Nullable final String userId) throws UserIdEmptyException {
+    public List<TaskDTO> findAll(@Nullable final String userId) throws UserIdEmptyException {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         try (@NotNull final SqlSession sqlSession = connectionService.getSqlSession()) {
             @NotNull final ITaskRepository repository = sqlSession.getMapper(ITaskRepository.class);
@@ -44,7 +44,7 @@ public final class TaskService implements ITaskService {
     @Nullable
     @Override
     @SneakyThrows
-    public List<Task> findAll(
+    public List<TaskDTO> findAll(
             @Nullable final String userId,
             @Nullable final Comparator comparator
     ) throws UserIdEmptyException {
@@ -59,7 +59,7 @@ public final class TaskService implements ITaskService {
     @NotNull
     @Override
     @SneakyThrows
-    public List<Task> findAll(
+    public List<TaskDTO> findAll(
             @Nullable final String userId,
             @Nullable final Sort sort
     ) throws UserIdEmptyException {
@@ -71,7 +71,7 @@ public final class TaskService implements ITaskService {
     @NotNull
     @Override
     @SneakyThrows
-    public List<Task> findAll() {
+    public List<TaskDTO> findAll() {
         try (@NotNull final SqlSession sqlSession = connectionService.getSqlSession()) {
             @NotNull final ITaskRepository repository = sqlSession.getMapper(ITaskRepository.class);
             return repository.findAll();
@@ -81,7 +81,7 @@ public final class TaskService implements ITaskService {
     @Nullable
     @Override
     @SneakyThrows
-    public Task add(@Nullable final String userId, @Nullable final Task model)
+    public TaskDTO add(@Nullable final String userId, @Nullable final TaskDTO model)
             throws ProjectNotFoundException, UserIdEmptyException {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (model == null) throw new ProjectNotFoundException();
@@ -103,7 +103,7 @@ public final class TaskService implements ITaskService {
     @Nullable
     @Override
     @SneakyThrows
-    public Collection<Task> add(@NotNull Collection<Task> models) {
+    public Collection<TaskDTO> add(@NotNull Collection<TaskDTO> models) {
         if (models.isEmpty()) return Collections.emptyList();
         @NotNull final SqlSession sqlSession = connectionService.getSqlSession();
         try {
@@ -122,7 +122,7 @@ public final class TaskService implements ITaskService {
     @Override
     @NotNull
     @SneakyThrows
-    public Collection<Task> set(@NotNull Collection<Task> models) {
+    public Collection<TaskDTO> set(@NotNull Collection<TaskDTO> models) {
         if (models.isEmpty()) return Collections.emptyList();
         @NotNull final SqlSession sqlSession = connectionService.getSqlSession();
         try {
@@ -143,7 +143,7 @@ public final class TaskService implements ITaskService {
     public void clear(@Nullable final String userId) throws UserIdEmptyException {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         @NotNull final SqlSession sqlSession = connectionService.getSqlSession();
-        @Nullable final Task result;
+        @Nullable final TaskDTO result;
         try {
             @NotNull final ITaskRepository repository = sqlSession.getMapper(ITaskRepository.class);
             repository.clear(userId);
@@ -170,7 +170,7 @@ public final class TaskService implements ITaskService {
     @Nullable
     @Override
     @SneakyThrows
-    public Task remove(@NotNull final String userId, @Nullable final Task model) throws UserIdEmptyException {
+    public TaskDTO remove(@NotNull final String userId, @Nullable final TaskDTO model) throws UserIdEmptyException {
         if (userId.isEmpty()) throw new UserIdEmptyException();
         @NotNull final SqlSession sqlSession = connectionService.getSqlSession();
         try {
@@ -190,7 +190,7 @@ public final class TaskService implements ITaskService {
     @Nullable
     @Override
     @SneakyThrows
-    public Task findById(@Nullable final String userId, @Nullable final String id)
+    public TaskDTO findById(@Nullable final String userId, @Nullable final String id)
             throws AbstractException {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (id == null || id.isEmpty()) throw new IdEmptyException();
@@ -203,7 +203,7 @@ public final class TaskService implements ITaskService {
     @Nullable
     @Override
     @SneakyThrows
-    public Task findByIndex(@Nullable final String userId, @Nullable final Integer index)
+    public TaskDTO findByIndex(@Nullable final String userId, @Nullable final Integer index)
             throws AbstractException {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (index == null || index < 0) throw new IndexIncorrectException();
@@ -216,11 +216,11 @@ public final class TaskService implements ITaskService {
     @NotNull
     @Override
     @SneakyThrows
-    public Task removeById(@Nullable final String userId, @Nullable final String id) throws AbstractException {
+    public TaskDTO removeById(@Nullable final String userId, @Nullable final String id) throws AbstractException {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (id == null || id.isEmpty()) throw new IdEmptyException();
         @NotNull final SqlSession sqlSession = connectionService.getSqlSession();
-        @Nullable final Task result;
+        @Nullable final TaskDTO result;
         try {
             @NotNull final ITaskRepository repository = sqlSession.getMapper(ITaskRepository.class);
             result = repository.findById(userId, id);
@@ -238,11 +238,11 @@ public final class TaskService implements ITaskService {
     @NotNull
     @Override
     @SneakyThrows
-    public Task removeByIndex(@Nullable final String userId, @Nullable final Integer index) throws AbstractException {
+    public TaskDTO removeByIndex(@Nullable final String userId, @Nullable final Integer index) throws AbstractException {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (index == null || index < 0) throw new IndexIncorrectException();
         @NotNull final SqlSession sqlSession = connectionService.getSqlSession();
-        @Nullable final Task result;
+        @Nullable final TaskDTO result;
         try {
             @NotNull final ITaskRepository repository = sqlSession.getMapper(ITaskRepository.class);
             result = repository.findByIndex(userId, index);
@@ -277,7 +277,7 @@ public final class TaskService implements ITaskService {
 
     @NotNull
     @Override
-    public List<Task> findAllByProjectId(@Nullable final String userId, @Nullable final String projectId)
+    public List<TaskDTO> findAllByProjectId(@Nullable final String userId, @Nullable final String projectId)
             throws Exception {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (projectId == null || projectId.isEmpty()) return Collections.emptyList();
@@ -289,16 +289,16 @@ public final class TaskService implements ITaskService {
 
     @NotNull
     @Override
-    public Task create(@Nullable final String userId, @Nullable final String name, @Nullable final String description)
+    public TaskDTO create(@Nullable final String userId, @Nullable final String name, @Nullable final String description)
             throws Exception {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (name == null || name.isEmpty()) throw new NameEmptyException();
         if (description == null || description.isEmpty()) throw new DescriptionEmptyException();
         @NotNull final SqlSession sqlSession = connectionService.getSqlSession();
-        @Nullable final Task task;
+        @Nullable final TaskDTO task;
         try {
             @NotNull final ITaskRepository repository = sqlSession.getMapper(ITaskRepository.class);
-            task = new Task();
+            task = new TaskDTO();
             task.setUserId(userId);
             task.setName(name);
             task.setDescription(description);
@@ -315,14 +315,14 @@ public final class TaskService implements ITaskService {
 
     @NotNull
     @Override
-    public Task create(@Nullable final String userId, @Nullable final String name) throws Exception {
+    public TaskDTO create(@Nullable final String userId, @Nullable final String name) throws Exception {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (name == null || name.isEmpty()) throw new NameEmptyException();
         @NotNull final SqlSession sqlSession = connectionService.getSqlSession();
-        @Nullable final Task task;
+        @Nullable final TaskDTO task;
         try {
             @NotNull final ITaskRepository repository = sqlSession.getMapper(ITaskRepository.class);
-            task = new Task();
+            task = new TaskDTO();
             task.setUserId(userId);
             task.setName(name);
             repository.add(task);
@@ -338,7 +338,7 @@ public final class TaskService implements ITaskService {
 
     @Override
     @Nullable
-    public Task updateById(
+    public TaskDTO updateById(
             @Nullable final String userId,
             @Nullable final String id,
             @Nullable final String name,
@@ -350,7 +350,7 @@ public final class TaskService implements ITaskService {
         if (name == null || name.isEmpty()) throw new NameEmptyException();
         if (description == null || description.isEmpty()) throw new DescriptionEmptyException();
         @NotNull final SqlSession sqlSession = connectionService.getSqlSession();
-        @Nullable final Task task;
+        @Nullable final TaskDTO task;
         try {
             @NotNull final ITaskRepository repository = sqlSession.getMapper(ITaskRepository.class);
             task = repository.findById(userId, id);
@@ -370,7 +370,7 @@ public final class TaskService implements ITaskService {
 
     @Override
     @Nullable
-    public Task updateByIndex(
+    public TaskDTO updateByIndex(
             @Nullable final String userId,
             @Nullable final Integer index,
             @Nullable final String name,
@@ -382,7 +382,7 @@ public final class TaskService implements ITaskService {
         if (name == null || name.isEmpty()) throw new NameEmptyException();
         if (description == null || description.isEmpty()) throw new DescriptionEmptyException();
         @NotNull final SqlSession sqlSession = connectionService.getSqlSession();
-        @Nullable final Task task;
+        @Nullable final TaskDTO task;
         try {
             @NotNull final ITaskRepository repository = sqlSession.getMapper(ITaskRepository.class);
             task = repository.findByIndex(userId, index);
@@ -402,7 +402,7 @@ public final class TaskService implements ITaskService {
 
     @Override
     @Nullable
-    public Task changeTaskStatusById(
+    public TaskDTO changeTaskStatusById(
             @Nullable final String userId,
             @Nullable final String id,
             @Nullable final Status status
@@ -411,7 +411,7 @@ public final class TaskService implements ITaskService {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (id == null || id.isEmpty()) throw new IdEmptyException();
         @NotNull final SqlSession sqlSession = connectionService.getSqlSession();
-        @Nullable final Task task;
+        @Nullable final TaskDTO task;
         try {
             @NotNull final ITaskRepository repository = sqlSession.getMapper(ITaskRepository.class);
             task = findById(userId, id);
@@ -430,7 +430,7 @@ public final class TaskService implements ITaskService {
 
     @Override
     @Nullable
-    public Task changeTaskStatusByIndex(
+    public TaskDTO changeTaskStatusByIndex(
             @Nullable final String userId,
             @Nullable final Integer index,
             @NotNull final Status status
@@ -438,7 +438,7 @@ public final class TaskService implements ITaskService {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (index == null || index < 0) throw new IndexIncorrectException();
         @NotNull final SqlSession sqlSession = connectionService.getSqlSession();
-        @Nullable final Task task;
+        @Nullable final TaskDTO task;
         try {
             @NotNull final ITaskRepository repository = sqlSession.getMapper(ITaskRepository.class);
             task = findByIndex(userId, index);
@@ -462,7 +462,7 @@ public final class TaskService implements ITaskService {
         if (projectId == null || projectId.isEmpty()) throw new ProjectIdEmptyException();
 
         @NotNull final SqlSession sqlSession = connectionService.getSqlSession();
-        @Nullable final Task task;
+        @Nullable final TaskDTO task;
         try {
             @NotNull final ITaskRepository repository = sqlSession.getMapper(ITaskRepository.class);
             task = repository.findTaskIdByProjectId(userId, taskId, projectId);

@@ -7,7 +7,7 @@ import ru.t1.dkononov.tm.api.services.IServiceLocator;
 import ru.t1.dkononov.tm.dto.request.AbstractUserRequest;
 import ru.t1.dkononov.tm.enumerated.Role;
 import ru.t1.dkononov.tm.exception.field.AccessDeniedException;
-import ru.t1.dkononov.tm.model.Session;
+import ru.t1.dkononov.tm.dto.model.SessionDTO;
 
 public abstract class AbstractEndpoint {
 
@@ -15,20 +15,20 @@ public abstract class AbstractEndpoint {
         this.serviceLocator = serviceLocator;
     }
 
-    protected Session check(
+    protected SessionDTO check(
             @Nullable final AbstractUserRequest request,
             @Nullable final Role role
     ) throws Exception {
         if (request == null) throw new AccessDeniedException();
         if (role == null) throw new AccessDeniedException();
         @Nullable final String token = request.getToken();
-        @Nullable final Session session = serviceLocator.getAuthService().validateToken(token);
+        @Nullable final SessionDTO session = serviceLocator.getAuthService().validateToken(token);
         if (session.getRole() == null) throw new AccessDeniedException();
         if (!session.getRole().equals(role)) throw new AccessDeniedException();
         return session;
     }
 
-    protected Session check(@Nullable final AbstractUserRequest request)
+    protected SessionDTO check(@Nullable final AbstractUserRequest request)
             throws AccessDeniedException {
         if (request == null) throw new AccessDeniedException();
         @Nullable final String token = request.getToken();

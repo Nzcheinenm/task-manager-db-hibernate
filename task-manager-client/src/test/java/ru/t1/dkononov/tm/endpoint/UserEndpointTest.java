@@ -12,7 +12,7 @@ import ru.t1.dkononov.tm.api.services.IPropertyService;
 import ru.t1.dkononov.tm.dto.request.*;
 import ru.t1.dkononov.tm.exception.field.AbstractFieldException;
 import ru.t1.dkononov.tm.marker.IntegrationCategory;
-import ru.t1.dkononov.tm.model.User;
+import ru.t1.dkononov.tm.dto.model.UserDTO;
 import ru.t1.dkononov.tm.service.PropertyService;
 
 import static ru.t1.dkononov.tm.constant.TestClientData.USER2_TEST_LOGIN;
@@ -54,7 +54,7 @@ public class UserEndpointTest {
         request.setFirstName(firstName);
         request.setMiddleName("Middle");
         request.setLastName("Last");
-        @NotNull final User user = userEndpoint.updateUserProfile(request).getUser();
+        @NotNull final UserDTO user = userEndpoint.updateUserProfile(request).getUser();
         Assert.assertNotNull(user);
         Assert.assertEquals(firstName, user.getFirstName());
     }

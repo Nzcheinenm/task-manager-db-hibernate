@@ -7,7 +7,7 @@ import ru.t1.dkononov.tm.api.endpoint.ITaskEndpoint;
 import ru.t1.dkononov.tm.command.AbstractCommand;
 import ru.t1.dkononov.tm.enumerated.Role;
 import ru.t1.dkononov.tm.enumerated.Status;
-import ru.t1.dkononov.tm.model.Project;
+import ru.t1.dkononov.tm.dto.model.ProjectDTO;
 
 public abstract class AbstractProjectCommand extends AbstractCommand {
 
@@ -27,7 +27,7 @@ public abstract class AbstractProjectCommand extends AbstractCommand {
         return null;
     }
 
-    protected void showProject(@Nullable final Project project) {
+    protected void showProject(@Nullable final ProjectDTO project) {
         if (project == null) return;
         System.out.println("ID: " + project.getId());
         System.out.println("NAME: " + project.getName());

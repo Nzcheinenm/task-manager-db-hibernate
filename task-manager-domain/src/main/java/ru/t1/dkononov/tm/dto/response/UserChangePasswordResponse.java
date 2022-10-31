@@ -4,13 +4,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.jetbrains.annotations.Nullable;
-import ru.t1.dkononov.tm.model.User;
+import ru.t1.dkononov.tm.dto.model.UserDTO;
 
 @Getter
 @Setter
 @NoArgsConstructor
 public final class UserChangePasswordResponse extends AbstractUserResponse {
-    public UserChangePasswordResponse(@Nullable final User user) {
+    public UserChangePasswordResponse(@Nullable final UserDTO user) {
         super(user);
     }
 }

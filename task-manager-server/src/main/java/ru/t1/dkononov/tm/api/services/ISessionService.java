@@ -6,7 +6,7 @@ import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.exception.AbstractException;
 import ru.t1.dkononov.tm.exception.entity.ProjectNotFoundException;
 import ru.t1.dkononov.tm.exception.field.UserIdEmptyException;
-import ru.t1.dkononov.tm.model.Session;
+import ru.t1.dkononov.tm.dto.model.SessionDTO;
 
 import java.util.Collection;
 import java.util.List;
@@ -14,31 +14,31 @@ import java.util.List;
 public interface ISessionService {
     @Nullable
     @SneakyThrows
-    Session findById(@Nullable String userId, @Nullable String id)
+    SessionDTO findById(@Nullable String userId, @Nullable String id)
             throws AbstractException;
 
     @NotNull
     @SneakyThrows
-    List<Session> findAll();
+    List<SessionDTO> findAll();
 
     @Nullable
     @SneakyThrows
-    Session add(@Nullable Session model)
+    SessionDTO add(@Nullable SessionDTO model)
             throws ProjectNotFoundException, UserIdEmptyException;
 
     @Nullable
     @SneakyThrows
-    Collection<Session> add(@NotNull Collection<Session> models);
+    Collection<SessionDTO> add(@NotNull Collection<SessionDTO> models);
 
     @SneakyThrows
     void clear(@Nullable String userId);
 
     @Nullable
     @SneakyThrows
-    Session remove(@NotNull String userId, @Nullable Session model);
+    SessionDTO remove(@NotNull String userId, @Nullable SessionDTO model);
 
     @SneakyThrows
     boolean existsById(@Nullable String id);
 
-    @NotNull List<Session> findAll(@Nullable String userId) throws UserIdEmptyException;
+    @NotNull List<SessionDTO> findAll(@Nullable String userId) throws UserIdEmptyException;
 }

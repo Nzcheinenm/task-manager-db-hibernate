@@ -13,7 +13,7 @@ import ru.t1.dkononov.tm.api.services.IUserService;
 import ru.t1.dkononov.tm.enumerated.Role;
 import ru.t1.dkononov.tm.exception.AbstractException;
 import ru.t1.dkononov.tm.exception.field.*;
-import ru.t1.dkononov.tm.model.User;
+import ru.t1.dkononov.tm.dto.model.UserDTO;
 import ru.t1.dkononov.tm.util.HashUtil;
 
 import java.util.Collection;
@@ -47,7 +47,7 @@ public final class UserService implements IUserService {
     @Nullable
     @Override
     @SneakyThrows
-    public User create(
+    public UserDTO create(
             @Nullable final String login,
             @Nullable final String password
     ) throws AbstractException {
@@ -55,10 +55,10 @@ public final class UserService implements IUserService {
         if (isLoginExist(login)) throw new ExistsLoginException();
         if (password == null || password.isEmpty()) throw new PasswordEmptyException();
         @NotNull final SqlSession sqlSession = connectionService.getSqlSession();
-        @Nullable final User user;
+        @Nullable final UserDTO user;
         try {
             @NotNull final IUserRepository repository = sqlSession.getMapper(IUserRepository.class);
-            user = new User();
+            user = new UserDTO();
             user.setLogin(login);
             user.setPasswordHash(HashUtil.salt(propertyService, password));
             user.setRole(Role.USUAL);
@@ -76,7 +76,7 @@ public final class UserService implements IUserService {
     @NotNull
     @Override
     @SneakyThrows
-    public User create(
+    public UserDTO create(
             @Nullable final String login,
             @Nullable final String password,
             @Nullable final String email
@@ -86,10 +86,10 @@ public final class UserService implements IUserService {
         if (password == null || password.isEmpty()) throw new PasswordEmptyException();
         if (isEmailExist(email)) throw new ExistsEmailException();
         @NotNull final SqlSession sqlSession = connectionService.getSqlSession();
-        @Nullable final User user;
+        @Nullable final UserDTO user;
         try {
             @NotNull final IUserRepository repository = sqlSession.getMapper(IUserRepository.class);
-            user = new User();
+            user = new UserDTO();
             user.setLogin(login);
             user.setPasswordHash(HashUtil.salt(propertyService, password));
             user.setEmail(email);
@@ -107,7 +107,7 @@ public final class UserService implements IUserService {
     @NotNull
     @Override
     @SneakyThrows
-    public User create(
+    public UserDTO create(
             @Nullable final String login,
             @Nullable final String password,
             @Nullable final Role role
@@ -117,10 +117,10 @@ public final class UserService implements IUserService {
         if (password == null || password.isEmpty()) throw new PasswordEmptyException();
         if (role == null) throw new RoleEmptyException();
         @NotNull final SqlSession sqlSession = connectionService.getSqlSession();
-        @Nullable final User user;
+        @Nullable final UserDTO user;
         try {
             @NotNull final IUserRepository repository = sqlSession.getMapper(IUserRepository.class);
-            user = new User();
+            user = new UserDTO();
             user.setLogin(login);
             user.setPasswordHash(HashUtil.salt(propertyService, password));
             if (role != null) user.setRole(role);
@@ -138,11 +138,11 @@ public final class UserService implements IUserService {
     @Nullable
     @Override
     @SneakyThrows
-    public User findByLogin(@Nullable final String login) throws LoginEmptyException, UserNotFoundException {
+    public UserDTO findByLogin(@Nullable final String login) throws LoginEmptyException, UserNotFoundException {
         if (login == null || login.isEmpty()) throw new LoginEmptyException();
         try (@NotNull final SqlSession sqlSession = connectionService.getSqlSession()) {
             @NotNull final IUserRepository repository = sqlSession.getMapper(IUserRepository.class);
-            @Nullable final User user = repository.findByLogin(login);
+            @Nullable final UserDTO user = repository.findByLogin(login);
             if (user == null) throw new UserNotFoundException();
             return user;
         }
@@ -151,11 +151,11 @@ public final class UserService implements IUserService {
     @Nullable
     @Override
     @SneakyThrows
-    public User findByEmail(@Nullable final String email) throws EmailEmptyException {
+    public UserDTO findByEmail(@Nullable final String email) throws EmailEmptyException {
         if (email == null || email.isEmpty()) throw new EmailEmptyException();
         try (@NotNull final SqlSession sqlSession = connectionService.getSqlSession()) {
             @NotNull final IUserRepository repository = sqlSession.getMapper(IUserRepository.class);
-            @Nullable final User user = repository.findByEmail(email);
+            @Nullable final UserDTO user = repository.findByEmail(email);
             if (user == null) return null;
             return user;
         }
@@ -164,10 +164,10 @@ public final class UserService implements IUserService {
     @Nullable
     @Override
     @SneakyThrows
-    public User removeOne(@Nullable final User model) throws UserIdEmptyException {
+    public UserDTO removeOne(@Nullable final UserDTO model) throws UserIdEmptyException {
         if (model == null) return null;
         @NotNull final SqlSession sqlSession = connectionService.getSqlSession();
-        @Nullable final User user;
+        @Nullable final UserDTO user;
         try {
             @NotNull final IUserRepository repository = sqlSession.getMapper(IUserRepository.class);
             user = removeOne(model);
@@ -188,10 +188,10 @@ public final class UserService implements IUserService {
     @NotNull
     @Override
     @SneakyThrows
-    public User removeByLogin(@Nullable final String login) throws AbstractFieldException {
+    public UserDTO removeByLogin(@Nullable final String login) throws AbstractFieldException {
         if (login == null || login.isEmpty()) throw new LoginEmptyException();
         @NotNull final SqlSession sqlSession = connectionService.getSqlSession();
-        @Nullable final User user;
+        @Nullable final UserDTO user;
         try {
             user = findByLogin(login);
             removeOne(user);
@@ -208,10 +208,10 @@ public final class UserService implements IUserService {
     @NotNull
     @Override
     @SneakyThrows
-    public User removeByEmail(@Nullable final String email) throws AbstractFieldException {
+    public UserDTO removeByEmail(@Nullable final String email) throws AbstractFieldException {
         if (email == null || email.isEmpty()) throw new EmailEmptyException();
         @NotNull final SqlSession sqlSession = connectionService.getSqlSession();
-        @Nullable final User user;
+        @Nullable final UserDTO user;
         try {
             user = findByEmail(email);
             removeOne(user);
@@ -228,14 +228,14 @@ public final class UserService implements IUserService {
     @NotNull
     @Override
     @SneakyThrows
-    public User setPassword(
+    public UserDTO setPassword(
             @Nullable final String id,
             @Nullable final String password
     ) throws AbstractFieldException {
         if (id == null || id.isEmpty()) throw new IdEmptyException();
         if (password == null || password.isEmpty()) throw new PasswordEmptyException();
         @NotNull final SqlSession sqlSession = connectionService.getSqlSession();
-        @Nullable final User user;
+        @Nullable final UserDTO user;
         try {
             @NotNull final IUserRepository repository = sqlSession.getMapper(IUserRepository.class);
             user = repository.findById(id);
@@ -254,7 +254,7 @@ public final class UserService implements IUserService {
     @NotNull
     @Override
     @SneakyThrows
-    public User updateUser(
+    public UserDTO updateUser(
             @Nullable final String id,
             @Nullable final String firstName,
             @Nullable final String lastName,
@@ -262,7 +262,7 @@ public final class UserService implements IUserService {
     ) throws AbstractFieldException {
         if (id == null || id.isEmpty()) throw new IdEmptyException();
         @NotNull final SqlSession sqlSession = connectionService.getSqlSession();
-        @Nullable final User user;
+        @Nullable final UserDTO user;
         try {
             @NotNull final IUserRepository repository = sqlSession.getMapper(IUserRepository.class);
             user = repository.findById(id);
@@ -305,10 +305,10 @@ public final class UserService implements IUserService {
     @Override
     @Nullable
     @SneakyThrows
-    public User lockUserByLogin(@Nullable final String login) throws LoginEmptyException, UserNotFoundException {
+    public UserDTO lockUserByLogin(@Nullable final String login) throws LoginEmptyException, UserNotFoundException {
         if (login == null || login.isEmpty()) throw new LoginEmptyException();
         @NotNull final SqlSession sqlSession = connectionService.getSqlSession();
-        @Nullable final User user;
+        @Nullable final UserDTO user;
         try {
             @NotNull final IUserRepository repository = sqlSession.getMapper(IUserRepository.class);
             user = findByLogin(login);
@@ -327,10 +327,10 @@ public final class UserService implements IUserService {
     @Override
     @Nullable
     @SneakyThrows
-    public User unlockUserByLogin(@Nullable String login) throws LoginEmptyException, UserNotFoundException {
+    public UserDTO unlockUserByLogin(@Nullable String login) throws LoginEmptyException, UserNotFoundException {
         if (login == null || login.isEmpty()) throw new LoginEmptyException();
         @NotNull final SqlSession sqlSession = connectionService.getSqlSession();
-        @Nullable final User user;
+        @Nullable final UserDTO user;
         try {
             @NotNull final IUserRepository repository = sqlSession.getMapper(IUserRepository.class);
             user = findByLogin(login);
@@ -348,7 +348,7 @@ public final class UserService implements IUserService {
     @Nullable
     @Override
     @SneakyThrows
-    public User findById(@Nullable final String id)
+    public UserDTO findById(@Nullable final String id)
             throws AbstractException {
         if (id == null || id.isEmpty()) throw new IdEmptyException();
         try (@NotNull final SqlSession sqlSession = connectionService.getSqlSession()) {
@@ -360,7 +360,7 @@ public final class UserService implements IUserService {
     @NotNull
     @Override
     @SneakyThrows
-    public List<User> findAll() {
+    public List<UserDTO> findAll() {
         try (@NotNull final SqlSession sqlSession = connectionService.getSqlSession()) {
             @NotNull final IUserRepository repository = sqlSession.getMapper(IUserRepository.class);
             return repository.findAll();
@@ -370,7 +370,7 @@ public final class UserService implements IUserService {
     @Override
     @NotNull
     @SneakyThrows
-    public Collection<User> set(@NotNull Collection<User> models) {
+    public Collection<UserDTO> set(@NotNull Collection<UserDTO> models) {
         if (models.isEmpty()) return Collections.emptyList();
         @NotNull final SqlSession sqlSession = connectionService.getSqlSession();
         try {

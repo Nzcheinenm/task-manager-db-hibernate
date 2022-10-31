@@ -4,14 +4,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.jetbrains.annotations.Nullable;
-import ru.t1.dkononov.tm.model.Task;
+import ru.t1.dkononov.tm.dto.model.TaskDTO;
 
 @Getter
 @Setter
 @NoArgsConstructor
 public final class TaskBindToProjectResponse extends AbstractTaskResponse {
 
-    public TaskBindToProjectResponse(@Nullable final Task task) {
+    public TaskBindToProjectResponse(@Nullable final TaskDTO task) {
         super(task);
     }
 

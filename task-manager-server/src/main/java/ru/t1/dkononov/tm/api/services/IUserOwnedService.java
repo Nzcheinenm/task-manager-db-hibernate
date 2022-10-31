@@ -4,11 +4,11 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.enumerated.Sort;
 import ru.t1.dkononov.tm.exception.field.UserIdEmptyException;
-import ru.t1.dkononov.tm.model.AbstractUserOwnedModel;
+import ru.t1.dkononov.tm.dto.model.AbstractUserOwnedModelDTO;
 
 import java.util.List;
 
-public interface IUserOwnedService<M extends AbstractUserOwnedModel> {
+public interface IUserOwnedService<M extends AbstractUserOwnedModelDTO> {
 
     @NotNull
     List<M> findAll(@Nullable String userId, @Nullable Sort sort) throws UserIdEmptyException;

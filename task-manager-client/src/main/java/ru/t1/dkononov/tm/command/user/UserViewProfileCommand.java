@@ -6,7 +6,7 @@ import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.dto.request.UserProfileRequest;
 import ru.t1.dkononov.tm.enumerated.Role;
 import ru.t1.dkononov.tm.exception.AbstractException;
-import ru.t1.dkononov.tm.model.User;
+import ru.t1.dkononov.tm.dto.model.UserDTO;
 
 public final class UserViewProfileCommand extends AbstractUserCommand {
 
@@ -21,7 +21,7 @@ public final class UserViewProfileCommand extends AbstractUserCommand {
     @Override
     public void execute() throws AbstractException {
         @NotNull final UserProfileRequest request = new UserProfileRequest(getToken());
-        @NotNull final User user = getAuthEndpoint().profile(request).getUser();
+        @NotNull final UserDTO user = getAuthEndpoint().profile(request).getUser();
         System.out.println("[USER VIEW PROFILE]");
         System.out.println("ID: " + user.getId());
         System.out.println("LOGIN: " + user.getId());

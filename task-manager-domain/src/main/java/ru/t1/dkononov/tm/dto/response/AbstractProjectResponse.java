@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.jetbrains.annotations.Nullable;
-import ru.t1.dkononov.tm.model.Project;
+import ru.t1.dkononov.tm.dto.model.ProjectDTO;
 
 @Getter
 @Setter
@@ -12,9 +12,9 @@ import ru.t1.dkononov.tm.model.Project;
 public abstract class AbstractProjectResponse extends AbstractResponse {
 
     @Nullable
-    private Project project;
+    private ProjectDTO project;
 
-    public AbstractProjectResponse(@Nullable Project project) {
+    public AbstractProjectResponse(@Nullable ProjectDTO project) {
         this.project = project;
     }
 

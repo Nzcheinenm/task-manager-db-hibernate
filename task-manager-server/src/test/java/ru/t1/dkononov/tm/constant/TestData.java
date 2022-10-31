@@ -6,10 +6,10 @@ import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.api.component.ISaltProvider;
 import ru.t1.dkononov.tm.enumerated.Role;
 import ru.t1.dkononov.tm.enumerated.Status;
-import ru.t1.dkononov.tm.model.Project;
-import ru.t1.dkononov.tm.model.Session;
-import ru.t1.dkononov.tm.model.Task;
-import ru.t1.dkononov.tm.model.User;
+import ru.t1.dkononov.tm.dto.model.ProjectDTO;
+import ru.t1.dkononov.tm.dto.model.SessionDTO;
+import ru.t1.dkononov.tm.dto.model.TaskDTO;
+import ru.t1.dkononov.tm.dto.model.UserDTO;
 import ru.t1.dkononov.tm.service.PropertyService;
 import ru.t1.dkononov.tm.util.HashUtil;
 
@@ -19,40 +19,40 @@ import java.util.Date;
 public class TestData {
 
     @NotNull
-    public final static Project USER_PROJECT = new Project();
+    public final static ProjectDTO USER_PROJECT = new ProjectDTO();
 
     @NotNull
-    public final static Project USER_PROJECT2 = new Project();
+    public final static ProjectDTO USER_PROJECT2 = new ProjectDTO();
 
     @NotNull
-    public final static Project ADMIN_PROJECT = new Project();
+    public final static ProjectDTO ADMIN_PROJECT = new ProjectDTO();
 
     @NotNull
-    public final static Task USER_TASK = new Task();
+    public final static TaskDTO USER_TASK = new TaskDTO();
 
     @NotNull
-    public final static Task USER_TASK2 = new Task();
+    public final static TaskDTO USER_TASK2 = new TaskDTO();
 
     @NotNull
-    public final static Task ADMIN_TASK = new Task();
+    public final static TaskDTO ADMIN_TASK = new TaskDTO();
 
     @NotNull
-    public final static User USER1 = new User();
+    public final static UserDTO USER1 = new UserDTO();
 
     @NotNull
-    public final static User USER2 = new User();
+    public final static UserDTO USER2 = new UserDTO();
 
     @NotNull
-    public final static Project NULL_PROJECT = null;
+    public final static ProjectDTO NULL_PROJECT = null;
 
     @NotNull
-    public final static Task NULL_TASK = null;
+    public final static TaskDTO NULL_TASK = null;
 
     @NotNull
-    public final static Session SESSION = new Session();
+    public final static SessionDTO SESSION = new SessionDTO();
 
     @NotNull
-    public final static Session SESSION_NULL = null;
+    public final static SessionDTO SESSION_NULL = null;
 
     @NotNull
     public static final String LOGIN = "login";

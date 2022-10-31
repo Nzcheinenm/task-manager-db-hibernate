@@ -6,7 +6,7 @@ import ru.t1.dkononov.tm.api.endpoint.IAuthEndpoint;
 import ru.t1.dkononov.tm.api.endpoint.IUserEndpoint;
 import ru.t1.dkononov.tm.command.AbstractCommand;
 import ru.t1.dkononov.tm.exception.field.UserNotFoundException;
-import ru.t1.dkononov.tm.model.User;
+import ru.t1.dkononov.tm.dto.model.UserDTO;
 
 public abstract class AbstractUserCommand extends AbstractCommand {
 
@@ -20,7 +20,7 @@ public abstract class AbstractUserCommand extends AbstractCommand {
         return serviceLocator.getAuthEndpoint();
     }
 
-    protected void showUser(@Nullable final User user) throws UserNotFoundException {
+    protected void showUser(@Nullable final UserDTO user) throws UserNotFoundException {
         if (user == null) throw new UserNotFoundException();
         System.out.println("ID: " + user.getId());
         System.out.println("LOGIN: " + user.getLogin());

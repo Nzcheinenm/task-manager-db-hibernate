@@ -4,14 +4,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.jetbrains.annotations.Nullable;
-import ru.t1.dkononov.tm.model.Project;
+import ru.t1.dkononov.tm.dto.model.ProjectDTO;
 
 @Getter
 @Setter
 @NoArgsConstructor
 public final class ProjectUpdateByIndexResponse extends AbstractProjectResponse {
 
-    public ProjectUpdateByIndexResponse(@Nullable final Project project) {
+    public ProjectUpdateByIndexResponse(@Nullable final ProjectDTO project) {
         super(project);
     }
 

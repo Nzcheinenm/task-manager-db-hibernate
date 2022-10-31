@@ -11,8 +11,8 @@ import ru.t1.dkononov.tm.exception.AbstractException;
 import ru.t1.dkononov.tm.exception.entity.ProjectNotFoundException;
 import ru.t1.dkononov.tm.exception.field.IdEmptyException;
 import ru.t1.dkononov.tm.exception.field.UserIdEmptyException;
-import ru.t1.dkononov.tm.model.Session;
-import ru.t1.dkononov.tm.model.Task;
+import ru.t1.dkononov.tm.dto.model.SessionDTO;
+import ru.t1.dkononov.tm.dto.model.TaskDTO;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -30,7 +30,7 @@ public class SessionService implements ISessionService {
     @Nullable
     @Override
     @SneakyThrows
-    public Session findById(@Nullable final String userId, @Nullable final String id)
+    public SessionDTO findById(@Nullable final String userId, @Nullable final String id)
             throws AbstractException {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (id == null || id.isEmpty()) throw new IdEmptyException();
@@ -43,7 +43,7 @@ public class SessionService implements ISessionService {
     @NotNull
     @Override
     @SneakyThrows
-    public List<Session> findAll() {
+    public List<SessionDTO> findAll() {
         try (@NotNull final SqlSession sqlSession = connectionService.getSqlSession()) {
             @NotNull final ISessionRepository repository = sqlSession.getMapper(ISessionRepository.class);
             return repository.findAll();
@@ -53,11 +53,11 @@ public class SessionService implements ISessionService {
     @Nullable
     @Override
     @SneakyThrows
-    public Session add(@Nullable final Session model)
+    public SessionDTO add(@Nullable final SessionDTO model)
             throws ProjectNotFoundException, UserIdEmptyException {
         if (model == null) throw new ProjectNotFoundException();
         @NotNull final SqlSession sqlSession = connectionService.getSqlSession();
-        @Nullable final Session result;
+        @Nullable final SessionDTO result;
         try {
             @NotNull final ISessionRepository repository = sqlSession.getMapper(ISessionRepository.class);
             repository.add(model);
@@ -75,7 +75,7 @@ public class SessionService implements ISessionService {
     @Nullable
     @Override
     @SneakyThrows
-    public Collection<Session> add(@NotNull Collection<Session> models) {
+    public Collection<SessionDTO> add(@NotNull Collection<SessionDTO> models) {
         if (models.isEmpty()) return Collections.emptyList();
         @NotNull final SqlSession sqlSession = connectionService.getSqlSession();
         try {
@@ -96,7 +96,7 @@ public class SessionService implements ISessionService {
     public void clear(@Nullable final String userId) {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         @NotNull final SqlSession sqlSession = connectionService.getSqlSession();
-        @Nullable final Task result;
+        @Nullable final TaskDTO result;
         try {
             @NotNull final ISessionRepository repository = sqlSession.getMapper(ISessionRepository.class);
             repository.clear(userId);
@@ -112,7 +112,7 @@ public class SessionService implements ISessionService {
     @Nullable
     @Override
     @SneakyThrows
-    public Session remove(@NotNull final String userId, @Nullable final Session model) {
+    public SessionDTO remove(@NotNull final String userId, @Nullable final SessionDTO model) {
         if (userId.isEmpty()) throw new UserIdEmptyException();
         @NotNull final SqlSession sqlSession = connectionService.getSqlSession();
         try {
@@ -141,7 +141,7 @@ public class SessionService implements ISessionService {
 
     @Override
     @NotNull
-    public List<Session> findAll(@Nullable String userId) throws UserIdEmptyException {
+    public List<SessionDTO> findAll(@Nullable String userId) throws UserIdEmptyException {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         try (@NotNull final SqlSession sqlSession = connectionService.getSqlSession()) {
             @NotNull final ISessionRepository repository = sqlSession.getMapper(ISessionRepository.class);

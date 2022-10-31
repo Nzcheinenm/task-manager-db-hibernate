@@ -7,7 +7,7 @@ import ru.t1.dkononov.tm.api.endpoint.*;
 import ru.t1.dkononov.tm.api.services.*;
 import ru.t1.dkononov.tm.endpoint.*;
 import ru.t1.dkononov.tm.enumerated.Role;
-import ru.t1.dkononov.tm.model.User;
+import ru.t1.dkononov.tm.dto.model.UserDTO;
 import ru.t1.dkononov.tm.service.*;
 import ru.t1.dkononov.tm.util.SystemUtil;
 
@@ -133,9 +133,9 @@ public final class Bootstrap implements IServiceLocator {
     }
 
     private void initDemoData() throws Exception {
-        @NotNull final User test = userService.create("test", "test", "test@test.ru");
-        @NotNull final User user = userService.create("user", "user", "user@test.ru");
-        @NotNull final User admin = userService.create("admin", "admin", Role.ADMIN);
+        @NotNull final UserDTO test = userService.create("test", "test", "test@test.ru");
+        @NotNull final UserDTO user = userService.create("user", "user", "user@test.ru");
+        @NotNull final UserDTO admin = userService.create("admin", "admin", Role.ADMIN);
 
         projectService.create(test.getId(), "Jira", "Desc");
         projectService.create(test.getId(), "Confluence", "Conf");

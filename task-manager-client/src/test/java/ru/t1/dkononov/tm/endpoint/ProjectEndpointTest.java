@@ -12,7 +12,7 @@ import ru.t1.dkononov.tm.dto.response.ProjectListResponse;
 import ru.t1.dkononov.tm.enumerated.Sort;
 import ru.t1.dkononov.tm.enumerated.Status;
 import ru.t1.dkononov.tm.marker.IntegrationCategory;
-import ru.t1.dkononov.tm.model.Project;
+import ru.t1.dkononov.tm.dto.model.ProjectDTO;
 import ru.t1.dkononov.tm.service.PropertyService;
 
 import static ru.t1.dkononov.tm.constant.TestClientData.USER2_TEST_LOGIN;
@@ -35,7 +35,7 @@ public class ProjectEndpointTest {
     private static String token;
 
     @Nullable
-    private Project project;
+    private ProjectDTO project;
 
     @BeforeClass
     public static void setUp() throws Exception {

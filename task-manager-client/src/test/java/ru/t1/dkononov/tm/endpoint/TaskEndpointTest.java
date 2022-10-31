@@ -11,7 +11,7 @@ import ru.t1.dkononov.tm.dto.request.*;
 import ru.t1.dkononov.tm.dto.response.TaskListResponse;
 import ru.t1.dkononov.tm.enumerated.Sort;
 import ru.t1.dkononov.tm.marker.IntegrationCategory;
-import ru.t1.dkononov.tm.model.Task;
+import ru.t1.dkononov.tm.dto.model.TaskDTO;
 import ru.t1.dkononov.tm.service.PropertyService;
 
 import static ru.t1.dkononov.tm.constant.TestClientData.USER2_TEST_LOGIN;
@@ -35,7 +35,7 @@ public class TaskEndpointTest {
 
 
     @Nullable
-    private Task task;
+    private TaskDTO task;
 
     @BeforeClass
     public static void setUp() throws Exception {

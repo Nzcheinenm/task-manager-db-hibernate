@@ -6,7 +6,7 @@ import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.dto.request.UserRegistryRequest;
 import ru.t1.dkononov.tm.enumerated.Role;
 import ru.t1.dkononov.tm.exception.AbstractException;
-import ru.t1.dkononov.tm.model.User;
+import ru.t1.dkononov.tm.dto.model.UserDTO;
 import ru.t1.dkononov.tm.util.TerminalUtil;
 
 public final class UserRegistryCommand extends AbstractUserCommand {
@@ -32,7 +32,7 @@ public final class UserRegistryCommand extends AbstractUserCommand {
         request.setPassword(password);
         request.setLogin(login);
         request.setEmail(email);
-        @NotNull final User user = getUserEndpoint().registryUser(request).getUser();
+        @NotNull final UserDTO user = getUserEndpoint().registryUser(request).getUser();
         showUser(user);
     }
 

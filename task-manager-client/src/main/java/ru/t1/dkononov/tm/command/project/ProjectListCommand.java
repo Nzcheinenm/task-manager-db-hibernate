@@ -7,7 +7,7 @@ import ru.t1.dkononov.tm.dto.request.ProjectListRequest;
 import ru.t1.dkononov.tm.dto.response.ProjectListResponse;
 import ru.t1.dkononov.tm.enumerated.Sort;
 import ru.t1.dkononov.tm.exception.AbstractException;
-import ru.t1.dkononov.tm.model.Project;
+import ru.t1.dkononov.tm.dto.model.ProjectDTO;
 import ru.t1.dkononov.tm.util.TerminalUtil;
 
 import java.util.Arrays;
@@ -37,8 +37,8 @@ public final class ProjectListCommand extends AbstractProjectCommand {
         int index = 0;
         @NotNull final ProjectListResponse response = getProjectEndpoint().listProject(request);
         if (response.getProjects() == null) response.setProjects(Collections.emptyList());
-        @NotNull final List<Project> projects = response.getProjects();
-        for (@NotNull final Project project : projects) {
+        @NotNull final List<ProjectDTO> projects = response.getProjects();
+        for (@NotNull final ProjectDTO project : projects) {
             index++;
             System.out.println(index + ". " + project.getName());
         }

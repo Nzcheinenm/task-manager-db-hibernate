@@ -6,7 +6,7 @@ import ru.t1.dkononov.tm.dto.request.ProjectGetByIdRequest;
 import ru.t1.dkononov.tm.dto.response.ProjectGetByIdResponse;
 import ru.t1.dkononov.tm.exception.AbstractException;
 import ru.t1.dkononov.tm.exception.entity.ProjectNotFoundException;
-import ru.t1.dkononov.tm.model.Project;
+import ru.t1.dkononov.tm.dto.model.ProjectDTO;
 import ru.t1.dkononov.tm.util.TerminalUtil;
 
 public final class ProjectShowByIdCommand extends AbstractProjectCommand {
@@ -35,7 +35,7 @@ public final class ProjectShowByIdCommand extends AbstractProjectCommand {
     }
 
     @NotNull
-    public String show(@NotNull final Project project) {
+    public String show(@NotNull final ProjectDTO project) {
         return "[ID: " + project.getId() + "]\n" +
                 "[NAME: " + project.getName() + "]\n" +
                 "[DESC: " + project.getDescription() + "]\n" +

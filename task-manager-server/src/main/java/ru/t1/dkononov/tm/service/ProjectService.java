@@ -12,7 +12,7 @@ import ru.t1.dkononov.tm.enumerated.Status;
 import ru.t1.dkononov.tm.exception.AbstractException;
 import ru.t1.dkononov.tm.exception.entity.ProjectNotFoundException;
 import ru.t1.dkononov.tm.exception.field.*;
-import ru.t1.dkononov.tm.model.Project;
+import ru.t1.dkononov.tm.dto.model.ProjectDTO;
 
 import java.sql.SQLException;
 import java.util.Collection;
@@ -34,7 +34,7 @@ public final class ProjectService implements IProjectService {
     @NotNull
     @Override
     @SneakyThrows
-    public List<Project> findAll(@Nullable final String userId) throws UserIdEmptyException {
+    public List<ProjectDTO> findAll(@Nullable final String userId) throws UserIdEmptyException {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         try (@NotNull final SqlSession sqlSession = connectionService.getSqlSession()) {
             @NotNull final IProjectRepository repository = sqlSession.getMapper(IProjectRepository.class);
@@ -45,7 +45,7 @@ public final class ProjectService implements IProjectService {
     @NotNull
     @Override
     @SneakyThrows
-    public List<Project> findAll() {
+    public List<ProjectDTO> findAll() {
         try (@NotNull final SqlSession sqlSession = connectionService.getSqlSession()) {
             @NotNull final IProjectRepository repository = sqlSession.getMapper(IProjectRepository.class);
             return repository.findAll();
@@ -55,7 +55,7 @@ public final class ProjectService implements IProjectService {
     @Nullable
     @Override
     @SneakyThrows
-    public List<Project> findAll(
+    public List<ProjectDTO> findAll(
             @Nullable final String userId,
             @Nullable final Comparator comparator
     ) throws UserIdEmptyException {
@@ -70,7 +70,7 @@ public final class ProjectService implements IProjectService {
     @NotNull
     @Override
     @SneakyThrows
-    public List<Project> findAll(
+    public List<ProjectDTO> findAll(
             @Nullable final String userId,
             @Nullable final Sort sort
     ) throws UserIdEmptyException {
@@ -84,12 +84,12 @@ public final class ProjectService implements IProjectService {
     @Nullable
     @Override
     @SneakyThrows
-    public Project add(@Nullable final String userId, @Nullable final Project model)
+    public ProjectDTO add(@Nullable final String userId, @Nullable final ProjectDTO model)
             throws ProjectNotFoundException, UserIdEmptyException {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (model == null) throw new ProjectNotFoundException();
         @NotNull final SqlSession sqlSession = connectionService.getSqlSession();
-        @Nullable final Project result;
+        @Nullable final ProjectDTO result;
         try {
             @NotNull final IProjectRepository repository = sqlSession.getMapper(IProjectRepository.class);
             model.setUserId(userId);
@@ -108,7 +108,7 @@ public final class ProjectService implements IProjectService {
     @Nullable
     @Override
     @SneakyThrows
-    public Collection<Project> add(@NotNull Collection<Project> models) {
+    public Collection<ProjectDTO> add(@NotNull Collection<ProjectDTO> models) {
         if (models.isEmpty()) return Collections.emptyList();
         @NotNull final SqlSession sqlSession = connectionService.getSqlSession();
         try {
@@ -127,7 +127,7 @@ public final class ProjectService implements IProjectService {
     @Override
     @NotNull
     @SneakyThrows
-    public Collection<Project> set(@NotNull Collection<Project> models) {
+    public Collection<ProjectDTO> set(@NotNull Collection<ProjectDTO> models) {
         if (models.isEmpty()) return Collections.emptyList();
         @NotNull final SqlSession sqlSession = connectionService.getSqlSession();
         try {
@@ -148,7 +148,7 @@ public final class ProjectService implements IProjectService {
     public void clear(@Nullable final String userId) throws UserIdEmptyException {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         @NotNull final SqlSession sqlSession = connectionService.getSqlSession();
-        @Nullable final Project result;
+        @Nullable final ProjectDTO result;
         try {
             @NotNull final IProjectRepository repository = sqlSession.getMapper(IProjectRepository.class);
             repository.clear(userId);
@@ -175,7 +175,7 @@ public final class ProjectService implements IProjectService {
     @Nullable
     @Override
     @SneakyThrows
-    public Project remove(@NotNull final String userId, @Nullable final Project model) throws UserIdEmptyException {
+    public ProjectDTO remove(@NotNull final String userId, @Nullable final ProjectDTO model) throws UserIdEmptyException {
         if (userId.isEmpty()) throw new UserIdEmptyException();
         @NotNull final SqlSession sqlSession = connectionService.getSqlSession();
         try {
@@ -195,7 +195,7 @@ public final class ProjectService implements IProjectService {
     @Nullable
     @Override
     @SneakyThrows
-    public Project findById(@Nullable final String userId, @Nullable final String id)
+    public ProjectDTO findById(@Nullable final String userId, @Nullable final String id)
             throws AbstractException {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (id == null || id.isEmpty()) throw new IdEmptyException();
@@ -208,7 +208,7 @@ public final class ProjectService implements IProjectService {
     @Nullable
     @Override
     @SneakyThrows
-    public Project findByIndex(@Nullable final String userId, @Nullable final Integer index)
+    public ProjectDTO findByIndex(@Nullable final String userId, @Nullable final Integer index)
             throws AbstractException {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (index == null || index < 0) throw new IndexIncorrectException();
@@ -221,11 +221,11 @@ public final class ProjectService implements IProjectService {
     @NotNull
     @Override
     @SneakyThrows
-    public Project removeById(@Nullable final String userId, @Nullable final String id) throws AbstractException {
+    public ProjectDTO removeById(@Nullable final String userId, @Nullable final String id) throws AbstractException {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (id == null || id.isEmpty()) throw new IdEmptyException();
         @NotNull final SqlSession sqlSession = connectionService.getSqlSession();
-        @Nullable final Project result;
+        @Nullable final ProjectDTO result;
         try {
             @NotNull final IProjectRepository repository = sqlSession.getMapper(IProjectRepository.class);
             result = repository.findByIdWithUserId(userId, id);
@@ -243,11 +243,11 @@ public final class ProjectService implements IProjectService {
     @NotNull
     @Override
     @SneakyThrows
-    public Project removeByIndex(@Nullable final String userId, @Nullable final Integer index) throws AbstractException {
+    public ProjectDTO removeByIndex(@Nullable final String userId, @Nullable final Integer index) throws AbstractException {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (index == null || index < 0) throw new IndexIncorrectException();
         @NotNull final SqlSession sqlSession = connectionService.getSqlSession();
-        @Nullable final Project result;
+        @Nullable final ProjectDTO result;
         try {
             @NotNull final IProjectRepository repository = sqlSession.getMapper(IProjectRepository.class);
             result = repository.findByIndex(userId, index);
@@ -283,7 +283,7 @@ public final class ProjectService implements IProjectService {
     @NotNull
     @Override
     @SneakyThrows
-    public Project create(
+    public ProjectDTO create(
             @Nullable final String userId,
             @Nullable final String name,
             @Nullable final String description
@@ -293,10 +293,10 @@ public final class ProjectService implements IProjectService {
         if (name == null || name.isEmpty()) throw new NameEmptyException();
         if (description == null || description.isEmpty()) throw new DescriptionEmptyException();
         @NotNull final SqlSession sqlSession = connectionService.getSqlSession();
-        @Nullable final Project result;
+        @Nullable final ProjectDTO result;
         try {
             @NotNull final IProjectRepository repository = sqlSession.getMapper(IProjectRepository.class);
-            result = new Project();
+            result = new ProjectDTO();
             result.setUserId(userId);
             result.setName(name);
             result.setDescription(description);
@@ -313,11 +313,11 @@ public final class ProjectService implements IProjectService {
 
     @NotNull
     @Override
-    public Project create(@Nullable final String userId, @Nullable final String name)
+    public ProjectDTO create(@Nullable final String userId, @Nullable final String name)
             throws AbstractFieldException, SQLException, ProjectNotFoundException {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (name == null || name.isEmpty()) throw new NameEmptyException();
-        @NotNull Project project = new Project();
+        @NotNull ProjectDTO project = new ProjectDTO();
         project.setUserId(userId);
         project.setName(name);
         @NotNull final SqlSession sqlSession = connectionService.getSqlSession();
@@ -338,7 +338,7 @@ public final class ProjectService implements IProjectService {
     @Override
     @Nullable
     @SneakyThrows
-    public Project updateById(
+    public ProjectDTO updateById(
             @Nullable final String userId,
             @Nullable final String id,
             @Nullable final String name,
@@ -350,7 +350,7 @@ public final class ProjectService implements IProjectService {
         if (name == null || name.isEmpty()) throw new NameEmptyException();
         if (description == null || description.isEmpty()) throw new DescriptionEmptyException();
         @NotNull final SqlSession sqlSession = connectionService.getSqlSession();
-        @Nullable final Project project;
+        @Nullable final ProjectDTO project;
         try {
             @NotNull final IProjectRepository repository = sqlSession.getMapper(IProjectRepository.class);
             project = repository.findByIdWithUserId(userId, id);
@@ -371,7 +371,7 @@ public final class ProjectService implements IProjectService {
     @Override
     @Nullable
     @SneakyThrows
-    public Project updateByIndex(
+    public ProjectDTO updateByIndex(
             @Nullable final String userId,
             @Nullable final Integer index,
             @Nullable final String name,
@@ -383,7 +383,7 @@ public final class ProjectService implements IProjectService {
         if (name == null || name.isEmpty()) throw new NameEmptyException();
         if (description == null || description.isEmpty()) throw new DescriptionEmptyException();
         @NotNull final SqlSession sqlSession = connectionService.getSqlSession();
-        @Nullable final Project project;
+        @Nullable final ProjectDTO project;
         try {
             @NotNull final IProjectRepository repository = sqlSession.getMapper(IProjectRepository.class);
             project = repository.findByIndex(userId, index);
@@ -403,7 +403,7 @@ public final class ProjectService implements IProjectService {
     @Override
     @Nullable
     @SneakyThrows
-    public Project changeProjectStatusById(
+    public ProjectDTO changeProjectStatusById(
             @Nullable final String userId,
             @Nullable final String id,
             @NotNull final Status status
@@ -412,7 +412,7 @@ public final class ProjectService implements IProjectService {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (id == null || id.isEmpty()) throw new IdEmptyException();
         @NotNull final SqlSession sqlSession = connectionService.getSqlSession();
-        @Nullable final Project project;
+        @Nullable final ProjectDTO project;
         try {
             @NotNull final IProjectRepository repository = sqlSession.getMapper(IProjectRepository.class);
             project = findById(userId, id);
@@ -432,7 +432,7 @@ public final class ProjectService implements IProjectService {
     @Override
     @Nullable
     @SneakyThrows
-    public Project changeProjectStatusByIndex(
+    public ProjectDTO changeProjectStatusByIndex(
             @Nullable final String userId,
             @Nullable final Integer index,
             @NotNull final Status status
@@ -441,7 +441,7 @@ public final class ProjectService implements IProjectService {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (index == null || index < 0) throw new IndexIncorrectException();
         @NotNull final SqlSession sqlSession = connectionService.getSqlSession();
-        @Nullable final Project project;
+        @Nullable final ProjectDTO project;
         try {
             @NotNull final IProjectRepository repository = sqlSession.getMapper(IProjectRepository.class);
             project = repository.findByIndex(userId, index);

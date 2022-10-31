@@ -11,8 +11,8 @@ import ru.t1.dkononov.tm.dto.response.*;
 import ru.t1.dkononov.tm.enumerated.Role;
 import ru.t1.dkononov.tm.exception.AbstractException;
 import ru.t1.dkononov.tm.exception.field.AbstractFieldException;
-import ru.t1.dkononov.tm.model.Session;
-import ru.t1.dkononov.tm.model.User;
+import ru.t1.dkononov.tm.dto.model.SessionDTO;
+import ru.t1.dkononov.tm.dto.model.UserDTO;
 
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
@@ -38,7 +38,7 @@ public final class UserEndpoint extends AbstractEndpoint implements IUserEndpoin
     ) throws Exception {
         check(request, Role.ADMIN);
         @Nullable final String login = request.getLogin();
-        @Nullable final User user = getUserService().lockUserByLogin(login);
+        @Nullable final UserDTO user = getUserService().lockUserByLogin(login);
         return new UserLockResponse(user);
     }
 
@@ -51,7 +51,7 @@ public final class UserEndpoint extends AbstractEndpoint implements IUserEndpoin
     ) throws Exception {
         check(request, Role.ADMIN);
         @Nullable final String login = request.getLogin();
-        @Nullable final User user = getUserService().unlockUserByLogin(login);
+        @Nullable final UserDTO user = getUserService().unlockUserByLogin(login);
         return new UserUnlockResponse(user);
     }
 
@@ -64,7 +64,7 @@ public final class UserEndpoint extends AbstractEndpoint implements IUserEndpoin
     ) throws Exception {
         check(request, Role.ADMIN);
         @Nullable final String login = request.getLogin();
-        @Nullable final User user = getUserService().removeByLogin(login);
+        @Nullable final UserDTO user = getUserService().removeByLogin(login);
         return new UserRemoveResponse(user);
     }
 
@@ -75,12 +75,12 @@ public final class UserEndpoint extends AbstractEndpoint implements IUserEndpoin
             @WebParam(name = REQUEST, partName = REQUEST)
             @NotNull final UserUpdateProfileRequest request
     ) throws AbstractFieldException {
-        @NotNull final Session session = check(request);
+        @NotNull final SessionDTO session = check(request);
         @Nullable final String userId = session.getUserId();
         @Nullable final String firstName = request.getFirstName();
         @Nullable final String middleName = request.getMiddleName();
         @Nullable final String lastName = request.getLastName();
-        @Nullable final User user = getUserService().updateUser(
+        @Nullable final UserDTO user = getUserService().updateUser(
                 userId, firstName, lastName, middleName
         );
         return new UserUpdateProfileResponse(user);
@@ -93,10 +93,10 @@ public final class UserEndpoint extends AbstractEndpoint implements IUserEndpoin
             @WebParam(name = REQUEST, partName = REQUEST)
             @NotNull final UserChangePasswordRequest request
     ) throws AbstractFieldException {
-        @NotNull final Session session = check(request);
+        @NotNull final SessionDTO session = check(request);
         @Nullable final String userId = session.getUserId();
         @Nullable final String password = request.getPassword();
-        @Nullable final User user = getUserService().setPassword(userId, password);
+        @Nullable final UserDTO user = getUserService().setPassword(userId, password);
         return new UserChangePasswordResponse(user);
     }
 
@@ -111,7 +111,7 @@ public final class UserEndpoint extends AbstractEndpoint implements IUserEndpoin
         @Nullable final String password = request.getPassword();
         @Nullable final String email = request.getEmail();
         @NotNull final IAuthService authService = getServiceLocator().getAuthService();
-        @Nullable final User user = authService.registry(login, password, email);
+        @Nullable final UserDTO user = authService.registry(login, password, email);
         return new UserRegistryResponse(user);
     }
 

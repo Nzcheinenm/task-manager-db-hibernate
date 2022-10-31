@@ -6,7 +6,7 @@ import ru.t1.dkononov.tm.api.endpoint.ITaskEndpoint;
 import ru.t1.dkononov.tm.command.AbstractCommand;
 import ru.t1.dkononov.tm.enumerated.Role;
 import ru.t1.dkononov.tm.enumerated.Status;
-import ru.t1.dkononov.tm.model.Task;
+import ru.t1.dkononov.tm.dto.model.TaskDTO;
 
 import java.util.List;
 
@@ -28,16 +28,16 @@ public abstract class AbstractTaskCommand extends AbstractCommand {
         return null;
     }
 
-    protected void renderTasks(@NotNull final List<Task> tasks) {
+    protected void renderTasks(@NotNull final List<TaskDTO> tasks) {
         int index = 1;
-        for (@Nullable final Task task : tasks) {
+        for (@Nullable final TaskDTO task : tasks) {
             if (task == null) continue;
             System.out.println(index + ". " + task);
             index++;
         }
     }
 
-    protected void showTask(@Nullable final Task task) {
+    protected void showTask(@Nullable final TaskDTO task) {
         if (task == null) return;
         System.out.println("ID: " + task.getId());
         System.out.println("NAME: " + task.getName());

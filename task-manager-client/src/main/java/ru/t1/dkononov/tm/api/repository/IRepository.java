@@ -5,13 +5,13 @@ import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.exception.entity.ProjectNotFoundException;
 import ru.t1.dkononov.tm.exception.field.IdEmptyException;
 import ru.t1.dkononov.tm.exception.field.IndexIncorrectException;
-import ru.t1.dkononov.tm.model.AbstractModel;
+import ru.t1.dkononov.tm.dto.model.AbstractModelDTO;
 
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 
-public interface IRepository<M extends AbstractModel> {
+public interface IRepository<M extends AbstractModelDTO> {
 
     @NotNull
     List<M> findAll();
