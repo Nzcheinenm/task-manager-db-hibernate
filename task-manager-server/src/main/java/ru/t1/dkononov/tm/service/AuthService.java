@@ -73,7 +73,7 @@ public final class AuthService implements IAuthService {
     @Override
     public void invalidate(@Nullable final Session session) throws UserIdEmptyException {
         if (session == null) return;
-        sessionService.remove(session.getUserId(),session);
+        sessionService.remove(session.getUserId(), session);
     }
 
     @NotNull

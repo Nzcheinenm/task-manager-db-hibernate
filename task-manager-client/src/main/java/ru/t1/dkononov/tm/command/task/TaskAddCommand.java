@@ -3,7 +3,6 @@ package ru.t1.dkononov.tm.command.task;
 import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 import ru.t1.dkononov.tm.dto.request.TaskCreateRequest;
-import ru.t1.dkononov.tm.exception.field.AbstractFieldException;
 import ru.t1.dkononov.tm.util.TerminalUtil;
 
 public final class TaskAddCommand extends AbstractTaskCommand {

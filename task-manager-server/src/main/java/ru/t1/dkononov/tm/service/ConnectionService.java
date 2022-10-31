@@ -18,8 +18,6 @@ import ru.t1.dkononov.tm.api.services.IConnectionService;
 import ru.t1.dkononov.tm.api.services.IPropertyService;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.DriverManager;
 
 public class ConnectionService implements IConnectionService {
 
@@ -42,9 +40,9 @@ public class ConnectionService implements IConnectionService {
         @NotNull final String password = propertyService.getDatabasePassword();
         @NotNull final String url = propertyService.getDatabaseUrl();
         @NotNull final String driver = propertyService.getDatabaseDriver();
-        @NotNull final DataSource dataSource = new PooledDataSource(driver,url,username,password);
+        @NotNull final DataSource dataSource = new PooledDataSource(driver, url, username, password);
         @NotNull final TransactionFactory transactionFactory = new JdbcTransactionFactory();
-        @NotNull final Environment environment = new Environment("tm",transactionFactory,dataSource);
+        @NotNull final Environment environment = new Environment("tm", transactionFactory, dataSource);
         @NotNull final Configuration configuration = new Configuration(environment);
         configuration.addMapper(IProjectRepository.class);
         configuration.addMapper(ITaskRepository.class);

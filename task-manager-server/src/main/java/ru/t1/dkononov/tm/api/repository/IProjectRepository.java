@@ -4,7 +4,6 @@ import org.apache.ibatis.annotations.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.model.Project;
-import ru.t1.dkononov.tm.model.Task;
 
 import java.util.List;
 
@@ -39,7 +38,7 @@ public interface IProjectRepository {
     @Nullable Project findByIdWithUserId(@NotNull @Param("userId") String userId, @NotNull @Param("id") String id);
 
     @Select("SELECT * FROM tm.tm_project WHERE id = #{id} LIMIT 1")
-    @Nullable Project findById( @NotNull @Param("id") String id);
+    @Nullable Project findById(@NotNull @Param("id") String id);
 
     @Select("SELECT * FROM tm.tm_project WHERE user_id = #{userId} LIMIT 1 OFFSET #{index}")
     @Results(value = {

@@ -16,7 +16,6 @@ import ru.t1.dkononov.tm.exception.entity.ProjectNotFoundException;
 import ru.t1.dkononov.tm.exception.field.UserIdEmptyException;
 import ru.t1.dkononov.tm.marker.UnitCategory;
 
-
 import java.util.Objects;
 
 import static ru.t1.dkononov.tm.constant.TestData.*;
@@ -40,15 +39,15 @@ public class ProjectTaskServiceTest {
     private final IProjectService projectService = new ProjectService(connectionService);
 
     @NotNull
-    private final ProjectTaskService projectTaskService = new ProjectTaskService(projectService,taskService);
+    private final ProjectTaskService projectTaskService = new ProjectTaskService(projectService, taskService);
 
     @Before
     public void before() throws UserIdEmptyException, ProjectNotFoundException {
-        projectRepository.add(USER1.getId(),USER_PROJECT);
-        projectRepository.add(USER1.getId(),USER_PROJECT2);
+        projectRepository.add(USER1.getId(), USER_PROJECT);
+        projectRepository.add(USER1.getId(), USER_PROJECT2);
 
-        taskRepository.add(USER1.getId(),USER_TASK);
-        taskRepository.add(USER1.getId(),USER_TASK2);
+        taskRepository.add(USER1.getId(), USER_TASK);
+        taskRepository.add(USER1.getId(), USER_TASK2);
     }
 
     @After
@@ -59,19 +58,19 @@ public class ProjectTaskServiceTest {
 
     @Test
     public void bindTaskToProject() throws Exception {
-        projectTaskService.bindTaskToProject(USER1.getId(),USER_PROJECT.getId(),USER_TASK.getId());
+        projectTaskService.bindTaskToProject(USER1.getId(), USER_PROJECT.getId(), USER_TASK.getId());
         Assert.assertTrue(Objects.equals(USER_TASK.getProjectId(), USER_PROJECT.getId()));
     }
 
     @Test
     public void removeProjectById() throws Exception {
-        projectTaskService.removeProjectById(USER1.getId(),USER_PROJECT.getId());
+        projectTaskService.removeProjectById(USER1.getId(), USER_PROJECT.getId());
         Assert.assertFalse(projectRepository.findById(USER_PROJECT.getId()) != null);
     }
 
     @Test
     public void unbindTaskFromProject() throws Exception {
-        projectTaskService.unbindTaskFromProject(USER1.getId(),USER_PROJECT.getId(),USER_TASK.getId());
+        projectTaskService.unbindTaskFromProject(USER1.getId(), USER_PROJECT.getId(), USER_TASK.getId());
         Assert.assertNull(USER_TASK.getProjectId());
     }
 

@@ -15,9 +15,8 @@ import ru.t1.dkononov.tm.marker.IntegrationCategory;
 import ru.t1.dkononov.tm.model.User;
 import ru.t1.dkononov.tm.service.PropertyService;
 
-import java.util.Objects;
-
-import static ru.t1.dkononov.tm.constant.TestClientData.*;
+import static ru.t1.dkononov.tm.constant.TestClientData.USER2_TEST_LOGIN;
+import static ru.t1.dkononov.tm.constant.TestClientData.USER2_TEST_PASS;
 
 @Category(IntegrationCategory.class)
 public class UserEndpointTest {
@@ -70,7 +69,7 @@ public class UserEndpointTest {
         @NotNull final UserRegistryRequest request = new UserRegistryRequest(token);
         request.setLogin(USER2_TEST_LOGIN);
         request.setPassword(USER2_TEST_PASS);
-        Assert.assertThrows(Exception.class,() -> userEndpoint.registryUser(request));
+        Assert.assertThrows(Exception.class, () -> userEndpoint.registryUser(request));
     }
 
     @Test

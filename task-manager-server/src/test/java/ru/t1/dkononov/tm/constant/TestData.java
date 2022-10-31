@@ -11,7 +11,6 @@ import ru.t1.dkononov.tm.model.Session;
 import ru.t1.dkononov.tm.model.Task;
 import ru.t1.dkononov.tm.model.User;
 import ru.t1.dkononov.tm.service.PropertyService;
-import ru.t1.dkononov.tm.util.CryptUtil;
 import ru.t1.dkononov.tm.util.HashUtil;
 
 import java.util.Date;

@@ -19,7 +19,6 @@ import ru.t1.dkononov.tm.service.PropertyService;
 import ru.t1.dkononov.tm.util.HashUtil;
 
 import static ru.t1.dkononov.tm.constant.TestData.*;
-import static ru.t1.dkononov.tm.constant.TestData.USER_PROJECT;
 
 
 @Category(DataCategory.class)
@@ -29,7 +28,7 @@ public class UserRepositoryTest {
     private final IConnectionService connectionService = new ConnectionService(new PropertyService());
 
     @NotNull
-    private  final PropertyService propertyService = new PropertyService();
+    private final PropertyService propertyService = new PropertyService();
 
     @NotNull
     private final ProjectRepository projectRepository = new ProjectRepository(connectionService.getSqlSession());
@@ -76,7 +75,7 @@ public class UserRepositoryTest {
         repository.add(user1);
         @Nullable final User user = repository.findByLogin(LOGIN);
         Assert.assertNotNull(user);
-        projectRepository.add(user.getId(),USER_PROJECT);
+        projectRepository.add(user.getId(), USER_PROJECT);
         Assert.assertNotNull(projectRepository.findById(USER_PROJECT.getId()));
     }
 

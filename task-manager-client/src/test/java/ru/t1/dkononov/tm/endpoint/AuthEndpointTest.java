@@ -10,9 +10,7 @@ import org.junit.experimental.categories.Category;
 import ru.t1.dkononov.tm.api.endpoint.IAuthEndpoint;
 import ru.t1.dkononov.tm.api.endpoint.IUserEndpoint;
 import ru.t1.dkononov.tm.api.services.IPropertyService;
-import ru.t1.dkononov.tm.command.user.UserViewProfileCommand;
 import ru.t1.dkononov.tm.dto.request.*;
-import ru.t1.dkononov.tm.dto.response.UserProfileResponse;
 import ru.t1.dkononov.tm.marker.IntegrationCategory;
 import ru.t1.dkononov.tm.service.PropertyService;
 

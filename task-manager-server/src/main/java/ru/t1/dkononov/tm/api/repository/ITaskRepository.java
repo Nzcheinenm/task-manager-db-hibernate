@@ -3,7 +3,6 @@ package ru.t1.dkononov.tm.api.repository;
 import org.apache.ibatis.annotations.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import ru.t1.dkononov.tm.model.Project;
 import ru.t1.dkononov.tm.model.Task;
 
 import java.util.List;

@@ -12,10 +12,8 @@ import ru.t1.dkononov.tm.exception.AbstractException;
 import ru.t1.dkononov.tm.exception.entity.ProjectNotFoundException;
 import ru.t1.dkononov.tm.exception.field.UserIdEmptyException;
 import ru.t1.dkononov.tm.marker.UnitCategory;
-import ru.t1.dkononov.tm.repository.ProjectRepository;
 
 import static ru.t1.dkononov.tm.constant.TestData.*;
-import static ru.t1.dkononov.tm.constant.TestData.USER_PROJECT;
 
 @Category(UnitCategory.class)
 public class ProjectServiceTest {
@@ -28,9 +26,9 @@ public class ProjectServiceTest {
 
     @Before
     public void before() throws UserIdEmptyException, ProjectNotFoundException {
-        service.add(USER1.getId(),USER_PROJECT);
-        service.add(USER1.getId(),USER_PROJECT2);
-        service.add(USER2.getId(),ADMIN_PROJECT);
+        service.add(USER1.getId(), USER_PROJECT);
+        service.add(USER1.getId(), USER_PROJECT2);
+        service.add(USER2.getId(), ADMIN_PROJECT);
     }
 
     @After
@@ -41,7 +39,7 @@ public class ProjectServiceTest {
     @Test
     public void add() throws UserIdEmptyException, ProjectNotFoundException {
         Assert.assertNotNull(service.add(USER_PROJECT2));
-        Assert.assertThrows(Exception.class,() -> service.add(NULL_PROJECT));
+        Assert.assertThrows(Exception.class, () -> service.add(NULL_PROJECT));
     }
 
     @Test
@@ -51,7 +49,7 @@ public class ProjectServiceTest {
 
     @Test
     public void createByUserId() {
-        Assert.assertEquals(ADMIN_PROJECT.getUserId(),USER2.getId());
+        Assert.assertEquals(ADMIN_PROJECT.getUserId(), USER2.getId());
     }
 
     @Test
@@ -63,37 +61,37 @@ public class ProjectServiceTest {
 
     @Test
     public void findByNullId() {
-        Assert.assertThrows(Exception.class,() -> service.findById(USER1.getId(),null));
+        Assert.assertThrows(Exception.class, () -> service.findById(USER1.getId(), null));
     }
 
     @Test
     public void updateById() throws AbstractException {
-        Assert.assertNotNull(service.updateById(USER1.getId(),USER_PROJECT.getId(),"1","2"));
+        Assert.assertNotNull(service.updateById(USER1.getId(), USER_PROJECT.getId(), "1", "2"));
     }
 
     @Test
     public void updateByIndex() throws AbstractException {
-        Assert.assertNotNull(service.updateByIndex(USER1.getId(),1,"3","4"));
+        Assert.assertNotNull(service.updateByIndex(USER1.getId(), 1, "3", "4"));
     }
 
     @Test
     public void changeStatusById() throws AbstractException {
-        Assert.assertNotNull(service.changeProjectStatusById(USER1.getId(),USER_PROJECT.getId(), Status.IN_PROGRESS));
+        Assert.assertNotNull(service.changeProjectStatusById(USER1.getId(), USER_PROJECT.getId(), Status.IN_PROGRESS));
     }
 
     @Test
     public void changeStatusByIndex() throws AbstractException {
-        Assert.assertNotNull(service.changeProjectStatusByIndex(USER1.getId(),1,Status.IN_PROGRESS));
+        Assert.assertNotNull(service.changeProjectStatusByIndex(USER1.getId(), 1, Status.IN_PROGRESS));
     }
 
     @Test
     public void removeStatusById() throws AbstractException {
-        Assert.assertNotNull(service.removeById(USER1.getId(),USER_PROJECT.getId()));
+        Assert.assertNotNull(service.removeById(USER1.getId(), USER_PROJECT.getId()));
     }
 
     @Test
     public void removeStatusByIndex() throws AbstractException {
-        Assert.assertNotNull(service.removeByIndex(USER1.getId(),1));
+        Assert.assertNotNull(service.removeByIndex(USER1.getId(), 1));
     }
 
     @Test

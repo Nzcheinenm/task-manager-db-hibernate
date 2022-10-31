@@ -2,7 +2,6 @@ package ru.t1.dkononov.tm.endpoint;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -13,7 +12,6 @@ import ru.t1.dkononov.tm.api.services.IPropertyService;
 import ru.t1.dkononov.tm.dto.request.*;
 import ru.t1.dkononov.tm.marker.IntegrationCategory;
 import ru.t1.dkononov.tm.service.PropertyService;
-
 
 
 @Category(IntegrationCategory.class)

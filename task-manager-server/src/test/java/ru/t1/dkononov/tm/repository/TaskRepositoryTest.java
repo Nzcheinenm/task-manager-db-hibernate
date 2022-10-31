@@ -12,7 +12,6 @@ import ru.t1.dkononov.tm.service.ConnectionService;
 import ru.t1.dkononov.tm.service.PropertyService;
 
 import static ru.t1.dkononov.tm.constant.TestData.*;
-import static ru.t1.dkononov.tm.constant.TestData.ADMIN_TASK;
 
 @Category(DataCategory.class)
 public class TaskRepositoryTest {
@@ -48,7 +47,7 @@ public class TaskRepositoryTest {
 
     @Test
     public void createByUserId() {
-        Assert.assertEquals(ADMIN_TASK.getUserId(),USER2.getId());
+        Assert.assertEquals(ADMIN_TASK.getUserId(), USER2.getId());
     }
 
     @Test
@@ -56,7 +55,7 @@ public class TaskRepositoryTest {
         @NotNull final TaskRepository emptyRepository = new TaskRepository(connectionService.getSqlSession());
         Assert.assertTrue(emptyRepository.findAll().isEmpty());
         emptyRepository.add(USER_TASK);
-        Assert.assertEquals(USER_TASK,emptyRepository.findById(USER_TASK.getId()));
+        Assert.assertEquals(USER_TASK, emptyRepository.findById(USER_TASK.getId()));
     }
 
     @Test

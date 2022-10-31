@@ -76,7 +76,7 @@ public final class ProjectService implements IProjectService {
     ) throws UserIdEmptyException {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         try (@NotNull final SqlSession sqlSession = connectionService.getSqlSession()) {
-                        if (sort == null) return findAll(userId);
+            if (sort == null) return findAll(userId);
             return findAll(userId, sort.getComparator());
         }
     }

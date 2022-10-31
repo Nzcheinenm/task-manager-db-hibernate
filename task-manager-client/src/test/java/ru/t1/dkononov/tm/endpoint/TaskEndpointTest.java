@@ -14,7 +14,8 @@ import ru.t1.dkononov.tm.marker.IntegrationCategory;
 import ru.t1.dkononov.tm.model.Task;
 import ru.t1.dkononov.tm.service.PropertyService;
 
-import static ru.t1.dkononov.tm.constant.TestClientData.*;
+import static ru.t1.dkononov.tm.constant.TestClientData.USER2_TEST_LOGIN;
+import static ru.t1.dkononov.tm.constant.TestClientData.USER2_TEST_PASS;
 
 @Category(IntegrationCategory.class)
 public class TaskEndpointTest {

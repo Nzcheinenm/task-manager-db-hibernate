@@ -1,6 +1,5 @@
 package ru.t1.dkononov.tm.service;
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.junit.After;
@@ -16,13 +15,11 @@ import ru.t1.dkononov.tm.exception.field.LoginEmptyException;
 import ru.t1.dkononov.tm.exception.field.UserNotFoundException;
 import ru.t1.dkononov.tm.marker.UnitCategory;
 import ru.t1.dkononov.tm.model.User;
-import ru.t1.dkononov.tm.repository.ProjectRepository;
-import ru.t1.dkononov.tm.repository.TaskRepository;
-import ru.t1.dkononov.tm.repository.UserRepository;
 
 import java.util.Objects;
 
-import static ru.t1.dkononov.tm.constant.TestData.*;
+import static ru.t1.dkononov.tm.constant.TestData.LOGIN;
+import static ru.t1.dkononov.tm.constant.TestData.PASSWORD;
 
 
 @Category(UnitCategory.class)
@@ -36,7 +33,7 @@ public class UserServiceTest {
     private final PropertyService propertyService = new PropertyService();
 
     @NotNull
-    private final UserService service = new UserService(connectionService,propertyService);
+    private final UserService service = new UserService(connectionService, propertyService);
 
     @NotNull
     private static final String LOGIN_TEST = "logintest";
@@ -55,7 +52,7 @@ public class UserServiceTest {
 
     @Before
     public void before() throws AbstractException {
-        userTesting = service.create(LOGIN_TEST,PASS_TEST, Role.USUAL);
+        userTesting = service.create(LOGIN_TEST, PASS_TEST, Role.USUAL);
     }
 
     @After
@@ -65,7 +62,7 @@ public class UserServiceTest {
 
     @Test
     public void create() throws AbstractException {
-        service.create(LOGIN,PASSWORD, Role.USUAL);
+        service.create(LOGIN, PASSWORD, Role.USUAL);
         @Nullable final User user = service.findByLogin(LOGIN);
         Assert.assertNotNull(user);
     }
@@ -84,7 +81,7 @@ public class UserServiceTest {
 
     @Test
     public void updateUser() throws AbstractFieldException {
-        service.updateUser(userTesting.getId(),NAME,"lastName","middle");
+        service.updateUser(userTesting.getId(), NAME, "lastName", "middle");
         Assert.assertTrue(Objects.equals(userTesting.getFirstName(), NAME));
 
     }

@@ -4,7 +4,9 @@ import lombok.SneakyThrows;
 import org.apache.ibatis.session.SqlSession;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import ru.t1.dkononov.tm.api.repository.*;
+import ru.t1.dkononov.tm.api.repository.IProjectRepository;
+import ru.t1.dkononov.tm.api.repository.ITaskRepository;
+import ru.t1.dkononov.tm.api.repository.IUserRepository;
 import ru.t1.dkononov.tm.api.services.IConnectionService;
 import ru.t1.dkononov.tm.api.services.IPropertyService;
 import ru.t1.dkononov.tm.api.services.IUserService;
@@ -141,7 +143,7 @@ public final class UserService implements IUserService {
         try (@NotNull final SqlSession sqlSession = connectionService.getSqlSession()) {
             @NotNull final IUserRepository repository = sqlSession.getMapper(IUserRepository.class);
             @Nullable final User user = repository.findByLogin(login);
-            if (user == null) throw new  UserNotFoundException();
+            if (user == null) throw new UserNotFoundException();
             return user;
         }
     }

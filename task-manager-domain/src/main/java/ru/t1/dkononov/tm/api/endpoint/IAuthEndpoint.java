@@ -9,8 +9,6 @@ import ru.t1.dkononov.tm.dto.response.UserLoginResponse;
 import ru.t1.dkononov.tm.dto.response.UserLogoutResponse;
 import ru.t1.dkononov.tm.dto.response.UserProfileResponse;
 import ru.t1.dkononov.tm.exception.AbstractException;
-import ru.t1.dkononov.tm.exception.field.AccessDeniedException;
-import ru.t1.dkononov.tm.exception.field.IdEmptyException;
 
 import javax.jws.WebMethod;
 import javax.jws.WebParam;

@@ -6,7 +6,6 @@ import org.junit.*;
 import org.junit.experimental.categories.Category;
 import ru.t1.dkononov.tm.api.endpoint.IAuthEndpoint;
 import ru.t1.dkononov.tm.api.endpoint.IProjectEndpoint;
-import ru.t1.dkononov.tm.api.endpoint.IUserEndpoint;
 import ru.t1.dkononov.tm.api.services.IPropertyService;
 import ru.t1.dkononov.tm.dto.request.*;
 import ru.t1.dkononov.tm.dto.response.ProjectListResponse;
@@ -16,7 +15,8 @@ import ru.t1.dkononov.tm.marker.IntegrationCategory;
 import ru.t1.dkononov.tm.model.Project;
 import ru.t1.dkononov.tm.service.PropertyService;
 
-import static ru.t1.dkononov.tm.constant.TestClientData.*;
+import static ru.t1.dkononov.tm.constant.TestClientData.USER2_TEST_LOGIN;
+import static ru.t1.dkononov.tm.constant.TestClientData.USER2_TEST_PASS;
 
 @Category(IntegrationCategory.class)
 public class ProjectEndpointTest {
@@ -78,7 +78,7 @@ public class ProjectEndpointTest {
     }
 
     @Test
-    public void  changeStatusByIndex() throws Exception {
+    public void changeStatusByIndex() throws Exception {
         @Nullable final Status status = Status.IN_PROGRESS;
         @NotNull final ProjectChangeStatusByIndexRequest request = new ProjectChangeStatusByIndexRequest(getUserToken());
         request.setIndex(0);

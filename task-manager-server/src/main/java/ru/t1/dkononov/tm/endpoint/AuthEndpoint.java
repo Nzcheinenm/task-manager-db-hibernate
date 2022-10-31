@@ -13,8 +13,6 @@ import ru.t1.dkononov.tm.dto.response.UserLoginResponse;
 import ru.t1.dkononov.tm.dto.response.UserLogoutResponse;
 import ru.t1.dkononov.tm.dto.response.UserProfileResponse;
 import ru.t1.dkononov.tm.exception.AbstractException;
-import ru.t1.dkononov.tm.exception.field.AccessDeniedException;
-import ru.t1.dkononov.tm.exception.field.IdEmptyException;
 import ru.t1.dkononov.tm.model.Session;
 import ru.t1.dkononov.tm.model.User;
 

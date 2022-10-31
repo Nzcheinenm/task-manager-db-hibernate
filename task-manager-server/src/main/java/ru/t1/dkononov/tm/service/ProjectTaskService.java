@@ -1,9 +1,10 @@
 package ru.t1.dkononov.tm.service;
 
-import lombok.SneakyThrows;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import ru.t1.dkononov.tm.api.services.*;
+import ru.t1.dkononov.tm.api.services.IProjectService;
+import ru.t1.dkononov.tm.api.services.IProjectTaskService;
+import ru.t1.dkononov.tm.api.services.ITaskService;
 import ru.t1.dkononov.tm.exception.entity.ProjectNotFoundException;
 import ru.t1.dkononov.tm.exception.entity.TaskNotFoundException;
 import ru.t1.dkononov.tm.exception.field.ProjectIdEmptyException;
@@ -11,7 +12,6 @@ import ru.t1.dkononov.tm.exception.field.TaskIdEmptyException;
 import ru.t1.dkononov.tm.exception.field.UserIdEmptyException;
 import ru.t1.dkononov.tm.model.Task;
 
-import java.sql.Connection;
 import java.util.List;
 
 public final class ProjectTaskService implements IProjectTaskService {

@@ -9,7 +9,6 @@ import ru.t1.dkononov.tm.exception.AbstractException;
 import ru.t1.dkononov.tm.exception.entity.ProjectNotFoundException;
 import ru.t1.dkononov.tm.exception.field.AbstractFieldException;
 import ru.t1.dkononov.tm.exception.field.UserIdEmptyException;
-import ru.t1.dkononov.tm.model.Project;
 import ru.t1.dkononov.tm.model.Task;
 
 import java.util.Collection;
@@ -101,6 +100,6 @@ public interface ITaskService {
 
     Task changeTaskStatusByIndex(@Nullable String userId, @Nullable Integer index, @Nullable Status status) throws AbstractException, Exception;
 
-    void updateProjectIdById(@NotNull String userId,@Nullable String taskId, @Nullable String projectId) throws Exception;
+    void updateProjectIdById(@NotNull String userId, @Nullable String taskId, @Nullable String projectId) throws Exception;
 
 }

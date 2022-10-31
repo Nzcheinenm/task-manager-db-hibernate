@@ -4,10 +4,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import ru.t1.dkononov.tm.api.endpoint.*;
-import ru.t1.dkononov.tm.api.repository.IProjectRepository;
-import ru.t1.dkononov.tm.api.repository.ISessionRepository;
-import ru.t1.dkononov.tm.api.repository.ITaskRepository;
-import ru.t1.dkononov.tm.api.repository.IUserRepository;
 import ru.t1.dkononov.tm.api.services.*;
 import ru.t1.dkononov.tm.endpoint.*;
 import ru.t1.dkononov.tm.enumerated.Role;
@@ -45,7 +41,7 @@ public final class Bootstrap implements IServiceLocator {
 
     @Getter
     @NotNull
-    private final IProjectTaskService projectTaskService = new ProjectTaskService(projectService,taskService);
+    private final IProjectTaskService projectTaskService = new ProjectTaskService(projectService, taskService);
 
     @Getter
     @NotNull
@@ -141,12 +137,12 @@ public final class Bootstrap implements IServiceLocator {
         @NotNull final User user = userService.create("user", "user", "user@test.ru");
         @NotNull final User admin = userService.create("admin", "admin", Role.ADMIN);
 
-        projectService.create(test.getId(),"Jira", "Desc");
-        projectService.create(test.getId(), "Confluence","Conf");
+        projectService.create(test.getId(), "Jira", "Desc");
+        projectService.create(test.getId(), "Confluence", "Conf");
         projectService.create(admin.getId(), "SoapUI", "Pelp");
         projectService.create(user.getId(), "Postman", "Ferst");
 
-        taskService.create(test.getId(),"Work", "Working");
+        taskService.create(test.getId(), "Work", "Working");
         taskService.create(admin.getId(), "Homework", "Speed");
     }
 

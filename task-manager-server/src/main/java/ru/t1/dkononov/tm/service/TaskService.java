@@ -465,7 +465,7 @@ public final class TaskService implements ITaskService {
         @Nullable final Task task;
         try {
             @NotNull final ITaskRepository repository = sqlSession.getMapper(ITaskRepository.class);
-            task = repository.findTaskIdByProjectId(userId, taskId,projectId);
+            task = repository.findTaskIdByProjectId(userId, taskId, projectId);
             if (task == null) throw new TaskIdEmptyException();
             task.setProjectId(projectId);
             sqlSession.commit();
