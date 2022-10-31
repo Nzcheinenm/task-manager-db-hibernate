@@ -7,10 +7,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.enumerated.Role;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Enumerated;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Getter
@@ -25,28 +22,29 @@ public final class UserDTO extends AbstractModelDTO {
     @Nullable
     private String login;
 
-    @Column
     @Nullable
+    @Column(name = "password")
     private String passwordHash;
 
     @Column
     @Nullable
     private String email;
 
-    @Column
     @Nullable
+    @Column(name = "first_name")
     private String firstName;
 
-    @Column
     @Nullable
+    @Column(name = "middle_name")
     private String middleName;
 
-    @Column
     @Nullable
+    @Column(name = "last_name")
     private String lastName;
 
     @Column
     @NotNull
+    @Enumerated(EnumType.STRING)
     private Role role = Role.USUAL;
 
     @Column

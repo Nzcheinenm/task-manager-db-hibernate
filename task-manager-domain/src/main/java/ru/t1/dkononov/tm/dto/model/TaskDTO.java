@@ -9,9 +9,7 @@ import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.api.model.IWBS;
 import ru.t1.dkononov.tm.enumerated.Status;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Date;
 
 @Getter
@@ -34,10 +32,11 @@ public final class TaskDTO extends AbstractUserOwnedModelDTO implements IWBS {
 
     @Column
     @NotNull
+    @Enumerated(EnumType.STRING)
     private Status status = Status.NOT_STARTED;
 
-    @Column(name = "project_id")
     @Nullable
+    @Column(name = "project_id")
     private String projectId;
 
     @Column

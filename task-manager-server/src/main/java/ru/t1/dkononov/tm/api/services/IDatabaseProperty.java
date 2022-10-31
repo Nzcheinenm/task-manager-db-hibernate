@@ -13,4 +13,13 @@ public interface IDatabaseProperty {
     @NotNull
     String getDatabaseUrl();
 
+    @NotNull
+    String getDatabaseDialect();
+
+    @NotNull
+    String getDatabaseHbm2auto();
+
+    @NotNull
+    String getDatabaseShowSql();
+
 }

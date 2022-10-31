@@ -108,6 +108,24 @@ public final class PropertyService implements IPropertyService {
     @NotNull
     private static final String DB_DRIVER_KEY = "database.driver";
 
+    @NotNull
+    private static final String DB_DIALECT_DEFAULT = "org.hibernate.dialect.PostgreSQLDialect";
+
+    @NotNull
+    private static final String DB_DIALECT_KEY = "database.dialect";
+
+    @NotNull
+    private static final String DB_SHOW_DEFAULT = "true";
+
+    @NotNull
+    private static final String DB_SHOW_KEY = "database.show_sql";
+
+    @NotNull
+    private static final String DB_HBM2DDL_DEFAULT = "update";
+
+    @NotNull
+    private static final String DB_HBM2DDL_KEY = "database.hbm2ddl_auto";
+
 
     @NotNull
     public final Properties properties = new Properties();
@@ -283,6 +301,21 @@ public final class PropertyService implements IPropertyService {
     @Override
     public @NotNull String getDatabaseUrl() {
         return getStringValue(DB_URL_KEY, DB_URL_KEY_DEFAULT);
+    }
+
+    @Override
+    public @NotNull String getDatabaseDialect() {
+        return getStringValue(DB_DIALECT_KEY, DB_DIALECT_DEFAULT);
+    }
+
+    @Override
+    public @NotNull String getDatabaseHbm2auto() {
+        return getStringValue(DB_HBM2DDL_KEY, DB_HBM2DDL_DEFAULT);
+    }
+
+    @Override
+    public @NotNull String getDatabaseShowSql() {
+        return getStringValue(DB_SHOW_KEY, DB_SHOW_DEFAULT);
     }
 
     @Override

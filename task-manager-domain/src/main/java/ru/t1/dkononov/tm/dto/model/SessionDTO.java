@@ -8,6 +8,8 @@ import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.enumerated.Role;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Table;
 import java.util.Date;
 
@@ -22,6 +24,7 @@ public final class SessionDTO extends AbstractUserOwnedModelDTO {
     private Date date = new Date();
 
     @Nullable
+    @Enumerated(EnumType.STRING)
     private Role role = null;
 
 }
