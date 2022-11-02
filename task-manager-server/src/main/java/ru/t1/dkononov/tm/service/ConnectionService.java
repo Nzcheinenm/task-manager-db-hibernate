@@ -24,6 +24,10 @@ import ru.t1.dkononov.tm.dto.model.ProjectDTO;
 import ru.t1.dkononov.tm.dto.model.SessionDTO;
 import ru.t1.dkononov.tm.dto.model.TaskDTO;
 import ru.t1.dkononov.tm.dto.model.UserDTO;
+import ru.t1.dkononov.tm.model.Project;
+import ru.t1.dkononov.tm.model.Session;
+import ru.t1.dkononov.tm.model.Task;
+import ru.t1.dkononov.tm.model.User;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -67,6 +71,10 @@ public class ConnectionService implements IConnectionService {
         source.addAnnotatedClass(TaskDTO.class);
         source.addAnnotatedClass(UserDTO.class);
         source.addAnnotatedClass(SessionDTO.class);
+        source.addAnnotatedClass(Project.class);
+        source.addAnnotatedClass(Task.class);
+        source.addAnnotatedClass(User.class);
+        source.addAnnotatedClass(Session.class);
         @NotNull final Metadata metadata = source.getMetadataBuilder().build();
         return metadata.getSessionFactoryBuilder().build();
     }
