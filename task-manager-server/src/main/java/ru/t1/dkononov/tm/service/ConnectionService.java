@@ -69,10 +69,6 @@ public class ConnectionService implements IConnectionService {
         source.addAnnotatedClass(SessionDTO.class);
         @NotNull final Metadata metadata = source.getMetadataBuilder().build();
         return metadata.getSessionFactoryBuilder().build();
-
-
-
-
     }
 
     @NotNull
@@ -92,7 +88,6 @@ public class ConnectionService implements IConnectionService {
         configuration.addMapper(ISessionRepository.class);
         configuration.addMapper(IUserRepository.class);
         return new SqlSessionFactoryBuilder().build(configuration);
-
     }
 
     @Override
