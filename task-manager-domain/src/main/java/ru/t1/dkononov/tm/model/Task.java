@@ -20,7 +20,7 @@ import java.util.List;
 @Table(name = "tm_task")
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public final class Task extends AbstractUserOwnedModel implements IWBS {
+public final class  Task extends AbstractUserOwnedModel implements IWBS {
 
     private final static long serialVersionUID = 1;
 

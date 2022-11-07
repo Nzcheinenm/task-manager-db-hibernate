@@ -38,7 +38,7 @@ public final class Project extends AbstractUserOwnedModel implements IWBS {
     private Status status = Status.NOT_STARTED;
 
     @NotNull
-    @OneToMany(mappedBy = "project")
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL,orphanRemoval = true)
     private List<Task> tasks = new ArrayList<>();
 
     @Column
