@@ -5,14 +5,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.api.model.IWBS;
 import ru.t1.dkononov.tm.enumerated.Status;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 @Getter
 @Setter
@@ -20,7 +17,7 @@ import java.util.List;
 @Table(name = "tm_task")
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public final class  Task extends AbstractUserOwnedModel implements IWBS {
+public final class Task extends AbstractUserOwnedModel implements IWBS {
 
     private final static long serialVersionUID = 1;
 

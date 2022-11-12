@@ -2,7 +2,6 @@ package ru.t1.dkononov.tm.api.repository.model;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import ru.t1.dkononov.tm.dto.model.UserDTO;
 import ru.t1.dkononov.tm.model.User;
 
 import java.util.List;
@@ -20,5 +19,5 @@ public interface IUserRepository {
 
     @Nullable User findByLogin(@NotNull String login);
 
-    @Nullable UserDTO findByEmail(@NotNull String email);
+    @Nullable User findByEmail(@NotNull String email);
 }

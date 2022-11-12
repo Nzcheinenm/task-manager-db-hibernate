@@ -4,12 +4,12 @@ import lombok.experimental.UtilityClass;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.api.component.ISaltProvider;
-import ru.t1.dkononov.tm.enumerated.Role;
-import ru.t1.dkononov.tm.enumerated.Status;
 import ru.t1.dkononov.tm.dto.model.ProjectDTO;
 import ru.t1.dkononov.tm.dto.model.SessionDTO;
 import ru.t1.dkononov.tm.dto.model.TaskDTO;
 import ru.t1.dkononov.tm.dto.model.UserDTO;
+import ru.t1.dkononov.tm.enumerated.Role;
+import ru.t1.dkononov.tm.enumerated.Status;
 import ru.t1.dkononov.tm.service.PropertyService;
 import ru.t1.dkononov.tm.util.HashUtil;
 

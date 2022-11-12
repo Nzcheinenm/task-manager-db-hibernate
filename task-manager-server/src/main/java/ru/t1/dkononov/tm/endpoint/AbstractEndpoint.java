@@ -4,10 +4,10 @@ import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.api.services.IServiceLocator;
+import ru.t1.dkononov.tm.dto.model.SessionDTO;
 import ru.t1.dkononov.tm.dto.request.AbstractUserRequest;
 import ru.t1.dkononov.tm.enumerated.Role;
 import ru.t1.dkononov.tm.exception.field.AccessDeniedException;
-import ru.t1.dkononov.tm.dto.model.SessionDTO;
 
 public abstract class AbstractEndpoint {
 

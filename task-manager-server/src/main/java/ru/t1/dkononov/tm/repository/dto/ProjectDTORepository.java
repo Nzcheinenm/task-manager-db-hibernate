@@ -9,7 +9,7 @@ import ru.t1.dkononov.tm.enumerated.Sort;
 import javax.persistence.EntityManager;
 import java.util.*;
 
-public class ProjectDTORepository extends AbstractUserOwnedDTORepository<ProjectDTO> implements IProjectDTORepository {
+public final class ProjectDTORepository extends AbstractUserOwnedDTORepository<ProjectDTO> implements IProjectDTORepository {
 
     public ProjectDTORepository(@NotNull EntityManager entityManager) {
         super(entityManager);
@@ -26,7 +26,7 @@ public class ProjectDTORepository extends AbstractUserOwnedDTORepository<Project
         if (userId.isEmpty()) return;
         @NotNull final String sql = "DELETE FROM ProjectDTO m WHERE m.userId = :userId";
         entityManager.createQuery(sql)
-                .setParameter("userId",userId)
+                .setParameter("userId", userId)
                 .executeUpdate();
     }
 
@@ -71,7 +71,16 @@ public class ProjectDTORepository extends AbstractUserOwnedDTORepository<Project
     @NotNull
     @Override
     public ProjectDTO findById(@NotNull final String id) {
-        return entityManager.find(ProjectDTO.class,id);
+        return entityManager.find(ProjectDTO.class, id);
+    }
+
+    @Override
+    public ProjectDTO findByIndex(@Nullable String userId, @Nullable Integer index) {
+        @NotNull final String sql = "SELECT m FROM ProjectDTO m WHERE m.user.id = :userId";
+        return Objects.requireNonNull(entityManager.createQuery(sql, ProjectDTO.class)
+                .setParameter("userId", userId)
+                .setMaxResults(1)
+                .getResultList().stream().findFirst().orElse(null));
     }
 
     @Nullable
@@ -80,17 +89,16 @@ public class ProjectDTORepository extends AbstractUserOwnedDTORepository<Project
         if (userId.isEmpty() || id.isEmpty()) return null;
         @NotNull final String sql = "SELECT m FROM ProjectDTO m WHERE m.userId = :userId AND m.id = :id";
         return entityManager.createQuery(sql, ProjectDTO.class)
-                .setParameter("id",id)
-                .setParameter("userId",userId)
+                .setParameter("id", id)
+                .setParameter("userId", userId)
                 .setMaxResults(1).getResultList().stream().findFirst().orElse(null);
     }
 
     @NotNull
     @Override
     public ProjectDTO findByIndex(@NotNull final Integer index) {
-        @NotNull final String sql = "SELECT m FROM ProjectDTO m LIMIT 1 OFFSET :index";
+        @NotNull final String sql = "SELECT m FROM ProjectDTO m";
         return Objects.requireNonNull(entityManager.createQuery(sql, ProjectDTO.class)
-                .setParameter("index", index)
                 .setMaxResults(1)
                 .getResultList().stream().findFirst().orElse(null));
     }

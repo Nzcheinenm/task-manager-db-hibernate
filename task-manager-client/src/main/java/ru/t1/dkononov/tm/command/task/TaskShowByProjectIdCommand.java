@@ -3,9 +3,9 @@ package ru.t1.dkononov.tm.command.task;
 import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import ru.t1.dkononov.tm.dto.model.TaskDTO;
 import ru.t1.dkononov.tm.dto.request.TaskListByProjectIdRequest;
 import ru.t1.dkononov.tm.dto.response.TaskListByProjectIdResponse;
-import ru.t1.dkononov.tm.dto.model.TaskDTO;
 import ru.t1.dkononov.tm.util.TerminalUtil;
 
 import java.util.Collections;

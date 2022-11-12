@@ -6,14 +6,14 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.api.services.IAuthService;
 import ru.t1.dkononov.tm.api.services.IPropertyService;
-import ru.t1.dkononov.tm.api.services.ISessionService;
-import ru.t1.dkononov.tm.api.services.IUserService;
+import ru.t1.dkononov.tm.api.services.dto.ISessionDTOService;
+import ru.t1.dkononov.tm.api.services.dto.IUserDTOService;
+import ru.t1.dkononov.tm.dto.model.SessionDTO;
+import ru.t1.dkononov.tm.dto.model.UserDTO;
 import ru.t1.dkononov.tm.enumerated.Role;
 import ru.t1.dkononov.tm.exception.AbstractException;
 import ru.t1.dkononov.tm.exception.entity.ProjectNotFoundException;
 import ru.t1.dkononov.tm.exception.field.*;
-import ru.t1.dkononov.tm.dto.model.SessionDTO;
-import ru.t1.dkononov.tm.dto.model.UserDTO;
 import ru.t1.dkononov.tm.util.CryptUtil;
 import ru.t1.dkononov.tm.util.HashUtil;
 
@@ -24,21 +24,21 @@ public final class AuthService implements IAuthService {
 
 
     @Nullable
-    private final IUserService userService;
+    private final IUserDTOService userService;
 
     @Nullable
     private final IPropertyService propertyService;
 
     @NotNull
-    private final ISessionService sessionService;
+    private final ISessionDTOService sessionService;
 
     @Nullable
     private String userId;
 
     public AuthService(
-            @Nullable final IUserService userService,
+            @Nullable final IUserDTOService userService,
             @Nullable final IPropertyService propertyService,
-            @NotNull final ISessionService sessionService) {
+            @NotNull final ISessionDTOService sessionService) {
         this.userService = userService;
         this.propertyService = propertyService;
         this.sessionService = sessionService;

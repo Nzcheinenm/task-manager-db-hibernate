@@ -7,10 +7,11 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import ru.t1.dkononov.tm.api.services.IConnectionService;
+import ru.t1.dkononov.tm.dto.model.SessionDTO;
 import ru.t1.dkononov.tm.exception.entity.ProjectNotFoundException;
 import ru.t1.dkononov.tm.exception.field.UserIdEmptyException;
 import ru.t1.dkononov.tm.marker.UnitCategory;
-import ru.t1.dkononov.tm.dto.model.SessionDTO;
+import ru.t1.dkononov.tm.service.model.SessionService;
 
 import static ru.t1.dkononov.tm.constant.TestData.SESSION;
 import static ru.t1.dkononov.tm.constant.TestData.USER1;

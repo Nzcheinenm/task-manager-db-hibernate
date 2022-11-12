@@ -1,6 +1,7 @@
 package ru.t1.dkononov.tm.api.repository.dto;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.dto.model.AbstractModelDTO;
 
 import java.util.List;
@@ -20,4 +21,5 @@ public interface IDTORepository<E extends AbstractModelDTO> {
 
     void update(@NotNull E entity);
 
+    E findByIndex(@Nullable Integer index);
 }

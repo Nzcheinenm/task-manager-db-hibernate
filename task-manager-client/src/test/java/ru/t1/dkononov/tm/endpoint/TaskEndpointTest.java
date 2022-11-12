@@ -7,11 +7,11 @@ import org.junit.experimental.categories.Category;
 import ru.t1.dkononov.tm.api.endpoint.IAuthEndpoint;
 import ru.t1.dkononov.tm.api.endpoint.ITaskEndpoint;
 import ru.t1.dkononov.tm.api.services.IPropertyService;
+import ru.t1.dkononov.tm.dto.model.TaskDTO;
 import ru.t1.dkononov.tm.dto.request.*;
 import ru.t1.dkononov.tm.dto.response.TaskListResponse;
 import ru.t1.dkononov.tm.enumerated.Sort;
 import ru.t1.dkononov.tm.marker.IntegrationCategory;
-import ru.t1.dkononov.tm.dto.model.TaskDTO;
 import ru.t1.dkononov.tm.service.PropertyService;
 
 import static ru.t1.dkononov.tm.constant.TestClientData.USER2_TEST_LOGIN;

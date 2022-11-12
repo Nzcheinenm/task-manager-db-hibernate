@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
-@Table(name = "tm_user")
+@Table(name = "tm.tm_user")
 @NoArgsConstructor
 public final class UserDTO extends AbstractModelDTO {
 

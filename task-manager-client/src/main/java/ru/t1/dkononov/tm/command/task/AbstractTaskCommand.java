@@ -4,9 +4,9 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.api.endpoint.ITaskEndpoint;
 import ru.t1.dkononov.tm.command.AbstractCommand;
+import ru.t1.dkononov.tm.dto.model.TaskDTO;
 import ru.t1.dkononov.tm.enumerated.Role;
 import ru.t1.dkononov.tm.enumerated.Status;
-import ru.t1.dkononov.tm.dto.model.TaskDTO;
 
 import java.util.List;
 

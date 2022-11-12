@@ -7,7 +7,6 @@ import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
 import ru.t1.dkononov.tm.api.model.IWBS;
 import ru.t1.dkononov.tm.enumerated.Status;
-import ru.t1.dkononov.tm.model.AbstractUserOwnedModel;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -18,7 +17,7 @@ import java.util.List;
 @Setter
 @Entity
 @NoArgsConstructor
-@Table(name =  "tm_project")
+@Table(name = "tm_project")
 @JsonIgnoreProperties(ignoreUnknown = true)
 public final class Project extends AbstractUserOwnedModel implements IWBS {
 
@@ -38,7 +37,7 @@ public final class Project extends AbstractUserOwnedModel implements IWBS {
     private Status status = Status.NOT_STARTED;
 
     @NotNull
-    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL,orphanRemoval = true)
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Task> tasks = new ArrayList<>();
 
     @Column

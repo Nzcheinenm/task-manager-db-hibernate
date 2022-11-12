@@ -1,47 +1,50 @@
-package ru.t1.dkononov.tm.service;
+package ru.t1.dkononov.tm.service.dto;
 
 import lombok.SneakyThrows;
-import org.apache.ibatis.session.SqlSession;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import ru.t1.dkononov.tm.api.repository.IProjectRepository;
-import ru.t1.dkononov.tm.api.repository.ITaskRepository;
-import ru.t1.dkononov.tm.api.repository.IUserRepository;
+import ru.t1.dkononov.tm.api.repository.dto.IDTORepository;
+import ru.t1.dkononov.tm.api.repository.dto.IProjectDTORepository;
+import ru.t1.dkononov.tm.api.repository.dto.ITaskDTORepository;
+import ru.t1.dkononov.tm.api.repository.dto.IUserDTORepository;
 import ru.t1.dkononov.tm.api.services.IConnectionService;
 import ru.t1.dkononov.tm.api.services.IPropertyService;
-import ru.t1.dkononov.tm.api.services.IUserService;
+import ru.t1.dkononov.tm.api.services.dto.IUserDTOService;
+import ru.t1.dkononov.tm.dto.model.UserDTO;
 import ru.t1.dkononov.tm.enumerated.Role;
+import ru.t1.dkononov.tm.enumerated.Sort;
 import ru.t1.dkononov.tm.exception.AbstractException;
 import ru.t1.dkononov.tm.exception.field.*;
-import ru.t1.dkononov.tm.dto.model.UserDTO;
+import ru.t1.dkononov.tm.repository.dto.ProjectDTORepository;
+import ru.t1.dkononov.tm.repository.dto.TaskDTORepository;
+import ru.t1.dkononov.tm.repository.dto.UserDTORepository;
 import ru.t1.dkononov.tm.util.HashUtil;
 
+import javax.persistence.EntityManager;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-public final class UserService implements IUserService {
-
-
-    @NotNull
-    private final IConnectionService connectionService;
+public final class UserDTOService extends AbstractDTOService<UserDTO, UserDTORepository> implements IUserDTOService {
 
     @NotNull
     private final IPropertyService propertyService;
 
-    public UserService(@NotNull final IPropertyService propertyService, @NotNull final IConnectionService connectionService) {
+    public UserDTOService(@NotNull final IPropertyService propertyService, @NotNull final IConnectionService connectionService) {
+        super(connectionService);
         this.propertyService = propertyService;
-        this.connectionService = connectionService;
     }
 
+    @Override
     @NotNull
-    public ITaskRepository getTaskRepository() {
-        return connectionService.getSqlSession().getMapper(ITaskRepository.class);
+    public ITaskDTORepository getTaskRepository() {
+        return new TaskDTORepository(getEntityManager());
     }
 
+    @Override
     @NotNull
-    public IProjectRepository getProjectRepository() {
-        return connectionService.getSqlSession().getMapper(IProjectRepository.class);
+    public IProjectDTORepository getProjectRepository() {
+        return new ProjectDTORepository(getEntityManager());
     }
 
     @Nullable
@@ -54,21 +57,22 @@ public final class UserService implements IUserService {
         if (login == null || login.isEmpty()) throw new LoginEmptyException();
         if (isLoginExist(login)) throw new ExistsLoginException();
         if (password == null || password.isEmpty()) throw new PasswordEmptyException();
-        @NotNull final SqlSession sqlSession = connectionService.getSqlSession();
+        @NotNull final EntityManager entityManager = getEntityManager();
         @Nullable final UserDTO user;
         try {
-            @NotNull final IUserRepository repository = sqlSession.getMapper(IUserRepository.class);
+            entityManager.getTransaction().begin();
+            @NotNull final IDTORepository<UserDTO> repository = getRepository(entityManager);
             user = new UserDTO();
             user.setLogin(login);
             user.setPasswordHash(HashUtil.salt(propertyService, password));
             user.setRole(Role.USUAL);
             repository.add(user);
-            sqlSession.commit();
+            entityManager.getTransaction().commit();
         } catch (@NotNull final Exception e) {
-            sqlSession.rollback();
+            entityManager.getTransaction().rollback();
             throw e;
         } finally {
-            sqlSession.close();
+            entityManager.close();
         }
         return user;
     }
@@ -85,21 +89,22 @@ public final class UserService implements IUserService {
         if (isLoginExist(login)) throw new ExistsLoginException();
         if (password == null || password.isEmpty()) throw new PasswordEmptyException();
         if (isEmailExist(email)) throw new ExistsEmailException();
-        @NotNull final SqlSession sqlSession = connectionService.getSqlSession();
+        @NotNull final EntityManager entityManager = getEntityManager();
         @Nullable final UserDTO user;
         try {
-            @NotNull final IUserRepository repository = sqlSession.getMapper(IUserRepository.class);
+            entityManager.getTransaction().begin();
+            @NotNull final IDTORepository<UserDTO> repository = getRepository(entityManager);
             user = new UserDTO();
             user.setLogin(login);
             user.setPasswordHash(HashUtil.salt(propertyService, password));
             user.setEmail(email);
             repository.add(user);
-            sqlSession.commit();
+            entityManager.getTransaction().commit();
         } catch (@NotNull final Exception e) {
-            sqlSession.rollback();
+            entityManager.getTransaction().rollback();
             throw e;
         } finally {
-            sqlSession.close();
+            entityManager.close();
         }
         return user;
     }
@@ -116,21 +121,22 @@ public final class UserService implements IUserService {
         if (isLoginExist(login)) throw new ExistsLoginException();
         if (password == null || password.isEmpty()) throw new PasswordEmptyException();
         if (role == null) throw new RoleEmptyException();
-        @NotNull final SqlSession sqlSession = connectionService.getSqlSession();
+        @NotNull final EntityManager entityManager = getEntityManager();
         @Nullable final UserDTO user;
         try {
-            @NotNull final IUserRepository repository = sqlSession.getMapper(IUserRepository.class);
+            entityManager.getTransaction().begin();
+            @NotNull final IDTORepository<UserDTO> repository = getRepository(entityManager);
             user = new UserDTO();
             user.setLogin(login);
             user.setPasswordHash(HashUtil.salt(propertyService, password));
             if (role != null) user.setRole(role);
             repository.add(user);
-            sqlSession.commit();
+            entityManager.getTransaction().commit();
         } catch (@NotNull final Exception e) {
-            sqlSession.rollback();
+            entityManager.getTransaction().rollback();
             throw e;
         } finally {
-            sqlSession.close();
+            entityManager.close();
         }
         return user;
     }
@@ -138,13 +144,16 @@ public final class UserService implements IUserService {
     @Nullable
     @Override
     @SneakyThrows
-    public UserDTO findByLogin(@Nullable final String login) throws LoginEmptyException, UserNotFoundException {
+    public UserDTO findByLogin(@Nullable final String login) {
         if (login == null || login.isEmpty()) throw new LoginEmptyException();
-        try (@NotNull final SqlSession sqlSession = connectionService.getSqlSession()) {
-            @NotNull final IUserRepository repository = sqlSession.getMapper(IUserRepository.class);
+        @NotNull final EntityManager entityManager = getEntityManager();
+        try {
+            @NotNull final IUserDTORepository repository = (IUserDTORepository) getRepository(entityManager);
             @Nullable final UserDTO user = repository.findByLogin(login);
             if (user == null) throw new UserNotFoundException();
             return user;
+        } finally {
+            entityManager.close();
         }
     }
 
@@ -153,11 +162,13 @@ public final class UserService implements IUserService {
     @SneakyThrows
     public UserDTO findByEmail(@Nullable final String email) throws EmailEmptyException {
         if (email == null || email.isEmpty()) throw new EmailEmptyException();
-        try (@NotNull final SqlSession sqlSession = connectionService.getSqlSession()) {
-            @NotNull final IUserRepository repository = sqlSession.getMapper(IUserRepository.class);
+        @NotNull final EntityManager entityManager = getEntityManager();
+        try {
+            @NotNull final IUserDTORepository repository = (IUserDTORepository) getRepository(entityManager);
             @Nullable final UserDTO user = repository.findByEmail(email);
-            if (user == null) return null;
             return user;
+        } finally {
+            entityManager.close();
         }
     }
 
@@ -166,21 +177,22 @@ public final class UserService implements IUserService {
     @SneakyThrows
     public UserDTO removeOne(@Nullable final UserDTO model) throws UserIdEmptyException {
         if (model == null) return null;
-        @NotNull final SqlSession sqlSession = connectionService.getSqlSession();
+        @NotNull final EntityManager entityManager = getEntityManager();
         @Nullable final UserDTO user;
         try {
-            @NotNull final IUserRepository repository = sqlSession.getMapper(IUserRepository.class);
-            user = removeOne(model);
+            entityManager.getTransaction().begin();
+            @NotNull final IDTORepository<UserDTO> repository = getRepository(entityManager);
+            user = remove(model);
             if (user == null) return null;
             @Nullable final String userId = user.getId();
             getTaskRepository().clear(userId);
             getProjectRepository().clear(userId);
-            sqlSession.commit();
+            entityManager.getTransaction().commit();
         } catch (@NotNull final Exception e) {
-            sqlSession.rollback();
+            entityManager.getTransaction().rollback();
             throw e;
         } finally {
-            sqlSession.close();
+            entityManager.close();
         }
         return user;
     }
@@ -190,17 +202,18 @@ public final class UserService implements IUserService {
     @SneakyThrows
     public UserDTO removeByLogin(@Nullable final String login) throws AbstractFieldException {
         if (login == null || login.isEmpty()) throw new LoginEmptyException();
-        @NotNull final SqlSession sqlSession = connectionService.getSqlSession();
+        @NotNull final EntityManager entityManager = getEntityManager();
         @Nullable final UserDTO user;
         try {
+            entityManager.getTransaction().begin();
             user = findByLogin(login);
             removeOne(user);
-            sqlSession.commit();
+            entityManager.getTransaction().commit();
         } catch (@NotNull final Exception e) {
-            sqlSession.rollback();
+            entityManager.getTransaction().rollback();
             throw e;
         } finally {
-            sqlSession.close();
+            entityManager.close();
         }
         return user;
     }
@@ -210,17 +223,18 @@ public final class UserService implements IUserService {
     @SneakyThrows
     public UserDTO removeByEmail(@Nullable final String email) throws AbstractFieldException {
         if (email == null || email.isEmpty()) throw new EmailEmptyException();
-        @NotNull final SqlSession sqlSession = connectionService.getSqlSession();
+        @NotNull final EntityManager entityManager = getEntityManager();
         @Nullable final UserDTO user;
         try {
+            entityManager.getTransaction().begin();
             user = findByEmail(email);
             removeOne(user);
-            sqlSession.commit();
+            entityManager.getTransaction().commit();
         } catch (@NotNull final Exception e) {
-            sqlSession.rollback();
+            entityManager.getTransaction().rollback();
             throw e;
         } finally {
-            sqlSession.close();
+            entityManager.close();
         }
         return user;
     }
@@ -234,19 +248,20 @@ public final class UserService implements IUserService {
     ) throws AbstractFieldException {
         if (id == null || id.isEmpty()) throw new IdEmptyException();
         if (password == null || password.isEmpty()) throw new PasswordEmptyException();
-        @NotNull final SqlSession sqlSession = connectionService.getSqlSession();
+        @NotNull final EntityManager entityManager = getEntityManager();
         @Nullable final UserDTO user;
         try {
-            @NotNull final IUserRepository repository = sqlSession.getMapper(IUserRepository.class);
+            entityManager.getTransaction().begin();
+            @NotNull final IDTORepository<UserDTO> repository = getRepository(entityManager);
             user = repository.findById(id);
             if (user == null) throw new UserNotFoundException();
             user.setPasswordHash(HashUtil.salt(propertyService, password));
-            sqlSession.commit();
+            entityManager.getTransaction().commit();
         } catch (@NotNull final Exception e) {
-            sqlSession.rollback();
+            entityManager.getTransaction().rollback();
             throw e;
         } finally {
-            sqlSession.close();
+            entityManager.close();
         }
         return user;
     }
@@ -261,21 +276,22 @@ public final class UserService implements IUserService {
             @Nullable final String middleName
     ) throws AbstractFieldException {
         if (id == null || id.isEmpty()) throw new IdEmptyException();
-        @NotNull final SqlSession sqlSession = connectionService.getSqlSession();
+        @NotNull final EntityManager entityManager = getEntityManager();
         @Nullable final UserDTO user;
         try {
-            @NotNull final IUserRepository repository = sqlSession.getMapper(IUserRepository.class);
+            entityManager.getTransaction().begin();
+            @NotNull final IDTORepository<UserDTO> repository = getRepository(entityManager);
             user = repository.findById(id);
             if (user == null) throw new UserNotFoundException();
             user.setFirstName(firstName);
             user.setLastName(lastName);
             user.setMiddleName(middleName);
-            sqlSession.commit();
+            entityManager.getTransaction().commit();
         } catch (@NotNull final Exception e) {
-            sqlSession.rollback();
+            entityManager.getTransaction().rollback();
             throw e;
         } finally {
-            sqlSession.close();
+            entityManager.close();
         }
         return user;
     }
@@ -285,9 +301,12 @@ public final class UserService implements IUserService {
     @SneakyThrows
     public Boolean isLoginExist(@Nullable final String login) {
         if (login == null || login.isEmpty()) return false;
-        try (@NotNull final SqlSession sqlSession = connectionService.getSqlSession()) {
-            @NotNull final IUserRepository repository = sqlSession.getMapper(IUserRepository.class);
+        @NotNull final EntityManager entityManager = getEntityManager();
+        try {
+            @NotNull final IUserDTORepository repository = (IUserDTORepository) getRepository(entityManager);
             return repository.findByLogin(login) != null;
+        } finally {
+            entityManager.close();
         }
     }
 
@@ -296,9 +315,12 @@ public final class UserService implements IUserService {
     @SneakyThrows
     public Boolean isEmailExist(@Nullable final String email) {
         if (email == null || email.isEmpty()) return false;
-        try (@NotNull final SqlSession sqlSession = connectionService.getSqlSession()) {
-            @NotNull final IUserRepository repository = sqlSession.getMapper(IUserRepository.class);
+        @NotNull final EntityManager entityManager = getEntityManager();
+        try {
+            @NotNull final IUserDTORepository repository = (IUserDTORepository) getRepository(entityManager);
             return repository.findByEmail(email) != null;
+        } finally {
+            entityManager.close();
         }
     }
 
@@ -307,19 +329,20 @@ public final class UserService implements IUserService {
     @SneakyThrows
     public UserDTO lockUserByLogin(@Nullable final String login) throws LoginEmptyException, UserNotFoundException {
         if (login == null || login.isEmpty()) throw new LoginEmptyException();
-        @NotNull final SqlSession sqlSession = connectionService.getSqlSession();
+        @NotNull final EntityManager entityManager = getEntityManager();
         @Nullable final UserDTO user;
         try {
-            @NotNull final IUserRepository repository = sqlSession.getMapper(IUserRepository.class);
+            entityManager.getTransaction().begin();
+            @NotNull final IUserDTORepository repository = (IUserDTORepository) getRepository(entityManager);
             user = findByLogin(login);
             if (user == null) throw new UserNotFoundException();
             user.setLocked(true);
-            sqlSession.commit();
+            entityManager.getTransaction().commit();
         } catch (@NotNull final Exception e) {
-            sqlSession.rollback();
+            entityManager.getTransaction().rollback();
             throw e;
         } finally {
-            sqlSession.close();
+            entityManager.close();
         }
         return user;
     }
@@ -329,18 +352,19 @@ public final class UserService implements IUserService {
     @SneakyThrows
     public UserDTO unlockUserByLogin(@Nullable String login) throws LoginEmptyException, UserNotFoundException {
         if (login == null || login.isEmpty()) throw new LoginEmptyException();
-        @NotNull final SqlSession sqlSession = connectionService.getSqlSession();
+        @NotNull final EntityManager entityManager = getEntityManager();
         @Nullable final UserDTO user;
         try {
-            @NotNull final IUserRepository repository = sqlSession.getMapper(IUserRepository.class);
+            entityManager.getTransaction().begin();
+            @NotNull final IDTORepository<UserDTO> repository = getRepository(entityManager);
             user = findByLogin(login);
             user.setLocked(false);
-            sqlSession.commit();
+            entityManager.getTransaction().commit();
         } catch (@NotNull final Exception e) {
-            sqlSession.rollback();
+            entityManager.getTransaction().rollback();
             throw e;
         } finally {
-            sqlSession.close();
+            entityManager.close();
         }
         return user;
     }
@@ -348,22 +372,38 @@ public final class UserService implements IUserService {
     @Nullable
     @Override
     @SneakyThrows
-    public UserDTO findById(@Nullable final String id)
-            throws AbstractException {
+    public UserDTO findById(@Nullable final String id) {
         if (id == null || id.isEmpty()) throw new IdEmptyException();
-        try (@NotNull final SqlSession sqlSession = connectionService.getSqlSession()) {
-            @NotNull final IUserRepository repository = sqlSession.getMapper(IUserRepository.class);
+        @NotNull final EntityManager entityManager = getEntityManager();
+        try {
+            @NotNull final IDTORepository<UserDTO> repository = getRepository(entityManager);
             return repository.findById(id);
+        } finally {
+            entityManager.close();
         }
+    }
+
+    @Override
+    @Nullable
+    public List<UserDTO> findAll(@Nullable Sort sort) {
+        return findAll();
+    }
+
+    @Override
+    protected @NotNull IDTORepository<UserDTO> getRepository(@NotNull EntityManager entityManager) {
+        return new UserDTORepository(entityManager);
     }
 
     @NotNull
     @Override
     @SneakyThrows
     public List<UserDTO> findAll() {
-        try (@NotNull final SqlSession sqlSession = connectionService.getSqlSession()) {
-            @NotNull final IUserRepository repository = sqlSession.getMapper(IUserRepository.class);
+        @NotNull final EntityManager entityManager = getEntityManager();
+        try {
+            @NotNull final IDTORepository<UserDTO> repository = getRepository(entityManager);
             return repository.findAll();
+        } finally {
+            entityManager.close();
         }
     }
 
@@ -372,16 +412,17 @@ public final class UserService implements IUserService {
     @SneakyThrows
     public Collection<UserDTO> set(@NotNull Collection<UserDTO> models) {
         if (models.isEmpty()) return Collections.emptyList();
-        @NotNull final SqlSession sqlSession = connectionService.getSqlSession();
+        @NotNull final EntityManager entityManager = getEntityManager();
         try {
-            @NotNull final IUserRepository repository = sqlSession.getMapper(IUserRepository.class);
+            entityManager.getTransaction().begin();
+            @NotNull final IDTORepository<UserDTO> repository = getRepository(entityManager);
             models.forEach(repository::update);
-            sqlSession.commit();
+            entityManager.getTransaction().commit();
         } catch (@NotNull final Exception e) {
-            sqlSession.rollback();
+            entityManager.getTransaction().rollback();
             throw e;
         } finally {
-            sqlSession.close();
+            entityManager.close();
         }
         return models;
     }

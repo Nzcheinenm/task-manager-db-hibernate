@@ -3,8 +3,10 @@ package ru.t1.dkononov.tm.endpoint;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.api.endpoint.IProjectEndpoint;
-import ru.t1.dkononov.tm.api.services.IProjectService;
 import ru.t1.dkononov.tm.api.services.IServiceLocator;
+import ru.t1.dkononov.tm.api.services.dto.IProjectDTOService;
+import ru.t1.dkononov.tm.dto.model.ProjectDTO;
+import ru.t1.dkononov.tm.dto.model.SessionDTO;
 import ru.t1.dkononov.tm.dto.request.*;
 import ru.t1.dkononov.tm.dto.response.*;
 import ru.t1.dkononov.tm.enumerated.Sort;
@@ -13,8 +15,6 @@ import ru.t1.dkononov.tm.exception.AbstractException;
 import ru.t1.dkononov.tm.exception.field.AbstractFieldException;
 import ru.t1.dkononov.tm.exception.field.AccessDeniedException;
 import ru.t1.dkononov.tm.exception.field.UserIdEmptyException;
-import ru.t1.dkononov.tm.dto.model.ProjectDTO;
-import ru.t1.dkononov.tm.dto.model.SessionDTO;
 
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
@@ -24,14 +24,11 @@ import java.util.List;
 @WebService(endpointInterface = "ru.t1.dkononov.tm.api.endpoint.IProjectEndpoint")
 public final class ProjectEndpoint extends AbstractEndpoint implements IProjectEndpoint {
 
-    @NotNull
-    private IServiceLocator serviceLocator;
-
     public ProjectEndpoint(@NotNull IServiceLocator serviceLocator) {
         super(serviceLocator);
     }
 
-    public IProjectService getProjectService() {
+    public IProjectDTOService getProjectService() {
         return getServiceLocator().getProjectService();
     }
 

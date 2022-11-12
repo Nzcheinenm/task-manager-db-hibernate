@@ -1,6 +1,10 @@
 package ru.t1.dkononov.tm.api.services;
 
 import org.jetbrains.annotations.NotNull;
+import ru.t1.dkononov.tm.api.services.dto.IProjectDTOService;
+import ru.t1.dkononov.tm.api.services.dto.IProjectTaskDTOService;
+import ru.t1.dkononov.tm.api.services.dto.ITaskDTOService;
+import ru.t1.dkononov.tm.api.services.dto.IUserDTOService;
 
 public interface IServiceLocator {
 
@@ -8,16 +12,16 @@ public interface IServiceLocator {
     IAuthService getAuthService();
 
     @NotNull
-    IUserService getUserService();
+    IUserDTOService getUserService();
 
     @NotNull
-    IProjectService getProjectService();
+    IProjectDTOService getProjectService();
 
     @NotNull
-    IProjectTaskService getProjectTaskService();
+    IProjectTaskDTOService getProjectTaskService();
 
     @NotNull
-    ITaskService getTaskService();
+    ITaskDTOService getTaskService();
 
     @NotNull
     IPropertyService getPropertyService();

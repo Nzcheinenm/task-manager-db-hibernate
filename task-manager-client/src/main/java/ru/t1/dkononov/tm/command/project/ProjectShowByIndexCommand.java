@@ -2,11 +2,11 @@ package ru.t1.dkononov.tm.command.project;
 
 import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
+import ru.t1.dkononov.tm.dto.model.ProjectDTO;
 import ru.t1.dkononov.tm.dto.request.ProjectGetByIndexRequest;
 import ru.t1.dkononov.tm.dto.response.ProjectGetByIndexResponse;
 import ru.t1.dkononov.tm.exception.AbstractException;
 import ru.t1.dkononov.tm.exception.entity.ProjectNotFoundException;
-import ru.t1.dkononov.tm.dto.model.ProjectDTO;
 import ru.t1.dkononov.tm.util.TerminalUtil;
 
 public final class ProjectShowByIndexCommand extends AbstractProjectCommand {

@@ -15,7 +15,7 @@ import java.util.Date;
 @Getter
 @Setter
 @Entity
-@Table(name = "tm_task")
+@Table(name = "tm.tm_task")
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 public final class TaskDTO extends AbstractUserOwnedModelDTO implements IWBS {

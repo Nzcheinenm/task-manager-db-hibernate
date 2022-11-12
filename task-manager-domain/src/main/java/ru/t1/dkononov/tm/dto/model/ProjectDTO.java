@@ -15,7 +15,7 @@ import java.util.Date;
 @Setter
 @Entity
 @NoArgsConstructor
-@Table(name =  "tm_project")
+@Table(name = "tm.tm_project")
 @JsonIgnoreProperties(ignoreUnknown = true)
 public final class ProjectDTO extends AbstractUserOwnedModelDTO implements IWBS {
 

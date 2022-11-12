@@ -2,10 +2,10 @@ package ru.t1.dkononov.tm.command.task;
 
 import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
+import ru.t1.dkononov.tm.dto.model.TaskDTO;
 import ru.t1.dkononov.tm.dto.request.TaskGetByIdRequest;
 import ru.t1.dkononov.tm.dto.response.TaskGetByIdResponse;
 import ru.t1.dkononov.tm.exception.AbstractException;
-import ru.t1.dkononov.tm.dto.model.TaskDTO;
 import ru.t1.dkononov.tm.util.TerminalUtil;
 
 public final class TaskShowByIdCommand extends AbstractTaskCommand {

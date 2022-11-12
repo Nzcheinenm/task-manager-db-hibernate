@@ -3,10 +3,10 @@ package ru.t1.dkononov.tm.command.user;
 import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import ru.t1.dkononov.tm.dto.model.UserDTO;
 import ru.t1.dkononov.tm.dto.request.UserRegistryRequest;
 import ru.t1.dkononov.tm.enumerated.Role;
 import ru.t1.dkononov.tm.exception.AbstractException;
-import ru.t1.dkononov.tm.dto.model.UserDTO;
 import ru.t1.dkononov.tm.util.TerminalUtil;
 
 public final class UserRegistryCommand extends AbstractUserCommand {

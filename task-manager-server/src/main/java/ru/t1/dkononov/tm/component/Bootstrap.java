@@ -5,10 +5,12 @@ import lombok.NoArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import ru.t1.dkononov.tm.api.endpoint.*;
 import ru.t1.dkononov.tm.api.services.*;
+import ru.t1.dkononov.tm.api.services.dto.*;
+import ru.t1.dkononov.tm.dto.model.UserDTO;
 import ru.t1.dkononov.tm.endpoint.*;
 import ru.t1.dkononov.tm.enumerated.Role;
-import ru.t1.dkononov.tm.dto.model.UserDTO;
 import ru.t1.dkononov.tm.service.*;
+import ru.t1.dkononov.tm.service.dto.*;
 import ru.t1.dkononov.tm.util.SystemUtil;
 
 import javax.xml.ws.Endpoint;
@@ -33,15 +35,15 @@ public final class Bootstrap implements IServiceLocator {
 
     @Getter
     @NotNull
-    private final IProjectService projectService = new ProjectService(connectionService);
+    private final IProjectDTOService projectService = new ProjectDTOService(connectionService);
 
     @Getter
     @NotNull
-    private final ITaskService taskService = new TaskService(connectionService);
+    private final ITaskDTOService taskService = new TaskDTOService(connectionService);
 
     @Getter
     @NotNull
-    private final IProjectTaskService projectTaskService = new ProjectTaskService(projectService, taskService);
+    private final IProjectTaskDTOService projectTaskService = new ProjectTaskDTOService(projectService, taskService);
 
     @Getter
     @NotNull
@@ -53,7 +55,7 @@ public final class Bootstrap implements IServiceLocator {
 
     @Getter
     @NotNull
-    private final ISessionService sessionService = new SessionService(connectionService);
+    private final ISessionDTOService sessionService = new SessionDTOService(connectionService);
 
     @NotNull
     private final IAuthEndpoint authEndpoint = new AuthEndpoint(this);
@@ -78,7 +80,7 @@ public final class Bootstrap implements IServiceLocator {
 
     @Getter
     @NotNull
-    private final IUserService userService = new UserService(propertyService, connectionService);
+    private final IUserDTOService userService = new UserDTOService(propertyService, connectionService);
 
     @Getter
     @NotNull

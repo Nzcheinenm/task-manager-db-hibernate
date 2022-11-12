@@ -2,17 +2,14 @@ package ru.t1.dkononov.tm.repository.model;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import ru.t1.dkononov.tm.api.repository.dto.ITaskDTORepository;
 import ru.t1.dkononov.tm.api.repository.model.ITaskRepository;
-import ru.t1.dkononov.tm.dto.model.TaskDTO;
 import ru.t1.dkononov.tm.enumerated.Sort;
 import ru.t1.dkononov.tm.model.Task;
-import ru.t1.dkononov.tm.repository.dto.AbstractUserOwnedDTORepository;
 
 import javax.persistence.EntityManager;
 import java.util.*;
 
-public class TaskRepository extends AbstractUserOwnedRepository<Task> implements ITaskRepository {
+public final class TaskRepository extends AbstractUserOwnedRepository<Task> implements ITaskRepository {
 
     public TaskRepository(@NotNull EntityManager entityManager) {
         super(entityManager);
@@ -29,7 +26,7 @@ public class TaskRepository extends AbstractUserOwnedRepository<Task> implements
         if (userId.isEmpty()) return;
         @NotNull final String sql = "DELETE FROM Task m WHERE m.user.id = :userId";
         entityManager.createQuery(sql)
-                .setParameter("user.id", userId)
+                .setParameter("userId", userId)
                 .executeUpdate();
     }
 
@@ -46,8 +43,17 @@ public class TaskRepository extends AbstractUserOwnedRepository<Task> implements
         if (userId.isEmpty()) return Collections.emptyList();
         @NotNull final String sql = "SELECT m FROM Task m WHERE m.user.id = :userId";
         return entityManager.createQuery(sql, Task.class)
-                .setParameter("user.id", userId)
+                .setParameter("userId", userId)
                 .getResultList();
+    }
+
+    @Override
+    public Task findByIndex(@NotNull String userId, @NotNull Integer index) {
+        @NotNull final String sql = "SELECT m FROM Task m WHERE m.user.id = :userId";
+        return Objects.requireNonNull(entityManager.createQuery(sql, Task.class)
+                .setParameter("userId", userId)
+                .setMaxResults(1)
+                .getResultList().stream().findFirst().orElse(null));
     }
 
     @NotNull
@@ -57,7 +63,7 @@ public class TaskRepository extends AbstractUserOwnedRepository<Task> implements
         @NotNull final String sql = "SELECT m FROM TaskDTO m WHERE m.user.id = :userId ORDER BY m."
                 + getSortType(sort.getComparator());
         return entityManager.createQuery(sql, Task.class)
-                .setParameter("user.id", userId)
+                .setParameter("userId", userId)
                 .getResultList();
     }
 
@@ -67,7 +73,7 @@ public class TaskRepository extends AbstractUserOwnedRepository<Task> implements
         if (userId.isEmpty()) return Collections.emptyList();
         @NotNull final String sql = "SELECT m FROM Task m WHERE m.user.id = :userId" + getSortType(comparator);
         return entityManager.createQuery(sql, Task.class)
-                .setParameter("user.id", userId)
+                .setParameter("userId", userId)
                 .getResultList();
     }
 
@@ -84,16 +90,15 @@ public class TaskRepository extends AbstractUserOwnedRepository<Task> implements
         @NotNull final String sql = "SELECT m FROM Task m WHERE m.user.id = :userId AND m.id = :id";
         return entityManager.createQuery(sql, Task.class)
                 .setParameter("id", id)
-                .setParameter("user.id", userId)
+                .setParameter("userId", userId)
                 .setMaxResults(1).getResultList().stream().findFirst().orElse(null);
     }
 
     @NotNull
     @Override
     public Task findByIndex(@NotNull final Integer index) {
-        @NotNull final String sql = "SELECT m FROM Task m LIMIT 1 OFFSET :index";
+        @NotNull final String sql = "SELECT m FROM Task m";
         return Objects.requireNonNull(entityManager.createQuery(sql, Task.class)
-                .setParameter("index", index)
                 .setMaxResults(1)
                 .getResultList().stream().findFirst().orElse(null));
     }
@@ -124,9 +129,9 @@ public class TaskRepository extends AbstractUserOwnedRepository<Task> implements
 
     @Nullable
     @Override
-    public Task findTaskIdByProjectId(@NotNull String userId, @NotNull String projectId, @NotNull String taskId){
+    public Task findTaskIdByProjectId(@NotNull String userId, @NotNull String projectId, @NotNull String taskId) {
         if (userId.isEmpty() || taskId.isEmpty() || projectId.isEmpty()) return null;
-        @NotNull final String sql = "SELECT m FROM TaskDTO m WHERE m.user.id = :userId AND m.id = :id AND m.projectId = :projectId";
+        @NotNull final String sql = "SELECT m FROM TaskDTO m WHERE m.user.id = :userId AND m.id = :taskId AND m.projectId = :projectId";
         return entityManager.createQuery(sql, Task.class)
                 .setParameter("taskId", taskId)
                 .setParameter("userId", userId)

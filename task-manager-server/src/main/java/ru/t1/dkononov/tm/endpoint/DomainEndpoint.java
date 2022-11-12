@@ -2,8 +2,8 @@ package ru.t1.dkononov.tm.endpoint;
 
 import org.jetbrains.annotations.NotNull;
 import ru.t1.dkononov.tm.api.endpoint.IDomainEndpoint;
-import ru.t1.dkononov.tm.api.services.IProjectService;
 import ru.t1.dkononov.tm.api.services.IServiceLocator;
+import ru.t1.dkononov.tm.api.services.dto.IProjectDTOService;
 import ru.t1.dkononov.tm.dto.request.*;
 import ru.t1.dkononov.tm.dto.response.*;
 import ru.t1.dkononov.tm.enumerated.Role;
@@ -20,7 +20,7 @@ public final class DomainEndpoint extends AbstractEndpoint implements IDomainEnd
     }
 
     @NotNull
-    IProjectService getProjectService() {
+    IProjectDTOService getProjectService() {
         return getServiceLocator().getProjectService();
     }
 

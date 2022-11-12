@@ -9,7 +9,7 @@ import ru.t1.dkononov.tm.enumerated.Sort;
 import javax.persistence.EntityManager;
 import java.util.*;
 
-public class TaskDTORepository extends AbstractUserOwnedDTORepository<TaskDTO> implements ITaskDTORepository {
+public final class TaskDTORepository extends AbstractUserOwnedDTORepository<TaskDTO> implements ITaskDTORepository {
 
     public TaskDTORepository(@NotNull EntityManager entityManager) {
         super(entityManager);
@@ -74,6 +74,15 @@ public class TaskDTORepository extends AbstractUserOwnedDTORepository<TaskDTO> i
         return entityManager.find(TaskDTO.class, id);
     }
 
+    @Override
+    public TaskDTO findByIndex(@Nullable String userId, @Nullable Integer index) {
+        @NotNull final String sql = "SELECT m FROM TaskDTO m WHERE m.user.id = :userId";
+        return Objects.requireNonNull(entityManager.createQuery(sql, TaskDTO.class)
+                .setParameter("userId", userId)
+                .setMaxResults(1)
+                .getResultList().stream().findFirst().orElse(null));
+    }
+
     @Nullable
     @Override
     public TaskDTO findById(@NotNull final String userId, @NotNull final String id) {
@@ -88,9 +97,8 @@ public class TaskDTORepository extends AbstractUserOwnedDTORepository<TaskDTO> i
     @NotNull
     @Override
     public TaskDTO findByIndex(@NotNull final Integer index) {
-        @NotNull final String sql = "SELECT m FROM TaskDTO m LIMIT 1 OFFSET :index";
+        @NotNull final String sql = "SELECT m FROM TaskDTO m";
         return Objects.requireNonNull(entityManager.createQuery(sql, TaskDTO.class)
-                .setParameter("index", index)
                 .setMaxResults(1)
                 .getResultList().stream().findFirst().orElse(null));
     }
@@ -121,7 +129,7 @@ public class TaskDTORepository extends AbstractUserOwnedDTORepository<TaskDTO> i
 
     @Nullable
     @Override
-    public TaskDTO findTaskIdByProjectId(@NotNull String userId, @NotNull String projectId, @NotNull String taskId){
+    public TaskDTO findTaskIdByProjectId(@NotNull String userId, @NotNull String projectId, @NotNull String taskId) {
         if (userId.isEmpty() || taskId.isEmpty() || projectId.isEmpty()) return null;
         @NotNull final String sql = "SELECT m FROM TaskDTO m WHERE m.userId = :userId AND m.id = :id AND m.projectId = :projectId";
         return entityManager.createQuery(sql, TaskDTO.class)

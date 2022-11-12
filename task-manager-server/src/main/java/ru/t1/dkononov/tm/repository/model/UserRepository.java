@@ -2,17 +2,15 @@ package ru.t1.dkononov.tm.repository.model;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import ru.t1.dkononov.tm.api.repository.dto.IUserDTORepository;
-import ru.t1.dkononov.tm.dto.model.UserDTO;
+import ru.t1.dkononov.tm.api.repository.model.IUserRepository;
 import ru.t1.dkononov.tm.model.User;
-import ru.t1.dkononov.tm.repository.dto.AbstractDTORepository;
 
 import javax.persistence.EntityManager;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-public class UserRepository extends AbstractRepository<User> implements ru.t1.dkononov.tm.api.repository.model.IUserRepository {
+public final class UserRepository extends AbstractRepository<User> implements IUserRepository {
 
     public UserRepository(@NotNull EntityManager entityManager) {
         super(entityManager);
@@ -34,16 +32,15 @@ public class UserRepository extends AbstractRepository<User> implements ru.t1.dk
     @NotNull
     @Override
     public User findById(@NotNull final String id) {
-        return entityManager.find(User.class,id);
+        return entityManager.find(User.class, id);
     }
 
 
     @NotNull
     @Override
     public User findByIndex(@NotNull final Integer index) {
-        @NotNull final String sql = "SELECT m FROM User m LIMIT 1 OFFSET :index";
+        @NotNull final String sql = "SELECT m FROM User m ";
         return Objects.requireNonNull(entityManager.createQuery(sql, User.class)
-                .setParameter("index", index)
                 .setMaxResults(1)
                 .getResultList().stream().findFirst().orElse(null));
     }
@@ -66,10 +63,10 @@ public class UserRepository extends AbstractRepository<User> implements ru.t1.dk
 
     @Override
     @Nullable
-    public UserDTO findByEmail(@NotNull String email) {
+    public User findByEmail(@NotNull String email) {
         if (email.isEmpty()) return null;
         @NotNull final String sql = "SELECT m FROM User m WHERE m.email = :email";
-        return entityManager.createQuery(sql, UserDTO.class)
+        return entityManager.createQuery(sql, User.class)
                 .setParameter("email", email)
                 .setMaxResults(1).getResultList().stream().findFirst().orElse(null);
     }

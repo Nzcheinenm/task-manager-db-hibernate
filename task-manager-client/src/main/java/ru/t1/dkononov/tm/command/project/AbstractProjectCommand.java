@@ -5,9 +5,9 @@ import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.api.endpoint.IProjectEndpoint;
 import ru.t1.dkononov.tm.api.endpoint.ITaskEndpoint;
 import ru.t1.dkononov.tm.command.AbstractCommand;
+import ru.t1.dkononov.tm.dto.model.ProjectDTO;
 import ru.t1.dkononov.tm.enumerated.Role;
 import ru.t1.dkononov.tm.enumerated.Status;
-import ru.t1.dkononov.tm.dto.model.ProjectDTO;
 
 public abstract class AbstractProjectCommand extends AbstractCommand {
 

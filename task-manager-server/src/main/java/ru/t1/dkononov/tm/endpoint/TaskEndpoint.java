@@ -4,7 +4,9 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.api.endpoint.ITaskEndpoint;
 import ru.t1.dkononov.tm.api.services.IServiceLocator;
-import ru.t1.dkononov.tm.api.services.ITaskService;
+import ru.t1.dkononov.tm.api.services.dto.ITaskDTOService;
+import ru.t1.dkononov.tm.dto.model.SessionDTO;
+import ru.t1.dkononov.tm.dto.model.TaskDTO;
 import ru.t1.dkononov.tm.dto.request.*;
 import ru.t1.dkononov.tm.dto.response.*;
 import ru.t1.dkononov.tm.enumerated.Sort;
@@ -12,8 +14,6 @@ import ru.t1.dkononov.tm.enumerated.Status;
 import ru.t1.dkononov.tm.exception.AbstractException;
 import ru.t1.dkononov.tm.exception.field.AccessDeniedException;
 import ru.t1.dkononov.tm.exception.field.UserIdEmptyException;
-import ru.t1.dkononov.tm.dto.model.SessionDTO;
-import ru.t1.dkononov.tm.dto.model.TaskDTO;
 
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
@@ -28,7 +28,7 @@ public final class TaskEndpoint extends AbstractEndpoint implements ITaskEndpoin
     }
 
     @NotNull
-    public ITaskService getTaskService() {
+    public ITaskDTOService getTaskService() {
         return getServiceLocator().getTaskService();
     }
 

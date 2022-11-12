@@ -2,17 +2,15 @@ package ru.t1.dkononov.tm.repository.model;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import ru.t1.dkononov.tm.api.repository.dto.IProjectDTORepository;
 import ru.t1.dkononov.tm.api.repository.model.IProjectRepository;
 import ru.t1.dkononov.tm.dto.model.ProjectDTO;
 import ru.t1.dkononov.tm.enumerated.Sort;
 import ru.t1.dkononov.tm.model.Project;
-import ru.t1.dkononov.tm.repository.dto.AbstractUserOwnedDTORepository;
 
 import javax.persistence.EntityManager;
 import java.util.*;
 
-public class ProjectRepository extends AbstractUserOwnedRepository<Project> implements IProjectRepository {
+public final class ProjectRepository extends AbstractUserOwnedRepository<Project> implements IProjectRepository {
 
     public ProjectRepository(@NotNull EntityManager entityManager) {
         super(entityManager);
@@ -29,7 +27,7 @@ public class ProjectRepository extends AbstractUserOwnedRepository<Project> impl
         if (userId.isEmpty()) return;
         @NotNull final String sql = "DELETE FROM Project m WHERE m.user.id = :userId";
         entityManager.createQuery(sql)
-                .setParameter("user.id",userId)
+                .setParameter("userId", userId)
                 .executeUpdate();
     }
 
@@ -46,8 +44,17 @@ public class ProjectRepository extends AbstractUserOwnedRepository<Project> impl
         if (userId.isEmpty()) return Collections.emptyList();
         @NotNull final String sql = "SELECT m FROM Project m WHERE m.user.id = :userId";
         return entityManager.createQuery(sql, Project.class)
-                .setParameter("user.id", userId)
+                .setParameter("userId", userId)
                 .getResultList();
+    }
+
+    @Override
+    public Project findByIndex(@NotNull String userId, @NotNull Integer index) {
+        @NotNull final String sql = "SELECT m FROM Project m WHERE m.user.id = :userId ";
+        return Objects.requireNonNull(entityManager.createQuery(sql, Project.class)
+                .setParameter("userId", userId)
+                .setMaxResults(1)
+                .getResultList().stream().findFirst().orElse(null));
     }
 
     @NotNull
@@ -57,7 +64,7 @@ public class ProjectRepository extends AbstractUserOwnedRepository<Project> impl
         @NotNull final String sql = "SELECT m FROM ProjectDTO m WHERE m.user.id = :userId ORDER BY m."
                 + getSortType(sort.getComparator());
         return entityManager.createQuery(sql, Project.class)
-                .setParameter("user.id", userId)
+                .setParameter("userId", userId)
                 .getResultList();
     }
 
@@ -67,14 +74,14 @@ public class ProjectRepository extends AbstractUserOwnedRepository<Project> impl
         if (userId.isEmpty()) return Collections.emptyList();
         @NotNull final String sql = "SELECT m FROM Project m WHERE m.user.id = :userId" + getSortType(comparator);
         return entityManager.createQuery(sql, Project.class)
-                .setParameter("user.id", userId)
+                .setParameter("userId", userId)
                 .getResultList();
     }
 
     @NotNull
     @Override
     public Project findById(@NotNull final String id) {
-        return entityManager.find(Project.class,id);
+        return entityManager.find(Project.class, id);
     }
 
     @Nullable
@@ -83,15 +90,15 @@ public class ProjectRepository extends AbstractUserOwnedRepository<Project> impl
         if (userId.isEmpty() || id.isEmpty()) return null;
         @NotNull final String sql = "SELECT m FROM Project m WHERE m.user.id = :userId AND m.id = :id";
         return entityManager.createQuery(sql, Project.class)
-                .setParameter("id",id)
-                .setParameter("user.id",userId)
+                .setParameter("id", id)
+                .setParameter("userId", userId)
                 .setMaxResults(1).getResultList().stream().findFirst().orElse(null);
     }
 
     @NotNull
     @Override
     public Project findByIndex(@NotNull final Integer index) {
-        @NotNull final String sql = "SELECT m FROM Project m LIMIT 1 OFFSET :index";
+        @NotNull final String sql = "SELECT m FROM Project m";
         return Objects.requireNonNull(entityManager.createQuery(sql, Project.class)
                 .setParameter("index", index)
                 .setMaxResults(1)

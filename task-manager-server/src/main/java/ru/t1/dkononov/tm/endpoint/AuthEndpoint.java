@@ -5,7 +5,9 @@ import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.api.endpoint.IAuthEndpoint;
 import ru.t1.dkononov.tm.api.services.IAuthService;
 import ru.t1.dkononov.tm.api.services.IServiceLocator;
-import ru.t1.dkononov.tm.api.services.IUserService;
+import ru.t1.dkononov.tm.api.services.dto.IUserDTOService;
+import ru.t1.dkononov.tm.dto.model.SessionDTO;
+import ru.t1.dkononov.tm.dto.model.UserDTO;
 import ru.t1.dkononov.tm.dto.request.UserLoginRequest;
 import ru.t1.dkononov.tm.dto.request.UserLogoutRequest;
 import ru.t1.dkononov.tm.dto.request.UserProfileRequest;
@@ -13,8 +15,6 @@ import ru.t1.dkononov.tm.dto.response.UserLoginResponse;
 import ru.t1.dkononov.tm.dto.response.UserLogoutResponse;
 import ru.t1.dkononov.tm.dto.response.UserProfileResponse;
 import ru.t1.dkononov.tm.exception.AbstractException;
-import ru.t1.dkononov.tm.dto.model.SessionDTO;
-import ru.t1.dkononov.tm.dto.model.UserDTO;
 
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
@@ -27,7 +27,7 @@ public final class AuthEndpoint extends AbstractEndpoint implements IAuthEndpoin
         super(serviceLocator);
     }
 
-    public IUserService getUserService() {
+    public IUserDTOService getUserService() {
         return getServiceLocator().getUserService();
     }
 

@@ -5,14 +5,14 @@ import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.api.endpoint.IUserEndpoint;
 import ru.t1.dkononov.tm.api.services.IAuthService;
 import ru.t1.dkononov.tm.api.services.IServiceLocator;
-import ru.t1.dkononov.tm.api.services.IUserService;
+import ru.t1.dkononov.tm.api.services.dto.IUserDTOService;
+import ru.t1.dkononov.tm.dto.model.SessionDTO;
+import ru.t1.dkononov.tm.dto.model.UserDTO;
 import ru.t1.dkononov.tm.dto.request.*;
 import ru.t1.dkononov.tm.dto.response.*;
 import ru.t1.dkononov.tm.enumerated.Role;
 import ru.t1.dkononov.tm.exception.AbstractException;
 import ru.t1.dkononov.tm.exception.field.AbstractFieldException;
-import ru.t1.dkononov.tm.dto.model.SessionDTO;
-import ru.t1.dkononov.tm.dto.model.UserDTO;
 
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
@@ -25,7 +25,7 @@ public final class UserEndpoint extends AbstractEndpoint implements IUserEndpoin
     }
 
     @NotNull
-    private IUserService getUserService() {
+    private IUserDTOService getUserService() {
         return this.getServiceLocator().getUserService();
     }
 

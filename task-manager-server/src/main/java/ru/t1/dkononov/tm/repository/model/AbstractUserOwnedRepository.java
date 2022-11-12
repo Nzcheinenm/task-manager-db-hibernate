@@ -1,16 +1,15 @@
 package ru.t1.dkononov.tm.repository.model;
 
 import org.jetbrains.annotations.NotNull;
+import ru.t1.dkononov.tm.api.repository.model.IUserOwnedRepository;
 import ru.t1.dkononov.tm.comparator.CreatedComparator;
 import ru.t1.dkononov.tm.comparator.StatusComparator;
 import ru.t1.dkononov.tm.model.AbstractUserOwnedModel;
-import ru.t1.dkononov.tm.repository.dto.AbstractDTORepository;
 
 import javax.persistence.EntityManager;
 import java.util.Comparator;
-import java.util.List;
 
-public abstract class AbstractUserOwnedRepository<E extends AbstractUserOwnedModel> extends AbstractRepository<E> implements ru.t1.dkononov.tm.api.repository.model.IAbstractUserOwnedRepository<E> {
+public abstract class AbstractUserOwnedRepository<E extends AbstractUserOwnedModel> extends AbstractRepository<E> implements IUserOwnedRepository<E> {
 
     public AbstractUserOwnedRepository(@NotNull final EntityManager entityManager) {
         super(entityManager);

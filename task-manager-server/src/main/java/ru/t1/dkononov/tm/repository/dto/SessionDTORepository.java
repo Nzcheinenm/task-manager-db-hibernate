@@ -6,9 +6,12 @@ import ru.t1.dkononov.tm.api.repository.dto.ISessionDTORepository;
 import ru.t1.dkononov.tm.dto.model.SessionDTO;
 
 import javax.persistence.EntityManager;
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
-public class SessionDTORepository extends AbstractUserOwnedDTORepository<SessionDTO> implements ISessionDTORepository {
+public final class SessionDTORepository extends AbstractUserOwnedDTORepository<SessionDTO> implements ISessionDTORepository {
 
     public SessionDTORepository(@NotNull EntityManager entityManager) {
         super(entityManager);
@@ -25,7 +28,7 @@ public class SessionDTORepository extends AbstractUserOwnedDTORepository<Session
         if (userId.isEmpty()) return;
         @NotNull final String sql = "DELETE FROM SessionDTO m WHERE m.userId = :userId";
         entityManager.createQuery(sql)
-                .setParameter("userId",userId)
+                .setParameter("userId", userId)
                 .executeUpdate();
     }
 
@@ -49,7 +52,24 @@ public class SessionDTORepository extends AbstractUserOwnedDTORepository<Session
     @NotNull
     @Override
     public SessionDTO findById(@NotNull final String id) {
-        return entityManager.find(SessionDTO.class,id);
+        return entityManager.find(SessionDTO.class, id);
+    }
+
+    @Override
+    public SessionDTO findByIndex(@Nullable Integer index) {
+        @NotNull final String sql = "SELECT m FROM SessionDTO m";
+        return Objects.requireNonNull(entityManager.createQuery(sql, SessionDTO.class)
+                .setMaxResults(1)
+                .getResultList().stream().findFirst().orElse(null));
+    }
+
+    @Override
+    public SessionDTO findByIndex(@Nullable String userId, @Nullable Integer index) {
+        @NotNull final String sql = "SELECT m FROM SessionDTO m WHERE m.user.id = :userId";
+        return Objects.requireNonNull(entityManager.createQuery(sql, SessionDTO.class)
+                .setParameter("userId", userId)
+                .setMaxResults(1)
+                .getResultList().stream().findFirst().orElse(null));
     }
 
     @Nullable
@@ -58,8 +78,8 @@ public class SessionDTORepository extends AbstractUserOwnedDTORepository<Session
         if (userId.isEmpty() || id.isEmpty()) return null;
         @NotNull final String sql = "SELECT m FROM SessionDTO m WHERE m.userId = :userId AND m.id = :id";
         return entityManager.createQuery(sql, SessionDTO.class)
-                .setParameter("id",id)
-                .setParameter("userId",userId)
+                .setParameter("id", id)
+                .setParameter("userId", userId)
                 .setMaxResults(1).getResultList().stream().findFirst().orElse(null);
     }
 

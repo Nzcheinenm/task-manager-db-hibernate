@@ -12,6 +12,7 @@ import ru.t1.dkononov.tm.exception.AbstractException;
 import ru.t1.dkononov.tm.exception.entity.ProjectNotFoundException;
 import ru.t1.dkononov.tm.exception.field.UserIdEmptyException;
 import ru.t1.dkononov.tm.marker.UnitCategory;
+import ru.t1.dkononov.tm.service.model.TaskService;
 
 import static ru.t1.dkononov.tm.constant.TestData.*;
 

@@ -1,11 +1,13 @@
 package ru.t1.dkononov.tm.repository.model;
 
 import org.jetbrains.annotations.NotNull;
+import ru.t1.dkononov.tm.api.repository.model.IRepository;
 import ru.t1.dkononov.tm.model.AbstractModel;
+
 import javax.persistence.EntityManager;
 
 
-public abstract class AbstractRepository<E extends AbstractModel> implements ru.t1.dkononov.tm.api.repository.model.IAbstractRepository<E> {
+public abstract class AbstractRepository<E extends AbstractModel> implements IRepository<E> {
 
     @NotNull
     protected final EntityManager entityManager;

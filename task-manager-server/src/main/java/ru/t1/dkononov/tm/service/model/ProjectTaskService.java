@@ -1,4 +1,4 @@
-package ru.t1.dkononov.tm.service;
+package ru.t1.dkononov.tm.service.model;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -10,7 +10,8 @@ import ru.t1.dkononov.tm.exception.entity.TaskNotFoundException;
 import ru.t1.dkononov.tm.exception.field.ProjectIdEmptyException;
 import ru.t1.dkononov.tm.exception.field.TaskIdEmptyException;
 import ru.t1.dkononov.tm.exception.field.UserIdEmptyException;
-import ru.t1.dkononov.tm.dto.model.TaskDTO;
+import ru.t1.dkononov.tm.model.Project;
+import ru.t1.dkononov.tm.model.Task;
 
 import java.util.List;
 
@@ -37,8 +38,8 @@ public final class ProjectTaskService implements IProjectTaskService {
     ) throws Exception {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (projectId == null || projectId.isEmpty()) throw new ProjectIdEmptyException();
-        if (!projectService.existsById(userId, projectId)) throw new ProjectNotFoundException();
-        @NotNull final List<TaskDTO> tasks = taskService.findAllByProjectId(userId, projectId);
+        if (projectService.findById(userId, projectId) == null) throw new ProjectNotFoundException();
+        @NotNull final List<Task> tasks = taskService.findAllByProjectId(userId, projectId);
         tasks.forEach(m -> {
             try {
                 taskService.removeById(userId, m.getId());
@@ -59,9 +60,9 @@ public final class ProjectTaskService implements IProjectTaskService {
         if (projectId == null || projectId.isEmpty()) throw new ProjectIdEmptyException();
         if (taskId == null || taskId.isEmpty()) throw new TaskIdEmptyException();
         if (!projectService.existsById(userId, projectId)) throw new ProjectNotFoundException();
-        @Nullable final TaskDTO task = taskService.findById(userId, taskId);
+        @Nullable final Task task = taskService.findById(userId, taskId);
         if (task == null) throw new TaskNotFoundException();
-        task.setProjectId(null);
+        task.setProject(null);
         taskService.updateProjectIdById(userId, taskId, null);
     }
 
@@ -75,9 +76,10 @@ public final class ProjectTaskService implements IProjectTaskService {
         if (projectId == null || projectId.isEmpty()) throw new ProjectIdEmptyException();
         if (taskId == null || taskId.isEmpty()) throw new TaskIdEmptyException();
         if (!projectService.existsById(userId, projectId)) throw new ProjectNotFoundException();
-        @Nullable final TaskDTO task = taskService.findById(userId, taskId);
+        @Nullable final Task task = taskService.findById(userId, taskId);
         if (task == null) throw new TaskNotFoundException();
-        task.setProjectId(projectId);
+        @Nullable final Project project = projectService.findById(userId, projectId);
+        task.setProject(project);
         taskService.updateProjectIdById(userId, taskId, projectId);
     }
 

@@ -16,7 +16,7 @@ import java.util.Date;
 @Entity
 @Getter
 @Setter
-@Table(name = "tm_session")
+@Table(name = "tm.tm_session")
 @NoArgsConstructor
 public final class SessionDTO extends AbstractUserOwnedModelDTO {
 
