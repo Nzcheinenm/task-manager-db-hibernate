@@ -3,6 +3,7 @@ package ru.t1.dkononov.tm.dto.model;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.enumerated.Role;
@@ -14,6 +15,7 @@ import javax.persistence.*;
 @Setter
 @Table(name = "tm.tm_user")
 @NoArgsConstructor
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public final class UserDTO extends AbstractModelDTO {
 
     private final static long serialVersionUID = 1;

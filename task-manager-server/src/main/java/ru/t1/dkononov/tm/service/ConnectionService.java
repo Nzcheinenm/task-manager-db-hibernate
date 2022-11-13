@@ -5,6 +5,7 @@ import org.hibernate.boot.Metadata;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.cfg.Environment;
 import org.jetbrains.annotations.NotNull;
 import ru.t1.dkononov.tm.api.services.IConnectionService;
 import ru.t1.dkononov.tm.api.services.IPropertyService;
@@ -46,6 +47,14 @@ public class ConnectionService implements IConnectionService {
         settings.put(org.hibernate.cfg.Environment.DIALECT, propertyService.getDatabaseDialect());
         settings.put(org.hibernate.cfg.Environment.HBM2DDL_AUTO, propertyService.getDatabaseHbm2auto());
         settings.put(org.hibernate.cfg.Environment.SHOW_SQL, propertyService.getDatabaseShowSql());
+
+        settings.put(Environment.USE_SECOND_LEVEL_CACHE,propertyService.getDatabaseUseSecondLvlCache());
+        settings.put(Environment.USE_QUERY_CACHE,propertyService.getDatabaseUseQueryCache());
+        settings.put(Environment.USE_MINIMAL_PUTS,propertyService.getDatabaseUseMinimalPuts());
+        settings.put(Environment.CACHE_REGION_PREFIX,propertyService.getDatabaseCacheRegionPrefix());
+        settings.put(Environment.CACHE_REGION_FACTORY,propertyService.getDatabaseCacheRegionFactory());
+        settings.put(Environment.CACHE_PROVIDER_CONFIG,propertyService.getDatabaseProviderConfig());
+
         @NotNull final StandardServiceRegistryBuilder registryBuilder = new StandardServiceRegistryBuilder();
         registryBuilder.applySettings(settings);
         @NotNull final StandardServiceRegistry registry = registryBuilder.build();

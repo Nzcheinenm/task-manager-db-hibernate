@@ -6,11 +6,14 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import ru.t1.dkononov.tm.api.repository.ISessionRepository;
+import ru.t1.dkononov.tm.api.repository.model.ISessionRepository;
+import ru.t1.dkononov.tm.api.repository.model.IUserOwnedRepository;
 import ru.t1.dkononov.tm.api.services.IConnectionService;
 import ru.t1.dkononov.tm.exception.entity.ProjectNotFoundException;
 import ru.t1.dkononov.tm.exception.field.UserIdEmptyException;
 import ru.t1.dkononov.tm.marker.DataCategory;
+import ru.t1.dkononov.tm.model.Session;
+import ru.t1.dkononov.tm.repository.model.SessionRepository;
 import ru.t1.dkononov.tm.service.ConnectionService;
 import ru.t1.dkononov.tm.service.PropertyService;
 
@@ -24,7 +27,7 @@ public class SessionRepositoryTest {
     private final IConnectionService connectionService = new ConnectionService(new PropertyService());
 
     @NotNull
-    private final ISessionRepository repository = new SessionRepository(connectionService.getSqlSession());
+    private final IUserOwnedRepository<Session> repository = new SessionRepository(connectionService.getEntityManager());
 
     @Before
     public void before() throws UserIdEmptyException, ProjectNotFoundException {
@@ -37,23 +40,19 @@ public class SessionRepositoryTest {
     }
 
     @Test
-    public void add() throws UserIdEmptyException, ProjectNotFoundException {
-        Assert.assertNotNull(repository.add(SESSION));
-    }
-
-    @Test
     public void addByUserId() throws UserIdEmptyException, ProjectNotFoundException {
-        Assert.assertNotNull(repository.add(USER1.getId(), SESSION));
+        repository.add(USER1.getId(), SESSION);
+        Assert.assertNotNull(repository.findById(SESSION.getId()));
     }
 
     @Test
     public void createByUserId() {
-        Assert.assertEquals(SESSION.getUserId(), USER1.getId());
+        Assert.assertEquals(SESSION.getUser().getId(), USER1.getId());
     }
 
     @Test
     public void findAllNull() {
-        @NotNull final SessionRepository sessionRepository = new SessionRepository(connectionService.getSqlSession());
+        @NotNull final SessionRepository sessionRepository = new SessionRepository(connectionService.getEntityManager());
         Assert.assertTrue(sessionRepository.findAll().isEmpty());
     }
 

@@ -3,6 +3,8 @@ package ru.t1.dkononov.tm.model;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.enumerated.Role;
@@ -18,6 +20,7 @@ import java.util.Date;
 @Setter
 @Table(name = "tm_session")
 @NoArgsConstructor
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public final class Session extends AbstractUserOwnedModel {
 
     @NotNull

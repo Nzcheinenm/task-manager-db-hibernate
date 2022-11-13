@@ -1,5 +1,6 @@
 package ru.t1.dkononov.tm.repository.model;
 
+import org.hibernate.jpa.QueryHints;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.api.repository.model.IUserRepository;
@@ -42,6 +43,7 @@ public final class UserRepository extends AbstractRepository<User> implements IU
         @NotNull final String sql = "SELECT m FROM User m ";
         return Objects.requireNonNull(entityManager.createQuery(sql, User.class)
                 .setMaxResults(1)
+                .setHint(QueryHints.HINT_CACHEABLE,true)
                 .getResultList().stream().findFirst().orElse(null));
     }
 
@@ -58,6 +60,7 @@ public final class UserRepository extends AbstractRepository<User> implements IU
         @NotNull final String sql = "SELECT m FROM User m WHERE m.login = :login";
         return entityManager.createQuery(sql, User.class)
                 .setParameter("login", login)
+                .setHint(QueryHints.HINT_CACHEABLE,true)
                 .setMaxResults(1).getResultList().stream().findFirst().orElse(null);
     }
 
@@ -68,6 +71,7 @@ public final class UserRepository extends AbstractRepository<User> implements IU
         @NotNull final String sql = "SELECT m FROM User m WHERE m.email = :email";
         return entityManager.createQuery(sql, User.class)
                 .setParameter("email", email)
+                .setHint(QueryHints.HINT_CACHEABLE,true)
                 .setMaxResults(1).getResultList().stream().findFirst().orElse(null);
     }
 

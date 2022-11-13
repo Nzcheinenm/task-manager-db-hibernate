@@ -1,5 +1,6 @@
 package ru.t1.dkononov.tm.repository.dto;
 
+import org.hibernate.jpa.QueryHints;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.api.repository.dto.IUserDTORepository;
@@ -58,6 +59,7 @@ public final class UserDTORepository extends AbstractDTORepository<UserDTO> impl
         @NotNull final String sql = "SELECT m FROM UserDTO m WHERE m.login = :login";
         return entityManager.createQuery(sql, UserDTO.class)
                 .setParameter("login", login)
+                .setHint(QueryHints.HINT_CACHEABLE,true)
                 .setMaxResults(1).getResultList().stream().findFirst().orElse(null);
     }
 
@@ -68,6 +70,7 @@ public final class UserDTORepository extends AbstractDTORepository<UserDTO> impl
         @NotNull final String sql = "SELECT m FROM UserDTO m WHERE m.email = :email";
         return entityManager.createQuery(sql, UserDTO.class)
                 .setParameter("email", email)
+                .setHint(QueryHints.HINT_CACHEABLE,true)
                 .setMaxResults(1).getResultList().stream().findFirst().orElse(null);
     }
 

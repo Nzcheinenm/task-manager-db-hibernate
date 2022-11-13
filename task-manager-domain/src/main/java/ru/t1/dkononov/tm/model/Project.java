@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.jetbrains.annotations.NotNull;
 import ru.t1.dkononov.tm.api.model.IWBS;
 import ru.t1.dkononov.tm.enumerated.Status;
@@ -19,6 +20,7 @@ import java.util.List;
 @NoArgsConstructor
 @Table(name = "tm_project")
 @JsonIgnoreProperties(ignoreUnknown = true)
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public final class Project extends AbstractUserOwnedModel implements IWBS {
 
     private final static long serialVersionUID = 1;

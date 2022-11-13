@@ -14,6 +14,9 @@ import ru.t1.dkononov.tm.exception.AbstractException;
 import ru.t1.dkononov.tm.exception.field.AbstractFieldException;
 import ru.t1.dkononov.tm.exception.field.LoginEmptyException;
 import ru.t1.dkononov.tm.marker.DataCategory;
+import ru.t1.dkononov.tm.model.User;
+import ru.t1.dkononov.tm.repository.model.ProjectRepository;
+import ru.t1.dkononov.tm.repository.model.UserRepository;
 import ru.t1.dkononov.tm.service.ConnectionService;
 import ru.t1.dkononov.tm.service.PropertyService;
 import ru.t1.dkononov.tm.util.HashUtil;
@@ -31,11 +34,11 @@ public class UserRepositoryTest {
     private final PropertyService propertyService = new PropertyService();
 
     @NotNull
-    private final ProjectRepository projectRepository = new ProjectRepository(connectionService.getSqlSession());
+    private final ProjectRepository projectRepository = new ProjectRepository(connectionService.getEntityManager());
 
 
     @NotNull
-    private final UserRepository repository = new UserRepository(connectionService.getSqlSession());
+    private final UserRepository repository = new UserRepository(connectionService.getEntityManager());
 
     @NotNull
     private static final String LOGIN_TEST = "logintest";
@@ -54,11 +57,11 @@ public class UserRepositoryTest {
 
     @Before
     public void before() throws AbstractException {
-        @NotNull final UserDTO user = new UserDTO();
+        @NotNull final User user = new User();
         user.setLogin(LOGIN_TEST);
         user.setPasswordHash(HashUtil.salt(propertyService, PASS_TEST));
         user.setRole(Role.USUAL);
-        userTesting = repository.add(user);
+        repository.add(user);
     }
 
     @After
@@ -68,12 +71,12 @@ public class UserRepositoryTest {
 
     @Test
     public void create() throws AbstractException {
-        @NotNull final UserDTO user1 = new UserDTO();
+        @NotNull final User user1 = new User();
         user1.setLogin(LOGIN);
         user1.setPasswordHash(HashUtil.salt(propertyService, PASSWORD));
         user1.setRole(Role.USUAL);
         repository.add(user1);
-        @Nullable final UserDTO user = repository.findByLogin(LOGIN);
+        @Nullable final User user = repository.findByLogin(LOGIN);
         Assert.assertNotNull(user);
         projectRepository.add(user.getId(), USER_PROJECT);
         Assert.assertNotNull(projectRepository.findById(USER_PROJECT.getId()));
@@ -89,11 +92,6 @@ public class UserRepositoryTest {
     public void removeById() throws AbstractFieldException {
         repository.removeById(userTesting.getId());
         Assert.assertNull(repository.findByLogin(LOGIN_TEST));
-    }
-
-    @Test
-    public void isLoginExist() {
-        Assert.assertTrue(repository.isLoginExist(LOGIN_TEST));
     }
 
 }

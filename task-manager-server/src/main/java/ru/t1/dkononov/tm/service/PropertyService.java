@@ -126,6 +126,42 @@ public final class PropertyService implements IPropertyService {
     @NotNull
     private static final String DB_HBM2DDL_KEY = "database.hbm2ddl_auto";
 
+    @NotNull
+    private static final String DB_USE_SECOND_LEVEL_CACHE_DEFAULT = "true";
+
+    @NotNull
+    private static final String DB_USE_SECOND_LEVEL_CACHE_KEY = "database.cache.use_second_level_cache";
+
+    @NotNull
+    private static final String DB_USE_QUERY_CACHE_DEFAULT = "true";
+
+    @NotNull
+    private static final String DB_USE_QUERY_CACHE_KEY = "database.cache.use_query_cache";
+
+    @NotNull
+    private static final String DB_MINIMAL_PUTS_DEFAULT = "true";
+
+    @NotNull
+    private static final String DB_MINIMAL_PUTS_KEY = "database.cache.use_minimal_puts";
+
+    @NotNull
+    private static final String DB_CACHE_REGION_PREFIX_DEFAULT = "tm";
+
+    @NotNull
+    private static final String DB_CACHE_REGION_PREFIX_KEY = "database.cache.region_prefix";
+
+    @NotNull
+    private static final String DB_CACHE_REGION_FACTORY_DEFAULT = "com.hazelcast.hibernate.HazelcastLocalCacheRegionFactory";
+
+    @NotNull
+    private static final String DB_CACHE_REGION_FACTORY_KEY = "database.cache.region.factory_class";
+
+    @NotNull
+    private static final String DB_PROVIDER_CONFIG_DEFAULT = "hazelcast.xml";
+
+    @NotNull
+    private static final String DB_PROVIDER_CONFIG_KEY = "database.cache.provider_configuration_file_resource_path";
+
 
     @NotNull
     public final Properties properties = new Properties();
@@ -321,6 +357,36 @@ public final class PropertyService implements IPropertyService {
     @Override
     public @NotNull String getDatabaseDriver() {
         return getStringValue(DB_DRIVER_KEY, DB_DRIVER_DEFAULT);
+    }
+
+    @Override
+    public @NotNull String getDatabaseUseSecondLvlCache() {
+        return getStringValue(DB_USE_SECOND_LEVEL_CACHE_KEY, DB_USE_SECOND_LEVEL_CACHE_DEFAULT);
+    }
+
+    @Override
+    public @NotNull String getDatabaseUseQueryCache() {
+        return getStringValue(DB_USE_QUERY_CACHE_KEY, DB_USE_QUERY_CACHE_DEFAULT);
+    }
+
+    @Override
+    public @NotNull String getDatabaseUseMinimalPuts() {
+        return getStringValue(DB_MINIMAL_PUTS_KEY, DB_MINIMAL_PUTS_DEFAULT);
+    }
+
+    @Override
+    public @NotNull String getDatabaseCacheRegionPrefix() {
+        return getStringValue(DB_CACHE_REGION_PREFIX_KEY, DB_CACHE_REGION_PREFIX_DEFAULT);
+    }
+
+    @Override
+    public @NotNull String getDatabaseCacheRegionFactory() {
+        return getStringValue(DB_CACHE_REGION_FACTORY_KEY, DB_CACHE_REGION_FACTORY_DEFAULT);
+    }
+
+    @Override
+    public @NotNull String getDatabaseProviderConfig() {
+        return getStringValue(DB_PROVIDER_CONFIG_KEY, DB_PROVIDER_CONFIG_DEFAULT);
     }
 
 }

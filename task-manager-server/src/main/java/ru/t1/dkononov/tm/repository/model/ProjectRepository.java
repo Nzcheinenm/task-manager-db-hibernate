@@ -1,5 +1,6 @@
 package ru.t1.dkononov.tm.repository.model;
 
+import org.hibernate.jpa.QueryHints;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.api.repository.model.IProjectRepository;
@@ -92,6 +93,7 @@ public final class ProjectRepository extends AbstractUserOwnedRepository<Project
         return entityManager.createQuery(sql, Project.class)
                 .setParameter("id", id)
                 .setParameter("userId", userId)
+                .setHint(QueryHints.HINT_CACHEABLE,true)
                 .setMaxResults(1).getResultList().stream().findFirst().orElse(null);
     }
 
@@ -102,6 +104,7 @@ public final class ProjectRepository extends AbstractUserOwnedRepository<Project
         return Objects.requireNonNull(entityManager.createQuery(sql, Project.class)
                 .setParameter("index", index)
                 .setMaxResults(1)
+                .setHint(QueryHints.HINT_CACHEABLE,true)
                 .getResultList().stream().findFirst().orElse(null));
     }
 

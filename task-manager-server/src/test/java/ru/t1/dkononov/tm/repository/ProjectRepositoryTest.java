@@ -8,6 +8,7 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import ru.t1.dkononov.tm.api.services.IConnectionService;
 import ru.t1.dkononov.tm.marker.DataCategory;
+import ru.t1.dkononov.tm.repository.model.ProjectRepository;
 import ru.t1.dkononov.tm.service.ConnectionService;
 import ru.t1.dkononov.tm.service.PropertyService;
 
@@ -20,7 +21,7 @@ public class ProjectRepositoryTest {
     private final IConnectionService connectionService = new ConnectionService(new PropertyService());
 
     @NotNull
-    private final ProjectRepository repository = new ProjectRepository(connectionService.getSqlSession());
+    private final ProjectRepository repository = new ProjectRepository(connectionService.getEntityManager());
 
     @Before
     public void before() {
@@ -34,25 +35,15 @@ public class ProjectRepositoryTest {
         repository.clear();
     }
 
-    @Test
-    public void add() {
-        Assert.assertNotNull(repository.add(USER_PROJECT2));
-        Assert.assertNull(repository.add(NULL_PROJECT));
-    }
-
-    @Test
-    public void addByUserId() {
-        Assert.assertNotNull(repository.add(USER1.getId(), USER_PROJECT2));
-    }
 
     @Test
     public void createByUserId() {
-        Assert.assertEquals(ADMIN_PROJECT.getUserId(), USER2.getId());
+        Assert.assertEquals(ADMIN_PROJECT.getUser().getId(), USER2.getId());
     }
 
     @Test
     public void findAll() {
-        @NotNull final ProjectRepository emptyRepository = new ProjectRepository(connectionService.getSqlSession());
+        @NotNull final ProjectRepository emptyRepository = new ProjectRepository(connectionService.getEntityManager());
         Assert.assertTrue(emptyRepository.findAll().isEmpty());
         emptyRepository.add(USER_PROJECT);
         Assert.assertEquals(USER_PROJECT, emptyRepository.findById(USER_PROJECT.getId()));
@@ -61,16 +52,6 @@ public class ProjectRepositoryTest {
     @Test
     public void findById() {
         Assert.assertNotNull(repository.findById(USER1.getId(), USER_PROJECT.getId()));
-    }
-
-    @Test
-    public void removeById() {
-        Assert.assertNotNull(repository.removeById(ADMIN_PROJECT.getId()));
-    }
-
-    @Test
-    public void removeByIndex() {
-        Assert.assertNotNull(repository.removeByIndex(1));
     }
 
     @Test

@@ -1,5 +1,6 @@
 package ru.t1.dkononov.tm.repository.model;
 
+import org.hibernate.jpa.QueryHints;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.api.repository.model.ISessionRepository;
@@ -69,6 +70,7 @@ public final class SessionRepository extends AbstractUserOwnedRepository<Session
         @NotNull final String sql = "SELECT m FROM Session m";
         return Objects.requireNonNull(entityManager.createQuery(sql, Session.class)
                 .setMaxResults(1)
+                .setHint(QueryHints.HINT_CACHEABLE,true)
                 .getResultList().stream().findFirst().orElse(null));
     }
 
@@ -80,6 +82,7 @@ public final class SessionRepository extends AbstractUserOwnedRepository<Session
         return entityManager.createQuery(sql, Session.class)
                 .setParameter("id", id)
                 .setParameter("userId", userId)
+                .setHint(QueryHints.HINT_CACHEABLE,true)
                 .setMaxResults(1).getResultList().stream().findFirst().orElse(null);
     }
 

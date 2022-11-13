@@ -43,4 +43,16 @@ public interface IPropertyService extends ISaltProvider, IDatabaseProperty {
     String getGitCommiterEmail();
 
     @NotNull String getDatabaseDriver();
+
+    @NotNull String getDatabaseUseSecondLvlCache();
+
+    @NotNull String getDatabaseUseQueryCache();
+
+    @NotNull String getDatabaseUseMinimalPuts();
+
+    @NotNull String getDatabaseCacheRegionPrefix();
+
+    @NotNull String getDatabaseCacheRegionFactory();
+
+    @NotNull String getDatabaseProviderConfig();
 }

@@ -1,5 +1,6 @@
 package ru.t1.dkononov.tm.repository.model;
 
+import org.hibernate.jpa.QueryHints;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.api.repository.model.ITaskRepository;
@@ -53,6 +54,7 @@ public final class TaskRepository extends AbstractUserOwnedRepository<Task> impl
         return Objects.requireNonNull(entityManager.createQuery(sql, Task.class)
                 .setParameter("userId", userId)
                 .setMaxResults(1)
+                .setHint(QueryHints.HINT_CACHEABLE,true)
                 .getResultList().stream().findFirst().orElse(null));
     }
 
@@ -91,6 +93,7 @@ public final class TaskRepository extends AbstractUserOwnedRepository<Task> impl
         return entityManager.createQuery(sql, Task.class)
                 .setParameter("id", id)
                 .setParameter("userId", userId)
+                .setHint(QueryHints.HINT_CACHEABLE,true)
                 .setMaxResults(1).getResultList().stream().findFirst().orElse(null);
     }
 
@@ -136,6 +139,7 @@ public final class TaskRepository extends AbstractUserOwnedRepository<Task> impl
                 .setParameter("taskId", taskId)
                 .setParameter("userId", userId)
                 .setParameter("projectId", projectId)
+                .setHint(QueryHints.HINT_CACHEABLE,true)
                 .setMaxResults(1).getResultList().stream().findFirst().orElse(null);
     }
 
