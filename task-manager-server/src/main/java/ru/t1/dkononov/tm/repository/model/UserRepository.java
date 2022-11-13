@@ -4,6 +4,7 @@ import org.hibernate.jpa.QueryHints;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.api.repository.model.IUserRepository;
+import ru.t1.dkononov.tm.enumerated.Sort;
 import ru.t1.dkononov.tm.model.User;
 
 import javax.persistence.EntityManager;
@@ -28,6 +29,15 @@ public final class UserRepository extends AbstractRepository<User> implements IU
     public List<User> findAll() {
         @NotNull final String sql = "SELECT m FROM User m";
         return entityManager.createQuery(sql, User.class).getResultList();
+    }
+
+    @NotNull
+    @Override
+    public List<User> findAll(@NotNull Sort sort) {
+        @NotNull final String sql = "SELECT m FROM User m ORDER BY m."
+                + getSortType(sort.getComparator());
+        return entityManager.createQuery(sql, User.class)
+                .getResultList();
     }
 
     @NotNull

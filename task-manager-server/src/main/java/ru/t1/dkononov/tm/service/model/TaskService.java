@@ -6,6 +6,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.api.repository.model.ITaskRepository;
 import ru.t1.dkononov.tm.api.repository.model.IUserOwnedRepository;
+import ru.t1.dkononov.tm.api.repository.model.IUserRepository;
 import ru.t1.dkononov.tm.api.services.IConnectionService;
 import ru.t1.dkononov.tm.api.services.ITaskService;
 import ru.t1.dkononov.tm.enumerated.Sort;
@@ -37,7 +38,13 @@ public final class TaskService extends AbstractUserOwnedService<Task, TaskReposi
     public List<Task> findAll(
             @Nullable final Sort sort
     ) {
-        return findAll();
+        @NotNull final EntityManager entityManager = getEntityManager();
+        try {
+            @NotNull final ITaskRepository repository = (ITaskRepository) getRepository(entityManager);
+            return repository.findAll(sort);
+        } finally {
+            entityManager.close();
+        }
     }
 
     @Override

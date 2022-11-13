@@ -4,6 +4,7 @@ import org.hibernate.jpa.QueryHints;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.api.repository.model.ISessionRepository;
+import ru.t1.dkononov.tm.enumerated.Sort;
 import ru.t1.dkononov.tm.model.Session;
 
 import javax.persistence.EntityManager;
@@ -88,13 +89,33 @@ public final class SessionRepository extends AbstractUserOwnedRepository<Session
 
     @Override
     public void removeById(@NotNull final String id) {
-        Optional<Session> entity = Optional.ofNullable(findById(id));
+        @NotNull final Optional<Session> entity = Optional.ofNullable(findById(id));
         entity.ifPresent(this::remove);
+    }
+
+    @NotNull
+    @Override
+    public List<Session> findAll(@NotNull Sort sort) {
+        @NotNull final String sql = "SELECT m FROM Session m ORDER BY m."
+                + getSortType(sort.getComparator());
+        return entityManager.createQuery(sql, Session.class)
+                .getResultList();
+    }
+
+    @NotNull
+    @Override
+    public List<Session> findAll(@NotNull final String userId, @NotNull Sort sort) {
+        if (userId.isEmpty()) return Collections.emptyList();
+        @NotNull final String sql = "SELECT m FROM Session m WHERE m.user.id = :userId ORDER BY m."
+                + getSortType(sort.getComparator());
+        return entityManager.createQuery(sql, Session.class)
+                .setParameter("userId", userId)
+                .getResultList();
     }
 
     @Override
     public void removeById(@NotNull final String userId, @NotNull final String id) {
-        Optional<Session> entity = Optional.ofNullable(findById(userId, id));
+        @NotNull final Optional<Session> entity = Optional.ofNullable(findById(userId, id));
         entity.ifPresent(this::remove);
     }
 

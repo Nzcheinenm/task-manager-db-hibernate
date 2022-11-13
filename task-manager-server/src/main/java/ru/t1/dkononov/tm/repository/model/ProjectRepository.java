@@ -62,10 +62,19 @@ public final class ProjectRepository extends AbstractUserOwnedRepository<Project
     @Override
     public List<Project> findAll(@NotNull final String userId, @NotNull Sort sort) {
         if (userId.isEmpty()) return Collections.emptyList();
-        @NotNull final String sql = "SELECT m FROM ProjectDTO m WHERE m.user.id = :userId ORDER BY m."
+        @NotNull final String sql = "SELECT m FROM Project m WHERE m.user.id = :userId ORDER BY m."
                 + getSortType(sort.getComparator());
         return entityManager.createQuery(sql, Project.class)
                 .setParameter("userId", userId)
+                .getResultList();
+    }
+
+    @NotNull
+    @Override
+    public List<Project> findAll(@NotNull Sort sort) {
+        @NotNull final String sql = "SELECT m FROM Project m ORDER BY m."
+                + getSortType(sort.getComparator());
+        return entityManager.createQuery(sql, Project.class)
                 .getResultList();
     }
 
@@ -110,13 +119,13 @@ public final class ProjectRepository extends AbstractUserOwnedRepository<Project
 
     @Override
     public void removeById(@NotNull final String id) {
-        Optional<Project> entity = Optional.ofNullable(findById(id));
+        @NotNull final Optional<Project> entity = Optional.ofNullable(findById(id));
         entity.ifPresent(this::remove);
     }
 
     @Override
     public void removeById(@NotNull final String userId, @NotNull final String id) {
-        Optional<Project> entity = Optional.ofNullable(findById(userId, id));
+        @NotNull final Optional<Project> entity = Optional.ofNullable(findById(userId, id));
         entity.ifPresent(this::remove);
     }
 

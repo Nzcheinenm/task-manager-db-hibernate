@@ -20,6 +20,8 @@ public interface IProjectRepository {
 
     @NotNull List<Project> findAll(@NotNull String userId, @NotNull Sort sort);
 
+    @NotNull List<Project> findAll(@NotNull Sort sort);
+
     @NotNull List<Project> findAll(@NotNull String userId, @NotNull Comparator<ProjectDTO> comparator);
 
     @NotNull Project findById(@NotNull String id);

@@ -5,6 +5,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.api.repository.dto.IUserDTORepository;
 import ru.t1.dkononov.tm.dto.model.UserDTO;
+import ru.t1.dkononov.tm.enumerated.Sort;
 
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -32,6 +33,15 @@ public final class UserDTORepository extends AbstractDTORepository<UserDTO> impl
 
     @NotNull
     @Override
+    public List<UserDTO> findAll(@NotNull Sort sort) {
+        @NotNull final String sql = "SELECT m FROM UserDTO m ORDER BY m."
+                + getSortType(sort.getComparator());
+        return entityManager.createQuery(sql, UserDTO.class)
+                .getResultList();
+    }
+
+    @NotNull
+    @Override
     public UserDTO findById(@NotNull final String id) {
         return entityManager.find(UserDTO.class, id);
     }
@@ -48,7 +58,7 @@ public final class UserDTORepository extends AbstractDTORepository<UserDTO> impl
 
     @Override
     public void removeById(@NotNull final String id) {
-        Optional<UserDTO> entity = Optional.ofNullable(findById(id));
+        @NotNull final Optional<UserDTO> entity = Optional.ofNullable(findById(id));
         entity.ifPresent(this::remove);
     }
 

@@ -15,6 +15,8 @@ public interface ITaskDTORepository {
 
     @NotNull List<TaskDTO> findAll();
 
+    @NotNull List<TaskDTO> findAll(@NotNull Sort sort);
+
     @NotNull List<TaskDTO> findAll(@NotNull String userId);
 
     @NotNull List<TaskDTO> findAll(@NotNull String userId, @NotNull Sort sort);

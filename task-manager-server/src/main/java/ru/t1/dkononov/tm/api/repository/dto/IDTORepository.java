@@ -4,6 +4,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.dto.model.AbstractModelDTO;
 
+import java.util.Comparator;
 import java.util.List;
 
 public interface IDTORepository<E extends AbstractModelDTO> {
@@ -22,4 +23,6 @@ public interface IDTORepository<E extends AbstractModelDTO> {
     void update(@NotNull E entity);
 
     E findByIndex(@Nullable Integer index);
+
+    @NotNull String getSortType(@NotNull Comparator comparator);
 }

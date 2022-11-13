@@ -17,6 +17,8 @@ public interface IProjectDTORepository {
 
     @NotNull List<ProjectDTO> findAll(@NotNull String userId);
 
+    @NotNull List<ProjectDTO> findAll(@NotNull Sort sort);
+
     @NotNull List<ProjectDTO> findAll(@NotNull String userId, @NotNull Sort sort);
 
     @NotNull List<ProjectDTO> findAll(@NotNull String userId, @NotNull Comparator<ProjectDTO> comparator);

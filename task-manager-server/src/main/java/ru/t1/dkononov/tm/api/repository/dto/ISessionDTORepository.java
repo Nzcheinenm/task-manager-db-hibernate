@@ -3,6 +3,7 @@ package ru.t1.dkononov.tm.api.repository.dto;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.dto.model.SessionDTO;
+import ru.t1.dkononov.tm.enumerated.Sort;
 
 import java.util.List;
 
@@ -14,6 +15,10 @@ public interface ISessionDTORepository {
     @NotNull List<SessionDTO> findAll();
 
     @NotNull List<SessionDTO> findAll(@NotNull String userId);
+
+    @NotNull List<SessionDTO> findAll(@NotNull Sort sort);
+
+    @NotNull List<SessionDTO> findAll(@NotNull String userId, @NotNull Sort sort);
 
     @NotNull SessionDTO findById(@NotNull String id);
 

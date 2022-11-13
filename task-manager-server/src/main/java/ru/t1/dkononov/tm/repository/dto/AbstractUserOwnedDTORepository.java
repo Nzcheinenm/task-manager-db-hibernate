@@ -17,7 +17,7 @@ public abstract class AbstractUserOwnedDTORepository<E extends AbstractUserOwned
     }
 
     @NotNull
-    protected String getSortType(@NotNull final Comparator comparator) {
+    public String getSortType(@NotNull final Comparator comparator) {
         if (comparator == CreatedComparator.INSTANCE) return "created";
         else if (comparator == StatusComparator.INSTANCE) return "status";
         else return "name";

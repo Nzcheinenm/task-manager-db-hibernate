@@ -2,9 +2,12 @@ package ru.t1.dkononov.tm.repository.dto;
 
 import org.jetbrains.annotations.NotNull;
 import ru.t1.dkononov.tm.api.repository.dto.IDTORepository;
+import ru.t1.dkononov.tm.comparator.CreatedComparator;
+import ru.t1.dkononov.tm.comparator.StatusComparator;
 import ru.t1.dkononov.tm.dto.model.AbstractModelDTO;
 
 import javax.persistence.EntityManager;
+import java.util.Comparator;
 import java.util.List;
 
 public abstract class AbstractDTORepository<E extends AbstractModelDTO> implements IDTORepository<E> {
@@ -40,6 +43,14 @@ public abstract class AbstractDTORepository<E extends AbstractModelDTO> implemen
     @Override
     public void update(@NotNull E entity) {
         entityManager.merge(entity);
+    }
+
+    @NotNull
+    @Override
+    public String getSortType(@NotNull final Comparator comparator) {
+        if (comparator == CreatedComparator.INSTANCE) return "created";
+        else if (comparator == StatusComparator.INSTANCE) return "status";
+        else return "name";
     }
 
 }

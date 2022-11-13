@@ -49,6 +49,15 @@ public final class ProjectDTORepository extends AbstractUserOwnedDTORepository<P
 
     @NotNull
     @Override
+    public List<ProjectDTO> findAll(@NotNull Sort sort) {
+        @NotNull final String sql = "SELECT m FROM ProjectDTO m ORDER BY m."
+                + getSortType(sort.getComparator());
+        return entityManager.createQuery(sql, ProjectDTO.class)
+                .getResultList();
+    }
+
+    @NotNull
+    @Override
     public List<ProjectDTO> findAll(@NotNull final String userId, @NotNull Sort sort) {
         if (userId.isEmpty()) return Collections.emptyList();
         @NotNull final String sql = "SELECT m FROM ProjectDTO m WHERE m.userId = :userId ORDER BY m."
@@ -105,13 +114,13 @@ public final class ProjectDTORepository extends AbstractUserOwnedDTORepository<P
 
     @Override
     public void removeById(@NotNull final String id) {
-        Optional<ProjectDTO> entity = Optional.ofNullable(findById(id));
+        @NotNull final Optional<ProjectDTO> entity = Optional.ofNullable(findById(id));
         entity.ifPresent(this::remove);
     }
 
     @Override
     public void removeById(@NotNull final String userId, @NotNull final String id) {
-        Optional<ProjectDTO> entity = Optional.ofNullable(findById(userId, id));
+        @NotNull final Optional<ProjectDTO> entity = Optional.ofNullable(findById(userId, id));
         entity.ifPresent(this::remove);
     }
 

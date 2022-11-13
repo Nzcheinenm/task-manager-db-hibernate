@@ -7,6 +7,7 @@ import ru.t1.dkononov.tm.api.repository.dto.IDTORepository;
 import ru.t1.dkononov.tm.api.repository.dto.IProjectDTORepository;
 import ru.t1.dkononov.tm.api.repository.dto.ITaskDTORepository;
 import ru.t1.dkononov.tm.api.repository.dto.IUserDTORepository;
+import ru.t1.dkononov.tm.api.repository.model.IUserRepository;
 import ru.t1.dkononov.tm.api.services.IConnectionService;
 import ru.t1.dkononov.tm.api.services.IPropertyService;
 import ru.t1.dkononov.tm.api.services.dto.IUserDTOService;
@@ -15,9 +16,11 @@ import ru.t1.dkononov.tm.enumerated.Role;
 import ru.t1.dkononov.tm.enumerated.Sort;
 import ru.t1.dkononov.tm.exception.AbstractException;
 import ru.t1.dkononov.tm.exception.field.*;
+import ru.t1.dkononov.tm.model.User;
 import ru.t1.dkononov.tm.repository.dto.ProjectDTORepository;
 import ru.t1.dkononov.tm.repository.dto.TaskDTORepository;
 import ru.t1.dkononov.tm.repository.dto.UserDTORepository;
+import ru.t1.dkononov.tm.repository.model.UserRepository;
 import ru.t1.dkononov.tm.util.HashUtil;
 
 import javax.persistence.EntityManager;
@@ -386,7 +389,13 @@ public final class UserDTOService extends AbstractDTOService<UserDTO, UserDTORep
     @Override
     @Nullable
     public List<UserDTO> findAll(@Nullable Sort sort) {
-        return findAll();
+        @NotNull final EntityManager entityManager = getEntityManager();
+        try {
+            @NotNull final IUserDTORepository repository = (IUserDTORepository) getRepository(entityManager);
+            return repository.findAll(sort);
+        } finally {
+            entityManager.close();
+        }
     }
 
     @Override

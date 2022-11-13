@@ -5,6 +5,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.api.repository.model.ITaskRepository;
 import ru.t1.dkononov.tm.enumerated.Sort;
+import ru.t1.dkononov.tm.model.Project;
 import ru.t1.dkononov.tm.model.Task;
 
 import javax.persistence.EntityManager;
@@ -108,13 +109,13 @@ public final class TaskRepository extends AbstractUserOwnedRepository<Task> impl
 
     @Override
     public void removeById(@NotNull final String id) {
-        Optional<Task> entity = Optional.ofNullable(findById(id));
+        @NotNull final Optional<Task> entity = Optional.ofNullable(findById(id));
         entity.ifPresent(this::remove);
     }
 
     @Override
     public void removeById(@NotNull final String userId, @NotNull final String id) {
-        Optional<Task> entity = Optional.ofNullable(findById(userId, id));
+        @NotNull final Optional<Task> entity = Optional.ofNullable(findById(userId, id));
         entity.ifPresent(this::remove);
     }
 
@@ -141,6 +142,15 @@ public final class TaskRepository extends AbstractUserOwnedRepository<Task> impl
                 .setParameter("projectId", projectId)
                 .setHint(QueryHints.HINT_CACHEABLE,true)
                 .setMaxResults(1).getResultList().stream().findFirst().orElse(null);
+    }
+
+    @NotNull
+    @Override
+    public List<Task> findAll(@NotNull Sort sort) {
+        @NotNull final String sql = "SELECT m FROM Task m ORDER BY m."
+                + getSortType(sort.getComparator());
+        return entityManager.createQuery(sql, Task.class)
+                .getResultList();
     }
 
 }

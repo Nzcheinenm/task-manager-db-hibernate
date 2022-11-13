@@ -3,10 +3,7 @@ package ru.t1.dkononov.tm.service.model;
 import lombok.SneakyThrows;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import ru.t1.dkononov.tm.api.repository.model.IProjectRepository;
-import ru.t1.dkononov.tm.api.repository.model.IRepository;
-import ru.t1.dkononov.tm.api.repository.model.ITaskRepository;
-import ru.t1.dkononov.tm.api.repository.model.IUserRepository;
+import ru.t1.dkononov.tm.api.repository.model.*;
 import ru.t1.dkononov.tm.api.services.IConnectionService;
 import ru.t1.dkononov.tm.api.services.IPropertyService;
 import ru.t1.dkononov.tm.api.services.IUserService;
@@ -384,7 +381,13 @@ public final class UserService extends AbstractService<User, UserRepository> imp
     @Override
     @Nullable
     public List<User> findAll(@Nullable Sort sort) {
-        return findAll();
+        @NotNull final EntityManager entityManager = getEntityManager();
+        try {
+            @NotNull final IUserRepository repository = (IUserRepository) getRepository(entityManager);
+            return repository.findAll(sort);
+        } finally {
+            entityManager.close();
+        }
     }
 
     @Override

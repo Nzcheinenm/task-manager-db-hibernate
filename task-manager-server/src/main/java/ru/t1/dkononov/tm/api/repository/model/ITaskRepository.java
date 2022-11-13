@@ -34,4 +34,6 @@ public interface ITaskRepository {
     @NotNull List<Task> findAllByProjectId(@NotNull String userId, @NotNull String projectId);
 
     @Nullable Task findTaskIdByProjectId(@NotNull String userId, @NotNull String projectId, @NotNull String taskId);
+
+    @NotNull List<Task> findAll(@NotNull Sort sort);
 }

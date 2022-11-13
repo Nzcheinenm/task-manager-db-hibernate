@@ -4,6 +4,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.api.repository.dto.ISessionDTORepository;
 import ru.t1.dkononov.tm.dto.model.SessionDTO;
+import ru.t1.dkononov.tm.dto.model.UserDTO;
+import ru.t1.dkononov.tm.enumerated.Sort;
 
 import javax.persistence.EntityManager;
 import java.util.Collections;
@@ -51,6 +53,27 @@ public final class SessionDTORepository extends AbstractUserOwnedDTORepository<S
 
     @NotNull
     @Override
+    public List<SessionDTO> findAll(@NotNull Sort sort) {
+        @NotNull final String sql = "SELECT m FROM SessionDTO m ORDER BY m."
+                + getSortType(sort.getComparator());
+        return entityManager.createQuery(sql, SessionDTO.class)
+                .getResultList();
+    }
+
+    @NotNull
+    @Override
+    public List<SessionDTO> findAll(@NotNull final String userId, @NotNull Sort sort) {
+        if (userId.isEmpty()) return Collections.emptyList();
+        @NotNull final String sql = "SELECT m FROM SessionDTO m WHERE m.user.id = :userId ORDER BY m."
+                + getSortType(sort.getComparator());
+        return entityManager.createQuery(sql, SessionDTO.class)
+                .setParameter("userId", userId)
+                .getResultList();
+    }
+
+
+    @NotNull
+    @Override
     public SessionDTO findById(@NotNull final String id) {
         return entityManager.find(SessionDTO.class, id);
     }
@@ -85,13 +108,13 @@ public final class SessionDTORepository extends AbstractUserOwnedDTORepository<S
 
     @Override
     public void removeById(@NotNull final String id) {
-        Optional<SessionDTO> entity = Optional.ofNullable(findById(id));
+        @NotNull final Optional<SessionDTO> entity = Optional.ofNullable(findById(id));
         entity.ifPresent(this::remove);
     }
 
     @Override
     public void removeById(@NotNull final String userId, @NotNull final String id) {
-        Optional<SessionDTO> entity = Optional.ofNullable(findById(userId, id));
+        @NotNull final Optional<SessionDTO> entity = Optional.ofNullable(findById(userId, id));
         entity.ifPresent(this::remove);
     }
 

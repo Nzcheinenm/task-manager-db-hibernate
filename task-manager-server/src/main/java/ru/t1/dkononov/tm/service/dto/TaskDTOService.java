@@ -5,6 +5,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.api.repository.dto.ITaskDTORepository;
 import ru.t1.dkononov.tm.api.repository.dto.IUserOwnedDTORepository;
+import ru.t1.dkononov.tm.api.repository.model.ITaskRepository;
 import ru.t1.dkononov.tm.api.services.IConnectionService;
 import ru.t1.dkononov.tm.api.services.dto.ITaskDTOService;
 import ru.t1.dkononov.tm.dto.model.TaskDTO;
@@ -34,7 +35,13 @@ public final class TaskDTOService extends AbstractUserOwnedDTOService<TaskDTO, T
     public List<TaskDTO> findAll(
             @Nullable final Sort sort
     ) {
-        return findAll();
+        @NotNull final EntityManager entityManager = getEntityManager();
+        try {
+            @NotNull final ITaskDTORepository repository = (ITaskDTORepository) getRepository(entityManager);
+            return repository.findAll(sort);
+        } finally {
+            entityManager.close();
+        }
     }
 
     @Override

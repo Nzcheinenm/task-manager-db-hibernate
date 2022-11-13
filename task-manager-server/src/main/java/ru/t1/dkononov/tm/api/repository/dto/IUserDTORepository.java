@@ -3,6 +3,7 @@ package ru.t1.dkononov.tm.api.repository.dto;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.dto.model.UserDTO;
+import ru.t1.dkononov.tm.enumerated.Sort;
 
 import java.util.List;
 
@@ -10,6 +11,8 @@ public interface IUserDTORepository {
     void clear();
 
     @NotNull List<UserDTO> findAll();
+
+    @NotNull List<UserDTO> findAll(@NotNull Sort sort);
 
     @NotNull UserDTO findById(@NotNull String id);
 

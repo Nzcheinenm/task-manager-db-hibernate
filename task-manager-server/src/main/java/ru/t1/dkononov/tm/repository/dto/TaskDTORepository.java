@@ -39,6 +39,15 @@ public final class TaskDTORepository extends AbstractUserOwnedDTORepository<Task
 
     @NotNull
     @Override
+    public List<TaskDTO> findAll(@NotNull Sort sort) {
+        @NotNull final String sql = "SELECT m FROM TaskDTO m ORDER BY m."
+                + getSortType(sort.getComparator());
+        return entityManager.createQuery(sql, TaskDTO.class)
+                .getResultList();
+    }
+
+    @NotNull
+    @Override
     public List<TaskDTO> findAll(@NotNull final String userId) {
         if (userId.isEmpty()) return Collections.emptyList();
         @NotNull final String sql = "SELECT m FROM TaskDTO m WHERE m.userId = :userId";
@@ -105,13 +114,13 @@ public final class TaskDTORepository extends AbstractUserOwnedDTORepository<Task
 
     @Override
     public void removeById(@NotNull final String id) {
-        Optional<TaskDTO> entity = Optional.ofNullable(findById(id));
+        @NotNull final Optional<TaskDTO> entity = Optional.ofNullable(findById(id));
         entity.ifPresent(this::remove);
     }
 
     @Override
     public void removeById(@NotNull final String userId, @NotNull final String id) {
-        Optional<TaskDTO> entity = Optional.ofNullable(findById(userId, id));
+        @NotNull final Optional<TaskDTO> entity = Optional.ofNullable(findById(userId, id));
         entity.ifPresent(this::remove);
     }
 

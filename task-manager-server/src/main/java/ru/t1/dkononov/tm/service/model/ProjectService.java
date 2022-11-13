@@ -3,6 +3,8 @@ package ru.t1.dkononov.tm.service.model;
 import lombok.SneakyThrows;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import ru.t1.dkononov.tm.api.repository.model.IProjectRepository;
+import ru.t1.dkononov.tm.api.repository.model.ITaskRepository;
 import ru.t1.dkononov.tm.api.repository.model.IUserOwnedRepository;
 import ru.t1.dkononov.tm.api.services.IConnectionService;
 import ru.t1.dkononov.tm.api.services.IProjectService;
@@ -12,6 +14,7 @@ import ru.t1.dkononov.tm.exception.AbstractException;
 import ru.t1.dkononov.tm.exception.entity.ProjectNotFoundException;
 import ru.t1.dkononov.tm.exception.field.*;
 import ru.t1.dkononov.tm.model.Project;
+import ru.t1.dkononov.tm.model.Task;
 import ru.t1.dkononov.tm.model.User;
 import ru.t1.dkononov.tm.repository.model.ProjectRepository;
 
@@ -214,9 +217,19 @@ public final class ProjectService extends AbstractUserOwnedService<Project, Proj
         return new ProjectRepository(entityManager);
     }
 
+    @NotNull
     @Override
-    public @Nullable List<Project> findAll(@Nullable Sort sort) {
-        return null;
+    @SneakyThrows
+    public List<Project> findAll(
+            @Nullable final Sort sort
+    ) {
+        @NotNull final EntityManager entityManager = getEntityManager();
+        try {
+            @NotNull final IProjectRepository repository = (IProjectRepository) getRepository(entityManager);
+            return repository.findAll(sort);
+        } finally {
+            entityManager.close();
+        }
     }
 
     @Nullable

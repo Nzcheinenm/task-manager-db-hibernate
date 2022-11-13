@@ -198,7 +198,7 @@ public abstract class AbstractUserOwnedDTOService<M extends AbstractUserOwnedMod
     @SneakyThrows
     public M remove(@NotNull final String userId, @Nullable final M model) throws UserIdEmptyException {
         if (userId.isEmpty()) throw new UserIdEmptyException();
-        @NotNull EntityManager entityManager = getEntityManager();
+        @NotNull final EntityManager entityManager = getEntityManager();
         try {
             entityManager.getTransaction().begin();
             @NotNull final IUserOwnedDTORepository<M> repository = getRepository(entityManager);

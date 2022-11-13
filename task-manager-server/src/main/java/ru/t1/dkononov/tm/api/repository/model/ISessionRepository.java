@@ -2,6 +2,7 @@ package ru.t1.dkononov.tm.api.repository.model;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import ru.t1.dkononov.tm.enumerated.Sort;
 import ru.t1.dkononov.tm.model.Session;
 
 import java.util.List;
@@ -20,6 +21,10 @@ public interface ISessionRepository {
     @Nullable Session findById(@NotNull String userId, @NotNull String id);
 
     void removeById(@NotNull String id);
+
+    @NotNull List<Session> findAll(@NotNull Sort sort);
+
+    @NotNull List<Session> findAll(@NotNull String userId, @NotNull Sort sort);
 
     void removeById(@NotNull String userId, @NotNull String id);
 }

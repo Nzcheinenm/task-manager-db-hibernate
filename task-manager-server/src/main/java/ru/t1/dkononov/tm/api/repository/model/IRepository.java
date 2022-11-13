@@ -4,6 +4,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.t1.dkononov.tm.model.AbstractModel;
 
+import java.util.Comparator;
 import java.util.List;
 
 public interface IRepository<E extends AbstractModel> {
@@ -20,4 +21,6 @@ public interface IRepository<E extends AbstractModel> {
     void update(E entity);
 
     E findByIndex(@Nullable Integer index);
+
+    @NotNull String getSortType(@NotNull Comparator comparator);
 }
