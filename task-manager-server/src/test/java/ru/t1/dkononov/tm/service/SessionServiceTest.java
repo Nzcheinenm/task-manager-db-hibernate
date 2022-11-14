@@ -11,6 +11,7 @@ import ru.t1.dkononov.tm.dto.model.SessionDTO;
 import ru.t1.dkononov.tm.exception.entity.ProjectNotFoundException;
 import ru.t1.dkononov.tm.exception.field.UserIdEmptyException;
 import ru.t1.dkononov.tm.marker.UnitCategory;
+import ru.t1.dkononov.tm.model.Session;
 import ru.t1.dkononov.tm.service.model.SessionService;
 
 import static ru.t1.dkononov.tm.constant.TestData.SESSION;
@@ -38,7 +39,7 @@ public class SessionServiceTest {
     @Test
     public void add() throws UserIdEmptyException, ProjectNotFoundException {
         Assert.assertNotNull(service.add(SESSION));
-        Assert.assertThrows(Exception.class, () -> service.add((SessionDTO) null));
+        Assert.assertThrows(Exception.class, () -> service.add(USER1.getId(),(Session) null));
     }
 
     @Test
@@ -48,7 +49,7 @@ public class SessionServiceTest {
 
     @Test
     public void createByUserId() {
-        Assert.assertEquals(SESSION.getUserId(), USER1.getId());
+        Assert.assertEquals(SESSION.getUser().getId(), USER1.getId());
     }
 
     @Test

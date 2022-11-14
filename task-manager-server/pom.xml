@@ -49,6 +49,33 @@
                 <test.category>ru.t1.dkononov.tm.marker.DataCategory</test.category>
             </properties>
         </profile>
+        <profile>
+            <id>LIQUIBASE</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.liquibase</groupId>
+                        <artifactId>liquibase-maven-plugin</artifactId>
+                        <version>3.6.3</version>
+                        <configuration>
+                            <outputChangeLogFile>${project.basedir}/src/main/resources/changelog/changelog-master.xml</outputChangeLogFile>
+                            <propertyFile>${project.basedir}/src/main/resources/liquibase.properties</propertyFile>
+                            <changeLogFile>${project.basedir}/src/main/resources/changelog/changelog-master.xml</changeLogFile>
+                        </configuration>
+                        <dependencies>
+                            <dependency>
+                                <groupId>org.postgresql</groupId>
+                                <artifactId>postgresql</artifactId>
+                                <version>42.2.1</version>
+                            </dependency>
+                        </dependencies>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
     </profiles>
 
     <scm>
@@ -157,6 +184,12 @@
             <artifactId>hibernate-c3p0</artifactId>
             <version>5.3.7.Final</version>
         </dependency>
+        <dependency>
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-core</artifactId>
+            <version>3.6.3</version>
+        </dependency>
+
 
 
 <!--        <dependency>-->
@@ -260,7 +293,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
+                <version>3.10.1</version>
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>

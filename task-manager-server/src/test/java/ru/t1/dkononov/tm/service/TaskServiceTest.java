@@ -50,7 +50,7 @@ public class TaskServiceTest {
 
     @Test
     public void createByUserId() {
-        Assert.assertEquals(ADMIN_TASK.getUserId(), USER2.getId());
+        Assert.assertEquals(ADMIN_TASK.getUser().getId(), USER2.getId());
     }
 
     @Test

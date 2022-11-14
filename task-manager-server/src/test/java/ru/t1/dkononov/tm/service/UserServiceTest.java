@@ -15,6 +15,7 @@ import ru.t1.dkononov.tm.exception.field.AbstractFieldException;
 import ru.t1.dkononov.tm.exception.field.LoginEmptyException;
 import ru.t1.dkononov.tm.exception.field.UserNotFoundException;
 import ru.t1.dkononov.tm.marker.UnitCategory;
+import ru.t1.dkononov.tm.model.User;
 import ru.t1.dkononov.tm.service.model.UserService;
 
 import java.util.Objects;
@@ -34,7 +35,7 @@ public class UserServiceTest {
     private final PropertyService propertyService = new PropertyService();
 
     @NotNull
-    private final UserService service = new UserService(connectionService, propertyService);
+    private final UserService service = new UserService(propertyService,connectionService);
 
     @NotNull
     private static final String LOGIN_TEST = "logintest";
@@ -48,8 +49,7 @@ public class UserServiceTest {
     @NotNull
     private static final String NAME = "firstName";
 
-    @NotNull
-    private UserDTO userTesting;
+    private @NotNull User userTesting;
 
     @Before
     public void before() throws AbstractException {
@@ -64,7 +64,7 @@ public class UserServiceTest {
     @Test
     public void create() throws AbstractException {
         service.create(LOGIN, PASSWORD, Role.USUAL);
-        @Nullable final UserDTO user = service.findByLogin(LOGIN);
+        @Nullable final User user = service.findByLogin(LOGIN);
         Assert.assertNotNull(user);
     }
 

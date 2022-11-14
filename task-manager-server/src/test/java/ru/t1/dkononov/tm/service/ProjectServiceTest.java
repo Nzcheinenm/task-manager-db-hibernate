@@ -50,7 +50,7 @@ public class ProjectServiceTest {
 
     @Test
     public void createByUserId() {
-        Assert.assertEquals(ADMIN_PROJECT.getUserId(), USER2.getId());
+        Assert.assertEquals(ADMIN_PROJECT.getUser().getId(), USER2.getId());
     }
 
     @Test
